@@ -2,12 +2,9 @@
     <div class="container">
         <div>
             <Logo />
-            <h1 class="title">jarabeach_web</h1>
             <input type="text" />
-            <div class="links">
-                <a href="https://nuxtjs.org/" target="_blank" rel="noopener noreferrer" class="button--green">Documentation</a>
-                <a href="https://github.com/nuxt/nuxt.js" target="_blank" rel="noopener noreferrer" class="button--grey">GitHub</a>
-            </div>
+            <input type="checkbox"  /> Hello
+            <nuxt-link class="p-5 bg-red-100" tag="button" to="/welcome">Begin</nuxt-link>
         </div>
     </div>
 </template>
