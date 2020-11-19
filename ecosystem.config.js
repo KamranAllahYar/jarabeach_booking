@@ -5,7 +5,7 @@ module.exports = {
           script: './start.js',
           env: {
               HOST: 'localhost',
-              PORT: 3000
+              PORT: 5000
           }
       }
   ],
