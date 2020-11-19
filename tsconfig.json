@@ -25,7 +25,10 @@
     },
     "types": [
       "@types/node",
-      "@nuxt/types"
+      "@nuxt/types",
+      "@nuxtjs/axios",
+      "@nuxtjs/toast",
+      "@nuxtjs/date-fns",
     ]
   },
   "exclude": [

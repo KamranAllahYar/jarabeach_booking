@@ -3,16 +3,24 @@
         <div>
             <Logo />
             <input type="text" />
-            <input type="checkbox"  /> Hello
+            <input type="checkbox" /> Hello
             <nuxt-link class="p-5 bg-red-100" tag="button" to="/welcome">Begin</nuxt-link>
+            <button @click="testToast()">Toast</button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { Component, Vue } from "vue-property-decorator";
 
-export default Vue.extend({});
+@Component
+export default class Index extends Vue {
+    message: string = "This is a message";
+
+    testToast() {
+        this.$toast.show("Hello world");
+    }
+}
 </script>
 
 <style>

@@ -11,13 +11,18 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/date-fns": "^1.4.3",
     "@nuxtjs/pwa": "^3.0.2",
+    "@nuxtjs/toast": "^3.3.1",
     "@tailwindcss/forms": "^0.2.1",
     "autoprefixer": "^9.8.6",
     "core-js": "^3.6.5",
     "nuxt": "^2.14.6",
+    "nuxt-property-decorator": "^2.8.8",
     "postcss": "^7.0.35",
-    "tailwindcss": "^2.0.1-compat"
+    "tailwindcss": "^2.0.1-compat",
+    "vue-class-component": "^7.2.6",
+    "vue-property-decorator": "^9.0.2"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.6",
