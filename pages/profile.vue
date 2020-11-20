@@ -39,7 +39,7 @@
                         </div>
                         <div v-else>
                             <div class="flex items-center">
-                                <input type="text" placeholder="hilkia@example.com" class="w-1/2 mr-2 rounded">
+                                <input type="text" placeholder="mark.slade@gmail.com" class="w-1/2 mr-2 rounded">
                                 <svg class="w-8 h-8 text-green-500" 
                                     fill="currentColor" viewBox="0 0 20 20" 
                                     xmlns="http://www.w3.org/2000/svg">
