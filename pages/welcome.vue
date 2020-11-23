@@ -24,11 +24,7 @@
 
 <script>
 export default {
-  data() {
-    return {
-      choice: ''
-    }
-  },
+  
 }
 </script>
 

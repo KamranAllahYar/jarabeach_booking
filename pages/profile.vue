@@ -6,7 +6,7 @@
                     <SideBar/>
                 </div>
                 <div class="w-5/6 p-20 border">
-                    <form action="" class="w-2/3 m-auto space-y-10">
+                    <form action="" class="w-2/3 m-auto space-y-10 h-3/4">
                         <div class="space-y-10" v-if="!signedIn">
                             <div class="flex space-x-24 full">
                                 <input type="text" placeholder="Email Address" class="w-1/2 rounded">
