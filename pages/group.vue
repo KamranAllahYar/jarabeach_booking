@@ -96,7 +96,7 @@
         
         <Notification>Some very important message you feel they need to know</Notification>
         <br>
-        <nuxt-link tag="span" to="/availability" class="p-3 mt-10 bg-gray-200 rounded cursor-pointer ">Next</nuxt-link>
+        <span @click="gotoNext()" class="p-3 mt-10 bg-gray-200 rounded cursor-pointer ">Next</span>
       </div>
     </div>
   </div>
@@ -109,6 +109,17 @@ export default {
       groupType: 'individual',
       noOfChildren: 0,
       noOfAdult: 1,  
+    }
+  },
+  methods: {
+    gotoNext(){
+      this.$store.commit("UPDATE_GROUP", {
+        groupType: this.groupType,
+        adult_no: this.noOfAdult,
+        child_no: this.noOfChildren,
+      });
+
+      this.$router.push({path: "/availability"})
     }
   },
   watch: {

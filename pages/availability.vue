@@ -77,6 +77,7 @@
         <pre>
             {{ rooms }}
         </pre>
+        <span @click="gotoNext()" class="p-3 mt-10 bg-gray-200 rounded cursor-pointer ">Next</span>
       </div>
     </div>
   </div>
@@ -117,6 +118,14 @@ export default {
 
                     this.roomOptions = res.data.data
                 })
+        },
+        gotoNext(){
+          this.$store.commit("UPDATE_ROOMS", {
+            room_id: this.rooms[0].room_id,
+            date: this.rooms[0].date
+          });
+
+          this.$router.push({path: "/profile"})
         }
     },
     mounted(){
