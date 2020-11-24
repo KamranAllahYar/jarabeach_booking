@@ -16,22 +16,19 @@
                         <option value="5">5</option>
                     </select>
                 </div>
-                <div class="my-10 font-medium">Select room type available for specific date</div>
-                <div class="flex items-center w-3/4 p-3 space-x-10 bg-gray-100" v-for="(room, index) in rooms" :key="index">
+                <div class="my-10 font-medium">Select Room-Type available for specific date</div>
+                <div class="flex items-center p-3 space-x-10 bg-gray-100" v-for="(room, index) in rooms" :key="index">
                     <div class="flex items-center w-1/2 space-x-5">
                         <label for="date" class="">Dates:</label>
-                        <input type="date"  id="date" v-model="rooms.date">
+                        <input type="date"  id="date" v-model="room.date">
                     </div>
                     <div class="flex items-center w-1/2 space-x-5">
                         <label for="type" class="">Room-type Available:</label>
-                        <select name="type" id="type" v-model="rooms.type"  class="text-sm">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
+                        <select name="type" id="type" v-model="room.types" class="text-sm" >
+                            <option value="">Select Room</option>
+                            <option v-for="type in rooms[0].types" :key="type.id">{{ type.name }}</option>
                         </select>
+                        
                     </div>
                     <div class="rounded hover:bg-white" @click="removeRoom(index)">
                         <svg 
@@ -43,7 +40,7 @@
                     </div>
                     
                 </div>
-                <div class="flex items-center justify-end w-3/4 py-2 space-x-3" >
+                <div class="flex items-center justify-end py-2 space-x-3" >
                     <div class="bg-gray-100 rounded" @click="addRoom">  
                         <svg 
                             class="w-6 h-6 cursor-pointer hover:text-gray-600" 
@@ -63,31 +60,39 @@
 
 <script>
 export default {
-  data() {
-    return {
-        noOfDays: 1,
-        rooms: [
-            {
-                date: null,
-                type: 1,
-            }
-        ]
-    }
-  },
-  methods: {
-    addRoom() {
-        this.rooms.push({
-            date: '',
-            type: '',
-        });
-        console.log('pushed ');
-        console.log(this.rooms);
-        
+    data() {
+        return {
+            noOfDays: 1,
+            rooms: [
+                {
+                    date: null,
+                    types: [
+                        {id:1, name:'Room 1'},
+                        {id:2, name:'Room 2'},
+                        {id:3, name:'Room 3'},
+                        {id:4, name:'Room 4'},
+                        {id:5, name:'Room 5'},
+                        {id:6, name:'Room 6'},
+                    ]
+                }
+            ],
+        }
     },
-    removeRoom(i) {
-            this.rooms.splice(i, 1);
+    methods: {
+        addRoom() {
+            this.rooms.push({
+                date: null,
+                types: [],
+            }); 
         },
-  }
+        removeRoom(i) {
+            if(this.rooms.length == 1){
+                return;
+            } else {
+                this.rooms.splice(i, 1);
+            }
+        },
+    }
 }
 </script>
 
