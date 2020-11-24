@@ -20,7 +20,7 @@ export default {
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/tailwindcss',
-		'@nuxtjs/date-fns',
+    '@nuxtjs/date-fns',
   ],
   modules: [
     '@nuxtjs/axios',
