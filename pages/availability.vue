@@ -1,95 +1,71 @@
 <template>
-    <div class="h-screen m-10">
-        <div class="flex h-screen w-100">
-            <div class="w-1/6 text-center">
-                <SideBar />
+    <div class="p-6">
+        <h1 class="mb-6 text-3xl font-semibold">Room Selection</h1>
+
+        <div class="w-full">
+            <RoomCalendar class="w-full mb-6" @selected="selectRooms($event)" />
+        </div>
+
+        <!-- <Calendar class="w-1/2" /> -->
+        <div
+            class="flex items-center p-3 space-x-10 bg-gray-100"
+            v-for="(room, index) in rooms"
+            :key="index">
+            <div class="flex items-center w-1/2 space-x-5">
+                <label for="date" class="">Dates:</label>
+                <input type="date" id="date" v-model="room.date" />
             </div>
-            <div class="w-5/6 p-16 border">
-
-                <RoomCalendar class="w-full mb-6" @selected="selectRooms($event)" />
-
-                <!-- <Calendar class="w-1/2" /> -->
-
-                <div class="py-10 text-3xl font-bold text-center">Rooms Setup</div>
-                <div class="flex items-center">
-                    <label for="days" class="w-2/6">How many days are you booking for</label>
-                    <select name="days" id="days" v-model="noOfDays" class="text-sm">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                </div>
-                <div class="my-10 font-medium">
-                    Select Room-Type available for specific date
-                </div>
-                <div
-                    class="flex items-center p-3 space-x-10 bg-gray-100"
-                    v-for="(room, index) in rooms"
-                    :key="index">
-                    <div class="flex items-center w-1/2 space-x-5">
-                        <label for="date" class="">Dates:</label>
-                        <input type="date" id="date" v-model="room.date" />
-                    </div>
-                    <div class="flex items-center w-1/2 space-x-5">
-                        <label for="type" class="">Room-type Available:</label>
-                        <select name="type" id="type" v-model="room.room_id" class="text-sm">
-                            <option value="">Select Room</option>
-                            <option v-for="type in roomOptions" :key="type.id" :value="type.id">
-                                {{ type.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="rounded hover:bg-white" @click="removeRoom(index)">
-                        <svg
-                            class="w-6 h-6"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M20 12H4"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="flex items-center justify-end py-2 space-x-3">
-                    <div class="bg-gray-100 rounded" @click="addRoom">
-                        <svg
-                            class="w-6 h-6 cursor-pointer hover:text-gray-600"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                    </div>
-                </div>
-                <pre>{{ rooms }}</pre>
-                <span @click="gotoNext()" class="p-3 mt-10 bg-gray-200 rounded cursor-pointer ">Next</span>
+            <div class="flex items-center w-1/2 space-x-5">
+                <label for="type" class="">Room-type Available:</label>
+                <select name="type" id="type" v-model="room.room_id" class="text-sm">
+                    <option value="">Select Room</option>
+                    <option v-for="type in roomOptions" :key="type.id" :value="type.id">
+                        {{ type.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="rounded hover:bg-white" @click="removeRoom(index)">
+                <svg
+                    class="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M20 12H4"></path>
+                </svg>
             </div>
         </div>
+        <div class="flex items-center justify-end py-2 space-x-3">
+            <div class="bg-gray-100 rounded" @click="addRoom">
+                <svg
+                    class="w-6 h-6 cursor-pointer hover:text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+            </div>
+        </div>
+        <span @click="gotoNext()" class="p-3 mt-10 bg-gray-200 rounded cursor-pointer ">Next</span>
     </div>
 </template>
 
 <script>
 export default {
+    layout: "booking",
     data() {
         return {
             noOfDays: 1,
-            rooms: [
-                {
-                    date: null,
-                    room_id: null,
-                },
-            ],
+            rooms: [],
             roomOptions: [],
         };
     },
@@ -115,17 +91,14 @@ export default {
             });
         },
         gotoNext() {
-            this.$store.commit("UPDATE_ROOMS", {
-                room_id: this.rooms[0].room_id,
-                date: this.rooms[0].date,
-            });
+            this.$store.commit("UPDATE_ROOMS", this.rooms);
 
             this.$router.push({ path: "/profile" });
         },
-        selectRooms(rooms){
-          console.log(rooms);
-          this.rooms = rooms;
-        }
+        selectRooms(rooms) {
+            console.log(rooms);
+            this.rooms = rooms;
+        },
     },
     mounted() {
         this.getRooms();

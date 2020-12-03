@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col w-full">
         <div class="flex items-center mb-6 space-x-4">
             <button class="px-4 text-white bg-blue-500" @click="prevMonth()">
                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -17,7 +17,7 @@
             </svg>
         </div>
 
-        <div class="flex">
+        <div class="flex w-full">
             <div class="w-48">
                 <div class="flex items-center h-10 pr-3 mb-3 text-xl font-bold">
                     {{ months[calMonth-1] }}
@@ -72,13 +72,13 @@
                 </div>
             </div>
         </div>
-
-        <!-- <pre>{{ bookedRooms }}</pre> -->
     </div>
 </template>
 
 <script>
 import getDay from "date-fns/getDay";
+import isBefore from "date-fns/isBefore";
+import parseISO from "date-fns/parseISO";
 
 export default {
     data() {
@@ -192,8 +192,11 @@ export default {
             if (date < 10) d = `0${date}`;
 
             const dateStr = `${this.calYear}-${m}-${d}`;
-
             const roomsHere = this.availableRooms[dateStr];
+
+            if (isBefore(parseISO(dateStr), new Date())) {
+                return 0;
+            }
 
             let count = 0;
 
