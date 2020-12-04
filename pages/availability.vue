@@ -28,7 +28,7 @@
         >
           <div class="flex items-center w-1/2 space-x-5">
             <label for="date" class="">Dates:</label>
-            <input type="date" id="date" v-model="room.date" />
+            <input type="date" id="date" v-model="room.booking_date" />
           </div>
           <div class="flex items-center w-1/2 space-x-5">
             <label for="type" class="">Room-type Available:</label>
@@ -90,7 +90,7 @@ export default {
             noOfDays: 1,
             rooms: [
                 {
-                    date: null,
+                    booking_date: null,
                     room_id: null,
                 }
             ],
@@ -100,7 +100,7 @@ export default {
     methods: {
         addRoom() {
             this.rooms.push({
-                date: null,
+                booking_date: null,
                 room_id: null,
             }); 
         },
@@ -120,10 +120,7 @@ export default {
                 })
         },
         gotoNext(){
-          this.$store.commit("UPDATE_ROOMS", {
-            room_id: this.rooms[0].room_id,
-            date: this.rooms[0].date
-          });
+          this.$store.commit("UPDATE_ROOMS", this.rooms);
 
           this.$router.push({path: "/profile"})
         }

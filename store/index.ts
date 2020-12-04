@@ -1,4 +1,4 @@
-import { GetterTree, MutationTree } from 'vuex';
+import { GetterTree, MutationTree, ActionTree } from 'vuex';
 
 export const state = () => ({
 	groupType: 'individual' as string,
@@ -11,7 +11,7 @@ export const state = () => ({
 export type RootState = ReturnType<typeof state>
 
 export const getters: GetterTree<RootState, RootState> = {
-
+	
 }
 
 export const mutations: MutationTree<RootState> = {
@@ -21,16 +21,45 @@ export const mutations: MutationTree<RootState> = {
 		state.child_no = payload.child_no
 	},
 
-	UPDATE_GUEST: (state, payload) => {	
-		state.guest =  payload	
+	UPDATE_GUEST: (state, payload) => {
+		state.guest = payload
 	},
 
 	UPDATE_ROOMS: (state, data) => {
-		
-		state.rooms.push({
-			room_id: data.room_id,
-			date: data.date
-		});
-		
+
+		state.rooms = data;
+
 	},
+}
+
+export const actions: ActionTree<RootState, RootState> = {
+
+	createBooking({ commit, state, dispatch }) {
+
+		const dataToPost = {
+			guest: {
+				first_name: state.guest.first_name,
+				last_name: state.guest.last_name,
+				phone: state.guest.phone,
+				email: state.guest.email,
+				gender: state.guest.gender,
+				dob: state.guest.dob,
+				identification: state.guest.identification,
+				hear_of_us: state.guest.hear_of_us,
+				concerns: state.guest.concerns
+			},
+			booking: {
+				full_names: state.guest.full_names
+			},
+			booked_rooms: state.rooms,
+		}
+
+		this.$axios.post("bookings", dataToPost)
+			.then(res => {
+				console.log(res.data);
+
+				this.app.$toast.success("Your booking has successfully been submitted");
+			})
+	},
+
 }
