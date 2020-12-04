@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <button class="px-16 py-2 font-medium border rounded border-brand-blue-300 text-brand-blue-300"><slot></slot></button>
-    </div>
+    <button class="px-16 py-2 font-medium border rounded-lg border-brand-blue-400 text-brand-blue-400"><slot></slot></button>
 </template>
 
 <script>
