@@ -5,8 +5,8 @@
         <div class="grid grid-cols-12">
             <div class="col-span-10">
 
-                <div class="py-6 bg-white border rounded-lg shadow-lg">
-                    <RoomCalendar class="w-full mb-6" @selected="selectRooms($event)" />
+                <div class="pt-6 bg-white border rounded-lg shadow-lg">
+                    <RoomCalendar class="w-full" @selected="selectRooms($event)" />
                 </div>
 
             </div>
