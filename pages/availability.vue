@@ -87,7 +87,7 @@ export default {
     methods: {
         addRoom() {
             this.rooms.push({
-                date: null,
+                booking_date: null,
                 room_id: null,
             });
         },

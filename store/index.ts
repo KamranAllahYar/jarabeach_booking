@@ -42,3 +42,35 @@ export const actions: ActionTree<RootState, RootState> = {
 
   },
 }
+
+export const actions: ActionTree<RootState, RootState> = {
+
+	createBooking({ commit, state, dispatch }) {
+
+		const dataToPost = {
+			guest: {
+				first_name: state.guest.first_name,
+				last_name: state.guest.last_name,
+				phone: state.guest.phone,
+				email: state.guest.email,
+				gender: state.guest.gender,
+				dob: state.guest.dob,
+				identification: state.guest.identification,
+				hear_of_us: state.guest.hear_of_us,
+				concerns: state.guest.concerns
+			},
+			booking: {
+				full_names: state.guest.full_names
+			},
+			booked_rooms: state.rooms,
+		}
+
+		this.$axios.post("bookings", dataToPost)
+			.then(res => {
+				console.log(res.data);
+
+				this.app.$toast.success("Your booking has successfully been submitted");
+			})
+	},
+
+}

@@ -90,9 +90,11 @@ export default {
             const form = {
                 email: this.guest.email,
                 phone: this.guest.phone,
+                gender: this.guest.gender,
+                dob: this.guest.dob,
                 first_name: this.guest.first_name,
                 last_name: this.guest.last_name,
-                dietary_concerns: this.guest.dietary_concerns,
+                concerns: this.guest.concerns,
                 identification: this.guest.identification,
                 social_link: this.guest.social_link,
             };
