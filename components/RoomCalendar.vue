@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col w-full">
         <div class="flex items-center justify-between px-6 mb-6 space-x-4">
-            <div class="flex items-center h-10 text-2xl font-semibold text-brand-blue">
+            <div class="flex items-center h-10 text-2xl font-semibold text-brand-blue-400">
                 {{ months[calMonth-1] }}. {{calYear}}
             </div>
             <div class="flex items-center space-x-4">
