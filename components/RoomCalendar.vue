@@ -79,6 +79,7 @@
 import getDay from "date-fns/getDay";
 import isBefore from "date-fns/isBefore";
 import parseISO from "date-fns/parseISO";
+import isWeekend from "date-fns/isWeekend";
 
 export default {
     data() {
@@ -145,6 +146,7 @@ export default {
                 this.bookedRooms.push({
                     room_id: room_id,
                     date: dateStr,
+                    isWeekend: isWeekend(parseISO(dateStr)),
                 });
             } else {
                 this.bookedRooms.splice(ix, 1);
