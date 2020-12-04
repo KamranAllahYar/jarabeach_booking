@@ -34,16 +34,14 @@ export const mutations: MutationTree<RootState> = {
 }
 
 export const actions: ActionTree<RootState, RootState> = {
-  loadRooms({ commit }) {
-    this.$axios.get("/rooms").then((res) => {
-      console.log(res.data.data);
-      commit("UPDATE_ROOMS_DATA", res.data.data);
-    });
 
-  },
-}
-
-export const actions: ActionTree<RootState, RootState> = {
+	loadRooms({ commit }) {
+		this.$axios.get("/rooms").then((res) => {
+		  console.log(res.data.data);
+		  commit("UPDATE_ROOMS_DATA", res.data.data);
+		});
+	
+	  },
 
 	createBooking({ commit, state, dispatch }) {
 

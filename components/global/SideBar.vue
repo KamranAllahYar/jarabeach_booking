@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center w-full space-x-2">
-        <nuxt-link exact tag="div" to="/group" class="px-8 py-4 text-gray-500 border-2 cursor-pointer">Group</nuxt-link>
+        <nuxt-link exact tag="div" to="/guests" class="px-8 py-4 text-gray-500 border-2 cursor-pointer">Guests</nuxt-link>
         <nuxt-link exact tag="div" to="/availability" class="px-8 py-4 text-gray-500 border-2 cursor-pointer">Availability</nuxt-link>
         <nuxt-link exact tag="div" to="/profile" class="px-8 py-4 text-gray-500 border-2 cursor-pointer">Profile</nuxt-link>
         <nuxt-link exact tag="div" to="/policies" class="px-8 py-4 text-gray-500 border-2 cursor-pointer">Policies</nuxt-link>
