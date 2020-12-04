@@ -1,11 +1,22 @@
 <template>
     <div>
-        <h1 class="mb-6 text-3xl font-semibold">Room Selection</h1>
+        <h1 class="mb-6 text-2xl text-center">What dates would you like to stay for?</h1>
 
-        <div class="w-full">
-            <RoomCalendar class="w-full mb-6" @selected="selectRooms($event)" />
+        <div class="grid grid-cols-12">
+            <div class="col-span-10">
+
+                <div class="py-6 bg-white border rounded-lg shadow-lg">
+                    <RoomCalendar class="w-full mb-6" @selected="selectRooms($event)" />
+                </div>
+
+            </div>
+            <!-- <div class="w"></div> -->
         </div>
 
+        <!-- <div class="w-full">
+            <RoomCalendar class="w-full mb-6" @selected="selectRooms($event)" />
+        </div> -->
+        <!--
         <Calendar class="w-1/2" />
         <div
             class="flex items-center p-3 space-x-10 bg-gray-100"
@@ -54,8 +65,8 @@
                         d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
             </div>
-        </div>
-        <span @click="gotoNext()" class="p-3 mt-10 bg-gray-200 rounded cursor-pointer ">Next</span>
+        </div> -->
+        <!-- <span @click="gotoNext()" class="p-3 mt-10 bg-gray-200 rounded cursor-pointer ">Next</span> -->
     </div>
 </template>
 

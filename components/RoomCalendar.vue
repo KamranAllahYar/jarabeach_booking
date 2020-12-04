@@ -1,43 +1,48 @@
 <template>
     <div class="flex flex-col w-full">
-        <div class="flex items-center mb-6 space-x-4">
-            <button class="px-4 text-white bg-blue-500" @click="prevMonth()">
-                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+        <div class="flex items-center justify-between px-6 mb-6 space-x-4">
+            <div class="flex items-center h-10 text-2xl font-semibold text-brand-blue">
+                {{ months[calMonth-1] }}. {{calYear}}
+            </div>
+            <div class="flex items-center space-x-4">
+                <svg v-if="loading" class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-            </button>
-            <button class="px-4 text-white bg-blue-500" @click="nextMonth()">
-                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                </svg>
-            </button>
-            <svg v-if="loading" class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
+                <button class="px-4 text-white bg-blue-500" @click="prevMonth()">
+                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+                <button class="px-4 text-white bg-blue-500" @click="nextMonth()">
+                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <div class="flex w-full">
             <div class="w-48">
-                <div class="flex items-center h-10 pr-3 mb-3 text-xl font-bold">
-                    {{ months[calMonth-1] }}
-                    <span class="ml-1 font-light">{{calYear}}</span>
+                <div class="flex items-center px-6 text-xl font-bold border border-l-0 border-gray-100 h-14">
+                    {{ months[calMonth-1] }}.
+                    {{calYear}}
                 </div>
-                <div v-for="roomType in roomTypes" :key="roomType" class="flex items-center w-full h-10 px-3 uppercase border border-gray-900">
+                <div v-for="roomType in roomTypes" :key="roomType" class="flex items-center w-full px-6 capitalize border border-l-0 border-gray-100 h-14">
                     {{ roomType }}
                 </div>
             </div>
             <div class="flex-1 pb-3 overflow-auto">
-                <div class="flex mb-3">
-                    <div v-for="w in daysInMonth" :key="w" class="flex flex-col items-center justify-center flex-shrink-0 w-10 h-10 text-sm text-center text-black bg-blue-200 border border-gray-900">
-                        <div>{{ w }}</div>
-                        <div class="text-xs uppercase">{{ dayOfWeek(w) }}</div>
+                <div class="flex">
+                    <div v-for="w in daysInMonth" :key="w" class="flex flex-col items-center justify-center flex-shrink-0 text-sm text-center text-black border border-gray-100 w-14 h-14">
+                        <div class="text-base">{{ dayOfWeek(w) }}.</div>
+                        <div class="text-base font-light">{{ w }}</div>
                     </div>
                 </div>
                 <div class="flex" v-for="roomType in roomTypes" :key="roomType">
                     <div v-for="day in daysInMonth" :key="day"
-                        class="flex items-center justify-center flex-shrink-0 w-10 h-10 text-black border border-gray-900 cursor-pointer"
-                        :class="roomsAvailable(roomType, day) <= 0 ? 'bg-red-200' : 'bg-green-200'"
+                        class="flex items-center justify-center flex-shrink-0 text-2xl text-gray-500 border border-gray-100 cursor-pointer font-extralight w-14 bg-opacity-20 h-14"
+                        :class="roomsAvailable(roomType, day) <= 0 ? 'bg-brand-red' : 'bg-brand-blue-300'"
                         @click="hoverRoom(roomType, day)">
                         {{ roomsAvailable(roomType, day) }}
                     </div>
@@ -45,7 +50,7 @@
             </div>
         </div>
 
-        <div class="flex">
+        <!-- <div class="flex">
             <div>
                 <div v-for="h in hoveredRooms" :key="h.room.id"
                     class="flex items-center mb-2 cursor-pointer"
@@ -71,7 +76,7 @@
                     <span v-else>- {{h.available}}</span>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -89,18 +94,18 @@ export default {
             calYear: new Date().getFullYear(),
             weekDays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
             months: [
-                "January",
-                "February",
-                "March",
-                "April",
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
                 "May",
                 "June",
                 "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December",
+                "Aug",
+                "Sept",
+                "Oct",
+                "Nov",
+                "Dec",
             ],
             availableRooms: [],
             loading: false,
@@ -155,6 +160,8 @@ export default {
             this.$emit("selected", this.bookedRooms);
         },
         hoverRoom(roomType, date) {
+            if (this.roomsAvailable(roomType, date) <= 0) return;
+
             this.hoveredRooms = [];
             console.log(roomType);
 
