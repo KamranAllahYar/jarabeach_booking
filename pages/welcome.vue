@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div>
         <div class="w-full text-center">
             <div class="py-10 text-3xl font-bold">Welcome to Jara Resorts</div>
             <div class="py-10 text-2xl">Book a stay with us</div>

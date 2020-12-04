@@ -1,5 +1,5 @@
 <template>
-    <div class="p-6">
+    <div>
         <div class="text-2xl font-medium">What type of group will this be?</div>
         <div class="uppercase">
             <div class="mt-5">

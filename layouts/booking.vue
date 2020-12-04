@@ -7,7 +7,10 @@
 
             <SideBar />
 
-            <Nuxt />
+            <div class="max-w-6xl p-6 mx-auto mt-12 bg-red-100">
+                <Nuxt />
+            </div>
+
         </main>
     </div>
 </template>

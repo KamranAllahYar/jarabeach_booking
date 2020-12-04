@@ -1,5 +1,5 @@
 <template>
-    <div class="p-6">
+    <div>
         <h1 class="mb-6 text-3xl font-semibold">Guest Information</h1>
         <form @submit.prevent="gotoNext()" class="max-w-lg space-y-10">
             <div class="space-y-10" v-if="!signedIn">

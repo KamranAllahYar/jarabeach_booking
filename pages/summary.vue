@@ -1,5 +1,5 @@
 <template>
-    <div class="p-6">
+    <div>
         <h1 class="mb-6 text-3xl font-semibold">Summary</h1>
         <table class="w-full border border-collapse table-auto">
             <tbody>

@@ -1,5 +1,5 @@
 <template>
-    <div class="p-6 text-center ">
+    <div>
         <div class="text-3xl font-semibold">Congratulations</div>
         <div class="flex items-center justify-center my-5">
             <svg class="w-48 h-48 text-green-500"

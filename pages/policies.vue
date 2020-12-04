@@ -1,5 +1,5 @@
 <template>
-    <div class="p-6">
+    <div>
         <h1 class="mb-6 text-3xl font-semibold">Please accept our Policies</h1>
 
         <div class="mb-6" v-if="currentPolicy">
