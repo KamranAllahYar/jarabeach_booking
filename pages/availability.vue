@@ -6,7 +6,7 @@
             <RoomCalendar class="w-full mb-6" @selected="selectRooms($event)" />
         </div>
 
-        <!-- <Calendar class="w-1/2" /> -->
+        <Calendar class="w-1/2" />
         <div
             class="flex items-center p-3 space-x-10 bg-gray-100"
             v-for="(room, index) in rooms"
@@ -66,8 +66,12 @@ export default {
         return {
             noOfDays: 1,
             rooms: [],
-            roomOptions: [],
         };
+    },
+    computed: {
+        roomOptions() {
+            return this.$store.getters.roomsData;
+        },
     },
     methods: {
         addRoom() {
@@ -83,13 +87,6 @@ export default {
                 this.rooms.splice(i, 1);
             }
         },
-        getRooms() {
-            this.$axios.get("/rooms").then((res) => {
-                console.log(res.data.data);
-
-                this.roomOptions = res.data.data;
-            });
-        },
         gotoNext() {
             this.$store.commit("UPDATE_ROOMS", this.rooms);
 
@@ -99,9 +96,6 @@ export default {
             console.log(rooms);
             this.rooms = rooms;
         },
-    },
-    mounted() {
-        this.getRooms();
     },
 };
 </script>

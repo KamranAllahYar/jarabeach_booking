@@ -2,7 +2,18 @@ module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        brand: {
+          yellow: "#FFFCF1",
+          blue: {
+            100: "#E6F5FF",
+            300: "#7EC4F6",
+            DEFAULT: "#225A89",
+          }
+        }
+      }
+    },
   },
   variants: {
     extend: {},

@@ -1,9 +1,12 @@
 <template>
-    <div class="flex min-h-screen">
-        <div class="flex-shrink-0 border-r w-72">
+    <div class="flex min-h-screen bg-brand-yellow">
+        <main class="flex-1 w-full pb-48 overflow-auto beach">
+            <div class="my-10 text-center">
+                <img src="~/assets/logo.png" class="w-40 mx-auto" />
+            </div>
+
             <SideBar />
-        </div>
-        <main class="flex-1 w-full overflow-auto">
+
             <Nuxt />
         </main>
     </div>
@@ -15,5 +18,18 @@ export default {
     components: {
         SideBar,
     },
+    created() {
+        console.log("Initial loadings");
+        this.$store.dispatch("loadRooms");
+    },
 };
 </script>
+
+<style>
+.beach {
+    background: url("~assets/beach_bottom.svg"), url("~assets/beach_top.svg");
+    background-repeat: no-repeat, no-repeat;
+    background-position: center bottom, center top;
+    background-size: contain, contain;
+}
+</style>

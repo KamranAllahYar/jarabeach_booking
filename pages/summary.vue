@@ -3,29 +3,9 @@
         <h1 class="mb-6 text-3xl font-semibold">Summary</h1>
         <table class="w-full border border-collapse table-auto">
             <tbody>
-                <tr class="h-12">
-                    <td class="w-1/2 pl-5 font-semibold border">{{ items[0].name }}</td>
-                    <td class="w-1/2 pl-5 text-xl border">N{{ items[0].amount }}</td>
-                </tr>
-                <tr class="h-12">
-                    <td class="pl-5 font-semibold border">{{ items[1].name }}</td>
-                    <td class="pl-5 text-xl border">N{{ items[1].amount }}</td>
-                </tr>
-                <tr class="h-12">
-                    <td class="pl-5 font-semibold border">{{ items[2].name }}</td>
-                    <td class="pl-5 text-xl border">N{{ items[2].amount }}</td>
-                </tr>
-                <tr class="h-12">
-                    <td class="pl-5 font-semibold border">{{ items[3].name }}</td>
-                    <td class="pl-5 text-xl border">N{{ items[3].amount }}</td>
-                </tr>
-                <tr class="h-12">
-                    <td class="pl-5 font-semibold border">{{ items[4].name }}</td>
-                    <td class="pl-5 text-xl border">N{{ items[4].amount }}</td>
-                </tr>
-                <tr class="h-12">
-                    <td class="pl-5 font-semibold border">{{ items[5].name }}</td>
-                    <td class="pl-5 text-xl border">N{{ items[5].amount }}</td>
+                <tr class="h-12" v-for="item in items" :key="item.name">
+                    <td class="w-1/2 pl-5 font-semibold border">{{ item.name }}</td>
+                    <td class="w-1/2 pl-5 text-xl border">N{{ item.amount }}</td>
                 </tr>
             </tbody>
         </table>
