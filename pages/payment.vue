@@ -1,28 +1,39 @@
 <template>
-    <div class="h-screen m-10">
-        <div class="w-full">
-            <div class="flex h-screen">
-                <div class="w-1/6 text-center ">
-                    <SideBar/>
-                </div>
-                <div class="block w-5/6 p-20 border"> 
-                    <div class="text-3xl">Payment</div>
-                </div>
-            </div>
-        </div>
+    <div>
+        <h1 class="text-3xl font-semibold">Payment</h1>
     </div>
 </template>
 
 <script>
 export default {
+    layout: "booking",
     data() {
         return {
-         
-        }
+            items: [
+                { name: "Stay (2-nights)", amount: 150000 },
+                { name: "Birthday Cake", amount: 35000 },
+                { name: "Room Decorations", amount: 15000 },
+                { name: "Nanny Lodging", amount: 20000 },
+                { name: "1 Bottle Champagne", amount: 75000 },
+                { name: "Lookout Experience", amount: 50000 },
+            ],
+            discount: 50000,
+            total: 0,
+        };
     },
-}
+    computed: {
+        subTotalAmount() {
+            const accAmount = this.items.reduce(
+                (acc, val) => acc + val.amount,
+                0
+            );
+            return accAmount;
+        },
+        totalAmount() {
+            this.total = this.subTotalAmount - this.discount;
+            return this.total;
+        },
+    },
+};
 </script>
 
-<style>
-
-</style>

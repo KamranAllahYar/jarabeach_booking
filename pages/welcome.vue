@@ -1,22 +1,16 @@
 <template>
-  <div class="h-screen m-10">
-        <div class="flex h-screen w-100">
-            <div class="w-1/6 text-center ">
-                <SideBar/>
-            </div>
-            <div class="w-5/6 pt-16 text-center border">
-                <div class="py-10 text-3xl font-bold">Welcome to Jara Resorts</div>
-                <div class="py-10 text-2xl">Book a stay with us</div>
-                <div class="">
-                    <div>On this trip what's more important to you?</div>
-                    <div class="mt-2">
-                        <input type="radio"  name="choice" class="mr-5"><span>Being able to attend on specific dates</span>
-                    </div>
-                    <div>
-                        <input type="radio"  name="choice"  class="mr-5"><span>The number of people i can bring along</span>
-                    </div>
+    <div>
+        <div class="w-full text-center">
+            <div class="py-10 text-3xl font-bold">Welcome to Jara Resorts</div>
+            <div class="py-10 text-2xl">Book a stay with us</div>
+            <div class="">
+                <div>On this trip what's more important to you?</div>
+                <div class="mt-2">
+                    <input type="radio" name="choice" class="mr-5"><span>Being able to attend on specific dates</span>
                 </div>
-                
+                <div>
+                    <input type="radio" name="choice" class="mr-5"><span>The number of people i can bring along</span>
+                </div>
             </div>
         </div>
     </div>
@@ -24,10 +18,9 @@
 
 <script>
 export default {
-  
-}
+    layout: "booking",
+};
 </script>
 
 <style>
-
 </style>
