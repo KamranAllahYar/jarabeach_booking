@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="text-2xl font-medium text-center">What's your guest make-up?</div>
-        <div class="w-1/2 p-5 mx-auto my-10 bg-white border rounded-lg">
-          <div class="p-3 border rounded-lg">
+        <div class="max-w-md px-6 py-4 mx-auto my-10 bg-white border rounded-lg">
+          <div class="p-4 border rounded-lg">
             <div class="text-sm font-semibold">Select guest make-up</div>
             <div class="w-full">
               <div class="flex items-center my-5 bg-green-100">
@@ -61,8 +61,8 @@
             </div>
           </div>
           <div class="flex items-center justify-between">
-            <BackButton/>
-            <NextButton/>
+            <outline-button>Back</outline-button>
+            <solid-button>Next</solid-button>
           </div>
         </div>
         
