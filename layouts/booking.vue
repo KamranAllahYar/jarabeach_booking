@@ -5,7 +5,7 @@
                 <img src="~/assets/logo.png" class="w-40 mx-auto" />
             </div>
 
-            <SideBar />
+            <TopProgressBar />
 
             <div class="max-w-6xl p-6 mx-auto mt-12">
                 <Nuxt keep-alive />
@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import SideBar from "@/components/global/SideBar";
+import TopProgressBar from "@/components/global/TopProgressBar";
 export default {
     components: {
-        SideBar,
+        TopProgressBar,
     },
     created() {
         console.log("Initial loadings");

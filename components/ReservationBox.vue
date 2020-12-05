@@ -13,7 +13,7 @@
                 <div>Children</div>
                 <div>{{ childNo }} Child<span v-if="childNo > 1">ren</span></div>
             </div>
-            <div class="flex justify-between px-3 my-3">
+            <div class="flex justify-between px-3 my-3" v-if="rooms.length > 0">
                 <div>Room<span v-if="rooms.length > 1">s</span></div>
                 <div>
                     <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">

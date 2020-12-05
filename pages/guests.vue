@@ -70,7 +70,7 @@
 
             </div>
 
-            <div class="flex w-full mt-6 space-x-3">
+            <div class="flex w-full mt-6 space-x-3" v-if="noOfAdult > 0">
                 <MainButton outline>Back</MainButton>
                 <MainButton @click="gotoNext()">Next</MainButton>
             </div>
@@ -96,19 +96,35 @@ export default {
             for (let ix = 0; ix < v; ix++) {
                 this.childrenAges.push({ age: 3 });
             }
+
+            this.updateStores();
         },
     },
     methods: {
         gotoNext() {
+            this.$toast.clear();
+            if (this.noOfAdult < 1) {
+                this.$toast.info(
+                    "Please let us know how many adults will be coming",
+                    { duration: 5000 }
+                );
+                return;
+            }
+            this.updateStores();
+            this.$store.commit("COMPLETE_GUEST");
+            this.$router.push({ path: "/availability" });
+        },
+        updateStores() {
             this.$store.commit("UPDATE_GROUP", {
                 groupType: "group",
                 adult_no: this.noOfAdult,
                 child_no: this.noOfChildren,
                 childrenAges: this.childrenAges,
             });
-
-            this.$router.push({ path: "/availability" });
         },
+    },
+    mounted() {
+        console.log("Mounting guest");
     },
 };
 </script>

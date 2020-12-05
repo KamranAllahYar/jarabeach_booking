@@ -69,6 +69,8 @@ export default {
                 return;
             }
 
+            this.$store.commit("COMPLETE_POLICY");
+
             this.$router.push({ path: "/summary" });
         },
     },

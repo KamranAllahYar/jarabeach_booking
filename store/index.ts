@@ -9,6 +9,11 @@ export const state = () => ({
   guest: {} as any,
   roomsData: [] as any[],
   policies: [] as any[],
+
+  guests_done: false as boolean,
+  availability_done: false as boolean,
+  profile_done: false as boolean,
+  policy_done: false as boolean,
 })
 
 export type RootState = ReturnType<typeof state>
@@ -55,6 +60,9 @@ export const mutations: MutationTree<RootState> = {
   UPDATE_POLICIES: (state, policies) => {
     state.policies = policies;
   },
+  COMPLETE_GUEST: (state) => state.guests_done = true,
+  COMPLETE_AVAILABILITY: (state) => state.availability_done = true,
+  COMPLETE_POLICY: (state) => state.policy_done = true,
 }
 
 export const actions: ActionTree<RootState, RootState> = {

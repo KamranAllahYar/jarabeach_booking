@@ -51,6 +51,8 @@ export default {
         gotoNext() {
             this.$store.commit("UPDATE_ROOMS", this.rooms);
 
+            this.$store.commit("COMPLETE_AVAILABILITY");
+
             this.$router.push({ path: "/profile" });
         },
         selectRooms(rooms) {
