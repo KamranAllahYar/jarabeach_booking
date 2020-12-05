@@ -3,6 +3,7 @@
         <div class="text-2xl font-medium text-center">
             What's <b>your guest</b> make-up?
         </div>
+
         <div class="max-w-md px-6 py-6 mx-auto mt-10 bg-white border rounded-lg">
             <div class="border rounded-lg">
 
@@ -70,16 +71,10 @@
             </div>
 
             <div class="flex w-full mt-6 space-x-3">
-                <OutlineButton class="flex-1">Back</OutlineButton>
-                <SolidButton class="flex-1">Next</SolidButton>
+                <MainButton outline>Back</MainButton>
+                <MainButton>Next</MainButton>
             </div>
         </div>
-
-        <Notification>Some very important message you feel they need to know</Notification>
-        <br />
-        <span
-            @click="gotoNext()"
-            class="p-3 mt-10 bg-gray-200 rounded cursor-pointer">Next</span>
     </div>
 </template>
 
