@@ -53,13 +53,13 @@
                         Specify children's age (years)
                     </div>
                     <div class="grid w-full grid-cols-3 gap-x-3 gap-y-3">
-                        <div class="flex items-center pl-2 rounded-md focus-within:ring" v-for="age in noOfChildren" :key="age">
+                        <div class="flex items-center pl-2 rounded-md focus-within:ring" v-for="(child, i) in childrenAges" :key="i">
                             <svg class="w-5 h-5" viewBox="0 0 16 16" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13.75 6.583h-.01C13.5 3.55 10.706 1.55 8 1.55s-5.5 2-5.74 5.033h-.01a1.75 1.75 0 100 3.5h.01a6 6 0 0011.48 0h.01a1.75 1.75 0 100-3.5z" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M8 1.55a1.5 1.5 0 01.596 2.876 1.5 1.5 0 01-2.01-.876M9.323 11.334a2 2 0 01-2.646 0M11.5 7.333a1 1 0 01-2 0M6.5 7.333a1 1 0 01-2 0" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
 
-                            <select class="border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
+                            <select v-model="child.age" class="border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
                                 <option v-for="num in 15" :value="num" :key="num">
                                     {{ num }}
                                 </option>
@@ -72,7 +72,7 @@
 
             <div class="flex w-full mt-6 space-x-3">
                 <MainButton outline>Back</MainButton>
-                <MainButton>Next</MainButton>
+                <MainButton @click="gotoNext()">Next</MainButton>
             </div>
         </div>
     </div>
@@ -83,31 +83,31 @@ export default {
     layout: "booking",
     data() {
         return {
-            groupType: "individual",
             noOfChildren: 0,
             noOfAdult: 0,
             childAge: 1,
+            childrenAges: [],
         };
+    },
+    watch: {
+        noOfChildren(v) {
+            this.childrenAges = [];
+
+            for (let ix = 0; ix < v; ix++) {
+                this.childrenAges.push({ age: 3 });
+            }
+        },
     },
     methods: {
         gotoNext() {
             this.$store.commit("UPDATE_GROUP", {
-                groupType: this.groupType,
+                groupType: "group",
                 adult_no: this.noOfAdult,
                 child_no: this.noOfChildren,
+                childrenAges: this.childrenAges,
             });
 
             this.$router.push({ path: "/availability" });
-        },
-    },
-    watch: {
-        groupType(val) {
-            if (val == "individual") {
-                this.noOfAdult = 1;
-            }
-            if (val == "couple") {
-                this.noOfAdult = 2;
-            }
         },
     },
 };

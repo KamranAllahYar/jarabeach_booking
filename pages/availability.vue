@@ -7,9 +7,9 @@
                 <div class="pt-6 bg-white border rounded-lg shadow-lg">
                     <RoomCalendar class="w-full" @selected="selectRooms($event)" />
 
-                    <div class="flex w-9/12 mx-auto mb-6 space-x-6">
+                    <div class="flex w-9/12 mx-auto mb-6 space-x-6" v-if="rooms.length > 0">
                         <MainButton outline>Back</MainButton>
-                        <MainButton>Next</MainButton>
+                        <MainButton @click="gotoNext()">Next</MainButton>
                     </div>
                 </div>
             </div>
@@ -56,6 +56,7 @@ export default {
         selectRooms(rooms) {
             console.log(rooms);
             this.rooms = rooms;
+            this.$store.commit("UPDATE_ROOMS", this.rooms);
         },
     },
 };

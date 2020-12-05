@@ -44,8 +44,11 @@
                         v-popover.right="{ name: 'rooms-available' }"
                         class="flex items-center justify-center flex-shrink-0 text-2xl text-gray-500 border border-gray-100 cursor-pointer font-extralight w-14 bg-opacity-20 h-14"
                         :class="roomsAvailable(roomType, day) <= 0 ? 'bg-brand-red' : 'bg-brand-blue-300'"
-                        @click.self="hoverRoom(roomType, day)">
-                        {{ roomsAvailable(roomType, day) }}
+                        @click="hoverRoom(roomType, day)">
+                        <transition name="fade">
+                            <span v-if="loading">-</span>
+                            <span v-else>{{ roomsAvailable(roomType, day) }}</span>
+                        </transition>
                     </div>
                 </div>
             </div>
@@ -312,5 +315,12 @@ export default {
 .show-from-top-leave-to {
     opacity: 0;
     transform: translateX(20px);
+}
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
 }
 </style>

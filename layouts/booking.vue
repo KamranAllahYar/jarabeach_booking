@@ -8,7 +8,7 @@
             <SideBar />
 
             <div class="max-w-6xl p-6 mx-auto mt-12">
-                <Nuxt />
+                <Nuxt keep-alive />
             </div>
 
         </main>
