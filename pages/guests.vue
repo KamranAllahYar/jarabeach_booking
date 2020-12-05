@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="text-2xl font-medium text-center">
-            What's your guest make-up?
+            What's <b>your guest</b> make-up?
         </div>
         <div class="max-w-md px-6 py-4 mx-auto mt-10 bg-white border rounded-lg">
             <div class="border rounded-lg">
