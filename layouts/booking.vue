@@ -24,6 +24,7 @@ export default {
     created() {
         console.log("Initial loadings");
         this.$store.dispatch("loadRooms");
+        this.$store.dispatch("loadPolicies");
     },
 };
 </script>

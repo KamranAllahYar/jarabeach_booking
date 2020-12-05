@@ -1,29 +1,37 @@
 <template>
     <div>
-        <h1 class="mb-6 text-3xl font-semibold">Please accept our Policies</h1>
+        <h1 class="mb-6 text-2xl text-center">Please accept our policies</h1>
 
-        <div class="mb-6" v-if="currentPolicy">
-            <div class="text-xl font-semibold">{{ currentPolicy.name }}</div>
-            <div class="leading-loose text-gray-600">
-                <div class="mt-8" v-html="currentPolicy.content">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto
-                    cupiditate dignissimos quidem adipisci porro dolorem fugiat. Excepturi
-                    nulla mollitia molestias doloribus sequi ut, dignissimos accusantium,
-                    earum consequatur exercitationem, soluta eius?Asperiores explicabo,
-                    saepe deserunt est exercitationem dignissimos aliquid quibusdam,
-                    blanditiis rem consectetur in libero nesciunt et consequuntur
-                    perspiciatis error quas iste nobis possimus aut cumque inventore id.
-                    Quasi, iure accusantium?
+        <div class="flex justify-center space-x-6">
+            <div class="w-6/12">
+                <div class="px-6 pt-6 text-gray-700 bg-white border rounded-lg shadow-lg">
+                    <div class="border rounded-md" v-if="currentPolicy">
+                        <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
+                            <div class="text-base font-bold capitalize">{{ currentPolicy.name }}</div>
+                        </div>
+
+                        <div class="px-3 py-4">
+                            <div v-html="currentPolicy.content"></div>
+                        </div>
+
+                        <div class="flex justify-center px-3 py-4">
+                            <label class="inline-flex items-center font-bold">
+                                <input type="checkbox" v-model="agreed" class="mr-2 text-green-600 rounded-full focus:ring-1 focus:ring-green-600" />
+                                I will accept the terms and condition
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex w-full my-6 space-x-6">
+                        <MainButton outline>Back</MainButton>
+                        <MainButton @click="gotoNext()">Next</MainButton>
+                    </div>
                 </div>
             </div>
-
-            <label class="inline-flex items-center mt-12 space-x-5 cursor-pointer">
-                <input type="checkbox" v-model="agreed" />
-                <div>I accept these terms and conditions</div>
-            </label>
+            <div class="w-3/12">
+                <ReservationBox />
+            </div>
         </div>
-
-        <button @click="gotoNext()" class="p-3 mt-10 bg-gray-200 rounded">Next</button>
     </div>
 </template>
 
@@ -34,13 +42,15 @@ export default {
         return {
             currentPolicyId: 0,
             agreed: false,
-            policies: [],
             acceptedPolicies: [],
         };
     },
     computed: {
         currentPolicy() {
             return this.policies[this.currentPolicyId];
+        },
+        policies() {
+            return this.$store.getters.policies;
         },
     },
     methods: {
@@ -61,15 +71,6 @@ export default {
 
             this.$router.push({ path: "/summary" });
         },
-        getPolicies() {
-            this.$axios.get("/policies").then((res) => {
-                console.log(res.data.data);
-                this.policies = res.data.data;
-            });
-        },
-    },
-    created() {
-        this.getPolicies();
     },
 };
 </script>
