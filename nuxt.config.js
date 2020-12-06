@@ -17,6 +17,7 @@ export default {
   ],
   plugins: [
     "@/plugins/popover.js",
+    { src: '@/plugins/vuex-persist', ssr: false }
   ],
   components: true,
   buildModules: [
