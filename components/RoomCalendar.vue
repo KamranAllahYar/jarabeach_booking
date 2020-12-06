@@ -90,18 +90,6 @@
                 </div>
             </div>
         </popover>
-
-        <div class="flex">
-            <!-- <div class="ml-12">
-                <div v-for="h in hoveredRooms" :key="h.room.id"
-                    class="text-blue-600 cursor-pointer">
-                    {{ h.room.name }}
-                    <span v-if="h.available == false">- closed</span>
-                    <span v-else-if="h.available == true"></span>
-                    <span v-else>- {{h.available}}</span>
-                </div>
-            </div> -->
-        </div>
     </div>
 </template>
 
@@ -112,6 +100,7 @@ import parseISO from "date-fns/parseISO";
 import isWeekend from "date-fns/isWeekend";
 
 export default {
+    props: ["initialRooms"],
     data() {
         return {
             rooms: [],
@@ -182,7 +171,7 @@ export default {
                 this.bookedRooms.splice(ix, 1);
             }
 
-            this.$emit("selected", this.bookedRooms);
+            this.$emit("selected", this.bookedRooms.slice(0));
         },
         hoverRoom(roomType, date) {
             this.hoveredRooms = [];
@@ -302,6 +291,13 @@ export default {
     mounted() {
         this.getRooms();
         this.getRoomsForMonth();
+
+        console.log("ROOM CALENDAR MOUNTED");
+        console.log(this.initialRooms);
+
+        if (this.initialRooms) {
+            this.bookedRooms = this.initialRooms;
+        }
     },
 };
 </script>

@@ -5,10 +5,10 @@
         <div class="flex justify-center space-x-6">
             <div class="w-9/12">
                 <div class="pt-6 bg-white border rounded-lg shadow-lg">
-                    <RoomCalendar class="w-full" @selected="selectRooms($event)" />
+                    <RoomCalendar class="w-full" @selected="selectRooms($event)" :initialRooms="rooms" />
 
                     <div class="flex w-9/12 mx-auto mb-6 space-x-6" v-if="rooms.length > 0">
-                        <MainButton outline>Back</MainButton>
+                        <MainButton @click="gotoBack()" outline>Back</MainButton>
                         <MainButton @click="gotoNext()">Next</MainButton>
                     </div>
                 </div>
@@ -55,11 +55,22 @@ export default {
 
             this.$router.push({ path: "/profile" });
         },
+        gotoBack() {
+            this.$store.commit("UPDATE_ROOMS", this.rooms);
+
+            this.$router.push({ path: "/guests" });
+        },
         selectRooms(rooms) {
             console.log(rooms);
-            this.rooms = rooms;
-            this.$store.commit("UPDATE_ROOMS", this.rooms);
+            this.rooms = rooms.slice(0);
+            this.$store.commit("UPDATE_ROOMS", rooms);
         },
+    },
+    created() {
+        console.log("STORE_ROOMS");
+        this.rooms = this.$store.state.rooms.slice(0);
+
+        console.log(this.rooms);
     },
 };
 </script>

@@ -9,46 +9,62 @@
                         <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
                             <div>
                                 <div class="text-base font-bold">Email address</div>
-                                <input type="email" v-model="guest.email" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                <div class="flex items-center">
+                                    <input type="email" required v-model="guest.email" placeholder="email@example.com" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                    <Loading v-if="loading" />
+                                    <svg v-if="weHaveData && !wantsToUpdate" class="inline-block w-6 h-6 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
                             </div>
-                            <div>
+                            <div v-if="showFullForm">
                                 <div class="text-base font-bold">Phone number</div>
                                 <input type="tel" v-model="guest.phone" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
+                        <div class="px-3 py-4 border-b" v-if="weHaveData && !wantsToUpdate">
                             <div>
-                                <div class="text-base font-bold">First Name</div>
-                                <input type="text" v-model="guest.first_name" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
-                            </div>
-                            <div>
-                                <div class="text-base font-bold">Last Name</div>
-                                <input type="text" v-model="guest.last_name" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                Hi {{ guest.first_name }}, welcome back to Jara Beach Resorts.
+                                We have used your details from the last booking,
+                                however if you would like to make any changes
+                                <span @click="wantsToUpdate = true" class="font-bold cursor-pointer text-brand-blue">click here</span>.
                             </div>
                         </div>
-                        <div class="px-3 py-4 border-b">
-                            <div>
-                                <textarea type="text" v-model="guest.dietary_concerns"
-                                    class="w-full px-2 border-b border-gray-200 rounded-md" placeholder="State any dietary concerns (e.g Vegeterian)"></textarea>
+                        <template v-if="showFullForm">
+                            <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
+                                <div>
+                                    <div class="text-base font-bold">First Name</div>
+                                    <input type="text" v-model="guest.first_name" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                </div>
+                                <div>
+                                    <div class="text-base font-bold">Last Name</div>
+                                    <input type="text" v-model="guest.last_name" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="px-3 py-4 border-b">
-                            <div>
-                                <div class="text-base font-bold">Upload Identification</div>
-                                <input type="text" v-model="guest.identification" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                            <div class="px-3 py-4 border-b">
+                                <div>
+                                    <textarea type="text" v-model="guest.concerns"
+                                        class="w-full px-2 border-b border-gray-200 rounded-md" placeholder="State any dietary concerns (e.g Vegeterian)"></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="px-3 py-4 border-b">
-                            <div>
-                                <div class="text-base font-bold">How did you hear about us?</div>
-                                <input type="text" v-model="guest.social_link" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                            <div class="px-3 py-4 border-b">
+                                <div>
+                                    <div class="text-base font-bold">Upload Identification</div>
+                                    <input type="text" v-model="guest.identification" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                </div>
                             </div>
-                        </div>
+                            <div class="px-3 py-4 border-b">
+                                <div>
+                                    <div class="text-base font-bold">How did you hear about us?</div>
+                                    <input type="text" v-model="guest.hear_of_us" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                </div>
+                            </div>
+                        </template>
                     </div>
 
                     <div class="flex w-full my-6 space-x-6">
                         <MainButton outline>Back</MainButton>
-                        <MainButton>Next</MainButton>
+                        <MainButton :loading="initialLoad && loading" @click="gotoNext()">Next</MainButton>
                     </div>
                 </div>
             </div>
@@ -64,32 +80,44 @@ export default {
     layout: "booking",
     data() {
         return {
-            signedIn: false,
+            loading: false,
+            weHaveData: false,
+            wantsToUpdate: false,
+            initialLoad: true,
             guest: {
                 email: "",
                 phone: "",
                 first_name: "",
                 last_name: "",
-                dietary_concerns: "",
+                concerns: "",
                 identification: "",
-                social_link: "",
+                hear_of_us: "",
             },
         };
+    },
+    computed: {
+        showFullForm() {
+            if (this.initialLoad) return false;
+
+            if (this.wantsToUpdate) return true;
+
+            if (this.weHaveData) return false;
+
+            return true;
+        },
     },
     methods: {
         toggleSignin() {
             this.signedIn = !this.signedIn;
         },
-        clearForm() {
-            this.guest.email = "";
-            this.guest.phone = "";
-            this.guest.first_name = "";
-            this.guest.last_name = "";
-            this.guest.identification = "";
-            this.guest.social_link = "";
-        },
 
         gotoNext() {
+            console.log("go to next");
+            if (this.initialLoad) {
+                this.confirmGuest();
+                return;
+            }
+
             const form = {
                 email: this.guest.email,
                 phone: this.guest.phone,
@@ -99,11 +127,44 @@ export default {
                 last_name: this.guest.last_name,
                 concerns: this.guest.concerns,
                 identification: this.guest.identification,
-                social_link: this.guest.social_link,
+                hear_of_us: this.guest.hear_of_us,
             };
             this.$store.commit("UPDATE_GUEST", form);
-            this.clearForm;
+
+            this.$store.commit("COMPLETE_PROFILE");
+
             this.$router.push({ path: "/policies" });
+        },
+
+        async confirmGuest() {
+            if (!this.isValidEmail(this.guest.email)) {
+                this.$toast.show("Please enter a valid email address");
+                return;
+            }
+
+            this.loading = true;
+            const res = await this.$store.dispatch(
+                "confirmGuest",
+                this.guest.email
+            );
+
+            if (res.success) {
+                this.weHaveData = true;
+                const guest = res.data;
+
+                this.guest = guest;
+                this.$store.commit("UPDATE_GUEST", guest);
+                this.$toast.success(res.message);
+            }
+
+            console.log(res);
+            this.loading = false;
+            this.initialLoad = false;
+        },
+
+        isValidEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
         },
     },
 };

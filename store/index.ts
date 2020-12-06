@@ -2,7 +2,7 @@ import { GetterTree, MutationTree, ActionTree } from 'vuex';
 
 export const state = () => ({
   groupType: 'individual' as string,
-  adult_no: 1 as number,
+  adult_no: 0 as number,
   child_no: 0 as number,
   children_ages: [] as any[],
   rooms: [] as any[],
@@ -45,7 +45,7 @@ export const mutations: MutationTree<RootState> = {
     state.groupType = payload.groupType
     state.adult_no = payload.adult_no
     state.child_no = payload.child_no
-    state.children_ages = payload.childrenAges.map((age: any) => age.age)
+    state.children_ages = payload.children_ages.map((age: any) => age.age)
   },
 
   UPDATE_GUEST: (state, payload) => {
@@ -62,6 +62,7 @@ export const mutations: MutationTree<RootState> = {
   },
   COMPLETE_GUEST: (state) => state.guests_done = true,
   COMPLETE_AVAILABILITY: (state) => state.availability_done = true,
+  COMPLETE_PROFILE: (state) => state.profile_done = true,
   COMPLETE_POLICY: (state) => state.policy_done = true,
 }
 
@@ -81,8 +82,7 @@ export const actions: ActionTree<RootState, RootState> = {
     });
   },
 
-  createBooking({ commit, state, dispatch }) {
-
+  createBooking({ state }) {
     const dataToPost = {
       guest: {
         first_name: state.guest.first_name,
@@ -108,5 +108,14 @@ export const actions: ActionTree<RootState, RootState> = {
         this.app.$toast.success("Your booking has successfully been submitted");
       })
   },
+
+  async confirmGuest({ }, email: string) {
+    return await this.$axios.post("confirm/guest", { email })
+      .then(res => {
+        console.log(res);
+        return res.data
+      })
+
+  }
 
 }

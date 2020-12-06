@@ -85,18 +85,34 @@ export default {
         return {
             noOfChildren: 0,
             noOfAdult: 0,
-            childAge: 1,
             childrenAges: [],
         };
     },
     watch: {
         noOfChildren(v) {
-            this.childrenAges = [];
+            if (this.childrenAges.length == v) return;
 
-            for (let ix = 0; ix < v; ix++) {
+            if (this.childrenAges.length > v) {
+                const newC = [];
+                for (let jx = 0; jx < v; jx++) {
+                    newC.push(this.childrenAges[jx]);
+                }
+
+                this.childrenAges = newC;
+                return;
+            }
+
+            const diff = v - this.childrenAges.length;
+            console.log(v);
+            console.log(diff);
+
+            for (let ix = 0; ix < diff; ix++) {
                 this.childrenAges.push({ age: 3 });
             }
 
+            this.updateStores();
+        },
+        childrenAges(v) {
             this.updateStores();
         },
     },
@@ -119,12 +135,21 @@ export default {
                 groupType: "group",
                 adult_no: this.noOfAdult,
                 child_no: this.noOfChildren,
-                childrenAges: this.childrenAges,
+                children_ages: this.childrenAges,
+            });
+        },
+        updateFromStore() {
+            this.noOfAdult = this.$store.state.adult_no;
+            this.noOfChildren = this.$store.state.child_no;
+
+            this.childrenAges = this.$store.state.children_ages.map((a) => {
+                return { age: a };
             });
         },
     },
     mounted() {
         console.log("Mounting guest");
+        this.updateFromStore();
     },
 };
 </script>

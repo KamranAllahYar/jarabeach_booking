@@ -32,7 +32,10 @@ export default {
   ],
   axios: {
     baseURL: process.env.API_URL || "https://jarabeach-admin.reftek.app/api"
-
   },
-  build: {}
+  build: {},
+  toast: {
+    position: 'top-right',
+    duration: 4000,
+  }
 }
