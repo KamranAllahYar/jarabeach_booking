@@ -18,6 +18,10 @@ export const state = () => ({
   availability_done: false as boolean,
   profile_done: false as boolean,
   policy_done: false as boolean,
+
+  extra: '' as string,
+  showExtra: false as boolean,
+
 })
 
 export type RootState = ReturnType<typeof state>

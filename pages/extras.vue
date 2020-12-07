@@ -1,7 +1,7 @@
 <template>
     <div>
         <ExtrasLayout>
-            <div class="flex w-full" v-if="extras == 'lookout'" v-show="!showExtras">
+            <div class="flex w-full" v-if="extras == 'lookout'" >
                 <div class="w-1/2 ">
                     <img src="https://pbs.twimg.com/media/EktQi59WMAM99gg.jpg" alt="" class="object-cover object-center w-full h-full">
                 </div>
@@ -65,7 +65,8 @@
                         </div>
                     </div>
                     </div>
-                    <div class="w-1/3 mx-auto mt-8" >
+                    <div class="flex my-6 space-x-6">
+                        <MainButton outline @click="gotoBack('lookout')">Back</MainButton>
                         <MainButton @click="gotoNext('quad_bikes')">Next</MainButton>
                     </div>
                 </div>
@@ -105,7 +106,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-1/3 mx-auto mt-8" >
+                    <div class="flex my-6 space-x-6">
+                        <MainButton outline @click="gotoBack('massage')">Back</MainButton>
                         <MainButton @click="gotoNext('photoshoot')">Next</MainButton>
                     </div>
                 </div>
@@ -131,6 +133,9 @@ export default {
         gotoNext(value) { 
             this.extras = value;
             this.showExtras = true;
+        },
+        gotoBack(value) {
+            this.extras = value;
         }
     }
 };
