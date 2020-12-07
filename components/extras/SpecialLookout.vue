@@ -14,11 +14,11 @@
             <div class="mt-6 font-semibold">What date would you like to have this</div>
             <div class="flex items-center mt-3 space-x-5 font-light ">
                 <div>
-                    <input type="radio" name="lookout" id="first_date" class="mr-3 focus-within:ring-0">
+                    <input type="radio" name="lookout" id="first_date" class="mr-3 focus-within:ring-0 border-brand-blue">
                     <label for="first_date">Tues, Nov 9th 2020 </label>
                 </div>
                 <div>
-                    <input type="radio" name="lookout" id="second_date" class="mr-3 focus-within:ring-0">
+                    <input type="radio" name="lookout" id="second_date" class="mr-3 focus-within:ring-0 border-brand-blue">
                     <label for="second_date">Wed, Nov 10th 2020 </label>
                 </div>
             </div>

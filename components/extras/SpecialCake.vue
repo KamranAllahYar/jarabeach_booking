@@ -1,10 +1,10 @@
 <template>
     <div class="flex w-full">
         <div class="w-6/12 ">
-            <img src="@/assets/images/specials/massage.png" alt="" class="object-cover object-center w-full h-full">
+            <img src="@/assets/images/specials/cake.png" alt="" class="object-cover object-center w-full h-full">
         </div>
         <div class="w-7/12 p-6">
-            <div class="font-semibold">Massage</div>
+            <div class="font-semibold">Cakes</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum, sint impedit possimus itaque facere placeat debitis.
                 Totam nostrum aspernatur enim corporis alias, deserunt et quas aut error maxime ad pariatur.
@@ -26,16 +26,16 @@
                 <div class="mt-6 font-semibold">At what time?</div>
                 <div class="grid grid-cols-2 gap-4 mt-3 font-light ">
                     <div>
-                        <input type="radio" name="lookout" id="first_date" class="mr-3 focus-within:ring-0 border-brand-blue"><label for="first_date">10am - 12pm </label>
+                        <input type="radio" name="lookout" id="first_date" class="mr-3 focus-within:ring-0"><label for="first_date">10am - 12pm </label>
                     </div>
                     <div>
-                        <input type="radio" name="lookout" id="second_date" class="mr-3 focus-within:ring-0 border-brand-blue"><label for="second_date">12pm - 2pm</label>
+                        <input type="radio" name="lookout" id="second_date" class="mr-3 focus-within:ring-0"><label for="second_date">12pm - 2pm</label>
                     </div>
                     <div>
-                        <input type="radio" name="lookout" id="first_date" class="mr-3 focus-within:ring-0 border-brand-blue"><label for="first_date">2pm - 4pm</label>
+                        <input type="radio" name="lookout" id="first_date" class="mr-3 focus-within:ring-0"><label for="first_date">2pm - 4pm</label>
                     </div>
                     <div>
-                        <input type="radio" name="lookout" id="second_date" class="mr-3 focus-within:ring-0 border-brand-blue"><label for="second_date">4pm - 6pm</label>
+                        <input type="radio" name="lookout" id="second_date" class="mr-3 focus-within:ring-0"><label for="second_date">4pm - 6pm</label>
                     </div>
                 </div>
             </div>
