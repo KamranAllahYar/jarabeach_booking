@@ -5,10 +5,14 @@ export const state = () => ({
   adult_no: 0 as number,
   child_no: 0 as number,
   children_ages: [] as any[],
+
   rooms: [] as any[],
-  guest: {} as any,
   roomsData: [] as any[],
   policies: [] as any[],
+
+  guest: {} as any,
+  weHaveData: false as boolean,
+  other_guests: [] as any[],
 
   guests_done: false as boolean,
   availability_done: false as boolean,
@@ -49,7 +53,11 @@ export const mutations: MutationTree<RootState> = {
   },
 
   UPDATE_GUEST: (state, payload) => {
-    state.guest = payload
+    state.guest = JSON.parse(JSON.stringify(payload.guest));
+    state.other_guests = payload.others || []
+  },
+  GUEST_WEHAVEDATA: (state, payload: boolean) => {
+    state.weHaveData = payload;
   },
   UPDATE_ROOMS: (state, roomsData) => {
     state.rooms = roomsData;
@@ -64,6 +72,28 @@ export const mutations: MutationTree<RootState> = {
   COMPLETE_AVAILABILITY: (state) => state.availability_done = true,
   COMPLETE_PROFILE: (state) => state.profile_done = true,
   COMPLETE_POLICY: (state) => state.policy_done = true,
+
+  RESET_STORE: (state) => {
+    state = {
+      groupType: 'individual' as string,
+      adult_no: 0 as number,
+      child_no: 0 as number,
+      children_ages: [] as any[],
+
+      rooms: [] as any[],
+      roomsData: [] as any[],
+      policies: [] as any[],
+
+      guest: {} as any,
+      weHaveData: false as boolean,
+      other_guests: [] as any[],
+
+      guests_done: false as boolean,
+      availability_done: false as boolean,
+      profile_done: false as boolean,
+      policy_done: false as boolean,
+    }
+  },
 }
 
 export const actions: ActionTree<RootState, RootState> = {
@@ -83,8 +113,9 @@ export const actions: ActionTree<RootState, RootState> = {
   },
 
   createBooking({ state }) {
-    const dataToPost = {
+    let dataToPost: any = {
       guest: {
+        id: state.guest.id || null,
         first_name: state.guest.first_name,
         last_name: state.guest.last_name,
         phone: state.guest.phone,
@@ -96,17 +127,29 @@ export const actions: ActionTree<RootState, RootState> = {
         concerns: state.guest.concerns
       },
       booking: {
-        full_names: state.guest.full_names
+        full_names: state.guest.full_names || "names",
+        adult_no: state.adult_no,
+        child_no: state.child_no,
+        extra_info: "state.extra_info",
       },
       booked_rooms: state.rooms,
     }
 
-    this.$axios.post("bookings", dataToPost)
+    if (state.guest.id) {
+      dataToPost.guest_id = state.guest.id;
+    }
+
+    return this.$axios.post("bookings", dataToPost)
       .then(res => {
         console.log(res.data);
 
-        this.app.$toast.success("Your booking has successfully been submitted");
-      })
+        if (res.data.success) {
+          this.app.$toast.success(res.data.message);
+        } else {
+          this.app.$toast.error(res.data.message);
+        }
+        return res.data.success;
+      }).catch(err => this.app.$toast.error(err))
   },
 
   async confirmGuest({ }, email: string) {

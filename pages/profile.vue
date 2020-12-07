@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="flex w-full my-6 space-x-6">
-                        <MainButton outline>Back</MainButton>
+                        <MainButton outline @click="gotoBack()">Back</MainButton>
                         <MainButton :loading="initialLoad && loading" @click="gotoNext()">Next</MainButton>
                     </div>
                 </div>
@@ -81,7 +81,7 @@ export default {
     data() {
         return {
             loading: false,
-            weHaveData: false,
+            // weHaveData: false,
             wantsToUpdate: false,
             initialLoad: true,
             guest: {
@@ -96,10 +96,18 @@ export default {
         };
     },
     computed: {
+        weHaveData: {
+            set(v) {
+                return this.$store.commit("GUEST_WEHAVEDATA", v);
+            },
+            get() {
+                return this.$store.state.weHaveData;
+            },
+        },
         showFullForm() {
-            if (this.initialLoad) return false;
-
             if (this.wantsToUpdate) return true;
+
+            if (this.initialLoad) return false;
 
             if (this.weHaveData) return false;
 
@@ -113,27 +121,22 @@ export default {
 
         gotoNext() {
             console.log("go to next");
-            if (this.initialLoad) {
+            if (this.initialLoad && !this.wantsToUpdate) {
                 this.confirmGuest();
                 return;
             }
 
-            const form = {
-                email: this.guest.email,
-                phone: this.guest.phone,
-                gender: this.guest.gender,
-                dob: this.guest.dob,
-                first_name: this.guest.first_name,
-                last_name: this.guest.last_name,
-                concerns: this.guest.concerns,
-                identification: this.guest.identification,
-                hear_of_us: this.guest.hear_of_us,
-            };
-            this.$store.commit("UPDATE_GUEST", form);
+            this.$store.commit("UPDATE_GUEST", {
+                guest: Object.assign({}, this.guest),
+            });
 
             this.$store.commit("COMPLETE_PROFILE");
 
             this.$router.push({ path: "/policies" });
+        },
+
+        gotoBack() {
+            this.$router.push({ path: "/availability" });
         },
 
         async confirmGuest() {
@@ -153,7 +156,9 @@ export default {
                 const guest = res.data;
 
                 this.guest = guest;
-                this.$store.commit("UPDATE_GUEST", guest);
+                this.$store.commit("UPDATE_GUEST", {
+                    guest: Object.assign({}, guest),
+                });
                 this.$toast.success(res.message);
             }
 
@@ -166,6 +171,12 @@ export default {
             const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(String(email).toLowerCase());
         },
+    },
+    created() {
+        console.log("CREATED PROFILE");
+        if (this.$store.state.guest) {
+            this.guest = Object.assign({}, this.$store.state.guest);
+        }
     },
 };
 </script>

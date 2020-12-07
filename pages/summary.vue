@@ -41,6 +41,8 @@
                 </div>
             </div>
         </div>
+
+        <MainButton @click="completeBooking()">Complete</MainButton>
     </div>
 </template>
 
@@ -72,6 +74,18 @@ export default {
         totalAmount() {
             this.total = this.subTotalAmount - this.discount;
             return this.total;
+        },
+    },
+    methods: {
+        async completeBooking() {
+            this.loading = true;
+            res = await this.$store.dispatch("createBooking");
+            this.loading = false;
+
+            if (res) {
+                this.$router.push("/done");
+                this.$store.commit("RESET_STORE");
+            }
         },
     },
 };

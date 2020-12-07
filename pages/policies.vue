@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="flex w-full my-6 space-x-6">
-                        <MainButton outline>Back</MainButton>
+                        <MainButton outline @click="gotoBack()">Back</MainButton>
                         <MainButton @click="gotoNext()">Next</MainButton>
                     </div>
                 </div>
@@ -73,6 +73,15 @@ export default {
 
             this.$router.push({ path: "/summary" });
         },
+        gotoBack() {
+            this.$router.push({ path: "/profile" });
+        },
+    },
+    mounted() {
+        if (this.$store.state.policy_done) {
+            this.agreed = true;
+            this.currentPolicyId = this.policies.length - 1;
+        }
     },
 };
 </script>

@@ -11,7 +11,8 @@
         <nuxt-link exact tag="div" to="/extras" class="px-8 py-4 border-2 cursor-pointer">
             3. Extras
         </nuxt-link>
-        <nuxt-link exact tag="div" to="/profile" class="px-8 py-4 border-2 cursor-pointer">
+        <nuxt-link exact tag="div" to="/profile" class="px-8 py-4 border-2 cursor-pointer"
+            :class="$store.state.profile_done ? doneClass : notDoneClass">
             4. Profile
         </nuxt-link>
         <nuxt-link exact tag="div" to="/policies" class="px-8 py-4 border-2 cursor-pointer"
