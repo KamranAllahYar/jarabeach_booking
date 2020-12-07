@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-3/12">
+            <div class="flex-shrink-0 w-3/12">
                 <ReservationBox />
             </div>
         </div>
