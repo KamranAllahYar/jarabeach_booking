@@ -39,7 +39,8 @@
                             <select v-model="noOfChildren"
                                 class="border-0 rounded-md outline-none focus:outline-none"
                                 style="box-shadow: none">
-                                <option value="0">Children</option>
+                                <option :value="0">Children</option>
+                                <option :value="0">0</option>
                                 <option v-for="num in 5" :value="num" :key="num">
                                     {{ num }}
                                 </option>

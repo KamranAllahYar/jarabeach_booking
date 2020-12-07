@@ -1,85 +1,65 @@
 <template>
     <div>
-        <h1 class="mb-6 text-3xl font-semibold">Summary</h1>
-        <table class="w-full border border-collapse table-auto">
-            <tbody>
-                <tr class="h-12" v-for="item in items" :key="item.name">
-                    <td class="w-1/2 pl-5 font-semibold border">{{ item.name }}</td>
-                    <td class="w-1/2 pl-5 text-xl border">N{{ item.amount }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="mt-10">
-            <div class="flex items-center w-2/3 space-x-3">
-                <input type="text" placeholder="Enter Discount Code" class="w-1/2 mr-2 rounded">
-                <button class="px-3 py-1 text-white bg-blue-500 rounded">Apply</button>
-            </div>
-            <div class="flex items-center mt-3">
-                <div class="mr-3 text-sm font-semibold text-green-400">Membership discount applied</div>
-                <svg class="w-5 h-5 text-green-500"
-                    fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clip-rule="evenodd">
-                    </path>
-                </svg>
-            </div>
-        </div>
-        <div class="flex justify-end text-sm">
-            <div class="w-1/2 space-y-2">
-                <div class="flex items-center w-full">
-                    <div class="w-1/2">Sub-total:</div>
-                    <div class="w-1/2">{{ subTotalAmount }}</div>
-                </div>
-                <div class="flex items-center w-full">
-                    <div class="w-1/2">Discount:</div>
-                    <div class="w-1/2">{{ discount }}</div>
-                </div>
-                <div class="flex items-center w-full text-base font-semibold">
-                    <div class="w-1/2">Total:</div>
-                    <div class="w-1/2">{{ totalAmount }}</div>
-                </div>
-            </div>
-        </div>
+        <h1 class="mb-6 text-2xl text-center">What’s are your profile details?</h1>
 
-        <MainButton @click="completeBooking()">Complete</MainButton>
+        <div class="flex justify-center space-x-6">
+            <div class="w-6/12">
+                <div class="px-6 pt-6 text-gray-700 bg-white border rounded-lg shadow-lg">
+                    <div class="border rounded-md">
+                        <div class="flex flex-col divide-y">
+                            <div class="flex items-center justify-between px-3 py-4" v-for="(room, i) in rooms" :key="i">
+                                <div class="text-base">
+                                    <div>{{room.date}}</div>
+                                    <div class="text-sm">{{room.name}}</div>
+                                </div>
+                                <div class="text-lg font-bold">{{ currency(room.price) }}</div>
+                            </div>
+                            <div class="flex items-center justify-between px-3 py-4">
+                                <div>Cake</div>
+                                <div class="text-lg font-bold">{{ currency(400) }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 mb-12 border border-gray-100 rounded-md bg-gray-50 ring-gray-200 focus-within:ring ring-offset-2">
+                        <form @submit.prevent class="flex justify-between p-2 ">
+                            <input class="w-full ml-2 bg-transparent outline-none" placeholder="Enter Discount code" />
+                            <button type="submit" class="px-10 py-1 text-white rounded-md focus:outline-none focus:ring bg-brand-blue-400">Apply</button>
+                        </form>
+                    </div>
+
+                    <div class="flex w-full my-6 space-x-6">
+                        <MainButton outline @click="gotoBack()">Back</MainButton>
+                        <MainButton @click="completeBooking()">
+                            <div class="flex justify-center">
+                                <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                                </svg>
+                                Pay
+                            </div>
+                        </MainButton>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-shrink-0 w-3/12">
+                <ReservationBox showDiscount :showGuests="false" />
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     layout: "booking",
-    data() {
-        return {
-            items: [
-                { name: "Stay (2-nights)", amount: 150000 },
-                { name: "Birthday Cake", amount: 35000 },
-                { name: "Room Decorations", amount: 15000 },
-                { name: "Nanny Lodging", amount: 20000 },
-                { name: "1 Bottle Champagne", amount: 75000 },
-                { name: "Lookout Experience", amount: 50000 },
-            ],
-            discount: 50000,
-            total: 0,
-        };
-    },
     computed: {
-        subTotalAmount() {
-            const accAmount = this.items.reduce(
-                (acc, val) => acc + val.amount,
-                0
-            );
-            return accAmount;
-        },
-        totalAmount() {
-            this.total = this.subTotalAmount - this.discount;
-            return this.total;
+        rooms() {
+            return this.$store.getters.bookedRooms;
         },
     },
     methods: {
         async completeBooking() {
             this.loading = true;
-            res = await this.$store.dispatch("createBooking");
+            const res = await this.$store.dispatch("createBooking");
             this.loading = false;
 
             if (res) {
@@ -87,6 +67,12 @@ export default {
                 this.$store.commit("RESET_STORE");
             }
         },
+        currency(num) {
+            return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        gotoBack(){
+          this.$router.push("/policies");
+        }
     },
 };
 </script>

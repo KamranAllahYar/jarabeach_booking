@@ -74,25 +74,20 @@ export const mutations: MutationTree<RootState> = {
   COMPLETE_POLICY: (state) => state.policy_done = true,
 
   RESET_STORE: (state) => {
-    state = {
-      groupType: 'individual' as string,
-      adult_no: 0 as number,
-      child_no: 0 as number,
-      children_ages: [] as any[],
-
-      rooms: [] as any[],
-      roomsData: [] as any[],
-      policies: [] as any[],
-
-      guest: {} as any,
-      weHaveData: false as boolean,
-      other_guests: [] as any[],
-
-      guests_done: false as boolean,
-      availability_done: false as boolean,
-      profile_done: false as boolean,
-      policy_done: false as boolean,
-    }
+    state.groupType = 'individual' as string;
+    state.adult_no = 0 as number;
+    state.child_no = 0 as number;
+    state.children_ages = [] as any[];
+    state.rooms = [] as any[];
+    state.roomsData = [] as any[];
+    state.policies = [] as any[];
+    state.guest = {} as any;
+    state.weHaveData = false as boolean;
+    state.other_guests = [] as any[];
+    state.guests_done = false as boolean;
+    state.availability_done = false as boolean;
+    state.profile_done = false as boolean;
+    state.policy_done = false as boolean;
   },
 }
 
