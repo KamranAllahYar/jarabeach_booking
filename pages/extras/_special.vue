@@ -4,7 +4,7 @@
         <div class="flex justify-center space-x-6">
             <div class="w-9/12">
                 <div class="bg-white border rounded-lg shadow-lg">
-                    <ExtrasLayout />
+                    <ExtrasLayout :currentSpecial="special" />
                 </div>
             </div>
             <div class="flex-shrink-0 w-3/12">
@@ -17,5 +17,17 @@
 <script>
 export default {
     layout: "booking",
+    data() {
+        return {
+            special: "lookout",
+        };
+    },
+    mounted() {
+        const special = this.$route.params.special;
+
+        if (special) {
+            this.special = special;
+        }
+    },
 };
 </script>

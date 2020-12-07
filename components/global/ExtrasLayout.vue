@@ -1,21 +1,22 @@
 <template>
     <div>
-        <SpecialLookout v-if="extras == 'lookout'" @next="gotoNext('massage')" />
-        <SpecialMassage v-else-if="extras == 'massage'" @next="gotoNext('quad_bikes')" />
-        <SpecialQuadBikes v-else-if="extras == 'quad_bikes'" @next="gotoNext('lookout')" />
+        <SpecialLookout v-if="currentSpecial == 'lookout'" @next="gotoNext('massage')" />
+        <SpecialMassage v-else-if="currentSpecial == 'massage'" @next="gotoNext('quadbikes')" />
+        <SpecialQuadBikes v-else-if="currentSpecial == 'quadbikes'" @next="gotoNext('lookout')" />
     </div>
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-            extras: "lookout",
-        };
+    props: {
+        currentSpecial: {
+            default: "lookout",
+            type: String,
+        },
     },
     methods: {
-        gotoNext(value) {
-            this.extras = value;
+        gotoNext(special) {
+            this.$router.push({ path: "/extras/" + special });
         },
     },
 };
