@@ -12,7 +12,7 @@
                 corrupti ut magni praesentium nemo omnis accusamus ex dolores. Eaque rem non eveniet provident. Non. Eaque rem non eveniet provident. Non.
             </p>
             <div class="w-1/3 mx-auto mt-8">
-                <MainButton><nuxt-link tag="div" to="/profile">Next</nuxt-link></MainButton>
+                <MainButton @click="$emit('next')">Next</MainButton>
             </div>
         </div>
     </div>
