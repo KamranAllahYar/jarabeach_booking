@@ -32,8 +32,8 @@
                     </label>
                 </div>
                 <div class="flex items-start">
-                    <input type="checkbox" name="nanny" id="nanny" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300">
-                    <label for="nanny" class="font-bold">Driver
+                    <input type="checkbox" name="driver" id="driver" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300">
+                    <label for="driver" class="font-bold">Driver
                         <div class="text-sm font-light text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores vitae doloremque sunt maxime officiis minima, natus odit numquam tenetur eos dolorum officia!</div>
                     </label>
                 </div>
@@ -44,33 +44,42 @@
                     <div>
                         <div class="font-bold">Breakfast</div>
                         <div class="flex items-start pr-4 my-1 border-r">
-                            <input type="checkbox" name="nanny" id="nanny" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300">
-                            <label for="nanny" class="">Lorem ipsum dolor sit amet</label>
+                            <input type="checkbox" name="breakfast" id="breakfast" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300" v-model="menu">
+                            <label for="breakfast" class="">Lorem ipsum dolor sit amet</label>
                         </div>
                     </div>
                     <div>
                         <div class="font-bold">Lunch</div>
                         <div class="flex items-start pr-4 my-1 border-r">
-                            <input type="checkbox" name="nanny" id="nanny" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300">
-                            <label for="nanny" class="">Lorem ipsum dolor sit amet consectetur adipisicing elit.</label>
+                            <input type="checkbox" name="lunch" id="lunch" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300" v-model="menu">
+                            <label for="lunch" class="">Lorem ipsum dolor sit amet consectetur adipisicing elit.</label>
                         </div>
                     </div>
                     <div class="">
                         <div class="font-bold">Dinner</div>
                         <div class="flex items-start my-1">
-                            <input type="checkbox" name="nanny" id="nanny" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300">
-                            <label for="nanny" class="">Lorem ipsum dolor sit amet.</label>
+                            <input type="checkbox" name="dinner" id="dinner" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300" v-model="menu">
+                            <label for="dinner" class="">Lorem ipsum dolor sit amet.</label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <hr>
-        <div class="w-1/3 py-4 mx-auto border-t">
+        <div class="w-1/3 py-4 mx-auto">
             <MainButton><nuxt-link tag="div" to="/profile">Next</nuxt-link></MainButton>
         </div>
     </div>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            menu: ''
+        }
+    }
+}
+</script>
 <style  scoped>
 .fonts {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
