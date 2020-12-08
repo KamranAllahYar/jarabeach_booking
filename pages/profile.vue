@@ -41,6 +41,16 @@
                                     <input type="text" v-model="guest.last_name" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
                                 </div>
                             </div>
+                            <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
+                                <div>
+                                    <div class="text-base font-bold">Gender</div>
+                                    <input type="text" v-model="guest.gender" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                </div>
+                                <div>
+                                    <div class="text-base font-bold">Date of Birth</div>
+                                    <input type="date" v-model="guest.dob" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                </div>
+                            </div>
                             <div class="px-3 py-4 border-b">
                                 <div>
                                     <textarea type="text" v-model="guest.concerns"
@@ -89,6 +99,8 @@ export default {
                 phone: "",
                 first_name: "",
                 last_name: "",
+                dob: "",
+                gender: "",
                 concerns: "",
                 identification: "",
                 hear_of_us: "",

@@ -66,6 +66,12 @@ export const mutations: MutationTree<RootState> = {
   UPDATE_ROOMS: (state, roomsData) => {
     state.rooms = roomsData;
   },
+  REMOVE_ROOM: (state, room) => {
+    const ix = state.rooms.findIndex(r => room.room_id === r.room_id && room.date == r.date);
+    if (ix > -1) {
+      state.rooms.splice(ix, 1);
+    }
+  },
   UPDATE_ROOMS_DATA: (state, roomsData) => {
     state.roomsData = roomsData;
   },
@@ -147,8 +153,12 @@ export const actions: ActionTree<RootState, RootState> = {
         } else {
           this.app.$toast.error(res.data.message);
         }
+
         return res.data.success;
-      }).catch(err => this.app.$toast.error(err))
+      }).catch(err => {
+        this.app.$toast.error(err)
+        return false;
+      })
   },
 
   async confirmGuest({ }, email: string) {

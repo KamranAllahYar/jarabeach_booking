@@ -12,7 +12,10 @@
                                     <div>{{room.date}}</div>
                                     <div class="text-sm">{{room.name}}</div>
                                 </div>
-                                <div class="text-lg font-bold">{{ currency(room.price) }}</div>
+                                <div class="text-lg font-bold text-right">
+                                    <div>{{ currency(room.price) }}</div>
+                                    <div class="text-xs font-light text-red-500 cursor-pointer hover:underline" @click="removeRoom(room)">Remove</div>
+                                </div>
                             </div>
                             <div class="flex items-center justify-between px-3 py-4">
                                 <div>Cake</div>
@@ -64,15 +67,19 @@ export default {
 
             if (res) {
                 this.$router.push("/done");
-                this.$store.commit("RESET_STORE");
+                // this.$store.commit("RESET_STORE");
             }
         },
         currency(num) {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
-        gotoBack(){
-          this.$router.push("/policies");
-        }
+        gotoBack() {
+            this.$router.push("/policies");
+        },
+        removeRoom(room) {
+            console.log(room);
+            this.$store.commit("REMOVE_ROOM", room);
+        },
     },
 };
 </script>
