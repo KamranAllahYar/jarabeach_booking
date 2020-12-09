@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="text-2xl font-medium text-center">
-            What's <b>your guest</b> make-up?
+        <div class="text-2xl font-bold text-center">
+            Tell Us about your visiting group
         </div>
 
         <div class="max-w-md px-6 py-6 mx-auto mt-10 bg-white border rounded-lg">
@@ -61,9 +61,9 @@
                             </svg>
 
                             <select v-model="child.age" class="border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
-                                <option v-for="num in 15" :value="num" :key="num">
-                                    {{ num }}
-                                </option>
+                                <option value="0 - 1">0 - 1</option>
+                                <option value="2 - 5">2 - 5</option>
+                                <option value="6 - 17">6 - 17</option>
                             </select>
                         </div>
                     </div>
@@ -104,11 +104,8 @@ export default {
             }
 
             const diff = v - this.childrenAges.length;
-            console.log(v);
-            console.log(diff);
-
             for (let ix = 0; ix < diff; ix++) {
-                this.childrenAges.push({ age: 3 });
+                this.childrenAges.push({ age: "0 - 1" });
             }
 
             this.updateStores();

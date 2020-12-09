@@ -19,12 +19,12 @@
                             </div>
                             <div v-if="showFullForm">
                                 <div class="text-base font-bold">Phone number</div>
-                                <input type="tel" v-model="guest.phone" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                <input type="tel" required v-model="guest.phone" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
                             </div>
                         </div>
                         <div class="px-3 py-4 border-b" v-if="weHaveData && !wantsToUpdate">
                             <div>
-                                Hi {{ guest.first_name }}, welcome back to Jara Beach Resorts.
+                                Hi {{ guest.first_name }}, welcome back to Jara Beach Resort.
                                 We have used your details from the last booking,
                                 however if you would like to make any changes
                                 <span @click="wantsToUpdate = true" class="font-bold cursor-pointer text-brand-blue">click here</span>.
@@ -44,11 +44,16 @@
                             <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
                                 <div>
                                     <div class="text-base font-bold">Gender</div>
-                                    <input type="text" v-model="guest.gender" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                    <select v-model="guest.gender" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none">
+                                        <option value="">--SELECT--</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
                                 </div>
                                 <div>
                                     <div class="text-base font-bold">Date of Birth</div>
-                                    <input type="date" v-model="guest.dob" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                    <input type="date" v-model="guest.dob" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200" ref="dob" style="box-shadow: none" />
+                                    <button @click="$refs.dob.click()">dd</button>
                                 </div>
                             </div>
                             <div class="px-3 py-4 border-b">
@@ -60,13 +65,32 @@
                             <div class="px-3 py-4 border-b">
                                 <div>
                                     <div class="text-base font-bold">Upload Identification</div>
-                                    <input type="text" v-model="guest.identification" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                    <div class="inline-flex items-center mt-2 cursor-pointer" @click="$refs.file.click()">
+                                        <svg viewBox="0 0 15 15" fill="none" class="w-5 h-5 mr-2"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8.75 1.875v2.5A.625.625 0 009.375 5h2.5" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M10.625 13.125h-6.25a1.25 1.25 0 01-1.25-1.25v-8.75a1.25 1.25 0 011.25-1.25H8.75L11.875 5v6.875a1.25 1.25 0 01-1.25 1.25zM7.5 6.875v3.75" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M5.625 8.75L7.5 6.875 9.375 8.75" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                        <span v-if="file.name">{{file.name}}</span>
+                                        <span v-else>Add file</span>
+                                    </div>
+                                    <input type="file" class="hidden" ref="file" @input="handleFileUpload()" />
                                 </div>
                             </div>
                             <div class="px-3 py-4 border-b">
                                 <div>
                                     <div class="text-base font-bold">How did you hear about us?</div>
-                                    <input type="text" v-model="guest.hear_of_us" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                    <select v-model="guest.hear_of_us" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none">
+                                        <option value="">--SELECT--</option>
+                                        <option value="Social Media">Social Media</option>
+                                        <option value="Friend">Friend</option>
+                                        <option value="Website">Website</option>
+                                        <option value="Online Search">Online Search</option>
+                                        <option value="Radio">Radio</option>
+                                        <option value="Television">Television</option>
+                                        <option value="Word of Mouth">Word of Mouth</option>
+                                    </select>
                                 </div>
                             </div>
                         </template>
@@ -94,6 +118,7 @@ export default {
             // weHaveData: false,
             wantsToUpdate: false,
             initialLoad: true,
+            file: {},
             guest: {
                 email: "",
                 phone: "",
@@ -138,8 +163,26 @@ export default {
                 return;
             }
 
+            let guestFormData = new FormData();
+            if (this.file.size > 0) {
+                guestFormData.append("identification", this.file);
+            }
+            guestFormData.append("email", this.guest.email);
+            guestFormData.append("phone", this.guest.phone);
+            guestFormData.append("first_name", this.guest.first_name);
+            guestFormData.append("last_name", this.guest.last_name);
+            guestFormData.append("dob", this.guest.dob);
+            guestFormData.append("gender", this.guest.gender);
+            guestFormData.append("concerns", this.guest.concerns);
+            guestFormData.append("hear_of_us", this.guest.hear_of_us);
+
+            for (var pair of guestFormData.entries()) {
+                console.log(pair[0] + ", " + pair[1]);
+            }
+
             this.$store.commit("UPDATE_GUEST", {
                 guest: Object.assign({}, this.guest),
+                guestFormData: guestFormData,
             });
 
             this.$store.commit("COMPLETE_PROFILE");
@@ -149,6 +192,30 @@ export default {
 
         gotoBack() {
             this.$router.push({ path: "/availability" });
+        },
+
+        submitFile() {
+            let formData = new FormData();
+            formData.append("file", this.file);
+            console.log(">> formData >> ", formData);
+
+            // // You should have a server side REST API
+            // axios
+            //     .post("http://localhost:8080/restapi/fileupload", formData, {
+            //         headers: {
+            //             "Content-Type": "multipart/form-data",
+            //         },
+            //     })
+            //     .then(function () {
+            //         console.log("SUCCESS!!");
+            //     })
+            //     .catch(function () {
+            //         console.log("FAILURE!!");
+            //     });
+        },
+        handleFileUpload() {
+            this.file = this.$refs.file.files[0];
+            console.log(">>>> 1st element in files array >>>> ", this.file);
         },
 
         async confirmGuest() {

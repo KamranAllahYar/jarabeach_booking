@@ -14,7 +14,7 @@
                         <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                     </svg>
                 </button>
-                <button class="px-4 text-white rounded-md bg-brand-blue-400" @click="nextMonth()">
+                <button class="px-4 text-white rounded-md bg-brand-blue-400 disabled:bg-gray-400" @click="nextMonth()">
                     <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                     </svg>
@@ -22,27 +22,29 @@
             </div>
         </div>
 
-        <div class="flex w-full">
-            <div class="w-48">
+        <div class="flex w-full" v-for="(monthDays, k) in [firstHalfDays, secondHalfDays]" :key="k">
+            <div class="flex-shrink-0 w-36">
                 <div class="flex items-center px-6 text-xl font-bold border border-l-0 border-gray-100 h-14">
-                    {{ months[calMonth-1] }}.
-                    {{calYear}}
+                    <span v-if="k == 0">
+                        {{ months[calMonth-1] }}.
+                        {{calYear}}
+                    </span>
                 </div>
                 <div v-for="roomType in roomTypes" :key="roomType" class="flex items-center w-full px-6 capitalize border border-l-0 border-gray-100 h-14">
                     {{ roomType }}
                 </div>
             </div>
-            <div class="flex-1 overflow-auto">
-                <div class="flex">
-                    <div v-for="w in daysInMonth" :key="w" class="flex flex-col items-center justify-center flex-shrink-0 text-sm text-center text-black border border-gray-100 w-14 h-14">
+            <div class="flex-1">
+                <div class="grid" :class="`grid-cols-${monthDays.length}`">
+                    <div v-for="w in monthDays" :key="w" class="flex flex-col items-center justify-center flex-shrink-0 text-sm text-center text-black border border-gray-100 h-14">
                         <div class="text-base">{{ dayOfWeek(w) }}.</div>
                         <div class="text-base font-light">{{ w }}</div>
                     </div>
                 </div>
-                <div class="flex" v-for="roomType in roomTypes" :key="roomType">
-                    <div v-for="day in daysInMonth" :key="day"
+                <div class="grid" :class="`grid-cols-${monthDays.length}`" v-for="roomType in roomTypes" :key="roomType">
+                    <div v-for="day in monthDays" :key="day"
                         v-popover.right="{ name: 'rooms-available' }"
-                        class="flex items-center justify-center flex-shrink-0 text-2xl text-gray-500 border border-gray-100 cursor-pointer font-extralight w-14 bg-opacity-20 h-14"
+                        class="flex items-center justify-center flex-shrink-0 text-2xl text-gray-500 border border-gray-100 cursor-pointer font-extralight bg-opacity-20 h-14"
                         :class="roomsAvailable(roomType, day) <= 0 ? 'bg-brand-red' : 'bg-brand-blue-300'"
                         @click="hoverRoom(roomType, day)">
                         <transition name="fade">
@@ -53,6 +55,12 @@
                 </div>
             </div>
         </div>
+
+        <!-- <div class="grid gap-1 grid-cols-16">
+            <div v-for="i in 31" :key="i">
+                <div class="flex items-center justify-center w-full bg-red-100 h-14">k</div>
+            </div>
+        </div> -->
 
         <div class="flex items-center p-6">
             <div class="flex items-center text-gray-600">
@@ -125,11 +133,34 @@ export default {
             loading: false,
             hoveredRooms: [],
             bookedRooms: [],
+            maxYear: new Date().getFullYear() + 1,
+            maxMonth: new Date().getMonth() + 1,
         };
     },
     computed: {
         daysInMonth() {
             return new Date(this.calYear, this.calMonth, 0).getDate();
+        },
+        firstHalfDays() {
+            let num = Math.ceil(this.daysInMonth / 2);
+            console.log(this.daysInMonth);
+
+            const nums = [];
+            for (let n = 1; n <= num; n++) {
+                nums.push(n);
+            }
+            return nums;
+        },
+        secondHalfDays() {
+            const num = this.daysInMonth - this.firstHalfDays.length + 1;
+
+            console.log(num + 1);
+
+            const nums = [];
+            for (let n = num + 1; n <= this.daysInMonth; n++) {
+                nums.push(n);
+            }
+            return nums;
         },
         dayMonth() {
             return new Date(this.calYear, this.calMonth, 0);
@@ -146,6 +177,11 @@ export default {
             });
 
             return types;
+        },
+        isMaxMonthYear() {
+            return (
+                this.calYear >= this.maxYear && this.calMonth >= this.maxMonth
+            );
         },
     },
     methods: {
@@ -244,6 +280,11 @@ export default {
             ];
         },
         nextMonth() {
+            if (this.isMaxMonthYear) {
+                this.$toast.info("You cannot book more than a year ahead");
+                return;
+            }
+
             if (this.calMonth == 12) {
                 this.calMonth = 1;
                 this.calYear++;

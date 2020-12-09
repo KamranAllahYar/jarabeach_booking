@@ -11,6 +11,7 @@ export const state = () => ({
   policies: [] as any[],
 
   guest: {} as any,
+  guestFormData: {} as FormData,
   weHaveData: false as boolean,
   other_guests: [] as any[],
 
@@ -58,6 +59,7 @@ export const mutations: MutationTree<RootState> = {
 
   UPDATE_GUEST: (state, payload) => {
     state.guest = JSON.parse(JSON.stringify(payload.guest));
+    state.guestFormData = payload.guestFormData;
     state.other_guests = payload.others || []
   },
   GUEST_WEHAVEDATA: (state, payload: boolean) => {
@@ -127,7 +129,7 @@ export const actions: ActionTree<RootState, RootState> = {
         email: state.guest.email,
         gender: state.guest.gender,
         dob: state.guest.dob,
-        identification: state.guest.identification,
+        identification: state.guestFormData.get('identification'), //state.guest.identification ,
         hear_of_us: state.guest.hear_of_us,
         concerns: state.guest.concerns
       },
@@ -144,7 +146,9 @@ export const actions: ActionTree<RootState, RootState> = {
       dataToPost.guest_id = state.guest.id;
     }
 
-    return this.$axios.post("bookings", dataToPost)
+    return this.$axios.post("bookings", dataToPost, {
+      // headers: { 'Content-Type': 'multipart/form-data' }
+    })
       .then(res => {
         console.log(res.data);
 

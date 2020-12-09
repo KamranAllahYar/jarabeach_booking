@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="w-full text-center">
-            <div class="py-10 text-3xl font-bold">Welcome to Jara Resorts</div>
+            <div class="py-10 text-3xl font-bold">Welcome to Jara Resort</div>
             <div class="py-10 text-2xl">Book a stay with us</div>
             <div class="">
                 <div>On this trip what's more important to you?</div>

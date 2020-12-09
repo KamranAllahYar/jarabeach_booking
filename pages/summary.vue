@@ -67,7 +67,7 @@ export default {
 
             if (res) {
                 this.$router.push("/done");
-                // this.$store.commit("RESET_STORE");
+                this.$store.commit("RESET_STORE");
             }
         },
         currency(num) {
