@@ -35,18 +35,7 @@ export default {
                 "roomDecoration",
                 "domesticStaff",
             ],
-            specialsIndex: ''
         };
-    },
-    computed: {
-
-    },
-    methods: {
-        gotoNext() {
-            // this.specialsIndex = this.specials.findIndex()
-            // this.$router.push({ path: "/extras/" + name });
-        },
-
     },
 };
 </script>

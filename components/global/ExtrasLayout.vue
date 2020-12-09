@@ -1,7 +1,8 @@
 <template>
     <div>
-        <SpecialLookout v-if="currentSpecial == 'lookout'" @next="gotoNext('lookoutMeal')" />
-        <SpecialLookoutMeal v-if="currentSpecial == 'lookoutMeal'" @next="gotoNext('massage')" />
+        <SpecialLookout v-if="currentSpecial == 'lookout'" />
+        
+        <SpecialLookoutMeal v-if="''" @next="gotoNext('massage')" />
 
         <SpecialMassage v-else-if="currentSpecial == 'massage'" @next="gotoNext('quadbikes')" />
 
@@ -15,7 +16,7 @@
 
         <SpecialRoomDecoration v-else-if="currentSpecial == 'roomDecoration'" @next="gotoNext('domesticStaff')" />
 
-        <SpecialDomesticStaff v-else-if="currentSpecial == 'domesticStaff'" @next="gotoNext('domesticStaffInfo')" />
+        <SpecialDomesticStaff v-else-if="currentSpecial == 'domesticStaff'" />
         <SpecialDomesticStaffInfo v-else-if="currentSpecial == 'domesticStaffInfo'" />
     </div>
 </template>

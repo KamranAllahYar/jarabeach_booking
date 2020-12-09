@@ -1,7 +1,7 @@
 <template>
     <div class="flex w-full">
         <div class="relative w-6/12 ">
-            <img src="@/assets/images/specials/decoration.png" alt="" class="object-cover object-center w-full h-full">
+            <img src="@/assets/images/specials/roomDecoration.png" alt="" class="object-cover object-center w-full h-full">
             <NavSpecials  />
         </div>
         <div class="w-7/12 p-6">

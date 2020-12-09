@@ -2,13 +2,13 @@
     <div class="w-full">
         <div class="flex items-center justify-between text-xs border-b">
             <div class="w-24 h-16">
-                <img src="@/assets/images/specials/staff.png" alt="" class="object-cover object-center w-full h-full">
+                <img src="@/assets/images/specials/domesticStaff.png" alt="" class="object-cover object-center w-full h-full">
             </div>
             <div class="flex-1 ml-5">
                 <div class="text-lg font-semibold">Lookout Experience</div>
                 <div class="font-light text-gray-600 fonts ">Food is available from a separate menu (below) and consumed in their rooms or at the back of the property</div>
             </div>
-            <div class="flex items-center mr-5 space-x-2 text-gray-600 cursor-pointer">
+            <div class="flex items-center mr-5 space-x-2 text-gray-600 cursor-pointer"  @click="cancelMeal">
                 <div class="">
                     <svg 
                         class="w-6 h-6" fill="none" 
@@ -96,11 +96,17 @@
 </template>
 <script>
 export default {
+    props:['cancelClicked'],
     data() {
         return {
             breakfast: '',
             lunch: '',
-            dinner: ''
+            dinner: '',
+        }
+    },
+    methods: {
+        cancelMeal() {
+            this.cancelClicked = true
         }
     }
 }

@@ -2,7 +2,7 @@
     <div class="w-full">
         <div class="flex items-center justify-between text-xs border-b">
             <div class="w-24 h-16">
-                <img src="@/assets/images/specials/staff.png" alt="" class="object-cover object-center w-full h-full">
+                <img src="@/assets/images/specials/domesticStaff.png" alt="" class="object-cover object-center w-full h-full">
             </div>
             <div class="flex-1 ml-5">
                 <div class="text-lg font-semibold">Domestic Staff</div>
