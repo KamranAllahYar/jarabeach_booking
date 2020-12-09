@@ -4,13 +4,12 @@
         <SpecialLookoutMeal v-if="currentSpecial == 'lookoutMeal'" @next="gotoNext('massage')" />
         <SpecialMassage v-else-if="currentSpecial == 'massage'" @next="gotoNext('quadbikes')" />
         <SpecialQuadBikes v-else-if="currentSpecial == 'quadbikes'" @next="gotoNext('photoshoot')" />
-        <SpecialPhotoshoot v-if="currentSpecial == 'photoshoot'" @next="gotoNext('drinkCollection')" />
-        <SpecialDrinkCollection v-if="currentSpecial == 'drinkCollection'" @next="gotoNext('cake')" />
+        <SpecialPhotoshoot v-if="currentSpecial == 'photoshoot'" @next="gotoNext('drinks')" />
+        <SpecialDrinkCollection v-if="currentSpecial == 'drinks'" @next="gotoNext('cake')" />
         <SpecialCake v-else-if="currentSpecial == 'cake'" @next="gotoNext('roomDecoration')" />
         <SpecialRoomDecoration v-else-if="currentSpecial == 'roomDecoration'" @next="gotoNext('domesticStaff')" />
         <SpecialDomesticStaff v-else-if="currentSpecial == 'domesticStaff'" @next="gotoNext('domesticStaffInfo')" />
         <SpecialDomesticStaffInfo v-else-if="currentSpecial == 'domesticStaffInfo'" />
-        
     </div>
 </template>
 

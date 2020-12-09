@@ -135,6 +135,8 @@ export default {
             bookedRooms: [],
             maxYear: new Date().getFullYear() + 1,
             maxMonth: new Date().getMonth() + 1,
+            minYear: new Date().getFullYear(),
+            minMonth: new Date().getMonth() + 1,
         };
     },
     computed: {
@@ -181,6 +183,11 @@ export default {
         isMaxMonthYear() {
             return (
                 this.calYear >= this.maxYear && this.calMonth >= this.maxMonth
+            );
+        },
+        isMinMonthYear() {
+            return (
+                this.calYear <= this.minYear && this.calMonth <= this.minMonth
             );
         },
     },
@@ -295,6 +302,11 @@ export default {
             this.getRoomsForMonth();
         },
         prevMonth() {
+            if (this.isMinMonthYear) {
+                this.$toast.info("You cannot book in the past");
+                return;
+            }
+
             if (this.calMonth == 1) {
                 this.calMonth = 12;
                 this.calYear--;
