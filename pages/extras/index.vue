@@ -9,13 +9,12 @@
 
             <div class="p-6 mx-auto mt-12 max-w-7xl">
                 <h1 class="mb-6 text-2xl text-center">Select an Extra experience to improve your stay!</h1>
-                <div class="flex justify-center space-x-3">
-                    <div class="grid grid-cols-4 gap-6">
-                        <div class="w-full border rounded cursor-pointer" v-for="name in specials" :key="name" @click="gotoNext(name)">
-                            <div class="px-3 py-5 font-bold capitalize">{{name}}</div>
-                            <div class="h-48 overflow-hidden">
-                                <img :src="require(`@/assets/images/specials/${name}.png`)" class="object-cover object-center w-full" alt="">
-                            </div>
+
+                <div class="grid grid-cols-4 gap-6">
+                    <div class="w-full border rounded cursor-pointer" v-for="name in specials" :key="name" @click="gotoNext(name)">
+                        <div class="px-3 py-3 font-bold capitalize">{{name}}</div>
+                        <div class="relative w-full h-48 overflow-hidden">
+                            <img :src="require(`@/assets/images/specials/${name}.png`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
                         </div>
                     </div>
                 </div>
