@@ -1,9 +1,9 @@
 <template>
     <div >
-        <div class="flex w-full" v-show="showLookout">
+        <div class="flex w-full" v-show="!showMenu">
             <div class="relative w-6/12">
                 <img src="@/assets/images/specials/lookout.png" alt="" class="object-cover object-center w-full h-full">
-                <NavSpecials />
+                <NavSpecials @next="emitNext()" />
             </div>
             <div class="w-7/12 p-6">
                 <div class="font-semibold">The Lookout Experience</div>
@@ -25,23 +25,29 @@
                     </div>
                 </div>
                 <div class="w-1/3 mx-auto mt-8">
-                    <MainButton @click="showClicked">Next</MainButton>
+                    <MainButton @click="showMenu = true">Next</MainButton>
                 </div>
             </div>
         </div>
-        <SpecialLookoutMeal :cancelClicked="showLookout" v-if="!showLookout" />
+        <SpecialLookoutMeal v-if="showMenu" @close="showMenu = false" @next="emitNext()"  />
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
-            showLookout: true,
+            showMenu: false,
         }
     },
+    computed: {
+        getSpecials() {
+            return this.$store.getters.getSpecials;
+        },
+    },
     methods: {
-        showClicked() {
-            this.showLookout = false;
+        emitNext(){
+            this.showMenu = false;
+            this.$emit('next');
         }
     }
 }

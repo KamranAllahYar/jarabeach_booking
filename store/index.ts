@@ -22,6 +22,7 @@ export const state = () => ({
 
   extra: '' as string,
   showExtra: false as boolean,
+  specials: [ "lookout", "massage", "quadbikes",  "photoshoot", "drinks", "cake",  "roomDecoration", "domesticStaff"] as any[],
 
 })
 
@@ -47,6 +48,7 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return bRooms;
   },
+  getSpecials: (state: RootState) => state.specials,
 }
 
 export const mutations: MutationTree<RootState> = {

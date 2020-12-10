@@ -4,14 +4,14 @@
             <div class="w-24 h-16">
                 <img src="@/assets/images/specials/domesticStaff.png" alt="" class="object-cover object-center w-full h-full">
             </div>
-            <div class="flex-1 ml-5">
+            <div class="flex-1 ml-3">
                 <div class="text-lg font-semibold">Lookout Experience</div>
-                <div class="font-light text-gray-600 fonts ">Food is available from a separate menu (below) and consumed in their rooms or at the back of the property</div>
+                <div class="font-light text-gray-600">Food is available from a separate menu (below) and consumed in their rooms or at the back of the property</div>
             </div>
-            <div class="flex items-center mr-5 space-x-2 text-gray-600 cursor-pointer"  @click="cancelMeal">
+            <div class="flex items-center mr-3 space-x-1 text-gray-600 cursor-pointer" @click="$emit('close')">
                 <div class="">
                     <svg 
-                        class="w-6 h-6" fill="none" 
+                        class="w-5 h-5" fill="none" 
                         stroke="currentColor" viewBox="0 0 24 24" 
                         xmlns="http://www.w3.org/2000/svg">
                         <path 
@@ -23,11 +23,11 @@
                 <div class="">Close</div>
             </div>
         </div>
-        <div class="flex justify-between mx-8 my-4 space-x-5 text-xs">
+        <div class="flex justify-between mx-8 my-4 space-x-5">
             <div>
                 <div class="text-center">
-                    <div class="text-xl font-bold uppercase fonts">Breakfast</div>
-                    <div class="font-light text-gray-700">(between 8:30- 10:30am)</div>
+                    <div class="text-xl font-bold uppercase ">Breakfast</div>
+                    <div class="text-xs font-light text-gray-700">(between 8:30- 10:30am)</div>
                 </div>
                 <div class="my-5 space-y-4">
                     <div>
@@ -48,8 +48,8 @@
             
             <div class="">
                 <div class="text-center">
-                    <div class="text-xl font-bold uppercase fonts">Lunch</div>
-                    <div class="font-light text-gray-700">(between 1:30 - 4:00pm)</div>
+                    <div class="text-xl font-bold uppercase ">Lunch</div>
+                    <div class="text-xs font-light text-gray-700">(between 1:30 - 4:00pm)</div>
                 </div>
                 <div class="px-16 my-5 space-y-4 border-l border-r">
                     <div>
@@ -69,8 +69,8 @@
             
             <div class="">
                 <div class="text-center">
-                    <div class="text-xl font-bold uppercase fonts">Dinner</div>
-                    <div class="font-light text-gray-700">(from 7pm. Candles inclusive)</div>
+                    <div class="text-xl font-bold uppercase ">Dinner</div>
+                    <div class="text-xs font-light text-gray-700">(from 7pm. Candles inclusive)</div>
                 </div>
                 <div class="pr-4 my-5 space-y-4">
                     <div>
@@ -104,11 +104,6 @@ export default {
             dinner: '',
         }
     },
-    methods: {
-        cancelMeal() {
-            this.cancelClicked = true
-        }
-    }
 }
 </script>
 <style  scoped>

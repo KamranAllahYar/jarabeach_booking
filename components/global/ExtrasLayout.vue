@@ -1,10 +1,10 @@
 <template>
     <div>
-        <SpecialLookout v-if="currentSpecial == 'lookout'" />
+        <SpecialLookout v-if="currentSpecial == 'lookout'" @next="gotoNext('massage')" />
         
-        <SpecialLookoutMeal v-if="''" @next="gotoNext('massage')" />
+        <!-- <SpecialLookoutMeal v-if="''" @next="gotoNext('massage')" /> -->
 
-        <SpecialMassage v-else-if="currentSpecial == 'massage'" @next="gotoNext('quadbikes')" />
+        <SpecialMassage v-else-if="currentSpecial == 'massage'" @next="gotoNext('quadbikes')" @prev="gotoNext('lookout')" />
 
         <SpecialQuadBikes v-else-if="currentSpecial == 'quadbikes'" @next="gotoNext('photoshoot')" />
 

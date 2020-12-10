@@ -1,6 +1,6 @@
 <template>
     <div class="absolute bottom-0 z-10 flex items-center justify-between w-full p-5 text-white bg-yellow-900">
-        <div class="flex items-center justify-center w-6 h-6 border rounded-full cursor-pointer">
+        <div class="flex items-center justify-center w-6 h-6 border rounded-full cursor-pointer" @click="$emit('prev')">
             <svg 
                 class="w-3 h-3" fill="none" 
                 stroke="currentColor" viewBox="0 0 24 24" 
@@ -8,8 +8,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
         </div>
-        <div class=""> 1 of {{ specials.length }}</div>
-        <div class="flex items-center justify-center w-6 h-6 border rounded-full cursor-pointer">
+        <div class=""> {{ index }} of {{ total }}</div>
+        <div class="flex items-center justify-center w-6 h-6 border rounded-full cursor-pointer" @click="$emit('next')">
             <svg 
                 class="w-3 h-3" fill="none" 
                 stroke="currentColor" viewBox="0 0 24 24" 
@@ -22,21 +22,14 @@
 
 <script>
 export default {
-    layout: "booking",
-    data() {
-        return {
-            specials: [
-                "lookout",
-                "massage",
-                "quadbikes",
-                "photoshoot",
-                "drinks",
-                "cake",
-                "roomDecoration",
-                "domesticStaff",
-            ],
-        };
-    },
+    props: {
+        total: {
+            default: 8,
+        },
+        index: {
+            default: 1,
+        }
+    }
 };
 </script>
 
