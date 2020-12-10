@@ -2,18 +2,17 @@
     <div class="flex w-full">
         <div class="relative w-6/12 ">
             <img src="@/assets/images/specials/quadbikes.png" alt="" class="object-cover object-center w-full h-full">
-            <NavSpecials  />
+            <NavSpecials :index="3" @next="$emit('next')" @prev="$emit('prev')"   />
         </div>
         <div class="w-7/12 p-6">
             <div class="font-semibold">Quad Bikes</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum, sint impedit possimus itaque facere placeat debitis.
-                Totam nostrum aspernatur enim corporis alias, deserunt et quas aut error maxime ad pariatur.
-                Voluptas accusamus molestias cum aperiam blanditiis. Harum eos, reprehenderit sequi quas suscipit repudiandae sunt blanditiis
-                corrupti ut magni praesentium nemo omnis accusamus ex dolores. Eaque rem non eveniet provident. Non. Eaque rem non eveniet provident. Non.
+                Quad biking - external beach provider (signed disclaimer and pre-booking required). 
+                There are only 2 quad bikes available so the application will need to take this into consideration when managing availability. 
+                The guest can also select the number of quad bikes they want (1 or 2)
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this</div>
-            <div class="flex items-center mt-3 space-x-5 font-light ">
+            <div class="flex items-center mt-2 space-x-5 font-light ">
                 <div>
                     <input type="radio" value="Tues, Nov 9th 2020" id="first_date" class="mr-3 focus-within:ring-0 border-brand-blue">
                     <label for="first_date">Tues, Nov 9th 2020 </label>
@@ -24,8 +23,8 @@
                 </div>
             </div>
             <div>
-                <div class="mt-6 font-semibold">At what time?</div>
-                <div class="mt-3 space-y-3 font-light ">
+                <div class="mt-4 font-semibold">At what time?</div>
+                <div class="mt-2 space-y-3 font-light ">
                     <div>
                         <input type="radio" name="lookout" id="first_date" class="mr-3 focus-within:ring-0 border-brand-blue"><label for="first_date">Half day (12pm - 4pm) #25,000</label>
                     </div>

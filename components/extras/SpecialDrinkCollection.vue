@@ -2,15 +2,16 @@
     <div class="flex w-full">
         <div class="relative w-6/12 ">
             <img src="@/assets/images/specials/drinks.png" alt="" class="object-cover object-center w-full h-full">
-            <NavSpecials  />
+            <NavSpecials :index="5" @next="$emit('next')" @prev="$emit('prev')"   />
         </div>
         <div class="w-7/12 p-6">
             <div class="font-semibold">Premium Drink Collection</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum, sint impedit possimus itaque facere placeat debitis.
-                Totam nostrum aspernatur enim corporis alias, deserunt et quas aut error maxime ad pariatur.
-                Voluptas accusamus molestias cum aperiam blanditiis. Harum eos, reprehenderit sequi quas suscipit repudiandae sunt blanditiis
-                corrupti ut magni praesentium nemo omnis accusamus ex dolores. Eaque rem non eveniet provident. Non. 
+                We have curated a small, but memorable range of champagnes, wines and spirits - 
+                available to be purchased during your stay via POS or bank transfer (JARA is a completely cashless resort). 
+                Items can also be  pre-ordered at the time of booking. 
+                The following items represent some of the items currently available to buy. 
+                We can source any bottle found in Nigeria, so if it's not listed, please do not hesitate to let us know what you'd like us to prepare for you. 
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this</div>
             <div class="flex items-center mt-3 space-x-5 font-light ">

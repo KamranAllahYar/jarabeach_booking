@@ -2,13 +2,12 @@
     <div class="flex w-full">
         <div class="relative w-6/12 ">
             <img src="@/assets/images/specials/cake.png" alt="" class="object-cover object-center w-full h-full">
-            <NavSpecials />
+            <NavSpecials :index="6" @next="$emit('next')" @prev="$emit('prev')"  />
         </div>
         <div class="w-7/12 p-6">
             <div class="font-semibold">Cakes</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Totam nostrum aspernatur enim corporis alias, deserunt et quas aut error maxime ad pariatur.
+                Make your visit extra-special with a celebration cake. You can specify size, layer, number, color and flavour of cake and we will get it done for you.
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this</div>
             <div class="flex items-center mt-3 space-x-5 font-light ">

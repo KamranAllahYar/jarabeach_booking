@@ -2,14 +2,13 @@
     <div class="flex w-full">
         <div class="relative w-6/12 ">
             <img src="@/assets/images/specials/roomDecoration.png" alt="" class="object-cover object-center w-full h-full">
-            <NavSpecials  />
+            <NavSpecials :index="7" @next="$emit('next')" @prev="$emit('prev')"   />
         </div>
         <div class="w-7/12 p-6">
             <div class="font-semibold">Room Decoration</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum, sint impedit possimus itaque facere placeat debitis.
-                Totam nostrum aspernatur enim corporis alias, deserunt et quas aut error maxime ad pariatur.
-                Voluptas accusamus molestias cum aperiam blanditiis. 
+                There are a number of expected extras we offer for free, including romantic room decoration, or happy birthday messages, simple decorations etc. 
+                This is only avaliable on date of arrival. 
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this</div>
             <div class="flex items-center mt-3 space-x-5 font-light ">

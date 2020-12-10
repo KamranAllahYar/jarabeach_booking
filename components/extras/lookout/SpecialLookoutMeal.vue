@@ -1,12 +1,12 @@
 <template>
     <div class="w-full">
         <div class="flex items-center justify-between text-xs border-b">
-            <div class="w-24 h-16">
+            <div class="w-24 h-20">
                 <img src="@/assets/images/specials/domesticStaff.png" alt="" class="object-cover object-center w-full h-full">
             </div>
             <div class="flex-1 ml-3">
                 <div class="text-lg font-semibold">Lookout Experience</div>
-                <div class="font-light text-gray-600">Food is available from a separate menu (below) and consumed in their rooms or at the back of the property</div>
+                <div class="font-light text-gray-600">9 total (3 for breakfast, lunch and dinner). Only 1 slot available for 2 people per meal. Must be booked in advance.</div>
             </div>
             <div class="flex items-center mr-3 space-x-1 text-gray-600 cursor-pointer" @click="$emit('close')">
                 <div class="">
@@ -23,67 +23,67 @@
                 <div class="">Close</div>
             </div>
         </div>
-        <div class="flex justify-between mx-8 my-4 space-x-5">
-            <div>
+        <div class="flex justify-between w-full my-4 space-x-5 text-sm">
+            <div class="w-1/3">
                 <div class="text-center">
                     <div class="text-xl font-bold uppercase ">Breakfast</div>
                     <div class="text-xs font-light text-gray-700">(between 8:30- 10:30am)</div>
                 </div>
-                <div class="my-5 space-y-4">
-                    <div>
-                        <input type="radio" name="breakfast" id="breakfast_shell" class="mr-2 focus:ring-0 border-brand-blue-300" v-model="breakfast">
-                        <label for="breakfast_shell" class="">Shell Package</label>
+                <div class="px-3 my-5 space-y-6 border-r">
+                    <div class="flex">
+                        <input type="radio" name="breakfast" id="breakfast_shell" class="mt-1 mr-2 focus:ring-0 border-brand-blue-300" v-model="breakfast">
+                        <label for="breakfast_shell" class="">Shell Package (includes non-alcoholic sparkling wine): <span class="font-bold">N15,000 per couple</span></label>
                     </div>
-                    <div>
-                        <input type="radio" name="breakfast" id="breakfast_seahorse" class="mr-2 focus:ring-0 border-brand-blue-300" v-model="breakfast">
-                        <label for="breakfast_seahorse" class="">Seahorse Package</label>
+                    <div class="flex">
+                        <input type="radio" name="breakfast" id="breakfast_seahorse" class="mt-1 mr-2 focus:ring-0 border-brand-blue-300" v-model="breakfast">
+                        <label for="breakfast_seahorse" class="">Seahorse Package (includes sparkling wine/ Prosecco): <span class="font-bold">N20,000 per couple</span></label>
                     </div>
-                    <div>
-                        <input type="radio" name="breakfast" id="breakfast_star" class="mr-2 focus:ring-0 border-brand-blue-300" v-model="breakfast">
-                        <label for="breakfast_star" class="">Starfish Package</label>
+                    <div class="flex">
+                        <input type="radio" name="breakfast" id="breakfast_star" class="mt-1 mr-2 focus:ring-0 border-brand-blue-300" v-model="breakfast">
+                        <label for="breakfast_star" class="">Starfish Package (includes brut champagne): <span class="font-bold">N45,000 per couple</span></label>
                     </div>
 
                 </div>
             </div>
             
-            <div class="">
+            <div class="w-1/3">
                 <div class="text-center">
                     <div class="text-xl font-bold uppercase ">Lunch</div>
                     <div class="text-xs font-light text-gray-700">(between 1:30 - 4:00pm)</div>
                 </div>
-                <div class="px-16 my-5 space-y-4 border-l border-r">
-                    <div>
-                        <input type="radio" name="lunch" id="lunch_shell" class="mr-2 border-brand-blue-300 focus:ring-0" v-model="lunch">
-                        <label for="lunch" class="">Shell Package</label>
+                <div class="px-2 my-5 space-y-6 border-r">
+                    <div class="flex">
+                        <input type="radio" name="lunch" id="lunch_shell" class="mt-1 mr-2 border-brand-blue-300 focus:ring-0" v-model="lunch">
+                        <label for="lunch" class="">Shell Package (includes non-alcoholic sparkling wine): <span class="font-bold">N15,000 per couple</span></label>
                     </div>
-                    <div>
-                        <input type="radio" name="lunch" id="lunch_seahorse" class="mr-2 border-brand-blue-300 focus:ring-0" v-model="lunch">
-                        <label for="lunch" class="">Seahorse Package</label>
+                    <div class="flex">
+                        <input type="radio" name="lunch" id="lunch_seahorse" class="mt-1 mr-2 border-brand-blue-300 focus:ring-0" v-model="lunch">
+                        <label for="lunch" class="">Seahorse Package (includes sparkling wine/ Prosecco): <span class="font-bold">N20,000 per couple</span></label>
                     </div>
-                    <div>
-                        <input type="radio" name="lunch" id="lunch_star" class="mr-2 border-brand-blue-300 focus:ring-0" v-model="lunch">
-                        <label for="lunch" class="">Starfish Package</label>
+                    <div class="flex">
+                        <input type="radio" name="lunch" id="lunch_star" class="mt-1 mr-2 border-brand-blue-300 focus:ring-0" v-model="lunch">
+                        <label for="lunch" class="">Starfish Package (includes brut champagne): <span class="font-bold">N45,000 per couple</span></label>
                     </div>
                 </div>
             </div>
             
-            <div class="">
+            <div class="w-1/3 ">
                 <div class="text-center">
                     <div class="text-xl font-bold uppercase ">Dinner</div>
                     <div class="text-xs font-light text-gray-700">(from 7pm. Candles inclusive)</div>
                 </div>
-                <div class="pr-4 my-5 space-y-4">
-                    <div>
-                        <input type="radio" name="dinner" id="dinner_shell" class="mr-2 border-brand-blue-300 focus:ring-0" v-model="dinner">
-                        <label for="dinner" class="">Shell Package</label>
+                <div class="px-3 my-5 space-y-6">
+                    <div class="flex">
+                        <input type="radio" name="dinner" id="dinner_shell" class="mt-1 mr-2 border-brand-blue-300 focus:ring-0" v-model="dinner">
+                        <label for="dinner" class="">Shell Package (includes non-alcoholic sparkling wine): <span class="font-bold">N15,000 per couple</span></label>
                     </div>
-                    <div>
-                        <input type="radio" name="dinner" id="dinner_seahorse" class="mr-2 border-brand-blue-300 focus:ring-0" v-model="dinner">
-                        <label for="dinner" class="">Seahorse Package</label>
+                    <div class="flex">
+                        <input type="radio" name="dinner" id="dinner_seahorse" class="mt-1 mr-2 border-brand-blue-300 focus:ring-0" v-model="dinner">
+                        <label for="dinner" class="">Seahorse Package (includes sparkling wine/ Prosecco): <span class="font-bold">N20,000 per couple</span></label>
                     </div>
-                    <div>
-                        <input type="radio" name="dinner" id="dinner_starfish" class="mr-2 border-brand-blue-300 focus:ring-0" v-model="dinner">
-                        <label for="dinner" class="">Starfish Package</label>
+                    <div class="flex">
+                        <input type="radio" name="dinner" id="dinner_starfish" class="mt-1 mr-2 border-brand-blue-300 focus:ring-0" v-model="dinner">
+                        <label for="dinner" class="">Starfish Package (includes brut champagne): <span class="font-bold">N45,000 per couple</span></label>
                     </div>
                 </div>
             </div>
@@ -106,8 +106,3 @@ export default {
     },
 }
 </script>
-<style  scoped>
-.fonts {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-</style>

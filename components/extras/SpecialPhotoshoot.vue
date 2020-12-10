@@ -2,15 +2,14 @@
     <div class="flex w-full">
         <div class="relative w-6/12 ">
             <img src="@/assets/images/specials/photoshoot.png" alt="" class="object-cover object-center w-full h-full">
-            <NavSpecials  />
+            <NavSpecials :index="4" @next="$emit('next')" @prev="$emit('prev')"   />
         </div>
         <div class="w-7/12 p-6">
             <div class="font-semibold">Photoshoot</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum, sint impedit possimus itaque facere placeat debitis.
-                Totam nostrum aspernatur enim corporis alias, deserunt et quas aut error maxime ad pariatur.
-                Voluptas accusamus molestias cum aperiam blanditiis. Harum eos, reprehenderit sequi quas suscipit repudiandae sunt blanditiis
-                corrupti ut magni praesentium nemo omnis accusamus ex dolores. Eaque rem non eveniet provident. Non. Eaque rem non eveniet provident. Non.
+                A photographer can access Jara Beach Resort for a maximum of four hours. Includes no food or drink. 
+                Assistants/ make up artists charged N15,000 each thereafter. 
+                Max two shoots at any given time outdoor venue - 4 hours. Photographer Only <span class="font-bold">- N50,000</span>
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this</div>
             <div class="flex items-center mt-3 space-x-5 font-light ">
