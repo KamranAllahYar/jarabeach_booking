@@ -29,9 +29,11 @@
                 <div class="flex flex-wrap items-center justify-between w-full mt-3">
                     <div class="flex items-center mb-3 space-x-3 font-light" v-for="drink in drinks" :key="drink.id">
                         <div class="flex items-center pl-2 border rounded-md focus-within:ring">
-                            <svg class="w-5 h-5" viewBox="0 0 16 16" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13.75 6.583h-.01C13.5 3.55 10.706 1.55 8 1.55s-5.5 2-5.74 5.033h-.01a1.75 1.75 0 100 3.5h.01a6 6 0 0011.48 0h.01a1.75 1.75 0 100-3.5z" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M8 1.55a1.5 1.5 0 01.596 2.876 1.5 1.5 0 01-2.01-.876M9.323 11.334a2 2 0 01-2.646 0M11.5 7.333a1 1 0 01-2 0M6.5 7.333a1 1 0 01-2 0" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
+                            <svg 
+                                class="w-5 h-5" fill="none" viewBox="0 0 15 15" 
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.625 14.5312h3.75M7.5 14.5312v-3.75M8.96444 10.3375a2.6397 2.6397 0 01-1.465.4439 2.63968 2.63968 0 01-1.465-.4439 2.64065 2.64065 0 01-1.16-2.50625L5.58131.89a.46936.46936 0 01.46688-.42125h2.9025A.46935.46935 0 019.41756.89l.70684 6.94125a2.64088 2.64088 0 01-.22621 1.41686 2.6407 2.6407 0 01-.93375 1.08939v0zM5.24316 4.21875h4.5125" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.79688 5.625a.23443.23443 0 01.21653.14468.23442.23442 0 01-.05081.25542.2344.2344 0 01-.25542.05081.2344.2344 0 01-.14468-.21653.23433.23433 0 01.06865-.16573.23433.23433 0 01.16573-.06865M6.79688 8.4375a.23443.23443 0 01.21653.14468.23442.23442 0 01-.05081.25542.2344.2344 0 01-.25542.05081.2344.2344 0 01-.14468-.21653.23433.23433 0 01.06865-.16573.23433.23433 0 01.16573-.06865M8.20313 7.03125a.23443.23443 0 01.21653.14468.23442.23442 0 01-.05081.25542.2344.2344 0 01-.25542.05081.2344.2344 0 01-.14468-.21653.23433.23433 0 01.06865-.16573.23433.23433 0 01.16573-.06865" 
+                                    stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                             <select v-model="drink.drinkType" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
                                 <option value="brut">Brut Champagne</option>

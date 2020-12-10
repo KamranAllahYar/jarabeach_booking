@@ -26,9 +26,11 @@
                 <div class="mt-6 font-semibold">Select number of assistants/make up artists</div>
                 <div class="grid w-full grid-cols-3 mt-3 gap-x-3 gap-y-3">
                         <div class="flex items-center pl-2 border rounded-md focus-within:ring">
-                            <svg class="w-5 h-5" viewBox="0 0 16 16" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13.75 6.583h-.01C13.5 3.55 10.706 1.55 8 1.55s-5.5 2-5.74 5.033h-.01a1.75 1.75 0 100 3.5h.01a6 6 0 0011.48 0h.01a1.75 1.75 0 100-3.5z" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M8 1.55a1.5 1.5 0 01.596 2.876 1.5 1.5 0 01-2.01-.876M9.323 11.334a2 2 0 01-2.646 0M11.5 7.333a1 1 0 01-2 0M6.5 7.333a1 1 0 01-2 0" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
+                            <svg 
+                                class="w-5 h-5" fill="none" viewBox="0 0 15 15" 
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.5 7.96875c1.81218 0 3.2812-1.46907 3.2812-3.28125S9.31218 1.40625 7.5 1.40625c-1.81218 0-3.28125 1.46907-3.28125 3.28125S5.68782 7.96875 7.5 7.96875zM1.40625 14.5312c0-1.6161.64202-3.1661 1.78482-4.3089C4.33387 9.07952 5.88384 8.4375 7.5 8.4375c1.61616 0 3.1661.64202 4.3089 1.7848 1.1428 1.1428 1.7848 2.6928 1.7849 4.3089" 
+                                    stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                             <select v-model="noOfArtists"
                                 class="border-0 rounded-md outline-none focus:outline-none"

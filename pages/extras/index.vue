@@ -14,7 +14,7 @@
                     <div class="w-full border rounded cursor-pointer" v-for="name in specials" :key="name" @click="gotoNext(name)">
                         <div class="px-3 py-3 font-bold capitalize">{{name}}</div>
                         <div class="relative w-full h-48 overflow-hidden">
-                            <img :src="require(`@/assets/images/specials/${name}.png`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
+                            <img :src="require(`@/assets/images/thumbnails/${name}.png`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
                         </div>
                     </div>
                 </div>

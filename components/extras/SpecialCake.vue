@@ -25,13 +25,10 @@
                 <div class="mt-3 font-light">
                     <div class="flex items-center w-full my-5 space-x-5">
                         <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring">
-                            <svg
-                                class="w-5 h-5 text-brand-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            <svg class="w-5 h-5" viewBox="0 0 15 15" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                                    d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z">
-                                </path>
+                                <path d="M.92 14.531h13.125M12.17 6.094H2.795a.937.937 0 00-.938.937v4.688c0 .518.42.937.938.937h9.375c.518 0 .937-.42.937-.937V7.03a.937.937 0 00-.937-.937zM7.482 4.688v1.406M8.42 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406zM11.232 4.688v1.406M12.17 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406zM3.732 4.688v1.406M4.67 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406z" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1.857 8.203A1.639 1.639 0 004.67 9.35a1.631 1.631 0 002.578-.313 1.628 1.628 0 002.812 0 1.637 1.637 0 003.047-.833" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             <select class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.size">
                                 <option value="size">Size</option>
@@ -73,13 +70,10 @@
                             </select>
                         </div>
                         <div class="flex items-center w-1/2 pl-2 border rounded-md focus-within:ring">
-                            <svg
-                                class="w-5 h-5 text-brand-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 15 15"
                                 xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                                    d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z">
-                                </path>
+                                <path d="M10.0144 9.76502c.1875 2.40998 3.7588.74998 3.4763 1.58748-1.5781 4.6756-7.90501 3.5531-10.60376.7281-1.25186-1.276-1.952-2.99299-1.94943-4.78058.00257-1.78759.70765-3.50254 1.96318-4.775 2.6425-2.6425 7.12001-2.83437 9.55501-.01375 4.77 5.525-2.60626 5.10313-2.4413 7.25375z" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.49297 9.26816c.52467 0 .95-.42533.95-.95s-.42533-.95-.95-.95-.95.42533-.95.95.42533.95.95.95zM6.84453 12.2896c.52467 0 .95-.4253.95-.95 0-.5246-.42533-.95-.95-.95s-.95.4254-.95.95c0 .5247.42533.95.95.95zM9.11602 4.64512c.52467 0 .94998-.42533.94998-.95s-.42531-.95-.94998-.95-.95.42533-.95.95.42533.95.95.95zM5.08867 5.65293c.52467 0 .95-.42533.95-.95s-.42533-.95-.95-.95-.95.42533-.95.95.42533.95.95.95z" 
+                                    stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                             <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.colors">
                                 <option value="color">Colors</option>

@@ -5,7 +5,7 @@
                 <img src="@/assets/images/specials/domesticStaff.png" alt="" class="object-cover object-center w-full h-full">
             </div>
             <div class="flex-1 ml-3">
-                <div class="text-lg font-semibold">Lookout Experience</div>
+                <div class="text-xl font-semibold">Lookout Experience</div>
                 <div class="text-xs font-light text-gray-600">9 total (3 for breakfast, lunch and dinner). Only 1 slot available for 2 people per meal. Must be booked in advance.</div>
             </div>
             <div class="flex items-center mr-3 space-x-1 text-gray-600 cursor-pointer" @click="$emit('close')">
