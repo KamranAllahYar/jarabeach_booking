@@ -6,7 +6,7 @@
             </div>
             <div class="flex-1 ml-3">
                 <div class="text-lg font-semibold">Domestic Staff</div>
-                <div class="font-light text-gray-600 fonts ">Food is available from a separate menu (below) and consumed in their rooms or at the back of the property</div>
+                <div class="font-light text-gray-600">Food is available from a separate menu (below) and consumed in their rooms or at the back of the property</div>
             </div>
             <div class="flex items-center mr-3 space-x-2 text-gray-600 cursor-pointer" @click="$emit('close')">
                 <div class="">
@@ -87,8 +87,4 @@ export default {
     }
 }
 </script>
-<style  scoped>
-.fonts {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-</style>
+
