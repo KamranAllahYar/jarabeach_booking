@@ -11,7 +11,7 @@
                 <h1 class="mb-6 text-2xl text-center">Here are some extra options to improve your stay!</h1>
 
                 <div class="grid grid-cols-4 gap-6">
-                    <div class="w-full border rounded cursor-pointer" v-for="name in specials" :key="name" @click="getSelectedSpecials(name)">
+                    <div class="w-full border rounded shadow-lg cursor-pointer" v-for="name in specials" :key="name" @click="getSelectedSpecials(name)">
                         <div class="flex items-center justify-between p-3">
                             <div class="font-medium capitalize">{{name}}</div>
                             <div v-if="selected">
