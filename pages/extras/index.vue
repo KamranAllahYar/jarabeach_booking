@@ -8,10 +8,10 @@
             <TopProgressBar />
 
             <div class="p-6 mx-auto mt-12 max-w-7xl">
-                <h1 class="mb-6 text-2xl text-center">Select an Extra experience to improve your stay!</h1>
+                <h1 class="mb-6 text-2xl text-center">Here are some extra options to improve your stay!</h1>
 
                 <div class="grid grid-cols-4 gap-6">
-                    <div class="w-full border rounded cursor-pointer" v-for="(name, index) in specials" :key="name" @click="getSelectedSpecials(index)">
+                    <div class="w-full border rounded cursor-pointer" v-for="name in specials" :key="name" @click="getSelectedSpecials(name)">
                         <div class="flex items-center justify-between p-3">
                             <div class="font-medium capitalize">{{name}}</div>
                             <div v-if="selected">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="flex items-center w-1/2 mx-auto mt-8 space-x-5">
-                    <MainButton outline >Back</MainButton>
+                    <MainButton outline @click="goBack">Back</MainButton>
                     <MainButton @click="gotoNext(name)">Next</MainButton>
                 </div>
             </div>
@@ -55,8 +55,14 @@ export default {
         };
     },
     methods: {
-        gotoNext(name) {
-            this.$router.push({ path: "/extras/" + name });
+        // gotoNext(name) {
+        //     if(this.selected){
+
+        //         this.$router.push({ path: "/extras/" + name });
+        //     }
+        // },
+        goBack() {
+            this.$router.push({ path: "/availability"});
         },
         getSelectedSpecials(index) {
             this.selected = !this.selected;
