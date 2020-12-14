@@ -1,23 +1,24 @@
 <template>
     <div>
-        <SpecialLookout v-if="currentSpecial == 'lookout'" @next="gotoNext('massage')" />
-        
-        <!-- <SpecialLookoutMeal v-if="''" @next="gotoNext('massage')" /> -->
+      <pre>
+        Index: {{ index }}
 
-        <SpecialMassage v-else-if="currentSpecial == 'massage'" @next="gotoNext('quadbikes')" @prev="gotoNext('lookout')" />
+      </pre>
+        <SpecialLookout v-if="currentSpecial == 'lookout'" @next="gotoNext()" @prev="gotoPrev()" />
 
-        <SpecialQuadBikes v-else-if="currentSpecial == 'quadbikes'" @next="gotoNext('photoshoot')" @prev="gotoNext('massage')"/>
+        <SpecialMassage v-else-if="currentSpecial == 'massage'" @next="gotoNext()" @prev="gotoPrev()" />
 
-        <SpecialPhotoshoot v-if="currentSpecial == 'photoshoot'" @next="gotoNext('drinks')" @prev="gotoNext('quadbikes')" />
+        <SpecialQuadBikes v-else-if="currentSpecial == 'quadbikes'" @next="gotoNext()" @prev="gotoPrev()" />
 
-        <SpecialDrinkCollection v-if="currentSpecial == 'drinks'" @next="gotoNext('cake')" @prev="gotoNext('photoshoot')"/>
+        <SpecialPhotoshoot v-if="currentSpecial == 'photoshoot'" @next="gotoNext()" @prev="gotoPrev()" />
 
-        <SpecialCake v-else-if="currentSpecial == 'cake'" @next="gotoNext('roomDecoration')" @prev="gotoNext('drinks')" />
+        <SpecialDrinkCollection v-if="currentSpecial == 'drinks'" @next="gotoNext()" @prev="gotoPrev()" />
 
-        <SpecialRoomDecoration v-else-if="currentSpecial == 'roomDecoration'" @next="gotoNext('domesticStaff')"  @prev="gotoNext('cake')"/>
+        <SpecialCake v-else-if="currentSpecial == 'cake'" @next="gotoNext()" @prev="gotoPrev()" />
 
-        <SpecialDomesticStaff v-else-if="currentSpecial == 'domesticStaff'"  @prev="gotoNext('roomDecoration')" />
-        <!-- <SpecialDomesticStaffInfo v-else-if="currentSpecial == 'domesticStaffInfo'" /> -->
+        <SpecialRoomDecoration v-else-if="currentSpecial == 'roomDecoration'" @next="gotoNext()" @prev="gotoPrev()" />
+
+        <SpecialDomesticStaff v-else-if="currentSpecial == 'domesticStaff'" @next="gotoNext()" @prev="gotoPrev()" />
     </div>
 </template>
 
@@ -29,8 +30,34 @@ export default {
             type: String,
         },
     },
+    data() {
+        return {
+            index: 0,
+            specials: [
+                "lookout",
+                "cake",
+                "quadbikes",
+                // "photoshoot",
+                // "drinks",
+                // "cake",
+                // "roomDecoration",
+                // "domesticStaff",
+            ],
+        };
+    },
     methods: {
-        gotoNext(special) {
+        gotoNext(n) {
+            this.index++;
+
+            const special = this.specials[this.index];
+
+            this.$router.push({ path: "/extras/" + special });
+        },
+        gotoPrev(n) {
+            this.index--;
+
+            const special = this.specials[this.index];
+
             this.$router.push({ path: "/extras/" + special });
         },
     },

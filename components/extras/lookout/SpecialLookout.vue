@@ -3,15 +3,15 @@
         <div class="flex w-full" v-show="!showMenu">
             <div class="relative w-6/12">
                 <img src="@/assets/images/specials/lookout.png" alt="" class="object-cover object-center w-full h-full">
-                <NavSpecials @next="emitNext()" />
+                <NavSpecials color="bg-green-500" @next="emitNext()" />
             </div>
             <div class="w-7/12 p-6">
                 <div class="font-semibold">The Lookout Experience</div>
                 <p class="mt-3 font-light leading-relaxed text-gray-600">
-                    The Lookout provides an experience like no other in the city. Pre-booked exclusively, 
-                    the lookout is only open for three sessions a day as well as for massages. 
-                    The lookout is available for up to four people maximum. A speaker is included so you can connect your own playlist, 
-                    or listen to Jara's own - curated to suit the sweet and soothing sound of the waves lapping against the beach. 
+                    The Lookout provides an experience like no other in the city. Pre-booked exclusively,
+                    the lookout is only open for three sessions a day as well as for massages.
+                    The lookout is available for up to four people maximum. A speaker is included so you can connect your own playlist,
+                    or listen to Jara's own - curated to suit the sweet and soothing sound of the waves lapping against the beach.
                     The perfect location for that extra-special romantic occasion. We will be happy to organise extras like flowers or cake for you at an additional cost.
 
                 </p>
