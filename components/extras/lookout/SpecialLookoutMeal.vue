@@ -2,7 +2,7 @@
     <div class="w-full">
         <div class="flex items-center justify-between border-b">
             <div class="w-24 h-20">
-                <img src="@/assets/images/specials/domesticStaff.png" alt="" class="object-cover object-center w-full h-full">
+                <img src="@/assets/images/specials/lookout.png" alt="" class="object-cover object-center w-full h-full">
             </div>
             <div class="flex-1 ml-3">
                 <div class="text-xl font-semibold">Lookout Experience</div>
