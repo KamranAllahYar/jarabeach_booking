@@ -76,6 +76,7 @@
                 <MainButton @click="gotoNext()">Next</MainButton>
             </div>
         </div>
+        <div class="mt-5 font-semibold text-center cursor-pointer text-brand-blue">Manage Booking</div>
     </div>
 </template>
 

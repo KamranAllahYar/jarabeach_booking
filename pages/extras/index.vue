@@ -8,7 +8,7 @@
             <TopProgressBar />
 
             <div class="p-6 mx-auto mt-12 max-w-7xl">
-                <h1 class="mb-6 text-2xl text-center">Select an Extra experience to improve your stay!</h1>
+                <h1 class="mb-6 text-2xl text-center">Here are some extra options to improve your stay!</h1>
 
                 <div class="grid grid-cols-4 gap-6">
                     <div class="w-full border rounded cursor-pointer" v-for="name in specials" :key="name" @click="selectSpecial(name)">
@@ -24,6 +24,7 @@
                         </div>
                         <div class="relative w-full h-48 overflow-hidden">
                             <img :src="require(`@/assets/images/thumbnails/${name}.png`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
+                            <div class="absolute bottom-0 px-5 pb-3 font-semibold text-white">From N50,000</div>
                         </div>
                     </div>
                 </div>
@@ -63,7 +64,7 @@ export default {
 
             this.$router.push({ path: "/extras/" + name });
         },
-        skip(){
+        skip() {
             this.$router.push({ path: "/profile" });
         },
         isSelectedSpecial(sp) {

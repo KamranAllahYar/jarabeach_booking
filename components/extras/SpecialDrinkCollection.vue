@@ -2,7 +2,7 @@
     <div class="flex w-full">
         <div class="relative w-6/12 ">
             <img src="@/assets/images/specials/drinks.png" alt="" class="object-cover object-center w-full h-full">
-            <NavSpecials :index="5" @next="$emit('next')" @prev="$emit('prev')"   />
+            <NavSpecials :color="'bg-green-700'" :index="5" @next="$emit('next')" @prev="$emit('prev')"   />
         </div>
         <div class="w-7/12 p-6">
             <div class="font-semibold">Premium Drink Collection</div>
