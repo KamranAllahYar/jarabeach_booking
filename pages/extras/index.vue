@@ -24,12 +24,13 @@
                         </div>
                         <div class="relative w-full h-48 overflow-hidden">
                             <img :src="require(`@/assets/images/thumbnails/${name}.png`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
+                            <div class="absolute bottom-0 px-5 pb-3 font-semibold text-white">From N50,000</div>
                         </div>
                     </div>
                 </div>
                 <div class="flex items-center w-1/2 mx-auto mt-8 space-x-5">
                     <MainButton outline @click="goBack">Back</MainButton>
-                    <MainButton @click="gotoNext(name)">Next</MainButton>
+                    <MainButton @click="gotoNext()">Next</MainButton>
                 </div>
             </div>
         </main>
@@ -56,10 +57,7 @@ export default {
     },
     methods: {
         // gotoNext(name) {
-        //     if(this.selected){
-
-        //         this.$router.push({ path: "/extras/" + name });
-        //     }
+        //     this.$router.push({ path: "/extras/" + name });
         // },
         goBack() {
             this.$router.push({ path: "/availability"});
