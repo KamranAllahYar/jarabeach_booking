@@ -24,6 +24,8 @@ export const state = () => ({
   showExtra: false as boolean,
   specials: [ "lookout", "massage", "quadbikes",  "photoshoot", "drinks", "cake",  "roomDecoration", "domesticStaff"] as any[],
 
+  booking: true,
+
 })
 
 export type RootState = ReturnType<typeof state>
@@ -49,6 +51,7 @@ export const getters: GetterTree<RootState, RootState> = {
     return bRooms;
   },
   getSpecials: (state: RootState) => state.specials,
+  getBooking: (state: RootState) => state.booking,
 }
 
 export const mutations: MutationTree<RootState> = {
@@ -86,6 +89,7 @@ export const mutations: MutationTree<RootState> = {
   COMPLETE_AVAILABILITY: (state) => state.availability_done = true,
   COMPLETE_PROFILE: (state) => state.profile_done = true,
   COMPLETE_POLICY: (state) => state.policy_done = true,
+  SET_BOOKING: (state, payload) => state.booking = payload,
 
   RESET_STORE: (state) => {
     state.groupType = 'individual' as string;
