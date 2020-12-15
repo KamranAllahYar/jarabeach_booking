@@ -73,13 +73,13 @@
                 </div>
 
                 <div class="flex w-full mt-6 space-x-3" v-if="noOfAdult > 0">
-                    <MainButton outline>Back</MainButton>
+                    <!-- <MainButton outline>Back</MainButton> -->
                     <MainButton @click="gotoNext()">Next</MainButton>
                 </div>
             </div>
-            <div class="mt-5 font-semibold text-center cursor-pointer text-brand-blue" @click="$router.push({path: '/guests/managebooking'})">Manage Booking</div>
+            <div class="mt-5 font-semibold text-center cursor-pointer text-brand-blue" @click="$router.push({path: '/manage'})">Manage Booking</div>
         </div>
-        
+
     </div>
 </template>
 
@@ -155,6 +155,3 @@ export default {
     },
 };
 </script>
-
-<style>
-</style>
