@@ -56,12 +56,6 @@
             </div>
         </div>
 
-        <!-- <div class="grid gap-1 grid-cols-16">
-            <div v-for="i in 31" :key="i">
-                <div class="flex items-center justify-center w-full bg-red-100 h-14">k</div>
-            </div>
-        </div> -->
-
         <div class="flex items-center p-6">
             <div class="flex items-center text-gray-600">
                 <div class="w-6 h-6 mr-4 bg-brand-red bg-opacity-20"></div> Not available
@@ -98,6 +92,8 @@
                 </div>
             </div>
         </popover>
+
+        <!-- DONT REMOVE: grid-cols-17 grid-cols-16 grid-cols-15 grid-cols-14 grid-cols-13 grid-cols-12 (for purgecss )-->
     </div>
 </template>
 
