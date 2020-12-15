@@ -58,7 +58,11 @@ export default {
             this.$toast.clear();
 
             if (!this.agreed) {
-                this.$toasted.info("Please accept the policy first");
+                this.$toasted.error("Please accept the policy first", {
+                  duration: 6000,
+                  position: "bottom-center",
+                  className: "bg-yellow-500"
+                });
                 return;
             }
 
