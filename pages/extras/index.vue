@@ -13,7 +13,7 @@
                 <div class="grid grid-cols-4 gap-6">
                     <div class="w-full border rounded cursor-pointer" v-for="(name, i) in specials" :key="i" @click="selectSpecial(name)">
                         <div class="flex items-center justify-between p-3">
-                            <div class="font-medium capitalize">{{name.type}}</div>
+                            <div class="font-medium capitalize">{{name.value}}</div>
                             <div v-if="isSelectedSpecial(name)">
                                 <svg
                                     width="20" height="20" fill="none"
@@ -47,14 +47,14 @@ export default {
     data() {
         return {
             specials: [
-                {type: 'lookout', range: '50,000'},
-                {type: 'massage', range: '30,000'},
-                {type: 'quadbikes', range: '25,000'},
-                {type: 'photoshoot', range: '50,000'},
-                {type: 'drinks', range: '5,000'},
-                {type: 'cake', range: '15,000'},
-                {type: 'roomDecoration', range: '0,000'},
-                {type: 'domesticStaff', range: '30,000'},
+                {type: 'lookout', value: 'Lookout Experience', range: '50,000'},
+                {type: 'massage', value: 'Massage', range: '30,000'},
+                {type: 'quadbikes', value: 'Quad Bikes', range: '25,000'},
+                {type: 'photoshoot', value: 'Photoshoot', range: '50,000'},
+                {type: 'drinks', value: 'Premium Drink Collection', range: '5,000'},
+                {type: 'cake', value: 'Cake', range: '15,000'},
+                {type: 'roomDecoration', value: 'Room Decoration', range: '0,000'},
+                {type: 'domesticStaff', value: 'Domestic Staff', range: '30,000'},
             ],
             selected: [],
         };
