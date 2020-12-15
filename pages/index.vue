@@ -20,5 +20,9 @@ export default class Index extends Vue {
     testToast() {
         this.$toast.show("Hello world");
     }
+
+    mounted(){
+      this.$router.push("/guests");
+    }
 }
 </script>

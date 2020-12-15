@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="mb-6 text-2xl text-center">What’s are your profile details?</h1>
+        <h1 class="mb-6 text-2xl text-center">Here's your order summary!</h1>
 
         <div class="flex justify-center space-x-6">
             <div class="w-6/12">
@@ -17,10 +17,10 @@
                                     <div class="text-xs font-light text-red-500 cursor-pointer hover:underline" @click="removeRoom(room)">Remove</div>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between px-3 py-4">
+                            <!-- <div class="flex items-center justify-between px-3 py-4">
                                 <div>Cake</div>
                                 <div class="text-lg font-bold">{{ currency(400) }}</div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -41,7 +41,7 @@
                                 Pay
                             </div>
                         </MainButton>
-                       <nuxt-link tag="div" to="/done" class="cursor-pointer">&rarr;</nuxt-link>
+                       <!-- <nuxt-link tag="div" to="/done" class="cursor-pointer">&rarr;</nuxt-link> -->
                     </div>
                 </div>
             </div>
