@@ -2,7 +2,7 @@
     <div class="flex w-full">
         <div class="relative w-6/12 ">
             <img src="@/assets/images/specials/roomDecoration.png" alt="" class="object-cover object-center w-full h-full">
-            <NavSpecials :color="'bg-red-500'" :index="7" @next="$emit('next')" @prev="$emit('prev')"   />
+            <NavSpecials :color="bg-red-500" :index="7" @next="$emit('next')" @prev="$emit('prev')"   />
         </div>
         <div class="w-7/12 p-6">
             <div class="font-semibold">Room Decoration</div>

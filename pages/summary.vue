@@ -31,7 +31,7 @@
                         </form>
                     </div>
 
-                    <div class="flex w-full my-6 space-x-6">
+                    <div class="flex items-center w-full my-6 space-x-6">
                         <MainButton outline @click="gotoBack()">Back</MainButton>
                         <MainButton @click="completeBooking()">
                             <div class="flex justify-center">
@@ -41,6 +41,7 @@
                                 Pay
                             </div>
                         </MainButton>
+                       <nuxt-link tag="div" to="/done" class="cursor-pointer">&rarr;</nuxt-link>
                     </div>
                 </div>
             </div>

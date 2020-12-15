@@ -13,7 +13,7 @@
                 <div class="grid grid-cols-4 gap-6">
                     <div class="w-full border rounded cursor-pointer" v-for="name in specials" :key="name" @click="selectSpecial(name)">
                         <div class="flex items-center justify-between p-3">
-                            <div class="font-medium capitalize">{{name}}</div>
+                            <div class="font-medium capitalize">{{name.type}}</div>
                             <div v-if="isSelectedSpecial(name)">
                                 <svg
                                     width="20" height="20" fill="none"
@@ -23,8 +23,9 @@
                             </div>
                         </div>
                         <div class="relative w-full h-48 overflow-hidden">
-                            <img :src="require(`@/assets/images/thumbnails/${name}.png`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
-                            <div class="absolute bottom-0 px-5 pb-3 font-semibold text-white">From N50,000</div>
+                            <img :src="require(`@/assets/images/thumbnails/${name.type}.png`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
+                            <div class="absolute bottom-0 z-20 px-5 pb-3 font-semibold text-white">From N{{ name.range }}</div>
+                            <div class="relative z-10 h-full bg-black bg-opacity-25"></div>
                         </div>
                     </div>
                 </div>
@@ -46,14 +47,14 @@ export default {
     data() {
         return {
             specials: [
-                "lookout",
-                "massage",
-                "quadbikes",
-                "photoshoot",
-                "drinks",
-                "cake",
-                "roomDecoration",
-                "domesticStaff",
+                {type: 'lookout', range: '50,000'},
+                {type: 'massage', range: '30,000'},
+                {type: 'quadbikes', range: '25,000'},
+                {type: 'photoshoot', range: '50,000'},
+                {type: 'drinks', range: '5,000'},
+                {type: 'cake', range: '15,000'},
+                {type: 'roomDecoration', range: '0,000'},
+                {type: 'domesticStaff', range: '30,000'},
             ],
             selected: [],
         };
@@ -62,7 +63,7 @@ export default {
         gotoNext() {
             const name = this.selected[0];
 
-            this.$router.push({ path: "/extras/" + name });
+            this.$router.push({ path: "/extras/" + name.type });
         },
         skip() {
             this.$router.push({ path: "/profile" });
