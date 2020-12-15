@@ -19,7 +19,7 @@
             :class="$store.state.policy_done ? doneClass : notDoneClass">
             5. Policies
         </nuxt-link>
-        <nuxt-link exact tag="div" to="/summary" class="px-8 py-4 border-2 cursor-pointer">
+        <nuxt-link exact tag="div" to="/summary" class="px-8 py-4 border-2 cursor-pointer" :class="notDoneClass">
             6. Payment
         </nuxt-link>
     </div>

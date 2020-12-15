@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="mb-6 text-2xl text-center">What’s are your profile details?</h1>
+        <h1 class="mb-6 text-2xl text-center">Please give us some information about you</h1>
 
         <div class="flex justify-center space-x-6">
             <div class="w-6/12">
@@ -53,7 +53,6 @@
                                 <div>
                                     <div class="text-base font-bold">Date of Birth</div>
                                     <input type="date" v-model="guest.dob" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200" ref="dob" style="box-shadow: none" />
-                                    <button @click="$refs.dob.click()">dd</button>
                                 </div>
                             </div>
                             <div class="px-3 py-4 border-b">
@@ -65,6 +64,9 @@
                             <div class="px-3 py-4 border-b">
                                 <div>
                                     <div class="text-base font-bold">Upload Identification</div>
+
+                                    <img v-if="guest.identification && !hasFileUpload" :src="guest.identification" class="w-3/5" />
+
                                     <div class="inline-flex items-center mt-2 cursor-pointer" @click="$refs.file.click()">
                                         <svg viewBox="0 0 15 15" fill="none" class="w-5 h-5 mr-2"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -72,10 +74,13 @@
                                             <path d="M10.625 13.125h-6.25a1.25 1.25 0 01-1.25-1.25v-8.75a1.25 1.25 0 011.25-1.25H8.75L11.875 5v6.875a1.25 1.25 0 01-1.25 1.25zM7.5 6.875v3.75" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M5.625 8.75L7.5 6.875 9.375 8.75" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                        <span v-if="file.name">{{file.name}}</span>
-                                        <span v-else>Add file</span>
+                                        <span v-if="hasFileUpload">{{file.name}}</span>
+                                        <template v-else>
+                                            <span v-if="guest.identification">Update file</span>
+                                            <span v-else>Add file</span>
+                                        </template>
                                     </div>
-                                    <input type="file" class="hidden" ref="file" @input="handleFileUpload()" />
+                                    <input type="file" class="hidden" ref="file" @input="handleFileUpload()" accept="image/x-png,image/gif,image/jpeg" />
                                 </div>
                             </div>
                             <div class="px-3 py-4 border-b">
@@ -115,11 +120,11 @@ export default {
     data() {
         return {
             loading: false,
-            // weHaveData: false,
             wantsToUpdate: false,
             initialLoad: true,
-            file: {},
+            file: null,
             guest: {
+                id: "",
                 email: "",
                 phone: "",
                 first_name: "",
@@ -150,13 +155,14 @@ export default {
 
             return true;
         },
+        hasFileUpload() {
+            if (this.file) return true;
+
+            return false;
+        },
     },
     methods: {
-        toggleSignin() {
-            this.signedIn = !this.signedIn;
-        },
-
-        gotoNext() {
+        async gotoNext() {
             console.log("go to next");
             if (this.initialLoad && !this.wantsToUpdate) {
                 this.confirmGuest();
@@ -164,8 +170,12 @@ export default {
             }
 
             let guestFormData = new FormData();
-            if (this.file.size > 0) {
+            if (this.hasFileUpload) {
                 guestFormData.append("identification", this.file);
+            }
+
+            if (this.guest.id) {
+                guestFormData.append("id", this.guest.id);
             }
             guestFormData.append("email", this.guest.email);
             guestFormData.append("phone", this.guest.phone);
@@ -185,9 +195,19 @@ export default {
                 guestFormData: guestFormData,
             });
 
-            this.$store.commit("COMPLETE_PROFILE");
-
-            this.$router.push({ path: "/policies" });
+            if (this.showFullForm) {
+                console.log("go and save");
+                await this.saveGuest(guestFormData).then((res) => {
+                    console.log(res);
+                    if (res) {
+                        this.$store.commit("COMPLETE_PROFILE");
+                        this.$router.push({ path: "/policies" });
+                    }
+                });
+            } else {
+                this.$store.commit("COMPLETE_PROFILE");
+                this.$router.push({ path: "/policies" });
+            }
         },
 
         gotoBack() {
@@ -197,21 +217,6 @@ export default {
         submitFile() {
             let formData = new FormData();
             formData.append("file", this.file);
-            console.log(">> formData >> ", formData);
-
-            // // You should have a server side REST API
-            // axios
-            //     .post("http://localhost:8080/restapi/fileupload", formData, {
-            //         headers: {
-            //             "Content-Type": "multipart/form-data",
-            //         },
-            //     })
-            //     .then(function () {
-            //         console.log("SUCCESS!!");
-            //     })
-            //     .catch(function () {
-            //         console.log("FAILURE!!");
-            //     });
         },
         handleFileUpload() {
             this.file = this.$refs.file.files[0];
@@ -239,11 +244,32 @@ export default {
                     guest: Object.assign({}, guest),
                 });
                 this.$toast.success(res.message);
+            } else {
+                this.weHaveData = false;
+                this.wantsToUpdate = true;
+
+                this.$store.commit("UPDATE_GUEST", {
+                    guest: Object.assign({}),
+                });
             }
 
             console.log(res);
             this.loading = false;
             this.initialLoad = false;
+        },
+
+        async saveGuest(formData) {
+            if (!this.isValidEmail(this.guest.email)) {
+                this.$toast.show("Please enter a valid email address");
+                return;
+            }
+
+            this.loading = true;
+            const res = await this.$store.dispatch("saveGuest", formData);
+
+            this.loading = false;
+
+            return res;
         },
 
         isValidEmail(email) {
