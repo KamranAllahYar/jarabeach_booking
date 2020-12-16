@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pb-60">
         <h1 class="mb-6 text-2xl font-bold text-center">What dates would you like to stay for?</h1>
 
         <div class="flex justify-center space-x-6">

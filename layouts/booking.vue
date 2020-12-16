@@ -7,10 +7,10 @@
 
             <TopProgressBar />
 
-            <div class="relative z-10 p-6 mx-auto mt-12 max-w-7xl">
+            <div class="static z-20 p-6 mx-auto mt-12 max-w-7xl">
                 <Nuxt keep-alive />
             </div>
-            <div class="fixed bottom-0 w-full h-80 bottom-beach"></div>
+            <div class="fixed bottom-0 z-10 w-full h-80 bottom-beach"></div>
         </main>
 
     </div>
@@ -42,6 +42,6 @@ export default {
     background-repeat: no-repeat;
     background-position: center bottom;
     background-size: contain;
-    z-index: 1;
+    z-index: 0;
 }
 </style>
