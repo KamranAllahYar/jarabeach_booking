@@ -23,10 +23,6 @@ export default {
             type: Boolean,
             default: false,
         },
-        // current: {
-        //     type: Boolean,
-        //     default: false,
-        // },
     },
     computed: {
         current() {
@@ -58,10 +54,6 @@ export default {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
-}
-.nuxt-link-active {
-    @apply font-bold;
-    @apply text-brand-blue;
 }
 .p-lb-s {
     background-image: url("~assets/images/progress/progress-light-blue-start.png");
