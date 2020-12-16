@@ -4,7 +4,7 @@
             Manage your booking
         </div>
 
-        <div class="max-w-md px-6 py-6 mx-auto mt-10 bg-white border rounded-lg">
+        <div class="max-w-md px-6 py-6 mx-auto mt-10 bg-white border rounded-lg shadow-lg">
             <div class="border rounded-lg">
 
                 <div class="p-4">

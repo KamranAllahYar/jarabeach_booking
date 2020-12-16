@@ -44,7 +44,7 @@
                 <div class="grid" :class="`grid-cols-${monthDays.length}`" v-for="roomType in roomTypes" :key="roomType">
                     <div v-for="day in monthDays" :key="day"
                         v-popover.right="{ name: 'rooms-available' }"
-                        class="flex items-center justify-center flex-shrink-0 text-2xl text-gray-500 border border-gray-100 cursor-pointer font-extralight bg-opacity-20 h-14"
+                        class="flex items-center justify-center flex-shrink-0 text-xl text-gray-500 border border-gray-100 cursor-pointer font-extralight bg-opacity-20 h-14"
                         :class="roomsAvailable(roomType, day) <= 0 ? 'bg-brand-red' : 'bg-brand-blue-300'"
                         @click="hoverRoom(roomType, day)">
                         <transition name="fade">
@@ -58,10 +58,10 @@
 
         <div class="flex items-center p-6">
             <div class="flex items-center text-gray-600">
-                <div class="w-6 h-6 mr-4 bg-brand-red bg-opacity-20"></div> Not available
+                <div class="w-5 h-5 mr-4 rounded-sm bg-brand-red bg-opacity-20"></div> Not available
             </div>
             <div class="flex items-center text-gray-600 ml-14">
-                <div class="w-6 h-6 mr-4 bg-brand-blue-300 bg-opacity-20"></div> Available
+                <div class="w-5 h-5 mr-4 rounded-sm bg-brand-blue-300 bg-opacity-20"></div> Available
             </div>
         </div>
 
@@ -75,9 +75,13 @@
                     <div v-if="h.available == true" :key="h.room.id" class="flex items-center cursor-pointer"
                         :class="h.available == true ? 'text-brand-blue' : 'text-red-600'"
                         @click="h.available == true ? addToBookedRoom(h.room.id, h.date) : ''">
-                        <svg v-if="!isBooked(h.room.id, h.date)" class="inline-block w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M12 20a8 8 0 01-8-8 8 8 0 018-8 8 8 0 018 8 8 8 0 01-8 8m0-18A10 10 0 002 12a10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2z" />
+                        <svg v-if="!isBooked(h.room.id, h.date)" viewBox="0 0 16 16" class="inline-block w-6 h-6 mr-2" fill="none" stroke="currentColor">
+                            <path d="M8 14.703a6.75 6.75 0 100-13.5 6.75 6.75 0 000 13.5z" stroke="#225A89" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
+
+                        <!-- <svg v-if="!isBooked(h.room.id, h.date)" class="inline-block w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M12 20a8 8 0 01-8-8 8 8 0 018-8 8 8 0 018 8 8 8 0 01-8 8m0-18A10 10 0 002 12a10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2z" />
+                        </svg> -->
                         <svg v-else class="inline-block w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>

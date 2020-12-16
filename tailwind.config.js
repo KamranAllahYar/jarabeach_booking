@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['MaisonNeue'],
+        'sans': ['Maison Neue'],
       },
       colors: {
         brand: {

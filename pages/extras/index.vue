@@ -2,16 +2,16 @@
     <div class="flex min-h-screen bg-white">
         <main class="flex-1 w-full pb-48 overflow-auto beach">
             <div class="my-10 text-center">
-                <img src="~/assets/logo.png" class="w-40 mx-auto" />
+                <img src="~/assets/logo_big.jpg" class="w-40 mx-auto" />
             </div>
 
             <TopProgressBar />
 
             <div class="p-6 mx-auto mt-12 max-w-7xl">
-                <h1 class="mb-6 text-2xl text-center">Here are some extra options to improve your stay!</h1>
+                <h1 class="mb-6 text-2xl font-bold text-center">Here are some extra options to improve your stay!</h1>
 
                 <div class="grid grid-cols-4 gap-6">
-                    <div class="w-full border rounded cursor-pointer" v-for="(name, i) in specials" :key="i" @click="selectSpecial(name)">
+                    <div class="w-full overflow-hidden border rounded-md shadow-md cursor-pointer" v-for="(name, i) in specials" :key="i" @click="selectSpecial(name)">
                         <div class="flex items-center justify-between p-3">
                             <div class="font-medium capitalize">{{name.value}}</div>
                             <div v-if="isSelectedSpecial(name)">
