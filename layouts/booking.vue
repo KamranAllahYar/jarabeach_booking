@@ -10,7 +10,7 @@
             <div class="static z-20 p-6 mx-auto mt-12 max-w-7xl">
                 <Nuxt keep-alive />
             </div>
-            <div class="fixed bottom-0 z-10 w-full h-80 bottom-beach"></div>
+            <div class="fixed bottom-0 z-10 w-full pointer-events-none h-80 bottom-beach"></div>
         </main>
 
     </div>
