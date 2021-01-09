@@ -3,7 +3,7 @@
         <h1 class="mb-6 text-2xl font-bold text-center">What dates would you like to stay for?</h1>
 
         <div class="flex justify-center space-x-6">
-            <div class="w-9/12">
+            <div class="w-10/12">
                 <div class="pt-6 bg-white border rounded-lg shadow-lg">
                     <RoomCalendar class="w-full" @selected="selectRooms($event)" :initialRooms="rooms" />
 
@@ -13,9 +13,9 @@
                     </div>
                 </div>
             </div>
-            <div class="flex-shrink-0 w-3/12">
+            <!-- <div class="flex-shrink-0 w-3/12">
                 <ReservationBox />
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

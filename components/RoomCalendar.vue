@@ -23,7 +23,7 @@
         </div>
 
         <div class="flex w-full" v-for="(monthDays, k) in [firstHalfDays, secondHalfDays]" :key="k">
-            <div class="flex-shrink-0 w-36">
+            <div class="flex-shrink-0 bg-cal-box w-36">
                 <div class="flex items-center px-6 text-xl font-bold border border-l-0 border-gray-100 h-14">
                     <span v-if="k == 0">
                         {{ months[calMonth-1] }}.
@@ -36,7 +36,7 @@
             </div>
             <div class="flex-1">
                 <div class="grid" :class="`grid-cols-${monthDays.length}`">
-                    <div v-for="w in monthDays" :key="w" class="flex flex-col items-center justify-center flex-shrink-0 text-sm text-center text-black border border-gray-100 h-14">
+                    <div v-for="w in monthDays" :key="w" class="flex flex-col items-center justify-center flex-shrink-0 text-sm text-center text-black border border-gray-100 bg-cal-box h-14">
                         <div class="text-base">{{ dayOfWeek(w) }}.</div>
                         <div class="text-base font-light">{{ w }}</div>
                     </div>
@@ -45,10 +45,16 @@
                     <div v-for="day in monthDays" :key="day"
                         v-popover.right="{ name: 'rooms-available' }"
                         class="flex items-center justify-center flex-shrink-0 text-xl text-gray-500 border border-gray-100 cursor-pointer font-extralight bg-opacity-20 h-14"
-                        :class="roomsAvailable(roomType, day) <= 0 ? 'bg-brand-red' : 'bg-brand-blue-300'"
+                        :class="roomsAvailable(roomType, day) <= 0 ? 'bg-white' : 'bg-brand-blue-300'"
                         @click="hoverRoom(roomType, day)">
                         <transition name="fade">
                             <span v-if="loading">-</span>
+                            <span v-else-if="roomsAvailable(roomType, day) <= 0">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 19 19">
+                                    <path d="M5.5415 3.1665L13.4582 15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M13.4582 3.1665L5.5415 15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
                             <span v-else>{{ roomsAvailable(roomType, day) }}</span>
                         </transition>
                     </div>
@@ -58,10 +64,10 @@
 
         <div class="flex items-center p-6">
             <div class="flex items-center text-gray-600">
-                <div class="w-5 h-5 mr-4 rounded-sm bg-brand-red bg-opacity-20"></div> Not available
+                <div class="w-5 h-5 mr-4 rounded-sm bg-cal-non-avail bg-opacity-20"></div> Not available
             </div>
             <div class="flex items-center text-gray-600 ml-14">
-                <div class="w-5 h-5 mr-4 rounded-sm bg-brand-blue-300 bg-opacity-20"></div> Available
+                <div class="w-5 h-5 mr-4 rounded-sm bg-cal-avail bg-opacity-20"></div> Available - numbers represent available rooms
             </div>
         </div>
 
@@ -106,6 +112,7 @@ import getDay from "date-fns/getDay";
 import isBefore from "date-fns/isBefore";
 import parseISO from "date-fns/parseISO";
 import isWeekend from "date-fns/isWeekend";
+import isToday from "date-fns/isToday";
 
 export default {
     props: ["initialRooms"],
@@ -259,7 +266,11 @@ export default {
             const dateStr = `${this.calYear}-${m}-${d}`;
             const roomsHere = this.availableRooms[dateStr];
 
-            if (isBefore(parseISO(dateStr), new Date())) {
+            if (isToday(parseISO(dateStr))) {
+                const today = new Date();
+                const todayHrs = today.getHours();
+                if (todayHrs >= 11) return 0;
+            } else if (isBefore(parseISO(dateStr), new Date())) {
                 return 0;
             }
 

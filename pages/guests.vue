@@ -62,8 +62,8 @@
                                 </svg>
 
                                 <select v-model="child.age" class="border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
-                                    <option value="0 - 1">0 - 1</option>
-                                    <option value="2 - 5">2 - 5</option>
+                                    <option value="0 - 2">0 - 2</option>
+                                    <option value="3 - 5">3 - 5</option>
                                     <option value="6 - 17">6 - 17</option>
                                 </select>
                             </div>

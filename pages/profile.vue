@@ -10,7 +10,7 @@
                             <div>
                                 <div class="text-base font-bold">Email address</div>
                                 <div class="flex items-center">
-                                    <input type="email" required v-model="guest.email" placeholder="email@example.com" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                    <input type="email" required v-model="guest.email" placeholder="email@example.com" class="w-full px-0 border-0" style="box-shadow: none" />
                                     <Loading v-if="loading" />
                                     <svg v-if="weHaveData && !wantsToUpdate" class="inline-block w-6 h-6 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -19,7 +19,7 @@
                             </div>
                             <div v-if="showFullForm">
                                 <div class="text-base font-bold">Phone number</div>
-                                <input type="tel" required v-model="guest.phone" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                <input type="tel" required v-model="guest.phone" placeholder="08012345678" class="w-full px-0 border-0" style="box-shadow: none" />
                             </div>
                         </div>
                         <div class="px-3 py-4 border-b" v-if="weHaveData && !wantsToUpdate">
@@ -34,17 +34,17 @@
                             <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
                                 <div>
                                     <div class="text-base font-bold">First Name</div>
-                                    <input type="text" v-model="guest.first_name" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                    <input type="text" v-model="guest.first_name" placeholder="Jane" class="w-full px-0 border-0" style="box-shadow: none" />
                                 </div>
                                 <div>
                                     <div class="text-base font-bold">Last Name</div>
-                                    <input type="text" v-model="guest.last_name" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none" />
+                                    <input type="text" v-model="guest.last_name" placeholder="Doe" class="w-full px-0 border-0" style="box-shadow: none" />
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
                                 <div>
                                     <div class="text-base font-bold">Gender</div>
-                                    <select v-model="guest.gender" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none">
+                                    <select v-model="guest.gender" class="w-full px-0 border-0" style="box-shadow: none">
                                         <option value="">--SELECT--</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -52,7 +52,7 @@
                                 </div>
                                 <div>
                                     <div class="text-base font-bold">Date of Birth</div>
-                                    <input type="date" v-model="guest.dob" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200" ref="dob" style="box-shadow: none" />
+                                    <input type="date" v-model="guest.dob" class="w-full px-0 border-0" ref="dob" style="box-shadow: none" />
                                 </div>
                             </div>
                             <div class="px-3 py-4 border-b">
@@ -86,7 +86,7 @@
                             <div class="px-3 py-4 border-b">
                                 <div>
                                     <div class="text-base font-bold">How did you hear about us?</div>
-                                    <select v-model="guest.hear_of_us" class="w-full px-0 border-0 border-b border-transparent focus:border-gray-200 " style="box-shadow: none">
+                                    <select v-model="guest.hear_of_us" class="px-0 border-0" style="box-shadow: none">
                                         <option value="">--SELECT--</option>
                                         <option value="Social Media">Social Media</option>
                                         <option value="Friend">Friend</option>
@@ -99,6 +99,13 @@
                                 </div>
                             </div>
                         </template>
+                    </div>
+
+                    <div class="flex justify-start my-4" v-if="showFullForm">
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="checkbox" v-model="agreed" checked class="w-4 h-4 mr-4 rounded-full text-brand-blue focus:ring-1 focus:ring-green-600" />
+                            Remember information for next visit
+                        </label>
                     </div>
 
                     <div class="flex w-full my-6 space-x-6">

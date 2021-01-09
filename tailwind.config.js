@@ -18,6 +18,11 @@ module.exports = {
             600: "#47a1cd"
           },
           red: "#E42727",
+        },
+        cal: {
+          box: "#F8F8F8",
+          avail: "#2C94C6",
+          "non-avail": "#BDBDBD",
         }
       },
       gridTemplateColumns: {

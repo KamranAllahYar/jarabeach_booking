@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="mb-6 text-2xl text-center">Here's your order summary!</h1>
+        <h1 class="mb-6 text-2xl text-center">Here's your booking summary!</h1>
 
         <div class="flex justify-center space-x-6">
             <div class="w-6/12">
