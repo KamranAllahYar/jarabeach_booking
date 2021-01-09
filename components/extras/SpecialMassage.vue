@@ -2,16 +2,16 @@
     <div class="flex w-full">
         <div class="relative w-6/12 ">
             <img src="@/assets/images/specials/massage.png" alt="" class="object-cover object-center w-full h-full">
-            <NavSpecials :color="bg-yellow-900" :index="2" @next="$emit('next')" @prev="$emit('prev')" />
+            <NavSpecials color="bg-yellow-900" :index="2" @next="$emit('next')" @prev="$emit('prev')" />
         </div>
         <div class="w-7/12 p-6">
             <div class="font-semibold">Massage</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
-                A soothing massage at Jara Beach Resort – picture yourself lying in the shade of a coconut palm that sways gently in the breeze, 
+                A soothing massage at Jara Beach Resort – picture yourself lying in the shade of a coconut palm that sways gently in the breeze,
                 or shaded by Jara's exclusive Lookout, your cares being eased away by one of our expert masseuses.
             </p>
             <p class="mt-2 font-light leading-relaxed text-gray-600">
-                No matter the occasion, make it even more memorable with a romantic couples massage. 
+                No matter the occasion, make it even more memorable with a romantic couples massage.
                 Romantic Outdoor Massage (one masseuse): 2 Hours (minimum) <span class="font-bold"> = N30,000</span>
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this</div>

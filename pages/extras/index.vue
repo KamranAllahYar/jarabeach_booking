@@ -11,10 +11,13 @@
                 <h1 class="mb-6 text-2xl font-bold text-center">Here are some extra options to improve your stay!</h1>
 
                 <div class="grid grid-cols-4 gap-6">
-                    <div class="w-full overflow-hidden border rounded-md shadow-md cursor-pointer" v-for="(name, i) in specials" :key="i" @click="selectSpecial(name)">
-                        <div class="flex items-center justify-between p-3">
-                            <div class="font-medium capitalize">{{name.value}}</div>
-                            <div v-if="isSelectedSpecial(name)">
+                    <div v-for="(extra, i) in specials" :key="i"
+                        class="w-full overflow-hidden transition-all transform border rounded-lg"
+                        :class="!extra.available ? 'opacity-50' : 'cursor-pointer shadow-md hover:scale-105'"
+                        @click="selectSpecial(extra)">
+                        <div class="flex items-center justify-between px-3 py-4">
+                            <div class="text-sm font-semibold capitalize">{{extra.name}}</div>
+                            <div v-if="isSelectedSpecial(extra)">
                                 <svg
                                     width="20" height="20" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -23,12 +26,13 @@
                             </div>
                         </div>
                         <div class="relative w-full h-48 overflow-hidden">
-                            <img :src="require(`@/assets/images/thumbnails/${name.type}.png`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
-                            <div class="absolute bottom-0 z-20 px-5 pb-3 font-semibold text-white">From N{{ name.range }}</div>
+                            <img :src="require(`@/assets/images/thumbnails/${extra.type}.png`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
+                            <div class="absolute bottom-0 z-20 px-5 pb-3 font-semibold text-white">From N{{ extra.range }}</div>
                             <div class="relative z-10 h-full bg-black bg-opacity-25"></div>
                         </div>
                     </div>
                 </div>
+
                 <div class="flex items-center w-1/2 mx-auto mt-8 space-x-5" v-if="selected.length > 0">
                     <MainButton outline>Back</MainButton>
                     <MainButton @click="gotoNext()">Next</MainButton>
@@ -46,18 +50,26 @@ export default {
     // layout: "booking",
     data() {
         return {
-            specials: [
-                {type: 'lookout', value: 'Lookout Experience', range: '50,000'},
-                {type: 'massage', value: 'Massage', range: '30,000'},
-                {type: 'quadbikes', value: 'Quad Bikes', range: '25,000'},
-                {type: 'photoshoot', value: 'Photoshoot', range: '50,000'},
-                {type: 'drinks', value: 'Premium Drink Collection', range: '5,000'},
-                {type: 'cake', value: 'Cake', range: '15,000'},
-                {type: 'roomDecoration', value: 'Room Decoration', range: '0,000'},
-                {type: 'domesticStaff', value: 'Domestic Staff', range: '30,000'},
-            ],
+            // specials: [
+            //     {type: 'lookout', value: 'Lookout Experience', range: '50,000'},
+            //     {type: 'massage', value: 'Massage', range: '30,000'},
+            //     {type: 'quadbikes', value: 'Quad Bikes', range: '25,000'},
+            //     {type: 'photoshoot', value: 'Photoshoot', range: '50,000'},
+            //     {type: 'drinks', value: 'Premium Drink Collection', range: '5,000'},
+            //     {type: 'cake', value: 'Cake', range: '15,000'},
+            //     {type: 'roomDecoration', value: 'Room Decoration', range: '50,000'},
+            //     {type: 'domesticStaff', value: 'Domestic Staff', range: '30,000'},
+            // ],
             selected: [],
         };
+    },
+    computed: {
+        specials() {
+            return this.$store.getters["extras/allSpecials"];
+        },
+        dates() {
+            return this.$store.getters.bookedRooms.map((room) => room.date);
+        },
     },
     methods: {
         gotoNext() {
@@ -72,6 +84,14 @@ export default {
             return this.selected.includes(sp);
         },
         selectSpecial(sp) {
+            console.log(sp);
+            if (!sp.available) {
+                this.$toast.info(
+                    sp.name + " is not available for the dates you selected"
+                );
+                return;
+            }
+
             if (this.isSelectedSpecial(sp)) {
                 const ix = this.selected.indexOf(sp);
                 this.selected.splice(ix, 1);
@@ -79,6 +99,9 @@ export default {
                 this.selected.push(sp);
             }
         },
+    },
+    mounted() {
+        this.$store.dispatch("extras/updateSpecials", this.dates);
     },
 };
 </script>

@@ -2,13 +2,13 @@
     <div class="flex w-full">
         <div class="relative w-6/12 ">
             <img src="@/assets/images/specials/quadbikes.png" alt="" class="object-cover object-center w-full h-full">
-            <NavSpecials :color="bg-green-900" :index="3" @next="$emit('next')" @prev="$emit('prev')"   />
+            <NavSpecials color="bg-green-900" :index="3" @next="$emit('next')" @prev="$emit('prev')"   />
         </div>
         <div class="w-7/12 p-6">
             <div class="font-semibold">Quad Bikes</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
-                Quad biking - external beach provider (signed disclaimer and pre-booking required). 
-                There are only 2 quad bikes available so the application will need to take this into consideration when managing availability. 
+                Quad biking - external beach provider (signed disclaimer and pre-booking required).
+                There are only 2 quad bikes available so the application will need to take this into consideration when managing availability.
                 The guest can also select the number of quad bikes they want (1 or 2)
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this</div>
