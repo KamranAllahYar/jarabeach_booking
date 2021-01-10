@@ -126,6 +126,7 @@ export default {
     layout: "booking",
     data() {
         return {
+            from: {},
             loading: false,
             wantsToUpdate: false,
             initialLoad: true,
@@ -218,7 +219,13 @@ export default {
         },
 
         gotoBack() {
-            this.$router.push({ path: "/availability" });
+            // if (this.from) {
+            //     this.$router.push({ path: this.from.fullPath });
+            //     return;
+            // }
+            // this.$router.push({ path: "/extras" });
+
+            this.$router.go(-1);
         },
 
         submitFile() {

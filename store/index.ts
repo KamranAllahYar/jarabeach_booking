@@ -54,6 +54,11 @@ export const getters: GetterTree<RootState, RootState> = {
   },
   getSpecials: (state: RootState) => state.specials,
   getBooking: (state: RootState) => state.booking,
+  bookingDates: (state: RootState, getters) => {
+    const dates = getters.bookedRooms.map((r: any) => r.date)
+
+    return [...new Set(dates)];
+  },
 }
 
 export const mutations: MutationTree<RootState> = {

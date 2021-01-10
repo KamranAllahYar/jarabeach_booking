@@ -10,12 +10,12 @@
             </div>
             <div class="flex items-center mr-3 space-x-2 text-gray-600 cursor-pointer" @click="$emit('close')">
                 <div class="">
-                    <svg 
-                        class="w-5 h-5" fill="none" 
-                        stroke="currentColor" viewBox="0 0 24 24" 
+                    <svg
+                        class="w-5 h-5" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
-                        <path 
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="1" 
+                        <path
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
                             d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z">
                         </path>
                     </svg>
@@ -29,9 +29,9 @@
                     <input type="checkbox" name="nanny" id="nanny" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300">
                     <label for="nanny" class="font-bold">Nanny
                         <div class="text-base font-light text-gray-600">
-                            If not staying in a standard or family room [as a regular guest], Nannies are welcome to sleep in our dedicated staff quarters - 
-                            bedding and water provided - and partake in all meals and make use of Jara's facilities. A separate food menu is available. 
-                            Alcohol and  the snack station is not included. <span class="font-bold text-black">Cost per night: N30,000 (inc VAT).</span>
+                            If not staying in a standard or family room [as a regular guest], Nannies are welcome to sleep in our dedicated staff quarters -
+                            bedding and water provided - and partake in all meals and make use of Jara's facilities. A separate food menu is available.
+                            Alcohol and the snack station is not included. <span class="font-bold text-black">Cost per night: N30,000 (inc VAT).</span>
                         </div>
                     </label>
                 </div>
@@ -39,9 +39,9 @@
                     <input type="checkbox" name="driver" id="driver" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300">
                     <label for="driver" class="font-bold ">Driver
                         <div class="text-base font-light text-gray-600">
-                            Drivers requiring accommodation are welcome to sleep in staff quarters (room access from 6pm) - bedding and water provided - 
+                            Drivers requiring accommodation are welcome to sleep in staff quarters (room access from 6pm) - bedding and water provided -
                             and are not expected to remain inside the property between 9am and 6pm. <span class="font-bold text-black">Cost per night: N15,000 (inc TAX).</span>
-                        </div>                    
+                        </div>
                     </label>
                 </div>
             </div>
@@ -74,7 +74,9 @@
         </div>
         <hr>
         <div class="w-1/3 py-4 mx-auto">
-            <MainButton><nuxt-link tag="div" to="/profile">Next</nuxt-link></MainButton>
+            <MainButton>
+                <nuxt-link tag="div" to="/profile">Next</nuxt-link>
+            </MainButton>
         </div>
     </div>
 </template>
@@ -82,9 +84,9 @@
 export default {
     data() {
         return {
-            menu: ''
-        }
-    }
-}
+            menu: "",
+        };
+    },
+};
 </script>
 

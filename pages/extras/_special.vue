@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1 class="mb-6 text-2xl text-center">Select an Extra experience to improve your stay!</h1>
+        <!-- <pre>{{selected}}</pre> -->
         <div class="flex justify-center space-x-3">
             <div class="w-9/12 ">
                 <div class="overflow-hidden bg-white border rounded-lg shadow-lg">
@@ -21,6 +22,11 @@ export default {
         return {
             special: "lookout",
         };
+    },
+    computed: {
+        selected() {
+            return this.$store.getters["extras/allSelected"];
+        },
     },
     mounted() {
         const special = this.$route.params.special;

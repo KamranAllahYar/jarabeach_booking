@@ -47,25 +47,12 @@
 
 <script>
 export default {
-    // layout: "booking",
-    data() {
-        return {
-            // specials: [
-            //     {type: 'lookout', value: 'Lookout Experience', range: '50,000'},
-            //     {type: 'massage', value: 'Massage', range: '30,000'},
-            //     {type: 'quadbikes', value: 'Quad Bikes', range: '25,000'},
-            //     {type: 'photoshoot', value: 'Photoshoot', range: '50,000'},
-            //     {type: 'drinks', value: 'Premium Drink Collection', range: '5,000'},
-            //     {type: 'cake', value: 'Cake', range: '15,000'},
-            //     {type: 'roomDecoration', value: 'Room Decoration', range: '50,000'},
-            //     {type: 'domesticStaff', value: 'Domestic Staff', range: '30,000'},
-            // ],
-            selected: [],
-        };
-    },
     computed: {
         specials() {
             return this.$store.getters["extras/allSpecials"];
+        },
+        selected() {
+            return this.$store.getters["extras/allSelected"];
         },
         dates() {
             return this.$store.getters.bookedRooms.map((room) => room.date);
@@ -73,15 +60,16 @@ export default {
     },
     methods: {
         gotoNext() {
-            const name = this.selected[0];
+            this.$store.commit("extras/RESET_INDEX");
 
+            const name = this.selected[0];
             this.$router.push({ path: "/extras/" + name.type });
         },
         skip() {
             this.$router.push({ path: "/profile" });
         },
         isSelectedSpecial(sp) {
-            return this.selected.includes(sp);
+            return this.selected.some((s) => s.type == sp.type);
         },
         selectSpecial(sp) {
             console.log(sp);
@@ -93,10 +81,9 @@ export default {
             }
 
             if (this.isSelectedSpecial(sp)) {
-                const ix = this.selected.indexOf(sp);
-                this.selected.splice(ix, 1);
+                this.$store.commit("extras/REMOVE_SELECTED", sp);
             } else {
-                this.selected.push(sp);
+                this.$store.commit("extras/ADD_SELECTED", sp);
             }
         },
     },

@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <div class="flex w-full" v-show="!showMenu">
             <div class="relative w-6/12">
                 <img src="@/assets/images/specials/lookout.png" alt="" class="object-cover object-center w-full h-full">
@@ -16,41 +16,45 @@
 
                 </p>
                 <div class="mt-6 font-semibold">What date would you like to have this</div>
-                <div class="flex items-center mt-3 space-x-5 font-light ">
-                    <div>
-                        <input type="radio" name="lookout" id="first_date" class="mr-3 focus-within:ring-0 border-brand-blue">
-                        <label for="first_date">Tues, Nov 9th 2020 </label>
-                    </div>
-                    <div>
-                        <input type="radio" name="lookout" id="second_date" class="mr-3 focus-within:ring-0 border-brand-blue">
-                        <label for="second_date">Wed, Nov 10th 2020 </label>
-                    </div>
+
+                <div class="grid items-center grid-cols-2 mt-3 font-light gap-y-2">
+                    <label class="flex items-center" v-for="date in dates" :key="date">
+                        <input type="checkbox" value="Tues, Nov 9th 2020" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                        <div>{{ showDate(date) }}</div>
+                    </label>
                 </div>
-                <div class="w-1/3 mx-auto mt-8">
+
+                <div class="flex w-2/3 mx-auto mt-8 space-x-2">
+                    <MainButton outline @click="$emit('prev')">Back</MainButton>
                     <MainButton @click="showMenu = true">Next</MainButton>
                 </div>
             </div>
         </div>
-        <SpecialLookoutMeal v-if="showMenu" @close="showMenu = false" @next="emitNext()"  />
+        <SpecialLookoutMeal v-if="showMenu" @close="showMenu = false" @next="emitNext()" />
     </div>
 </template>
 <script>
+import parseISO from "date-fns/parseISO";
+import format from "date-fns/format";
 export default {
     data() {
         return {
             showMenu: false,
-        }
+        };
     },
     computed: {
-        getSpecials() {
-            return this.$store.getters.getSpecials;
+        dates() {
+            return this.$store.getters.bookingDates;
         },
     },
     methods: {
-        emitNext(){
+        showDate(date) {
+            return format(parseISO(date), "iii, MMM. do yyyy");
+        },
+        emitNext() {
             this.showMenu = false;
-            this.$emit('next');
-        }
-    }
-}
+            this.$emit("next");
+        },
+    },
+};
 </script>

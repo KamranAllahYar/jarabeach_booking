@@ -18,26 +18,25 @@
                 <div>Close</div>
             </div>
         </div>
-        <div class="flex justify-between w-full my-4 space-x-5">
+        <div class="flex justify-between w-full px-3 my-4 space-x-5">
             <div class="w-1/3">
                 <div class="text-center">
                     <div class="text-xl font-bold uppercase ">Breakfast</div>
                     <div class="text-xs font-light text-gray-700">(between 8:30- 10:30am)</div>
                 </div>
                 <div class="px-3 my-5 space-y-6 border-r">
-                    <div class="flex">
-                        <input type="radio" name="breakfast" id="breakfast_shell" class="mt-1 mr-2 focus:ring-0 border-brand-blue-300" v-model="breakfast">
-                        <label for="breakfast_shell">Shell Package (includes non-alcoholic sparkling wine): <span class="font-bold">N15,000 per couple</span></label>
-                    </div>
-                    <div class="flex">
-                        <input type="radio" name="breakfast" id="breakfast_seahorse" class="mt-1 mr-2 focus:ring-0 border-brand-blue-300" v-model="breakfast">
-                        <label for="breakfast_seahorse">Seahorse Package (includes sparkling wine/ Prosecco): <span class="font-bold">N20,000 per couple</span></label>
-                    </div>
-                    <div class="flex">
-                        <input type="radio" name="breakfast" id="breakfast_star" class="mt-1 mr-2 focus:ring-0 border-brand-blue-300" v-model="breakfast">
-                        <label for="breakfast_star">Starfish Package (includes brut champagne): <span class="font-bold">N45,000 per couple</span></label>
-                    </div>
-
+                    <label class="flex">
+                        <input type="checkbox" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" :value="1" v-model="selectedPackages">
+                        <div>Shell Package (includes non-alcoholic sparkling wine): <span class="font-bold">N15,000 per couple</span></div>
+                    </label>
+                    <label class="flex">
+                        <input type="checkbox" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" :value="2" v-model="selectedPackages">
+                        <div>Seahorse Package (includes sparkling wine/ Prosecco): <span class="font-bold">N20,000 per couple</span></div>
+                    </label>
+                    <label class="flex">
+                        <input type="checkbox" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" :value="3" v-model="selectedPackages">
+                        <div>Starfish Package (includes brut champagne): <span class="font-bold">N45,000 per couple</span></div>
+                    </label>
                 </div>
             </div>
 
@@ -47,18 +46,18 @@
                     <div class="text-xs font-light text-gray-700">(between 1:30 - 4:00pm)</div>
                 </div>
                 <div class="px-2 my-5 space-y-6 border-r">
-                    <div class="flex">
-                        <input type="radio" name="lunch" id="lunch_shell" class="mt-1 mr-2 border-brand-blue-300 focus:ring-0" v-model="lunch">
-                        <label for="lunch">Shell Package (includes non-alcoholic sparkling wine): <span class="font-bold">N15,000 per couple</span></label>
-                    </div>
-                    <div class="flex">
-                        <input type="radio" name="lunch" id="lunch_seahorse" class="mt-1 mr-2 border-brand-blue-300 focus:ring-0" v-model="lunch">
-                        <label for="lunch">Seahorse Package (includes sparkling wine/ Prosecco): <span class="font-bold">N20,000 per couple</span></label>
-                    </div>
-                    <div class="flex">
-                        <input type="radio" name="lunch" id="lunch_star" class="mt-1 mr-2 border-brand-blue-300 focus:ring-0" v-model="lunch">
-                        <label for="lunch">Starfish Package (includes brut champagne): <span class="font-bold">N45,000 per couple</span></label>
-                    </div>
+                    <label class="flex">
+                        <input type="checkbox" class="mt-1 mr-2 rounded-full border-brand-blue-400 focus:ring-0 text-brand-blue-400" :value="4" v-model="selectedPackages">
+                        <div>Shell Package (includes non-alcoholic sparkling wine): <span class="font-bold">N15,000 per couple</span></div>
+                    </label>
+                    <label class="flex">
+                        <input type="checkbox" class="mt-1 mr-2 rounded-full border-brand-blue-400 focus:ring-0 text-brand-blue-400" :value="5" v-model="selectedPackages">
+                        <div>Seahorse Package (includes sparkling wine/ Prosecco): <span class="font-bold">N20,000 per couple</span></div>
+                    </label>
+                    <label class="flex">
+                        <input type="checkbox" class="mt-1 mr-2 rounded-full border-brand-blue-400 focus:ring-0 text-brand-blue-400" :value="6" v-model="selectedPackages">
+                        <div>Starfish Package (includes brut champagne): <span class="font-bold">N45,000 per couple</span></div>
+                    </label>
                 </div>
             </div>
 
@@ -68,18 +67,18 @@
                     <div class="text-xs font-light text-gray-700">(from 7pm. Candles inclusive)</div>
                 </div>
                 <div class="px-3 my-5 space-y-6">
-                    <div class="flex">
-                        <input type="radio" name="dinner" id="dinner_shell" class="mt-1 mr-2 border-brand-blue-300 focus:ring-0" v-model="dinner">
-                        <label for="dinner">Shell Package (includes non-alcoholic sparkling wine): <span class="font-bold">N15,000 per couple</span></label>
-                    </div>
-                    <div class="flex">
-                        <input type="radio" name="dinner" id="dinner_seahorse" class="mt-1 mr-2 border-brand-blue-300 focus:ring-0" v-model="dinner">
-                        <label for="dinner">Seahorse Package (includes sparkling wine/ Prosecco): <span class="font-bold">N20,000 per couple</span></label>
-                    </div>
-                    <div class="flex">
-                        <input type="radio" name="dinner" id="dinner_starfish" class="mt-1 mr-2 border-brand-blue-300 focus:ring-0" v-model="dinner">
-                        <label for="dinner">Starfish Package (includes brut champagne): <span class="font-bold">N45,000 per couple</span></label>
-                    </div>
+                    <label class="flex">
+                        <input type="checkbox" class="mt-1 mr-2 rounded-full border-brand-blue-400 text-brand-blue-400 focus:ring-0" :value="7" v-model="selectedPackages">
+                        <div>Shell Package (includes non-alcoholic sparkling wine): <span class="font-bold">N15,000 per couple</span></div>
+                    </label>
+                    <label class="flex">
+                        <input type="checkbox" class="mt-1 mr-2 rounded-full border-brand-blue-400 text-brand-blue-400 focus:ring-0" :value="8" v-model="selectedPackages">
+                        <div>Seahorse Package (includes sparkling wine/ Prosecco): <span class="font-bold">N20,000 per couple</span></div>
+                    </label>
+                    <label class="flex">
+                        <input type="checkbox" class="mt-1 mr-2 rounded-full border-brand-blue-400 text-brand-blue-400 focus:ring-0" :value="9" v-model="selectedPackages">
+                        <div>Starfish Package (includes brut champagne): <span class="font-bold">N45,000 per couple</span></div>
+                    </label>
                 </div>
             </div>
         </div>
@@ -91,12 +90,9 @@
 </template>
 <script>
 export default {
-    props: ["cancelClicked"],
     data() {
         return {
-            breakfast: "",
-            lunch: "",
-            dinner: "",
+            selectedPackages: [],
         };
     },
 };

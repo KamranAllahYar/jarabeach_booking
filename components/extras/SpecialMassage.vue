@@ -15,36 +15,56 @@
                 Romantic Outdoor Massage (one masseuse): 2 Hours (minimum) <span class="font-bold"> = N30,000</span>
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this</div>
-            <div class="flex items-center mt-2 space-x-5 font-light ">
-                <div>
-                    <input type="radio" value="Tues, Nov 9th 2020" id="first_date" class="mr-3 focus-within:ring-0 border-brand-blue">
-                    <label for="first_date">Tues, Nov 9th 2020 </label>
-                </div>
-                <div>
-                    <input type="radio" value="Wed, Nov 10th 2020" id="second_date" class="mr-3 focus-within:ring-0 border-brand-blue">
-                    <label for="second_date">Wed, Nov 10th 2020 </label>
-                </div>
+
+            <div class="grid items-center grid-cols-2 mt-3 font-light gap-y-2">
+                <label class="flex items-center" v-for="date in dates" :key="date">
+                    <input type="checkbox" value="Tues, Nov 9th 2020" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                    <div>{{ showDate(date) }}</div>
+                </label>
             </div>
+
             <div>
                 <div class="mt-6 font-semibold">At what time?</div>
                 <div class="grid grid-cols-2 gap-3 mt-2 font-light ">
-                    <div>
-                        <input type="radio" name="lookout" id="first_date" class="mr-3 focus-within:ring-0 border-brand-blue"><label for="first_date">10am - 12pm </label>
-                    </div>
-                    <div>
-                        <input type="radio" name="lookout" id="second_date" class="mr-3 focus-within:ring-0 border-brand-blue"><label for="second_date">12pm - 2pm</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="lookout" id="first_date" class="mr-3 focus-within:ring-0 border-brand-blue"><label for="first_date">2pm - 4pm</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="lookout" id="second_date" class="mr-3 focus-within:ring-0 border-brand-blue"><label for="second_date">4pm - 6pm</label>
-                    </div>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                        <div>10am - 12pm </div>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                        <div>12pm - 2pm</div>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                        <div>2pm - 4pm</div>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                        <div>4pm - 6pm</div>
+                    </label>
                 </div>
             </div>
-            <div class="w-1/3 mx-auto mt-8">
+            <div class="flex w-2/3 mx-auto mt-8 space-x-2">
+                <MainButton outline @click="$emit('prev')">Back</MainButton>
                 <MainButton @click="$emit('next')">Next</MainButton>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+import parseISO from "date-fns/parseISO";
+import format from "date-fns/format";
+export default {
+    computed: {
+        dates() {
+            return this.$store.getters.bookingDates;
+        },
+    },
+    methods: {
+        showDate(date) {
+            return format(parseISO(date), "iii, MMM. do yyyy");
+        },
+    },
+};
+</script>

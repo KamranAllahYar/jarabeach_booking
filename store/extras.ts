@@ -12,18 +12,37 @@ export const state = () => ({
     { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '50,000' },
     { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' }
   ] as { name: string, type: string, range: string, available: boolean }[],
+  selected: [] as { name: string, type: string, range: string, available: boolean }[],
+  selectedIndex: 0 as number,
 })
 
 export type ExtraState = ReturnType<typeof state>
 
 export const getters: GetterTree<ExtraState, RootState> = {
   allSpecials: (state: ExtraState) => state.specials,
+  allSelected: (state: ExtraState) => state.selected,
 }
 
 export const mutations: MutationTree<ExtraState> = {
   LOAD_EXTRAS: (state, payload) => {
     state.specials = payload
   },
+  LOAD_SELECTED: (state, payload) => {
+    state.selected = payload
+  },
+  ADD_SELECTED: (state, sp) => {
+    state.selected.push(sp);
+  },
+  REMOVE_SELECTED: (state, sp) => {
+    const ix = state.selected.findIndex((s) => s.type == sp.type);
+    if (ix >= 0) {
+      state.selected.splice(ix, 1);
+    }
+  },
+
+  RESET_INDEX: (state) => state.selectedIndex = 0,
+  INC_INDEX: (state) => state.selectedIndex++,
+  DEC_INDEX: (state) => state.selectedIndex--,
 }
 
 export const actions: ActionTree<ExtraState, RootState> = {

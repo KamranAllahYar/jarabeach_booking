@@ -1,9 +1,6 @@
 <template>
     <div>
-      <pre>
-        Index: {{ index }}
-
-      </pre>
+        <!-- <pre>{{index}}</pre> -->
         <SpecialLookout v-if="currentSpecial == 'lookout'" @next="gotoNext()" @prev="gotoPrev()" />
 
         <SpecialMassage v-else-if="currentSpecial == 'massage'" @next="gotoNext()" @prev="gotoPrev()" />
@@ -30,35 +27,36 @@ export default {
             type: String,
         },
     },
-    data() {
-        return {
-            index: 0,
-            specials: [
-                "lookout",
-                "cake",
-                "quadbikes",
-                // "photoshoot",
-                // "drinks",
-                // "cake",
-                // "roomDecoration",
-                // "domesticStaff",
-            ],
-        };
+    computed: {
+        selected() {
+            return this.$store.getters["extras/allSelected"];
+        },
+        index() {
+            return this.$store.state.extras.selectedIndex;
+        },
     },
     methods: {
         gotoNext(n) {
-            this.index++;
+            if (this.index == this.selected.length - 1) {
+                this.$router.push({ path: "/profile" });
+                return;
+            }
 
-            const special = this.specials[this.index];
-
-            this.$router.push({ path: "/extras/" + special });
+            this.$store.commit("extras/INC_INDEX");
+            const special = this.selected[this.index];
+            this.$router.push({ path: "/extras/" + special.type });
         },
         gotoPrev(n) {
-            this.index--;
+            if (this.index == 0) {
+                this.$router.push({ path: "/extras" });
+                return;
+            }
 
-            const special = this.specials[this.index];
+            this.$store.commit("extras/DEC_INDEX");
 
-            this.$router.push({ path: "/extras/" + special });
+            const special = this.selected[this.index];
+
+            this.$router.push({ path: "/extras/" + special.type });
         },
     },
 };
