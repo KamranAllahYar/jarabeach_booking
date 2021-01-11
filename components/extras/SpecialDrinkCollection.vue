@@ -1,10 +1,10 @@
 <template>
-    <div class="flex w-full">
+    <div class="flex w-full" style="height: 640px">
         <div class="relative w-6/12 ">
             <img src="@/assets/images/specials/drinks.png" alt="" class="object-cover object-center w-full h-full">
             <NavSpecials color="bg-green-700" :index="5" @next="$emit('next')" @prev="$emit('prev')" />
         </div>
-        <div class="w-7/12 p-6">
+        <div class="w-7/12 h-full p-6 overflow-y-auto">
             <div class="font-semibold">Premium Drink Collection</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
                 We have curated a small, but memorable range of champagnes, wines and spirits -
