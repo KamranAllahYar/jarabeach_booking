@@ -13,6 +13,7 @@ export const state = () => ({
   policies: [] as any[],
 
   guest: {} as any,
+  saveForNextTime: true as boolean,
   guestFormData: {} as FormData,
   weHaveData: false as boolean,
   other_guests: [] as any[],
@@ -78,6 +79,9 @@ export const mutations: MutationTree<RootState> = {
   GUEST_WEHAVEDATA: (state, payload: boolean) => {
     state.weHaveData = payload;
   },
+  GUEST_SAVE_DATA: (state, payload: boolean) => {
+    state.saveForNextTime = payload;
+  },
   UPDATE_ROOMS: (state, roomsData) => {
     state.rooms = roomsData;
   },
@@ -113,13 +117,19 @@ export const mutations: MutationTree<RootState> = {
     state.rooms = [] as any[];
     state.roomsData = [] as any[];
     state.policies = [] as any[];
-    state.guest = {} as any;
+
+    if (!state.saveForNextTime) {
+      state.guest = {} as any;
+    }
+
     state.weHaveData = false as boolean;
     state.other_guests = [] as any[];
     state.guests_done = false as boolean;
     state.availability_done = false as boolean;
     state.profile_done = false as boolean;
     state.policy_done = false as boolean;
+
+    state.saveForNextTime = true as boolean;
   },
 }
 

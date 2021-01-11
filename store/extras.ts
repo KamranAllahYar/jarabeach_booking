@@ -122,6 +122,21 @@ export const mutations: MutationTree<ExtraState> = {
   SET_SELECTED_PHOTOSHOOT: (state, num) => {
     state.selectedPhotoshoot = num
   },
+
+  RESET_STORE: (state) => {
+    state.selected = [] as { name: string, type: string, range: string, available: boolean }[];
+    state.selectedIndex = 0 as number;
+
+    state.decorationOptions = [] as any[];
+    state.selectedDecorations = [] as any[];
+
+    state.drinkOptions = [] as any[];
+    state.selectedDrinks = [] as any[];
+
+    state.selectedCake = {};
+
+    state.selectedPhotoshoot = 0 as number;
+  },
 }
 
 export const actions: ActionTree<ExtraState, RootState> = {

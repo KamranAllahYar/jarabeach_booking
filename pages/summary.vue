@@ -69,9 +69,9 @@
                     </div>
                 </div>
             </div>
-            <div class="flex-shrink-0 w-3/12">
+            <!-- <div class="flex-shrink-0 w-3/12">
                 <ReservationBox showDiscount :showGuests="false" />
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -99,6 +99,7 @@ export default {
             if (res) {
                 this.$router.push("/done");
                 this.$store.commit("RESET_STORE");
+                this.$store.commit("extras/RESET_STORE");
             }
         },
         currency(num) {

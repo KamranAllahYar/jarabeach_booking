@@ -129,9 +129,9 @@ export default {
             from: {},
             loading: false,
             wantsToUpdate: false,
-            initialLoad: true,
+            initialLoad: false,
             file: null,
-            agreed: true,
+            // agreed: true,
             guest: {
                 id: "",
                 email: "",
@@ -147,6 +147,14 @@ export default {
         };
     },
     computed: {
+        agreed: {
+            set(v) {
+                return this.$store.commit("GUEST_SAVE_DATA", v);
+            },
+            get() {
+                return this.$store.state.saveForNextTime;
+            },
+        },
         weHaveData: {
             set(v) {
                 return this.$store.commit("GUEST_WEHAVEDATA", v);
@@ -156,6 +164,8 @@ export default {
             },
         },
         showFullForm() {
+            return true;
+
             if (this.wantsToUpdate) return true;
 
             if (this.initialLoad) return false;
