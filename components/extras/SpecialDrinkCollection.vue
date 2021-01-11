@@ -119,6 +119,10 @@ export default {
                 qty: 1,
             });
         }
+
+        if (this.dates.length > 0) {
+            this.selectedDate = this.dates[0];
+        }
     },
 };
 </script>

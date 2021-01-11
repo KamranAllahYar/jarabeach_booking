@@ -13,7 +13,7 @@
 
             <div class="grid items-center grid-cols-2 mt-3 font-light gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">
-                    <input type="checkbox" value="Tues, Nov 9th 2020" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                    <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                     <div>{{ showDate(date) }}</div>
                 </label>
             </div>
@@ -29,10 +29,10 @@
                                 <path d="M1.857 8.203A1.639 1.639 0 004.67 9.35a1.631 1.631 0 002.578-.313 1.628 1.628 0 002.812 0 1.637 1.637 0 003.047-.833" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             <select class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.size">
-                                <option value="size">Size</option>
-                                <option value="small">Small</option>
-                                <option value="medium">Medium</option>
+                                <option value="">Type</option>
                                 <option value="large">Large</option>
+                                <option value="small">Small</option>
+                                <option value="cupcakes">Cupcakes</option>
                             </select>
                         </div>
                         <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring">
@@ -45,8 +45,8 @@
                         </div>
                         <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring">
                             <select class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.numbers">
-                                <option value="0">Numbers</option>
-                                <option v-for="num in 5" :value="num" :key="num">
+                                <option value="0">Quantity</option>
+                                <option v-for="num in quantityOption" :value="num" :key="num">
                                     {{ num }}
                                 </option>
                             </select>
@@ -60,11 +60,12 @@
                                 <path d="M1.857 8.203A1.639 1.639 0 004.67 9.35a1.631 1.631 0 002.578-.313 1.628 1.628 0 002.812 0 1.637 1.637 0 003.047-.833" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.flavours">
-                                <option value="flavour">Flavours</option>
-                                <option value="red">Banana</option>
-                                <option value="red">Vanilla</option>
-                                <option value="red">Carrot</option>
-                                <option value="red">chocolate</option>
+                                <option value="">Flavours</option>
+                                <option value="Banana">Banana</option>
+                                <option value="Vanilla">Vanilla</option>
+                                <option value="Carrot">Carrot</option>
+                                <option value="Chocolate">Chocolate</option>
+                                <option value="Red Velvet">Red Velvet</option>
                             </select>
                         </div>
                         <div class="flex items-center w-1/2 pl-2 border rounded-md focus-within:ring">
@@ -75,11 +76,12 @@
                                     stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.colors">
-                                <option value="color">Colors</option>
+                                <option value="">Colors</option>
                                 <option value="red">red</option>
-                                <option value="red">white</option>
-                                <option value="red">cream</option>
-                                <option value="red">pink</option>
+                                <option value="white">white</option>
+                                <option value="cream">cream</option>
+                                <option value="pink">pink</option>
+                                <option value="blue">blue</option>
                             </select>
                         </div>
                     </div>
@@ -87,8 +89,8 @@
                 </div>
             </div>
             <div class="flex w-2/3 mx-auto mt-8 space-x-2">
-                <MainButton outline @click="$emit('prev')">Back</MainButton>
-                <MainButton @click="$emit('next')">Next</MainButton>
+                <MainButton outline @click="prev()">Back</MainButton>
+                <MainButton @click="next()">Next</MainButton>
             </div>
         </div>
     </div>
@@ -101,12 +103,13 @@ import format from "date-fns/format";
 export default {
     data() {
         return {
+            selectedDate: null,
             cake: {
-                size: "size",
+                size: "",
                 layers: 0,
                 numbers: 0,
-                flavours: "flavour",
-                colors: "color",
+                flavours: "",
+                colors: "",
                 message: "",
             },
         };
@@ -115,11 +118,31 @@ export default {
         dates() {
             return this.$store.getters.bookingDates;
         },
+        quantityOption() {
+            if (this.cake.size == "cupcakes") {
+                return [6, 7, 8, 9, 10, 11, 12];
+            }
+
+            return [1, 2];
+        },
     },
     methods: {
+        next() {
+            this.$store.commit("extras/SET_SELECTED_CAKE", this.cake);
+            this.$emit("next");
+        },
+        prev() {
+            this.$store.commit("extras/SET_SELECTED_CAKE", this.cake);
+            this.$emit("prev");
+        },
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
+    },
+    mounted() {
+        if (this.dates.length > 0) {
+            this.selectedDate = this.dates[0];
+        }
     },
 };
 </script>
