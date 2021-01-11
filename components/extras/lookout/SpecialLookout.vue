@@ -3,7 +3,7 @@
         <div class="flex w-full" v-show="!showMenu">
             <div class="relative w-6/12">
                 <img src="@/assets/images/specials/lookout.png" alt="" class="object-cover object-center w-full h-full">
-                <NavSpecials :color="bg-green-500" @next="emitNext()" />
+                <NavSpecials :color="'bg-green-400'" @next="emitNext()" />
             </div>
             <div class="w-7/12 p-6">
                 <div class="font-semibold">The Lookout Experience</div>
