@@ -20,9 +20,10 @@
                             </svg>
                         </div>
                         <div class="">
-                          Your booking was successful, we’ve sent all the details you will need to
-                          <span class="text-brand-blue">{{ done_email }}</span>.
-                          We look forward to welcoming you in {{ days_left }} days!</div>
+                            Your booking was successful, we’ve sent all the details you will need to
+                            <span class="text-brand-blue">{{ done_email }}</span>.
+                            We look forward to welcoming you in {{ days_left }} days!
+                        </div>
                     </div>
                     <div class="mt-5 text-sm text-center">Check us out on social media</div>
                     <div class="flex items-center justify-center mt-2 space-x-5">
