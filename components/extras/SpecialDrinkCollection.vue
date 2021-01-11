@@ -16,14 +16,14 @@
             <div class="mt-6 font-semibold">What date would you like to have this</div>
             <div class="grid items-center grid-cols-2 mt-3 font-light gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">
-                    <input type="checkbox" value="Tues, Nov 9th 2020" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
+                    <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
                     <div>{{ showDate(date) }}</div>
                 </label>
             </div>
             <div>
                 <div class="mt-6 font-semibold">Select Wine or Champagne or Spirit</div>
                 <div class="flex flex-wrap items-center justify-between w-full mt-3">
-                    <div class="flex items-end w-full mb-3 space-x-3 font-light" v-for="(drink, ix) in drinks" :key="drink.id">
+                    <div class="flex items-end w-full mb-3 space-x-3 font-light" v-for="(sDrink, ix) in selectedDrinks" :key="sDrink.id">
                         <div class="flex items-center pl-2 border rounded-md focus-within:ring">
                             <svg
                                 class="w-5 h-5" fill="none" viewBox="0 0 15 15"
@@ -32,13 +32,12 @@
                                 <path d="M6.79688 5.625a.23443.23443 0 01.21653.14468.23442.23442 0 01-.05081.25542.2344.2344 0 01-.25542.05081.2344.2344 0 01-.14468-.21653.23433.23433 0 01.06865-.16573.23433.23433 0 01.16573-.06865M6.79688 8.4375a.23443.23443 0 01.21653.14468.23442.23442 0 01-.05081.25542.2344.2344 0 01-.25542.05081.2344.2344 0 01-.14468-.21653.23433.23433 0 01.06865-.16573.23433.23433 0 01.16573-.06865M8.20313 7.03125a.23443.23443 0 01.21653.14468.23442.23442 0 01-.05081.25542.2344.2344 0 01-.25542.05081.2344.2344 0 01-.14468-.21653.23433.23433 0 01.06865-.16573.23433.23433 0 01.16573-.06865"
                                     stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            <select v-model="drink.drinkType" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
-                                <option value="brut">Brut Champagne</option>
-                                <option value="red_wine">Premium Red Wine</option>
+                            <select v-model="sDrink.type" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
+                                <option v-for="drink in drinks" :value="drink.name" :key="drink.id">{{drink.name}}</option>
                             </select>
                         </div>
                         <div class="flex items-center pl-2 border rounded-md focus-within:ring">
-                            <select v-model="drink.drinkQty" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
+                            <select v-model="sDrink.qty" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
                                 <option value="0">Qty</option>
                                 <option v-for="num in 20" :value="num" :key="num">
                                     {{ num }}
@@ -46,7 +45,7 @@
                             </select>
                         </div>
                         <div class="flex-1"></div>
-                        <div @click="addDrinks" v-if="ix == drinks.length-1" class="flex items-center mb-3 text-xs cursor-pointer text-brand-blue hover:text-brand-blue-300">
+                        <div @click="addDrinks" v-if="ix == selectedDrinks.length-1" class="flex items-center mb-3 text-xs cursor-pointer text-brand-blue hover:text-brand-blue-300">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
@@ -59,8 +58,8 @@
                 </div>
             </div>
             <div class="flex w-2/3 mx-auto mt-8 space-x-2">
-                <MainButton outline @click="$emit('prev')">Back</MainButton>
-                <MainButton @click="$emit('next')">Next</MainButton>
+                <MainButton outline @click="prev()">Back</MainButton>
+                <MainButton @click="next()">Next</MainButton>
             </div>
         </div>
     </div>
@@ -72,32 +71,54 @@ import format from "date-fns/format";
 export default {
     data() {
         return {
-            drinks: [
-                {
-                    drinkType: "brut",
-                    drinkQty: 0,
-                },
-            ],
+            selectedDate: null,
+            selectedDrinks: [],
         };
     },
     computed: {
         dates() {
             return this.$store.getters.bookingDates;
         },
+        drinks() {
+            return this.$store.getters["extras/allDrinks"];
+        },
     },
     methods: {
+        next() {
+            this.$store.commit(
+                "extras/SET_SELECTED_DRINKS",
+                this.selectedDrinks
+            );
+            this.$emit("next");
+        },
+        prev() {
+            this.$store.commit(
+                "extras/SET_SELECTED_DRINKS",
+                this.selectedDrinks
+            );
+            this.$emit("prev");
+        },
         addDrinks() {
-            this.drinks.push({
-                drinkType: "brut",
-                drinkQty: 0,
+            this.selectedDrinks.push({
+                type: this.drinks[0].name,
+                qty: 1,
             });
         },
         removeDrink(ix) {
-            this.drinks.splice(ix, 1);
+            this.selectedDrinks.splice(ix, 1);
         },
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
+    },
+    mounted() {
+        this.$store.dispatch("extras/getSpecialDrinks");
+        if (this.drinks.length > 0) {
+            this.selectedDrinks.push({
+                type: this.drinks[0].name,
+                qty: 1,
+            });
+        }
     },
 };
 </script>

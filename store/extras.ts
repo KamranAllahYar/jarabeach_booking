@@ -14,6 +14,9 @@ export const state = () => ({
   ] as { name: string, type: string, range: string, available: boolean }[],
   selected: [] as { name: string, type: string, range: string, available: boolean }[],
   selectedIndex: 0 as number,
+
+  drinkOptions: [],
+  selectedDrinks: [],
 })
 
 export type ExtraState = ReturnType<typeof state>
@@ -21,6 +24,7 @@ export type ExtraState = ReturnType<typeof state>
 export const getters: GetterTree<ExtraState, RootState> = {
   allSpecials: (state: ExtraState) => state.specials,
   allSelected: (state: ExtraState) => state.selected,
+  allDrinks: (state: ExtraState) => state.drinkOptions,
 }
 
 export const mutations: MutationTree<ExtraState> = {
@@ -43,6 +47,13 @@ export const mutations: MutationTree<ExtraState> = {
   RESET_INDEX: (state) => state.selectedIndex = 0,
   INC_INDEX: (state) => state.selectedIndex++,
   DEC_INDEX: (state) => state.selectedIndex--,
+
+  LOAD_DRINK_OPTIONS: (state, drinks) => {
+    state.drinkOptions = drinks
+  },
+  SET_SELECTED_DRINKS: (state, drinks) => {
+    state.selectedDrinks = drinks
+  },
 }
 
 export const actions: ActionTree<ExtraState, RootState> = {
@@ -54,5 +65,13 @@ export const actions: ActionTree<ExtraState, RootState> = {
       commit("LOAD_EXTRAS", res.data);
     });
   },
+
+  getSpecialDrinks({ commit }) {
+    this.$axios.get("/drink-options").then((res) => {
+      console.log("Drinks")
+      console.log(res.data.data);
+      commit("LOAD_DRINK_OPTIONS", res.data.data);
+    });
+  }
 
 }
