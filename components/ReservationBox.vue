@@ -20,7 +20,27 @@
                         <div>{{ formatDate(room.date) }}</div>
                         <div class="text-xs text-gray-600">{{ room.name }}</div>
                     </div>
+                </div>
+            </div>
 
+            <div class="flex items-center justify-between px-3 my-3" v-for="extra in specials" :key="extra.id">
+                <div>{{ extra.name }}</div>
+                <div>
+                    <span v-if="extra.type == 'cake'">
+                        {{ currency($store.getters['extras/cakePrice']) }}
+                    </span>
+                    <span v-else-if="extra.type == 'drinks'">
+                        {{ currency($store.getters['extras/drinksPrice']) }}
+                    </span>
+                    <span v-else-if="extra.type == 'photoshoot'">
+                        {{ currency($store.getters['extras/photoshootPrice']) }}
+                    </span>
+                    <span v-else-if="extra.type == 'roomDecoration'">
+                        {{ currency($store.getters['extras/decorationPrice']) }}
+                    </span>
+                    <span v-else>
+                        {{ currency(0) }}
+                    </span>
                 </div>
             </div>
         </div>
@@ -64,6 +84,9 @@ export default {
         };
     },
     computed: {
+        specials() {
+            return this.$store.getters["extras/allSelected"];
+        },
         childNo() {
             return this.$store.state.child_no;
         },

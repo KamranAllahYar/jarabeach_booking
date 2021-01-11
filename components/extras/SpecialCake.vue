@@ -28,24 +28,24 @@
                                 <path d="M.92 14.531h13.125M12.17 6.094H2.795a.937.937 0 00-.938.937v4.688c0 .518.42.937.938.937h9.375c.518 0 .937-.42.937-.937V7.03a.937.937 0 00-.937-.937zM7.482 4.688v1.406M8.42 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406zM11.232 4.688v1.406M12.17 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406zM3.732 4.688v1.406M4.67 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406z" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M1.857 8.203A1.639 1.639 0 004.67 9.35a1.631 1.631 0 002.578-.313 1.628 1.628 0 002.812 0 1.637 1.637 0 003.047-.833" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            <select class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.size">
+                            <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.size">
                                 <option value="">Type</option>
                                 <option value="small">Small</option>
                                 <option value="large">Large</option>
                                 <option value="cupcakes">Cupcakes</option>
                             </select>
                         </div>
-                        <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring">
+                        <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring" v-if="cake.size != 'cupcakes'">
                             <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.layers">
-                                <option value="0">Layers</option>
+                                <option value="">Layers</option>
                                 <option v-for="num in 2" :value="num" :key="num">
                                     {{ num }}
                                 </option>
                             </select>
                         </div>
                         <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring">
-                            <select class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.numbers">
-                                <option value="0">Quantity</option>
+                            <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.numbers">
+                                <option value="">Quantity</option>
                                 <option v-for="num in quantityOption" :value="num" :key="num">
                                     {{ num }}
                                 </option>
