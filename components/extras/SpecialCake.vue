@@ -141,6 +141,13 @@ export default {
         if (this.dates.length > 0) {
             this.selectedDate = this.dates[0];
         }
+
+        if (this.$store.state.extras.selectedCake) {
+            this.cake = Object.assign(
+                {},
+                this.$store.state.extras.selectedCake
+            );
+        }
     },
 };
 </script>

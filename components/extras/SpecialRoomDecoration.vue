@@ -19,7 +19,6 @@
                     <div>{{ showDate(date) }}</div>
                 </label>
             </div>
-
             <div class="space-y-4">
                 <div class="mt-6 font-semibold">Select Room Decoration</div>
                 <label class="flex items-center" v-for="deco in decorations" :key="deco.id">
@@ -85,6 +84,12 @@ export default {
 
         if (this.dates.length > 0) {
             this.selectedDate = this.dates[0];
+        }
+
+        if (this.$store.state.extras.selectedDecorations) {
+            this.selectedDecorations = this.$store.state.extras.selectedDecorations.map(
+                (x) => x
+            );
         }
     },
 };
