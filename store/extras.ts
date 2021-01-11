@@ -15,6 +15,9 @@ export const state = () => ({
   selected: [] as { name: string, type: string, range: string, available: boolean }[],
   selectedIndex: 0 as number,
 
+  decorationOptions: [],
+  selectedDecorations: [],
+
   drinkOptions: [],
   selectedDrinks: [],
 
@@ -27,6 +30,7 @@ export const getters: GetterTree<ExtraState, RootState> = {
   allSpecials: (state: ExtraState) => state.specials,
   allSelected: (state: ExtraState) => state.selected,
   allDrinks: (state: ExtraState) => state.drinkOptions,
+  allDecorations: (state: ExtraState) => state.decorationOptions,
 }
 
 export const mutations: MutationTree<ExtraState> = {
@@ -50,12 +54,21 @@ export const mutations: MutationTree<ExtraState> = {
   INC_INDEX: (state) => state.selectedIndex++,
   DEC_INDEX: (state) => state.selectedIndex--,
 
+  LOAD_DECORATION_OPTIONS: (state, decorations) => {
+    state.decorationOptions = decorations
+  },
+  SET_SELECTED_DECORATION: (state, decorations) => {
+    state.selectedDecorations = decorations;
+  },
+
+
   LOAD_DRINK_OPTIONS: (state, drinks) => {
     state.drinkOptions = drinks
   },
   SET_SELECTED_DRINKS: (state, drinks) => {
     state.selectedDrinks = drinks
   },
+
   SET_SELECTED_CAKE: (state, cake) => {
     state.selectedCake = cake
   },
@@ -76,6 +89,14 @@ export const actions: ActionTree<ExtraState, RootState> = {
       console.log("Drinks")
       console.log(res.data.data);
       commit("LOAD_DRINK_OPTIONS", res.data.data);
+    });
+  },
+
+  getSpecialDecorations({ commit }) {
+    this.$axios.get("/decoration-options").then((res) => {
+      console.log("Decorations")
+      console.log(res.data.data);
+      commit("LOAD_DECORATION_OPTIONS", res.data.data);
     });
   }
 

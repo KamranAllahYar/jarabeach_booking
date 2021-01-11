@@ -15,29 +15,24 @@
 
             <div class="grid items-center grid-cols-2 mt-3 font-light gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">
-                    <input type="checkbox" value="Tues, Nov 9th 2020" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
+                    <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
                     <div>{{ showDate(date) }}</div>
                 </label>
             </div>
 
             <div class="space-y-4">
                 <div class="mt-6 font-semibold">Select Room Decoration</div>
-                <label class="flex items-center">
-                    <input type="checkbox" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
-                    <div>Welcome note - <span class="font-bold uppercase">free</span></div>
-                </label>
-                <label class="flex items-center">
-                    <input type="checkbox" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
-                    <div>Flower Petals - <span class="font-bold uppercase">free</span></div>
-                </label>
-                <label class="flex items-center">
-                    <input type="checkbox" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
-                    <div>Helium Ballon - <span class="font-bold uppercase">N25,000</span></div>
+                <label class="flex items-center" v-for="deco in decorations" :key="deco.id">
+                    <input type="checkbox" :value="deco" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
+                    <div>{{ deco.name }} -
+                        <span class="font-bold uppercase" v-if="deco.price >0">{{ currency(deco.price) }}</span>
+                        <span class="font-bold uppercase" v-else>FREE</span>
+                    </div>
                 </label>
             </div>
             <div class="flex w-2/3 mx-auto mt-8 space-x-2">
-                <MainButton outline @click="$emit('prev')">Back</MainButton>
-                <MainButton @click="$emit('next')">Next</MainButton>
+                <MainButton outline @click="prev()">Back</MainButton>
+                <MainButton @click="next()">Next</MainButton>
             </div>
         </div>
     </div>
@@ -48,15 +43,49 @@ import parseISO from "date-fns/parseISO";
 import format from "date-fns/format";
 
 export default {
+    data() {
+        return {
+            selectedDate: null,
+            selectedDecorations: [],
+        };
+    },
     computed: {
+        decorations() {
+            return this.$store.getters["extras/allDecorations"];
+        },
         dates() {
             return this.$store.getters.bookingDates;
         },
     },
     methods: {
+        next() {
+            console.log("NEXT");
+            this.$store.commit(
+                "extras/SET_SELECTED_DECORATION",
+                this.selectedDecorations
+            );
+            this.$emit("next");
+        },
+        prev() {
+            this.$store.commit(
+                "extras/SET_SELECTED_DECORATION",
+                this.selectedDecorations
+            );
+            this.$emit("prev");
+        },
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
+        currency(num) {
+            return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+    },
+    mounted() {
+        this.$store.dispatch("extras/getSpecialDecorations");
+
+        if (this.dates.length > 0) {
+            this.selectedDate = this.dates[0];
+        }
     },
 };
 </script>

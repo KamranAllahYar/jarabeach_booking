@@ -90,6 +90,7 @@ export default {
     mounted() {
         this.$store.dispatch("extras/updateSpecials", this.dates);
         this.$store.dispatch("extras/getSpecialDrinks");
+        this.$store.dispatch("extras/getSpecialDecorations");
     },
 };
 </script>

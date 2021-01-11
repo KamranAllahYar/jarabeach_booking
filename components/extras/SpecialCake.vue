@@ -30,15 +30,15 @@
                             </svg>
                             <select class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.size">
                                 <option value="">Type</option>
-                                <option value="large">Large</option>
                                 <option value="small">Small</option>
+                                <option value="large">Large</option>
                                 <option value="cupcakes">Cupcakes</option>
                             </select>
                         </div>
                         <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring">
                             <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.layers">
                                 <option value="0">Layers</option>
-                                <option v-for="num in 5" :value="num" :key="num">
+                                <option v-for="num in 2" :value="num" :key="num">
                                     {{ num }}
                                 </option>
                             </select>
@@ -61,9 +61,7 @@
                             </svg>
                             <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.flavours">
                                 <option value="">Flavours</option>
-                                <option value="Banana">Banana</option>
                                 <option value="Vanilla">Vanilla</option>
-                                <option value="Carrot">Carrot</option>
                                 <option value="Chocolate">Chocolate</option>
                                 <option value="Red Velvet">Red Velvet</option>
                             </select>
@@ -120,7 +118,7 @@ export default {
         },
         quantityOption() {
             if (this.cake.size == "cupcakes") {
-                return [6, 7, 8, 9, 10, 11, 12];
+                return [6, 12];
             }
 
             return [1, 2];
