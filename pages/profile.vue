@@ -131,6 +131,7 @@ export default {
             wantsToUpdate: false,
             initialLoad: true,
             file: null,
+            agreed: true,
             guest: {
                 id: "",
                 email: "",

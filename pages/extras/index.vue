@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="flex items-center w-1/2 mx-auto mt-8 space-x-5" v-if="selected.length > 0">
-                    <MainButton outline>Back</MainButton>
+                    <MainButton @click="gotoBack()" outline>Back</MainButton>
                     <MainButton @click="gotoNext()">Next</MainButton>
                 </div>
                 <div v-else class="flex items-center w-1/4 mx-auto mt-8 space-x-5">
@@ -59,6 +59,10 @@ export default {
         },
     },
     methods: {
+        gotoBack() {
+            this.$store.commit("extras/RESET_INDEX");
+            this.$router.push({ path: "/availability" });
+        },
         gotoNext() {
             this.$store.commit("extras/RESET_INDEX");
 

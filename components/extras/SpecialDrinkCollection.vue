@@ -113,7 +113,14 @@ export default {
     },
     mounted() {
         this.$store.dispatch("extras/getSpecialDrinks");
-        if (this.drinks.length > 0) {
+
+        if (this.$store.state.extras.selectedDrinks) {
+            this.selectedDrinks = this.$store.state.extras.selectedDrinks.map(
+                (x) => x
+            );
+        }
+
+        if (this.drinks.length > 0 && this.selectedDrinks.length <= 0) {
             this.selectedDrinks.push({
                 type: this.drinks[0].name,
                 qty: 1,
@@ -122,12 +129,6 @@ export default {
 
         if (this.dates.length > 0) {
             this.selectedDate = this.dates[0];
-        }
-
-        if (this.$store.state.extras.selectedDrinks) {
-            this.selectedDrinks = this.$store.state.extras.selectedDrinks.map(
-                (x) => x
-            );
         }
     },
 };

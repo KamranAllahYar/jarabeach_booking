@@ -22,6 +22,8 @@ export const state = () => ({
   selectedDrinks: [],
 
   selectedCake: {},
+
+  selectedPhotoshoot: 0,
 })
 
 export type ExtraState = ReturnType<typeof state>
@@ -71,6 +73,10 @@ export const mutations: MutationTree<ExtraState> = {
 
   SET_SELECTED_CAKE: (state, cake) => {
     state.selectedCake = cake
+  },
+
+  SET_SELECTED_PHOTOSHOOT: (state, num) => {
+    state.selectedPhotoshoot = num
   },
 }
 

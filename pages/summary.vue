@@ -17,10 +17,10 @@
                                     <div class="text-xs font-light text-red-500 cursor-pointer hover:underline" @click="removeRoom(room)">Remove</div>
                                 </div>
                             </div>
-                            <!-- <div class="flex items-center justify-between px-3 py-4">
+                            <div class="flex items-center justify-between px-3 py-4">
                                 <div>Cake</div>
                                 <div class="text-lg font-bold">{{ currency(400) }}</div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
 

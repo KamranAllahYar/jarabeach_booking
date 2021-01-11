@@ -15,7 +15,7 @@
 
             <div class="grid items-center grid-cols-2 mt-3 font-light gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">
-                    <input type="checkbox" value="Tues, Nov 9th 2020" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                    <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                     <div>{{ showDate(date) }}</div>
                 </label>
             </div>
@@ -33,6 +33,7 @@
                         <select v-model="noOfArtists"
                             class="w-full border-0 rounded-md outline-none focus:outline-none"
                             style="box-shadow: none">
+                            <option value="0">0</option>
                             <option v-for="num in 5" :value="num" :key="num">
                                 {{ num }}
                             </option>
@@ -57,7 +58,8 @@ import format from "date-fns/format";
 export default {
     data() {
         return {
-            noOfArtists: "",
+            selectedDate: null,
+            noOfArtists: 0,
         };
     },
     computed: {
@@ -66,9 +68,32 @@ export default {
         },
     },
     methods: {
+        next() {
+            this.$store.commit(
+                "extras/SET_SELECTED_PHOTOSHOOT",
+                this.noOfArtists
+            );
+            this.$emit("next");
+        },
+        prev() {
+            this.$store.commit(
+                "extras/SET_SELECTED_PHOTOSHOOT",
+                this.noOfArtists
+            );
+            this.$emit("prev");
+        },
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
+    },
+    mounted() {
+        if (this.dates.length > 0) {
+            this.selectedDate = this.dates[0];
+        }
+
+        if (this.$store.state.extras.selectedPhotoshoot) {
+            this.noOfArtists = this.$store.state.extras.selectedPhotoshoot;
+        }
     },
 };
 </script>
