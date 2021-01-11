@@ -23,7 +23,7 @@
             <div>
                 <div class="mt-6 font-semibold">Select Wine or Champagne or Spirit</div>
                 <div class="flex flex-wrap items-center justify-between w-full mt-3">
-                    <div class="flex items-end w-full mb-3 space-x-3 font-light" v-for="(sDrink, ix) in selectedDrinks" :key="sDrink.id">
+                    <div class="flex items-end w-full mb-3 space-x-3 font-light" v-for="(sDrink, ix) in selectedDrinks" :key="ix">
                         <div class="flex items-center pl-2 border rounded-md focus-within:ring">
                             <svg
                                 class="w-5 h-5" fill="none" viewBox="0 0 15 15"

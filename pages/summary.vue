@@ -7,7 +7,7 @@
                 <div class="px-6 pt-6 text-gray-700 bg-white border rounded-lg shadow-lg">
                     <div class="border rounded-md">
                         <div class="flex flex-col divide-y">
-                            <div class="flex items-center justify-between px-3 py-4" v-for="(room, i) in rooms" :key="i">
+                            <!-- <div class="flex items-center justify-between px-3 py-4" v-for="(room, i) in rooms" :key="i">
                                 <div class="text-base">
                                     <div>{{room.date}}</div>
                                     <div class="text-sm">{{room.name}}</div>
@@ -16,13 +16,29 @@
                                     <div>{{ currency(room.price) }}</div>
                                     <div class="text-xs font-light text-red-500 cursor-pointer hover:underline" @click="removeRoom(room)">Remove</div>
                                 </div>
+                            </div> -->
+                            <div class="flex items-center justify-between px-3 py-4">
+                                <div class="text-base">
+                                    <div>Stay ({{rooms.length}} Nights)</div>
+                                </div>
+                                <div class="text-lg font-bold text-right">
+                                    <div>{{ currency(roomsPrice) }}</div>
+                                </div>
                             </div>
                             <div class="flex items-center justify-between px-3 py-4" v-for="extra in specials" :key="extra.id">
                                 <div>{{ extra.name }}</div>
-                                {{ extra.type }}
                                 <div class="text-lg font-bold">
                                     <span v-if="extra.type == 'cake'">
                                         {{ currency($store.getters['extras/cakePrice']) }}
+                                    </span>
+                                    <span v-else-if="extra.type == 'drinks'">
+                                        {{ currency($store.getters['extras/drinksPrice']) }}
+                                    </span>
+                                    <span v-else-if="extra.type == 'photoshoot'">
+                                        {{ currency($store.getters['extras/photoshootPrice']) }}
+                                    </span>
+                                    <span v-else-if="extra.type == 'roomDecoration'">
+                                        {{ currency($store.getters['extras/decorationPrice']) }}
                                     </span>
                                     <span v-else>
                                         {{ currency(0) }}
@@ -66,6 +82,9 @@ export default {
     computed: {
         rooms() {
             return this.$store.getters.bookedRooms;
+        },
+        roomsPrice() {
+            return this.rooms.reduce((price, room) => price + room.price, 0);
         },
         specials() {
             return this.$store.getters["extras/allSelected"];

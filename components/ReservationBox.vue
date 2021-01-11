@@ -74,9 +74,11 @@ export default {
             return this.$store.getters.bookedRooms;
         },
         subTotal() {
-            return this.rooms.reduce((price, room) => {
+            const roomPrices = this.rooms.reduce((price, room) => {
                 return price + room.price;
             }, 0);
+
+            return roomPrices;
         },
         totalPrice() {
             return this.subTotal - this.discount;

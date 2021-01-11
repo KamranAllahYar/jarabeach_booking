@@ -42,20 +42,41 @@ export const getters: GetterTree<ExtraState, RootState> = {
     return 0;
   },
   drinksPrice: (state: ExtraState) => {
-    if (state.selectedDrinks.length > 0) {
-      let price = 0;
+    if (state.selectedDrinks.length <= 0) return 0;
+    let price = 0;
 
-      for (let i = 0; i < state.selectedDrinks.length; i++) {
-        const sDrink = state.selectedDrinks[i];
+    for (let i = 0; i < state.selectedDrinks.length; i++) {
+      const sDrink = state.selectedDrinks[i];
 
-        // const drink = state.drinkOptions.find(function (do){ return true });
+      const drink = state.drinkOptions.find(dko => dko.id == sDrink.id);
+
+      if (drink) {
+        price += (+drink.price * +sDrink.qty);
       }
-
-return price;
     }
 
-return 0;
+    return price;
   },
+  photoshootPrice: (state: ExtraState) => {
+    if (state.selectedPhotoshoot > 0) {
+      return 50000 * (+state.selectedPhotoshoot * 15000)
+    }
+
+    return 50000;
+  },
+  decorationPrice: (state: ExtraState) => {
+    if (state.selectedDecorations.length <= 0) return 0;
+
+    let price = 0;
+    for (let i = 0; i < state.selectedDecorations.length; i++) {
+      const deco = state.selectedDecorations[i];
+
+      if (deco) {
+        price += +deco.price;
+      }
+    }
+    return price;
+  }
 }
 
 export const mutations: MutationTree<ExtraState> = {

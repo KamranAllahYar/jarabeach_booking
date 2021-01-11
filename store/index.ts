@@ -1,4 +1,6 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
+import differenceInDays from 'date-fns/differenceInDays';
+import parseISO from 'date-fns/parseISO';
 
 export const state = () => ({
   groupType: 'individual' as string,
@@ -21,6 +23,7 @@ export const state = () => ({
   policy_done: false as boolean,
 
   done_email: "" as string,
+  done_days_left: 0 as number,
 
   extra: '' as string,
   showExtra: false as boolean,
@@ -98,7 +101,10 @@ export const mutations: MutationTree<RootState> = {
 
   RESET_STORE: (state) => {
     const email = state.guest.email;
+    const days_left = differenceInDays(parseISO(state.rooms[0].date), new Date());
+
     state.done_email = email || "";
+    state.done_days_left = days_left || 0;
 
     state.groupType = 'individual' as string;
     state.adult_no = 0 as number;
