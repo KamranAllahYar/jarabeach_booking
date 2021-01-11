@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="mb-6 text-2xl text-center">Please give us some information about you</h1>
+        <h1 class="mb-6 text-2xl font-bold text-center">Please give us some information about you</h1>
 
         <div class="flex justify-center space-x-6">
             <div class="w-6/12">

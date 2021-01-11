@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="mb-6 text-2xl text-center">Please accept our policies</h1>
+        <h1 class="mb-6 text-2xl font-bold text-center">Please accept our policies</h1>
 
         <div class="flex justify-center space-x-6">
             <div class="w-6/12">
@@ -14,9 +14,9 @@
                             <div v-html="currentPolicy.content"></div>
                         </div>
 
-                        <div class="flex justify-center px-3 py-4">
-                            <label class="inline-flex items-center font-bold">
-                                <input type="checkbox" v-model="agreed" class="mr-2 text-green-600 rounded-full focus:ring-1 focus:ring-green-600" />
+                        <div class="flex justify-start px-3 py-4">
+                            <label class="inline-flex items-center font-bold cursor-pointer">
+                                <input type="checkbox" v-model="agreed" class="w-6 h-6 mr-4 text-green-600 rounded-full focus:ring-1 focus:ring-green-600" />
                                 I will accept the terms and condition
                             </label>
                         </div>

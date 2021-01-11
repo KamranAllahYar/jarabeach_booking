@@ -5,7 +5,7 @@
                 Tell Us about your visiting group
             </div>
 
-            <div class="max-w-md px-6 py-6 mx-auto mt-10 bg-white border rounded-lg">
+            <div class="max-w-lg px-6 py-6 mx-auto mt-10 bg-white border rounded-lg shadow-lg">
                 <div class="border rounded-lg">
 
                     <div class="p-4">
@@ -56,7 +56,7 @@
                         </div>
                         <div class="grid w-full grid-cols-3 gap-x-3 gap-y-3">
                             <div class="flex items-center pl-2 rounded-md focus-within:ring" v-for="(child, i) in childrenAges" :key="i">
-                                <svg class="w-5 h-5" viewBox="0 0 16 16" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="flex-shrink-0 w-5 h-5" viewBox="0 0 16 16" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.75 6.583h-.01C13.5 3.55 10.706 1.55 8 1.55s-5.5 2-5.74 5.033h-.01a1.75 1.75 0 100 3.5h.01a6 6 0 0011.48 0h.01a1.75 1.75 0 100-3.5z" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M8 1.55a1.5 1.5 0 01.596 2.876 1.5 1.5 0 01-2.01-.876M9.323 11.334a2 2 0 01-2.646 0M11.5 7.333a1 1 0 01-2 0M6.5 7.333a1 1 0 01-2 0" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
