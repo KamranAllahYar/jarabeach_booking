@@ -17,9 +17,17 @@
                                     <div class="text-xs font-light text-red-500 cursor-pointer hover:underline" @click="removeRoom(room)">Remove</div>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between px-3 py-4">
-                                <div>Cake</div>
-                                <div class="text-lg font-bold">{{ currency(400) }}</div>
+                            <div class="flex items-center justify-between px-3 py-4" v-for="extra in specials" :key="extra.id">
+                                <div>{{ extra.name }}</div>
+                                {{ extra.type }}
+                                <div class="text-lg font-bold">
+                                    <span v-if="extra.type == 'cake'">
+                                        {{ currency($store.getters['extras/cakePrice']) }}
+                                    </span>
+                                    <span v-else>
+                                        {{ currency(0) }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -41,7 +49,7 @@
                                 Pay
                             </div>
                         </MainButton>
-                       <!-- <nuxt-link tag="div" to="/done" class="cursor-pointer">&rarr;</nuxt-link> -->
+                        <!-- <nuxt-link tag="div" to="/done" class="cursor-pointer">&rarr;</nuxt-link> -->
                     </div>
                 </div>
             </div>
@@ -58,6 +66,9 @@ export default {
     computed: {
         rooms() {
             return this.$store.getters.bookedRooms;
+        },
+        specials() {
+            return this.$store.getters["extras/allSelected"];
         },
     },
     methods: {

@@ -32,8 +32,8 @@
                                 <path d="M6.79688 5.625a.23443.23443 0 01.21653.14468.23442.23442 0 01-.05081.25542.2344.2344 0 01-.25542.05081.2344.2344 0 01-.14468-.21653.23433.23433 0 01.06865-.16573.23433.23433 0 01.16573-.06865M6.79688 8.4375a.23443.23443 0 01.21653.14468.23442.23442 0 01-.05081.25542.2344.2344 0 01-.25542.05081.2344.2344 0 01-.14468-.21653.23433.23433 0 01.06865-.16573.23433.23433 0 01.16573-.06865M8.20313 7.03125a.23443.23443 0 01.21653.14468.23442.23442 0 01-.05081.25542.2344.2344 0 01-.25542.05081.2344.2344 0 01-.14468-.21653.23433.23433 0 01.06865-.16573.23433.23433 0 01.16573-.06865"
                                     stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            <select v-model="sDrink.type" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
-                                <option v-for="drink in drinks" :value="drink.name" :key="drink.id">{{drink.name}}</option>
+                            <select v-model="sDrink.id" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
+                                <option v-for="drink in drinks" :value="drink.id" :key="drink.id">{{drink.name}}</option>
                             </select>
                         </div>
                         <div class="flex items-center pl-2 border rounded-md focus-within:ring">
@@ -100,7 +100,7 @@ export default {
         },
         addDrinks() {
             this.selectedDrinks.push({
-                type: this.drinks[0].name,
+                id: this.drinks[0].id,
                 qty: 1,
             });
         },
@@ -122,7 +122,7 @@ export default {
 
         if (this.drinks.length > 0 && this.selectedDrinks.length <= 0) {
             this.selectedDrinks.push({
-                type: this.drinks[0].name,
+                id: this.drinks[0].id,
                 qty: 1,
             });
         }

@@ -15,15 +15,15 @@ export const state = () => ({
   selected: [] as { name: string, type: string, range: string, available: boolean }[],
   selectedIndex: 0 as number,
 
-  decorationOptions: [],
-  selectedDecorations: [],
+  decorationOptions: [] as any[],
+  selectedDecorations: [] as any[],
 
-  drinkOptions: [],
-  selectedDrinks: [],
+  drinkOptions: [] as any[],
+  selectedDrinks: [] as any[],
 
   selectedCake: {},
 
-  selectedPhotoshoot: 0,
+  selectedPhotoshoot: 0 as number,
 })
 
 export type ExtraState = ReturnType<typeof state>
@@ -33,6 +33,29 @@ export const getters: GetterTree<ExtraState, RootState> = {
   allSelected: (state: ExtraState) => state.selected,
   allDrinks: (state: ExtraState) => state.drinkOptions,
   allDecorations: (state: ExtraState) => state.decorationOptions,
+
+  cakePrice: (state: ExtraState) => {
+    if (state.selectedCake) {
+      return 15000;
+    }
+
+    return 0;
+  },
+  drinksPrice: (state: ExtraState) => {
+    if (state.selectedDrinks.length > 0) {
+      let price = 0;
+
+      for (let i = 0; i < state.selectedDrinks.length; i++) {
+        const sDrink = state.selectedDrinks[i];
+
+        // const drink = state.drinkOptions.find(function (do){ return true });
+      }
+
+return price;
+    }
+
+return 0;
+  },
 }
 
 export const mutations: MutationTree<ExtraState> = {

@@ -27,7 +27,6 @@ export const state = () => ({
   specials: ["lookout", "massage", "quadbikes", "photoshoot", "drinks", "cake", "roomDecoration", "domesticStaff"] as any[],
 
   booking: true,
-
 })
 
 export type RootState = ReturnType<typeof state>
