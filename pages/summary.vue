@@ -69,9 +69,9 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="flex-shrink-0 w-3/12">
+            <div class="flex-shrink-0 w-3/12">
                 <ReservationBox showDiscount :showGuests="false" />
-            </div> -->
+            </div>
         </div>
     </div>
 </template>

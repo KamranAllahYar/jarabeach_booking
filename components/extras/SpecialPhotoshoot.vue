@@ -45,8 +45,8 @@
             <div class="flex-1"></div>
 
             <div class="flex w-2/3 mx-auto mt-8 space-x-2">
-                <MainButton outline @click="$emit('prev')">Back</MainButton>
-                <MainButton @click="$emit('next')">Next</MainButton>
+                <MainButton outline @click="prev()">Back</MainButton>
+                <MainButton @click="next()">Next</MainButton>
             </div>
         </div>
     </div>
@@ -69,17 +69,17 @@ export default {
     },
     methods: {
         next() {
-            this.$store.commit(
-                "extras/SET_SELECTED_PHOTOSHOOT",
-                this.noOfArtists
-            );
+            this.$store.commit("extras/SET_SELECTED_PHOTOSHOOT", {
+                num: this.noOfArtists,
+                date: this.selectedDate,
+            });
             this.$emit("next");
         },
         prev() {
-            this.$store.commit(
-                "extras/SET_SELECTED_PHOTOSHOOT",
-                this.noOfArtists
-            );
+            this.$store.commit("extras/SET_SELECTED_PHOTOSHOOT", {
+                num: this.noOfArtists,
+                date: this.selectedDate,
+            });
             this.$emit("prev");
         },
         showDate(date) {
@@ -93,6 +93,9 @@ export default {
 
         if (this.$store.state.extras.selectedPhotoshoot) {
             this.noOfArtists = this.$store.state.extras.selectedPhotoshoot;
+        }
+        if (this.$store.state.extras.datePhotoshoot) {
+            this.selectedDate = this.$store.state.extras.datePhotoshoot;
         }
     },
 };

@@ -7,7 +7,7 @@
         <div class="w-7/12 p-6">
             <div class="font-semibold">Cakes</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
-                Make your visit extra-special with a celebration cake. You can specify size, layer, number, color and flavour of cake and we will get it done for you.
+                Make your visit extra-special with a celebration cake. You can specify type, layer, number, color and flavour of cake and we will get it done for you.
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this</div>
 
@@ -28,24 +28,24 @@
                                 <path d="M.92 14.531h13.125M12.17 6.094H2.795a.937.937 0 00-.938.937v4.688c0 .518.42.937.938.937h9.375c.518 0 .937-.42.937-.937V7.03a.937.937 0 00-.937-.937zM7.482 4.688v1.406M8.42 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406zM11.232 4.688v1.406M12.17 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406zM3.732 4.688v1.406M4.67 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406z" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M1.857 8.203A1.639 1.639 0 004.67 9.35a1.631 1.631 0 002.578-.313 1.628 1.628 0 002.812 0 1.637 1.637 0 003.047-.833" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.size">
+                            <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.type">
                                 <option value="">Type</option>
                                 <option value="small">Small</option>
                                 <option value="large">Large</option>
                                 <option value="cupcakes">Cupcakes</option>
                             </select>
                         </div>
-                        <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring" v-if="cake.size != 'cupcakes'">
+                        <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring" v-if="cake.type != 'cupcakes'">
                             <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.layers">
-                                <option value="">Layers</option>
+                                <option :value="0">Layers</option>
                                 <option v-for="num in 2" :value="num" :key="num">
                                     {{ num }}
                                 </option>
                             </select>
                         </div>
                         <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring">
-                            <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.numbers">
-                                <option value="">Quantity</option>
+                            <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.quantity">
+                                <option :value="0">Quantity</option>
                                 <option v-for="num in quantityOption" :value="num" :key="num">
                                     {{ num }}
                                 </option>
@@ -59,8 +59,8 @@
                                 <path d="M.92 14.531h13.125M12.17 6.094H2.795a.937.937 0 00-.938.937v4.688c0 .518.42.937.938.937h9.375c.518 0 .937-.42.937-.937V7.03a.937.937 0 00-.937-.937zM7.482 4.688v1.406M8.42 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406zM11.232 4.688v1.406M12.17 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406zM3.732 4.688v1.406M4.67 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406z" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M1.857 8.203A1.639 1.639 0 004.67 9.35a1.631 1.631 0 002.578-.313 1.628 1.628 0 002.812 0 1.637 1.637 0 003.047-.833" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.flavours">
-                                <option value="">Flavours</option>
+                            <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.flavour">
+                                <option value="">Flavour</option>
                                 <option value="Vanilla">Vanilla</option>
                                 <option value="Chocolate">Chocolate</option>
                                 <option value="Red Velvet">Red Velvet</option>
@@ -103,21 +103,37 @@ export default {
         return {
             selectedDate: null,
             cake: {
-                size: "",
+                type: "",
                 layers: 0,
-                numbers: 0,
-                flavours: "",
+                quantity: 0,
+                flavour: "",
                 colors: "",
                 message: "",
             },
         };
+    },
+    watch: {
+        "cake.type"(newVal, oldVal) {
+            console.log("new: " + newVal + " - old: " + oldVal);
+            if (newVal == "cupcakes" && oldVal != "cupcakes") {
+                this.cake.quantity = 0;
+                return;
+            }
+
+            if (
+                (newVal == "large" || newVal == "small") &&
+                oldVal == "cupcakes"
+            ) {
+                this.cake.quantity = 0;
+            }
+        },
     },
     computed: {
         dates() {
             return this.$store.getters.bookingDates;
         },
         quantityOption() {
-            if (this.cake.size == "cupcakes") {
+            if (this.cake.type == "cupcakes") {
                 return [6, 12];
             }
 
@@ -126,11 +142,17 @@ export default {
     },
     methods: {
         next() {
-            this.$store.commit("extras/SET_SELECTED_CAKE", this.cake);
+            this.$store.commit("extras/SET_SELECTED_CAKE", {
+                cake: this.cake,
+                date: this.selectedDate,
+            });
             this.$emit("next");
         },
         prev() {
-            this.$store.commit("extras/SET_SELECTED_CAKE", this.cake);
+            this.$store.commit("extras/SET_SELECTED_CAKE", {
+                cake: this.cake,
+                date: this.selectedDate,
+            });
             this.$emit("prev");
         },
         showDate(date) {
@@ -142,11 +164,14 @@ export default {
             this.selectedDate = this.dates[0];
         }
 
-        if (this.$store.state.extras.selectedCake) {
+        if (this.$store.state.extras.selectedCake.type) {
             this.cake = Object.assign(
                 {},
                 this.$store.state.extras.selectedCake
             );
+        }
+        if (this.$store.state.extras.dateCake) {
+            this.selectedDate = this.$store.state.extras.dateCake;
         }
     },
 };

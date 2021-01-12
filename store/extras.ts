@@ -17,13 +17,17 @@ export const state = () => ({
 
   decorationOptions: [] as any[],
   selectedDecorations: [] as any[],
+  dateDecoration: null as String | null,
 
   drinkOptions: [] as any[],
   selectedDrinks: [] as any[],
+  dateDrink: null as String | null,
 
   selectedCake: {},
+  dateCake: null as String | null,
 
   selectedPhotoshoot: 0 as number,
+  datePhotoshoot: null as String | null,
 })
 
 export type ExtraState = ReturnType<typeof state>
@@ -59,7 +63,7 @@ export const getters: GetterTree<ExtraState, RootState> = {
   },
   photoshootPrice: (state: ExtraState) => {
     if (state.selectedPhotoshoot > 0) {
-      return 50000 * (+state.selectedPhotoshoot * 15000)
+      return 50000 + (+state.selectedPhotoshoot * 15000)
     }
 
     return 50000;
@@ -103,24 +107,28 @@ export const mutations: MutationTree<ExtraState> = {
   LOAD_DECORATION_OPTIONS: (state, decorations) => {
     state.decorationOptions = decorations
   },
-  SET_SELECTED_DECORATION: (state, decorations) => {
-    state.selectedDecorations = decorations;
+  SET_SELECTED_DECORATION: (state, payload) => {
+    state.selectedDecorations = payload.decorations;
+    state.dateDecoration = payload.date;
   },
 
 
   LOAD_DRINK_OPTIONS: (state, drinks) => {
     state.drinkOptions = drinks
   },
-  SET_SELECTED_DRINKS: (state, drinks) => {
-    state.selectedDrinks = drinks
+  SET_SELECTED_DRINKS: (state, payload) => {
+    state.selectedDrinks = payload.drinks
+    state.dateDrink = payload.date
   },
 
-  SET_SELECTED_CAKE: (state, cake) => {
-    state.selectedCake = cake
+  SET_SELECTED_CAKE: (state, payload) => {
+    state.selectedCake = payload.cake;
+    state.dateCake = payload.date;
   },
 
-  SET_SELECTED_PHOTOSHOOT: (state, num) => {
-    state.selectedPhotoshoot = num
+  SET_SELECTED_PHOTOSHOOT: (state, payload) => {
+    state.selectedPhotoshoot = payload.num;
+    state.datePhotoshoot = payload.date;
   },
 
   RESET_STORE: (state) => {

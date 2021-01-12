@@ -85,17 +85,17 @@ export default {
     },
     methods: {
         next() {
-            this.$store.commit(
-                "extras/SET_SELECTED_DRINKS",
-                this.selectedDrinks
-            );
+            this.$store.commit("extras/SET_SELECTED_DRINKS", {
+                drinks: this.selectedDrinks,
+                date: this.selectedDate,
+            });
             this.$emit("next");
         },
         prev() {
-            this.$store.commit(
-                "extras/SET_SELECTED_DRINKS",
-                this.selectedDrinks
-            );
+            this.$store.commit("extras/SET_SELECTED_DRINKS", {
+                drinks: this.selectedDrinks,
+                date: this.selectedDate,
+            });
             this.$emit("prev");
         },
         addDrinks() {
@@ -129,6 +129,10 @@ export default {
 
         if (this.dates.length > 0) {
             this.selectedDate = this.dates[0];
+        }
+
+        if (this.$store.state.extras.dateDrink) {
+            this.selectedDate = this.$store.state.extras.dateDrink;
         }
     },
 };

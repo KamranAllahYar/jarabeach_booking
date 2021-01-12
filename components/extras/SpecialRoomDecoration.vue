@@ -59,17 +59,17 @@ export default {
     methods: {
         next() {
             console.log("NEXT");
-            this.$store.commit(
-                "extras/SET_SELECTED_DECORATION",
-                this.selectedDecorations
-            );
+            this.$store.commit("extras/SET_SELECTED_DECORATION", {
+                decorations: this.selectedDecorations,
+                date: this.selectedDate,
+            });
             this.$emit("next");
         },
         prev() {
-            this.$store.commit(
-                "extras/SET_SELECTED_DECORATION",
-                this.selectedDecorations
-            );
+            this.$store.commit("extras/SET_SELECTED_DECORATION", {
+                decorations: this.selectedDecorations,
+                date: this.selectedDate,
+            });
             this.$emit("prev");
         },
         showDate(date) {
@@ -90,6 +90,9 @@ export default {
             this.selectedDecorations = this.$store.state.extras.selectedDecorations.map(
                 (x) => x
             );
+        }
+        if (this.$store.state.extras.dateDecoration) {
+            this.selectedDate = this.$store.state.extras.dateDecoration;
         }
     },
 };

@@ -86,7 +86,7 @@
                             <div class="px-3 py-4 border-b">
                                 <div>
                                     <div class="text-base font-bold">How did you hear about us?</div>
-                                    <select v-model="guest.hear_of_us" class="px-0 border-0" style="box-shadow: none">
+                                    <select v-model="guest.hear_of_us" class="w-32 px-0 border-0" style="box-shadow: none">
                                         <option value="">--SELECT--</option>
                                         <option value="Social Media">Social Media</option>
                                         <option value="Friend">Friend</option>

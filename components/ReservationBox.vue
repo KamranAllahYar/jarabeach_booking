@@ -101,7 +101,23 @@ export default {
                 return price + room.price;
             }, 0);
 
-            return roomPrices;
+            let extraPrices = 0;
+            this.specials.forEach((extra) => {
+                if (extra.type == "cake") {
+                    extraPrices += this.$store.getters["extras/cakePrice"];
+                }
+                if (extra.type == "drinks") {
+                    extraPrices += this.$store.getters["extras/drinksPrice"];
+                }
+                if (extra.type == "photoshoot") {
+                    extraPrices += this.$store.getters["extras/photoshootPrice"];
+                }
+                if (extra.type == "roomDecoration") {
+                    extraPrices += this.$store.getters["extras/decorationPrice"];
+                }
+            });
+
+            return extraPrices + roomPrices;
         },
         totalPrice() {
             return this.subTotal - this.discount;
