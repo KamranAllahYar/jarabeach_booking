@@ -204,6 +204,12 @@ export const actions: ActionTree<RootState, RootState> = {
         options: extraState.selectedDecorations.map((sd: any) => sd.id),
       }
     }
+    if (allExtras.includes('drinks')) {
+      specialsToSend['drinks'] = {
+        date: extraState.dateDrink,
+        options: extraState.selectedDrinks,
+      }
+    }
 
     console.log(specialsToSend);
     // return;
