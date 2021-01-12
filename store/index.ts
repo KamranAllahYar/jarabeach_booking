@@ -198,6 +198,12 @@ export const actions: ActionTree<RootState, RootState> = {
         quantity: extraState.selectedPhotoshoot,
       }
     }
+    if (allExtras.includes('roomDecoration')) {
+      specialsToSend['roomDecoration'] = {
+        date: extraState.dateDecoration,
+        options: extraState.selectedDecorations.map((sd: any) => sd.id),
+      }
+    }
 
     console.log(specialsToSend);
     // return;
