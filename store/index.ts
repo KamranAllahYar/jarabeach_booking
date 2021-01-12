@@ -210,6 +210,12 @@ export const actions: ActionTree<RootState, RootState> = {
         options: extraState.selectedDrinks,
       }
     }
+    if (allExtras.includes('domesticStaff')) {
+      specialsToSend['domesticStaff'] = {
+        dates: extraState.dateStaff,
+        info: extraState.selectedStaff,
+      }
+    }
 
     console.log(specialsToSend);
     // return;
