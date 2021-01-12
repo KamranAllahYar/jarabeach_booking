@@ -174,13 +174,23 @@ export const mutations: MutationTree<ExtraState> = {
 
     state.decorationOptions = [] as any[];
     state.selectedDecorations = [] as any[];
+    state.dateDecoration = null;
+
+    state.selectedStaff = {
+      menu: [],
+      type: [],
+    };
+    state.dateStaff = [];
 
     state.drinkOptions = [] as any[];
     state.selectedDrinks = [] as any[];
+    state.dateDrink = null;
 
     state.selectedCake = {};
+    state.dateCake = null;
 
     state.selectedPhotoshoot = 0 as number;
+    state.datePhotoshoot = null;
   },
 }
 
