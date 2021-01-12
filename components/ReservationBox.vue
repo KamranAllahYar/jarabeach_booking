@@ -38,6 +38,9 @@
                     <span v-else-if="extra.type == 'roomDecoration'">
                         {{ currency($store.getters['extras/decorationPrice']) }}
                     </span>
+                    <span v-else-if="extra.type == 'domesticStaff'">
+                        {{ currency($store.getters['extras/staffPrice']) }}
+                    </span>
                     <span v-else>
                         {{ currency(0) }}
                     </span>
@@ -45,7 +48,7 @@
             </div>
         </div>
 
-        <div class="w-full text-gray-800 border rounded-md border-brand-blue-300 bg-brand-blue-100" v-if="showDiscount">
+        <div class="w-full text-gray-800 border rounded-md border-brand-blue-300 bg-brand-blue-100" v-if="showDiscount && discount > 0">
             <div class="flex justify-between px-3 my-3">
                 <div>Sub-total</div>
                 <div class="font-bold">{{ currency(subTotal) }}</div>
@@ -110,10 +113,17 @@ export default {
                     extraPrices += this.$store.getters["extras/drinksPrice"];
                 }
                 if (extra.type == "photoshoot") {
-                    extraPrices += this.$store.getters["extras/photoshootPrice"];
+                    extraPrices += this.$store.getters[
+                        "extras/photoshootPrice"
+                    ];
                 }
                 if (extra.type == "roomDecoration") {
-                    extraPrices += this.$store.getters["extras/decorationPrice"];
+                    extraPrices += this.$store.getters[
+                        "extras/decorationPrice"
+                    ];
+                }
+                if (extra.type == "domesticStaff") {
+                    extraPrices += this.$store.getters["extras/staffPrice"];
                 }
             });
 

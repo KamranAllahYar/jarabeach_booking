@@ -19,6 +19,12 @@ export const state = () => ({
   selectedDecorations: [] as any[],
   dateDecoration: null as String | null,
 
+  selectedStaff: {
+    menu: [],
+    type: [],
+  } as any,
+  dateStaff: [] as String[] | null,
+
   drinkOptions: [] as any[],
   selectedDrinks: [] as any[],
   dateDrink: null as String | null,
@@ -80,7 +86,33 @@ export const getters: GetterTree<ExtraState, RootState> = {
       }
     }
     return price;
-  }
+  },
+  staffPrice: (state: ExtraState) => {
+    let price = 0;
+    if (state.selectedStaff.type.length > 0) {
+      if (state.selectedStaff.type.includes('nanny')) {
+        price += 30000
+      }
+      if (state.selectedStaff.type.includes('driver')) {
+        price += 15000
+      }
+
+      const totalStaff = state.selectedStaff.type.length;
+      if (state.selectedStaff.menu.includes('breakfast')) {
+        price += totalStaff * 3000
+      }
+      if (state.selectedStaff.menu.includes('lunch')) {
+        price += totalStaff * 4000
+      }
+      if (state.selectedStaff.menu.includes('dinner')) {
+        price += totalStaff * 5000
+      }
+    }
+
+    const totalDays = state.dateStaff?.length || 0;
+
+    return totalDays * price;
+  },
 }
 
 export const mutations: MutationTree<ExtraState> = {
@@ -112,6 +144,11 @@ export const mutations: MutationTree<ExtraState> = {
     state.dateDecoration = payload.date;
   },
 
+
+  SET_SELECTED_STAFF: (state, payload) => {
+    state.selectedStaff = payload.selectedStaff
+    state.dateStaff = payload.dates
+  },
 
   LOAD_DRINK_OPTIONS: (state, drinks) => {
     state.drinkOptions = drinks

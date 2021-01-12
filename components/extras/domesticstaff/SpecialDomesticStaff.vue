@@ -17,7 +17,7 @@
                     <div class="mt-4 font-semibold">Select dates for domestic staff</div>
                     <div class="mt-2 space-y-3 font-light ">
                         <label class="flex items-center" v-for="date in dates" :key="date">
-                            <input type="checkbox" value="Tues, Nov 9th 2020" class="w-5 h-5 mr-3 rounded focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                            <input type="checkbox" :value="date" v-model="selectedDates" class="w-5 h-5 mr-3 rounded focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                             <div>{{ showDate(date) }}</div>
                         </label>
                     </div>
@@ -26,13 +26,19 @@
                 <div class="flex-1"></div>
 
                 <div class="flex w-2/3 mx-auto mt-8 space-x-2">
-                    <MainButton outline @click="$emit('prev')">Back</MainButton>
-                    <MainButton @click="showStaff = true">Next</MainButton>
+                    <MainButton outline @click="prev()">Back</MainButton>
+                    <MainButton @click="toggleStaffInfo(true)">Next</MainButton>
                 </div>
             </div>
         </div>
 
-        <SpecialDomesticStaffInfo v-if="showStaff" @close="showStaff = false" />
+        <SpecialDomesticStaffInfo v-if="showStaff"
+            :initial="selectedStaff"
+
+            @close="toggleStaffInfo(false)"
+            @prev="toggleStaffInfo(false)"
+            @next="next()"
+            @details="updateSelection($event)" />
     </div>
 </template>
 
@@ -44,6 +50,11 @@ export default {
     data() {
         return {
             showStaff: false,
+            selectedDates: [],
+            selectedStaff: {
+                menu: [],
+                type: [],
+            },
         };
     },
     computed: {
@@ -52,9 +63,46 @@ export default {
         },
     },
     methods: {
+        toggleStaffInfo(view) {
+            this.$store.commit("extras/SET_SELECTED_STAFF", {
+                selectedStaff: this.selectedStaff,
+                dates: this.selectedDates,
+            });
+            this.showStaff = view;
+        },
+        prev() {
+            this.$store.commit("extras/SET_SELECTED_STAFF", {
+                selectedStaff: this.selectedStaff,
+                dates: this.selectedDates,
+            });
+            this.$emit("prev");
+        },
+        next() {
+            this.$store.commit("extras/SET_SELECTED_STAFF", {
+                selectedStaff: this.selectedStaff,
+                dates: this.selectedDates,
+            });
+            this.$emit("next");
+        },
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
+        updateSelection(details) {
+            console.log(details);
+            this.selectedStaff = details;
+        },
+    },
+    mounted() {
+        if (this.$store.state.extras.selectedStaff.type.length > 0) {
+            this.selectedStaff = Object.assign(
+                {},
+                this.$store.state.extras.selectedStaff
+            );
+        }
+
+        if (this.$store.state.extras.dateStaff) {
+            this.selectedDates = this.$store.state.extras.dateStaff;
+        }
     },
 };
 </script>
