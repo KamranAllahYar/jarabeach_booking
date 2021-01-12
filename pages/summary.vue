@@ -100,11 +100,10 @@ export default {
             this.loading = false;
 
             if (res) {
-              console.log(res);
-              this.$toast.info("done with booking");
-                // this.$router.push("/done");
-                // this.$store.commit("RESET_STORE");
-                // this.$store.commit("extras/RESET_STORE");
+                console.log(res);
+                this.$router.push("/done");
+                this.$store.commit("RESET_STORE");
+                this.$store.commit("extras/RESET_STORE");
             }
         },
         currency(num) {
