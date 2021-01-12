@@ -149,37 +149,6 @@ export const actions: ActionTree<RootState, RootState> = {
     });
   },
 
-  async createBooking({ state }) {
-    let dataToPost: any = {
-      booking: {
-        full_names: state.guest.full_names || "names",
-        adult_no: state.adult_no,
-        child_no: state.child_no,
-        extra_info: "state.extra_info",
-      },
-      booked_rooms: state.rooms,
-    }
-
-    if (state.guest.id) {
-      dataToPost.guest_id = state.guest.id;
-    }
-
-    try {
-      const res = await this.$axios.post("bookings", dataToPost);
-      console.log(res.data);
-
-      if (res.data.success) {
-        this.app.$toast.success(res.data.message);
-      } else {
-        this.app.$toast.error(res.data.message);
-      }
-      return res.data.success;
-    } catch (err) {
-      this.app.$toast.error(err);
-      return false;
-    }
-  },
-
   async confirmGuest({ }, email: string) {
     return await this.$axios.post("confirm/guest", { email })
       .then(res => {
@@ -205,6 +174,69 @@ export const actions: ActionTree<RootState, RootState> = {
         this.app.$toast.success(res.data.message);
         return true;
       })
-  }
+  },
+
+  async createBooking({ state, rootState, rootGetters }) {
+    //@ts-ignore
+    const extraState = rootState.extras;
+    console.log(extraState, rootGetters);
+
+    const allExtras = (rootGetters["extras/allSelected"] as any[]).map(s => s.type);
+    let specialsToSend = {
+      "extras": allExtras,
+    } as any;
+
+    if (allExtras.includes('cake')) {
+      specialsToSend['cake'] = {
+        date: extraState.dateCake,
+        info: extraState.selectedCake,
+      }
+    }
+    if (allExtras.includes('photoshoot')) {
+      specialsToSend['photoshoot'] = {
+        date: extraState.datePhotoshoot,
+        quantity: extraState.selectedPhotoshoot,
+      }
+    }
+
+    console.log(specialsToSend);
+    // return;
+
+
+    let dataToPost: any = {
+      booking: {
+        full_names: state.guest.full_names || "names",
+        adult_no: state.adult_no,
+        child_no: state.child_no,
+        extra_info: "state.extra_info",
+      },
+      booked_rooms: state.rooms,
+      // specials: allSpecials,
+    }
+
+    if (state.guest.id) {
+      dataToPost.guest_id = state.guest.id;
+    }
+
+    try {
+      const res = await this.$axios.post("bookings", dataToPost);
+      console.log(res.data);
+
+      if (res.data.success) {
+        const newBooking = res.data.data.booking;
+        console.log(newBooking);
+        const sRes = await this.$axios.post(`/book-specials/${newBooking.id}`, specialsToSend);
+        console.log(sRes.data);
+
+        this.app.$toast.success(res.data.message);
+      } else {
+        this.app.$toast.error(res.data.message);
+      }
+      return res.data.success;
+    } catch (err) {
+      this.app.$toast.error(err);
+      return false;
+    }
+  },
 
 }
