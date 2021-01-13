@@ -96,5 +96,11 @@ export default {
         this.$store.dispatch("extras/getSpecialDrinks");
         this.$store.dispatch("extras/getSpecialDecorations");
     },
+    middleware({ store, redirect, $toast }) {
+        if (!store.state.availability_done) {
+            $toast.info("Please provide availability first");
+            redirect("/availability");
+        }
+    },
 };
 </script>

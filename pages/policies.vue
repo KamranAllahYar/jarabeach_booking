@@ -87,6 +87,12 @@ export default {
             this.currentPolicyId = this.policies.length - 1;
         }
     },
+    middleware({ store, redirect, $toast }) {
+        if (!store.state.profile_done) {
+            $toast.info("Please provide profile information first");
+            redirect("/profile");
+        }
+    },
 };
 </script>
 

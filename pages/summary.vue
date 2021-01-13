@@ -117,6 +117,12 @@ export default {
             this.$store.commit("REMOVE_ROOM", room);
         },
     },
+    middleware({ store, redirect, $toast }) {
+        if (!store.state.policy_done) {
+            $toast.info("Please accept all policies first");
+            redirect("/policies");
+        }
+    },
 };
 </script>
 

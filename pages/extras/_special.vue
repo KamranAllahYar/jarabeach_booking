@@ -35,5 +35,11 @@ export default {
             this.special = special;
         }
     },
+    middleware({ store, redirect, $toast }) {
+        if (!store.state.availability_done) {
+            $toast.info("Please provide availability first");
+            redirect("/availability");
+        }
+    },
 };
 </script>
