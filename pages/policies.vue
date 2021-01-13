@@ -78,7 +78,7 @@ export default {
             this.$router.push({ path: "/summary" });
         },
         gotoBack() {
-            this.$router.push({ path: "/profile" });
+            this.$router.push({ path: "/profile/more" });
         },
     },
     mounted() {

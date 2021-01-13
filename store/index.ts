@@ -70,11 +70,31 @@ export const mutations: MutationTree<RootState> = {
     state.adult_no = payload.adult_no
     state.child_no = payload.child_no
     state.children_ages = payload.children_ages.map((age: any) => age.age)
+
+    let otherguests = [];
+    for (let i = 0; i < payload.adult_no; i++) {
+      otherguests.push({
+        first_name: "",
+        last_name: "",
+        type: 'adult',
+        num: i + 1,
+      });
+    }
+    for (let i = 0; i < payload.child_no; i++) {
+      otherguests.push({
+        first_name: "",
+        last_name: "",
+        type: 'child',
+        num: i + 1,
+      });
+    }
+
+    state.other_guests = otherguests;
   },
 
   UPDATE_GUEST: (state, payload) => {
     state.guest = JSON.parse(JSON.stringify(payload.guest));
-    state.other_guests = payload.others || []
+    // state.other_guests = payload.others || []
   },
   GUEST_WEHAVEDATA: (state, payload: boolean) => {
     state.weHaveData = payload;
@@ -223,14 +243,15 @@ export const actions: ActionTree<RootState, RootState> = {
 
     let dataToPost: any = {
       booking: {
-        full_names: state.guest.full_names || "names",
+        full_names: state.other_guests || [],
         adult_no: state.adult_no,
         child_no: state.child_no,
         extra_info: "state.extra_info",
       },
       booked_rooms: state.rooms,
-      // specials: allSpecials,
     }
+
+    console.log(dataToPost);
 
     if (state.guest.id) {
       dataToPost.guest_id = state.guest.id;

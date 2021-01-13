@@ -220,12 +220,12 @@ export default {
                     console.log(res);
                     if (res) {
                         this.$store.commit("COMPLETE_PROFILE");
-                        this.$router.push({ path: "/policies" });
+                        this.$router.push({ path: "/profile/more" });
                     }
                 });
             } else {
                 this.$store.commit("COMPLETE_PROFILE");
-                this.$router.push({ path: "/policies" });
+                this.$router.push({ path: "/profile/more" });
             }
         },
 
