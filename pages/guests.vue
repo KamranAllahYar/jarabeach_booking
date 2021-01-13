@@ -77,7 +77,9 @@
                     <MainButton @click="gotoNext()">Next</MainButton>
                 </div>
             </div>
-            <div class="mt-5 font-semibold text-center cursor-pointer text-brand-blue" @click="$router.push({path: '/manage'})">Manage Booking</div>
+            <div class="flex justify-center">
+                <button class="mx-auto mt-5 font-semibold text-center cursor-pointer text-brand-blue" @click="$router.push({path: '/manage'})">Manage Booking</button>
+            </div>
         </div>
 
     </div>

@@ -1,24 +1,27 @@
 <template>
     <div class="flex flex-col w-full">
-        <div class="flex items-center justify-between px-6 mb-6 space-x-4">
-            <div class="flex items-center h-10 text-2xl font-semibold text-brand-blue-400">
+        <div class="flex items-center px-6 mb-6 space-x-4">
+            <div class="flex items-center w-40 h-10 text-2xl font-semibold text-brand-blue-400">
                 {{ months[calMonth-1] }}. {{calYear}}
             </div>
-            <div class="flex items-center space-x-4">
-                <svg v-if="loading" class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <button class="px-4 text-white rounded-md bg-brand-blue-400" @click="prevMonth()">
-                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+
+            <div class="flex items-center justify-end space-x-2">
+                <div @click="prevMonth()" class="flex items-center justify-center w-8 h-8 bg-blue-200 rounded-full cursor-pointer text-brand-blue-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
-                </button>
-                <button class="px-4 text-white rounded-md bg-brand-blue-400 disabled:bg-gray-400" @click="nextMonth()">
-                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </div>
+                <div @click="nextMonth()" class="flex items-center justify-center w-8 h-8 bg-blue-200 rounded-full cursor-pointer text-brand-blue-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
-                </button>
+                </div>
+                <div class="w-7">
+                  <svg v-if="loading" class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                </div>
             </div>
         </div>
 
@@ -47,16 +50,28 @@
                         class="flex items-center justify-center flex-shrink-0 text-xl text-gray-500 border border-gray-100 cursor-pointer font-extralight bg-opacity-20 h-14"
                         :class="roomsAvailable(roomType, day) <= 0 ? 'bg-white' : 'bg-brand-blue-300'"
                         @click="hoverRoom(roomType, day)">
-                        <transition name="fade">
-                            <span v-if="loading">-</span>
-                            <span v-else-if="roomsAvailable(roomType, day) <= 0">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 19 19">
-                                    <path d="M5.5415 3.1665L13.4582 15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M13.4582 3.1665L5.5415 15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </span>
-                            <span v-else>{{ roomsAvailable(roomType, day) }}</span>
-                        </transition>
+
+                        <!-- <transition name="fade"> -->
+                        <div v-if="isStart(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-300 rounded-l-full">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <div v-else-if="isEnd(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-300 rounded-r-full">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <div v-else-if="isBetween(roomType, day)" class="w-full h-10 transform scale-110 bg-green-300"></div>
+                        <span v-else-if="loading">-</span>
+                        <span v-else-if="roomsAvailable(roomType, day) <= 0">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 19 19">
+                                <path d="M5.5415 3.1665L13.4582 15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M13.4582 3.1665L5.5415 15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </span>
+                        <span v-else>{{ roomsAvailable(roomType, day) }}</span>
+                        <!-- </transition> -->
                     </div>
                 </div>
             </div>
@@ -109,6 +124,7 @@
 
 <script>
 import getDay from "date-fns/getDay";
+import isAfter from "date-fns/isAfter";
 import isBefore from "date-fns/isBefore";
 import parseISO from "date-fns/parseISO";
 import isWeekend from "date-fns/isWeekend";
@@ -144,6 +160,10 @@ export default {
             maxMonth: new Date().getMonth() + 1,
             minYear: new Date().getFullYear(),
             minMonth: new Date().getMonth() + 1,
+
+            startDate: null,
+            endDate: null,
+            seRoom: null,
         };
     },
     computed: {
@@ -199,6 +219,13 @@ export default {
         },
     },
     methods: {
+        getDateStr(date) {
+            let m = this.calMonth;
+            if (m < 10) m = `0${m}`;
+            let d = date;
+            if (date < 10) d = `0${date}`;
+            return `${this.calYear}-${m}-${d}`;
+        },
         isBooked(room_id, dateStr) {
             const ix = this.bookedRooms.findIndex(
                 (br) => room_id == br.room_id && br.date == dateStr
@@ -223,19 +250,71 @@ export default {
 
             this.$emit("selected", this.bookedRooms.slice(0));
         },
+        isStart(roomType, date) {
+            if (this.seRoom != roomType) return false;
+            if (this.startDate == null) return false;
+            const dateStr = this.getDateStr(date);
+            return this.startDate == dateStr;
+        },
+        isEnd(roomType, date) {
+            if (this.seRoom != roomType) return false;
+            if (this.endDate == null) return false;
+            const dateStr = this.getDateStr(date);
+            return this.endDate == dateStr;
+        },
+        isBetween(roomType, date) {
+            if (this.seRoom != roomType) return false;
+            if (this.startDate == null || this.endDate == null) return false;
+
+            const startStr = this.startDate.substring(0, 10);
+            const endStr = this.endDate.substring(0, 10);
+
+            return (
+                isAfter(parseISO(this.getDateStr(date)), parseISO(startStr)) &&
+                isBefore(parseISO(this.getDateStr(date)), parseISO(endStr))
+            );
+
+            console.log(startStr, endStr);
+        },
         hoverRoom(roomType, date) {
+            if (this.roomsAvailable(roomType, date) <= 0) return;
+            console.log(date, roomType);
+
+            const dateStr = this.getDateStr(date);
+
+            console.log(dateStr);
+
+            this.seRoom = roomType;
+            if (this.startDate == null) {
+                this.startDate = dateStr;
+            } else if (this.endDate == null) {
+                if (dateStr == this.startDate) {
+                    this.startDate = null;
+                } else if (
+                    isBefore(parseISO(dateStr), parseISO(this.startDate))
+                ) {
+                    this.endDate = this.startDate;
+                    this.startDate = dateStr;
+                } else {
+                    this.endDate = dateStr;
+                }
+            } else {
+                this.endDate = null;
+                this.startDate = dateStr;
+            }
+
             this.hoveredRooms = [];
 
             if (this.roomsAvailable(roomType, date) <= 0) return;
             console.log(roomType);
 
-            let m = this.calMonth;
-            if (m < 10) m = `0${m}`;
+            // let m = this.calMonth;
+            // if (m < 10) m = `0${m}`;
 
-            let d = date;
-            if (date < 10) d = `0${date}`;
+            // let d = date;
+            // if (date < 10) d = `0${date}`;
 
-            const dateStr = `${this.calYear}-${m}-${d}`;
+            // const dateStr = `${this.calYear}-${m}-${d}`;
             console.log(dateStr);
 
             const roomsHere = this.availableRooms[dateStr];
