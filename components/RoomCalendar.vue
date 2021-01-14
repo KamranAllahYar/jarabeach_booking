@@ -45,14 +45,19 @@
                     </div>
                 </div>
                 <div class="grid" :class="`grid-cols-${monthDays.length}`" v-for="roomType in roomTypes" :key="roomType">
+                        <!-- v-popover.right="{ name: 'rooms-available' }" -->
                     <div v-for="day in monthDays" :key="day"
-                        v-popover.right="{ name: 'rooms-available' }"
                         class="flex items-center justify-center flex-shrink-0 text-xl text-gray-500 border border-gray-100 cursor-pointer font-extralight bg-opacity-20 h-14"
                         :class="roomsAvailable(roomType, day) <= 0 ? 'bg-white' : 'bg-brand-blue-300'"
-                        @click="hoverRoom(roomType, day)">
+                        @click="selectRoom(roomType, day)">
 
                         <!-- <transition name="fade"> -->
-                        <div v-if="isStart(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-300 rounded-l-full">
+                        <div v-if="isSingle(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-300 rounded-full">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <div v-else-if="isStart(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-300 rounded-l-full">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
@@ -93,10 +98,6 @@
                     <svg v-if="!isBooked(h.room.id, h.date)" viewBox="0 0 16 16" class="inline-block w-6 h-6 mr-2" fill="none" stroke="currentColor">
                         <path d="M8 14.703a6.75 6.75 0 100-13.5 6.75 6.75 0 000 13.5z" stroke="#225A89" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-
-                    <!-- <svg v-if="!isBooked(h.room.id, h.date)" class="inline-block w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M12 20a8 8 0 01-8-8 8 8 0 018-8 8 8 0 018 8 8 8 0 01-8 8m0-18A10 10 0 002 12a10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2z" />
-                        </svg> -->
                     <svg v-else class="inline-block w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                     </svg>
@@ -286,6 +287,9 @@ export default {
             const dateStr = this.getDateStr(date);
             return this.endDate == dateStr;
         },
+        isSingle(roomType, date) {
+            return this.isStart(roomType, date) && this.isEnd(roomType, date);
+        },
         isBetween(roomType, date) {
             if (this.seRoom != roomType) return false;
             if (this.startDate == null || this.endDate == null) return false;
@@ -300,7 +304,7 @@ export default {
 
             console.log(startStr, endStr);
         },
-        hoverRoom(roomType, date) {
+        selectRoom(roomType, date) {
             if (this.roomsAvailable(roomType, date) <= 0) return;
             console.log(date, roomType);
 
@@ -312,11 +316,10 @@ export default {
             if (this.startDate == null) {
                 this.startDate = dateStr;
             } else if (this.endDate == null) {
-                if (dateStr == this.startDate) {
-                    this.startDate = null;
-                } else if (
-                    isBefore(parseISO(dateStr), parseISO(this.startDate))
-                ) {
+                // if (dateStr == this.startDate) {
+                //     this.startDate = null;
+                // } else
+                if (isBefore(parseISO(dateStr), parseISO(this.startDate))) {
                     this.endDate = this.startDate;
                     this.startDate = dateStr;
 
@@ -330,30 +333,6 @@ export default {
                 this.endDate = null;
                 this.startDate = dateStr;
             }
-
-            // this.hoveredRooms = [];
-
-            // if (this.roomsAvailable(roomType, date) <= 0) return;
-            // console.log(roomType);
-
-            // console.log(dateStr);
-
-            // const roomsHere = this.availableRooms[dateStr];
-            // if (roomsHere) {
-            //     roomsHere.forEach((room, ix) => {
-            //         const rs = this.roomTypeIds(roomType);
-
-            //         if (rs.includes(room.room_id)) {
-            //             this.hoveredRooms.push({
-            //                 room: this.getRoom(room.room_id),
-            //                 available: room.available,
-            //                 date: dateStr,
-            //             });
-            //         }
-            //     });
-            // }
-
-            // console.log(this.hoveredRooms);
         },
         getRoom(roomId) {
             return this.rooms.find((room) => room.id == roomId);
