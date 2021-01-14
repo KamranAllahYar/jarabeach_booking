@@ -152,6 +152,21 @@ export const getters: GetterTree<ExtraState, RootState> = {
 
     return price;
   },
+  lookoutPrice: (state: ExtraState) => {
+    if (state.selectedLookouts.length <= 0) return 0;
+    let price = 0;
+
+    for (let i = 0; i < state.selectedLookouts.length; i++) {
+      const packageId = state.selectedLookouts[i];
+      const pack = state.lookoutOptions.find(l => l.id == packageId);
+
+      if (pack) {
+        price += pack.price
+      }
+    }
+
+    return price;
+  },
 }
 
 export const mutations: MutationTree<ExtraState> = {

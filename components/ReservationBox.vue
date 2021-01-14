@@ -47,6 +47,9 @@
                     <span v-else-if="extra.type == 'quadbike'">
                         {{ currency($store.getters['extras/quadbikePrice']) }}
                     </span>
+                    <span v-else-if="extra.type == 'lookout'">
+                        {{ currency($store.getters['extras/lookoutPrice']) }}
+                    </span>
                     <span v-else>
                         {{ currency(0) }}
                     </span>
@@ -136,6 +139,9 @@ export default {
                 }
                 if (extra.type == "quadbike") {
                     extraPrices += this.$store.getters["extras/quadbikePrice"];
+                }
+                if (extra.type == "lookout") {
+                    extraPrices += this.$store.getters["extras/lookoutPrice"];
                 }
             });
 

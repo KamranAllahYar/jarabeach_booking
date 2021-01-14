@@ -249,6 +249,12 @@ export const actions: ActionTree<RootState, RootState> = {
         options: extraState.selectedMassage,
       }
     }
+    if (allExtras.includes('lookout')) {
+      specialsToSend['lookout'] = {
+        date: extraState.dateLookout,
+        packages: extraState.selectedLookouts,
+      }
+    }
 
     console.log(specialsToSend);
     // return;
