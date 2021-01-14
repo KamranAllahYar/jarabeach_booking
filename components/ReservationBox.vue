@@ -131,6 +131,12 @@ export default {
                 if (extra.type == "domesticStaff") {
                     extraPrices += this.$store.getters["extras/staffPrice"];
                 }
+                if (extra.type == "massage") {
+                    extraPrices += this.$store.getters["extras/massagePrice"];
+                }
+                if (extra.type == "quadbike") {
+                    extraPrices += this.$store.getters["extras/quadbikePrice"];
+                }
             });
 
             return extraPrices + roomPrices;
