@@ -18,24 +18,18 @@
                 <div>Close</div>
             </div>
         </div>
+
         <div class="flex justify-between w-full px-3 my-4 space-x-5">
             <div class="w-1/3">
                 <div class="text-center">
                     <div class="text-xl font-bold uppercase ">Breakfast</div>
-                    <div class="text-xs font-light text-gray-700">(between 8:30- 10:30am)</div>
+                    <div class="text-xs font-light text-gray-700">(between 8:30 - 10:30am)</div>
                 </div>
                 <div class="px-3 my-5 space-y-6 border-r">
-                    <label class="flex">
-                        <input type="checkbox" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" :value="1" v-model="selectedPackages">
-                        <div>Shell Package (includes non-alcoholic sparkling wine): <span class="font-bold">N15,000 per couple</span></div>
-                    </label>
-                    <label class="flex">
-                        <input type="checkbox" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" :value="2" v-model="selectedPackages">
-                        <div>Seahorse Package (includes sparkling wine/ Prosecco): <span class="font-bold">N20,000 per couple</span></div>
-                    </label>
-                    <label class="flex">
-                        <input type="checkbox" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" :value="3" v-model="selectedPackages">
-                        <div>Starfish Package (includes brut champagne): <span class="font-bold">N45,000 per couple</span></div>
+                    <label class="flex" v-for="option in breakfastOptions" :key="option.id"
+                        :class="{'opacity-50' : !isAvailable(option.id)}">
+                        <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
+                        <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
                     </label>
                 </div>
             </div>
@@ -46,17 +40,10 @@
                     <div class="text-xs font-light text-gray-700">(between 1:30 - 4:00pm)</div>
                 </div>
                 <div class="px-2 my-5 space-y-6 border-r">
-                    <label class="flex">
-                        <input type="checkbox" class="mt-1 mr-2 rounded-full border-brand-blue-400 focus:ring-0 text-brand-blue-400" :value="4" v-model="selectedPackages">
-                        <div>Shell Package (includes non-alcoholic sparkling wine): <span class="font-bold">N15,000 per couple</span></div>
-                    </label>
-                    <label class="flex">
-                        <input type="checkbox" class="mt-1 mr-2 rounded-full border-brand-blue-400 focus:ring-0 text-brand-blue-400" :value="5" v-model="selectedPackages">
-                        <div>Seahorse Package (includes sparkling wine/ Prosecco): <span class="font-bold">N20,000 per couple</span></div>
-                    </label>
-                    <label class="flex">
-                        <input type="checkbox" class="mt-1 mr-2 rounded-full border-brand-blue-400 focus:ring-0 text-brand-blue-400" :value="6" v-model="selectedPackages">
-                        <div>Starfish Package (includes brut champagne): <span class="font-bold">N45,000 per couple</span></div>
+                    <label class="flex" v-for="option in lunchOptions" :key="option.id"
+                        :class="{'opacity-50' : !isAvailable(option.id)}">
+                        <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
+                        <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
                     </label>
                 </div>
             </div>
@@ -67,33 +54,68 @@
                     <div class="text-xs font-light text-gray-700">(from 7pm. Candles inclusive)</div>
                 </div>
                 <div class="px-3 my-5 space-y-6">
-                    <label class="flex">
-                        <input type="checkbox" class="mt-1 mr-2 rounded-full border-brand-blue-400 text-brand-blue-400 focus:ring-0" :value="7" v-model="selectedPackages">
-                        <div>Shell Package (includes non-alcoholic sparkling wine): <span class="font-bold">N15,000 per couple</span></div>
-                    </label>
-                    <label class="flex">
-                        <input type="checkbox" class="mt-1 mr-2 rounded-full border-brand-blue-400 text-brand-blue-400 focus:ring-0" :value="8" v-model="selectedPackages">
-                        <div>Seahorse Package (includes sparkling wine/ Prosecco): <span class="font-bold">N20,000 per couple</span></div>
-                    </label>
-                    <label class="flex">
-                        <input type="checkbox" class="mt-1 mr-2 rounded-full border-brand-blue-400 text-brand-blue-400 focus:ring-0" :value="9" v-model="selectedPackages">
-                        <div>Starfish Package (includes brut champagne): <span class="font-bold">N45,000 per couple</span></div>
+                    <label class="flex" v-for="option in dinnerOptions" :key="option.id"
+                        :class="{'opacity-50' : !isAvailable(option.id)}">
+                        <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
+                        <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
                     </label>
                 </div>
             </div>
         </div>
         <hr>
-        <div class="w-1/3 py-4 mx-auto">
-            <MainButton @click="$emit('next')">Next</MainButton>
+        <div class="flex w-2/3 mx-auto my-8 space-x-2">
+            <MainButton outline @click="prev()">Back</MainButton>
+            <MainButton @click="next()">Next</MainButton>
         </div>
     </div>
 </template>
 <script>
 export default {
+    props: ["initial", "options", "availableOptions", "date"],
     data() {
         return {
             selectedPackages: [],
         };
+    },
+    watch: {
+        selectedPackages(v) {
+            this.$emit("details", v);
+        },
+        date() {
+            this.selectedPackages = [];
+        },
+    },
+    computed: {
+        breakfastOptions() {
+            return this.options.filter(
+                (o) => o.type.toLowerCase() == "breakfast"
+            );
+        },
+        lunchOptions() {
+            return this.options.filter((o) => o.type.toLowerCase() == "lunch");
+        },
+        dinnerOptions() {
+            return this.options.filter((o) => o.type.toLowerCase() == "dinner");
+        },
+    },
+    methods: {
+        next() {
+            this.$emit("next");
+        },
+        prev() {
+            this.$emit("prev");
+        },
+        currency(num) {
+            return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        isAvailable(optionId) {
+            return this.availableOptions.includes(optionId);
+        },
+    },
+    mounted() {
+        if (this.initial) {
+            this.selectedPackages = this.initial;
+        }
     },
 };
 </script>

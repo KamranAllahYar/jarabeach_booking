@@ -88,7 +88,6 @@ export default {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
         updateSelection(details) {
-            console.log(details);
             this.selectedStaff = details;
         },
     },

@@ -308,7 +308,7 @@ export const actions: ActionTree<ExtraState, RootState> = {
     this.$axios.get("/lookout-options").then((res) => {
       console.log("Lookout options")
       console.log(res.data.data);
-      commit("LOAD_DECORATION_OPTIONS", res.data.data);
+      commit("LOAD_LOOKOUT_OPTIONS", res.data.data);
     });
   },
 

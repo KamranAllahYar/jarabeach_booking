@@ -26,11 +26,20 @@
 
                 <div class="flex w-2/3 mx-auto mt-8 space-x-2">
                     <MainButton outline @click="$emit('prev')">Back</MainButton>
-                    <MainButton @click="showMenu = true">Next</MainButton>
+                    <MainButton @click="toggleMenuInfo(true)">Next</MainButton>
                 </div>
             </div>
         </div>
-        <SpecialLookoutMeal v-if="showMenu" @close="showMenu = false" @next="emitNext()" />
+
+        <SpecialLookoutMeal v-show="showMenu"
+            :initial="selectedPackages"
+            :options="options"
+            :availableOptions="currentAvailablePackages"
+            :date="selectedDate"
+            @close="toggleMenuInfo(false)"
+            @prev="toggleMenuInfo(false)"
+            @next="next()"
+            @details="updateSelection($event)" />
     </div>
 </template>
 <script>
@@ -41,31 +50,80 @@ export default {
         return {
             showMenu: false,
             selectedDate: null,
+            selectedPackages: [],
+            availablePackages: null,
         };
     },
     computed: {
+        currentAvailablePackages() {
+            if (this.selectedDate == null) return [];
+            if (this.availablePackages == null) return [];
+
+            return this.availablePackages[this.selectedDate];
+        },
+        options() {
+            return this.$store.getters["extras/allLookouts"];
+        },
         dates() {
             return this.$store.getters.bookingDates;
         },
     },
+    watch: {
+        // selectedDate(newVal, oldVal){
+        // }
+    },
     methods: {
+        toggleMenuInfo(view) {
+            this.$store.commit("extras/SET_SELECTED_LOOKOUT", {
+                lookouts: this.selectedPackages,
+                date: this.selectedDate,
+            });
+            this.showMenu = view;
+        },
+        prev() {
+            this.$store.commit("extras/SET_SELECTED_LOOKOUT", {
+                lookouts: this.selectedPackages,
+                date: this.selectedDate,
+            });
+            this.$emit("prev");
+        },
+        next() {
+            this.$store.commit("extras/SET_SELECTED_LOOKOUT", {
+                lookouts: this.selectedPackages,
+                date: this.selectedDate,
+            });
+            this.$emit("next");
+        },
+        updateSelection(packages) {
+            this.selectedPackages = packages;
+
+            this.$store.commit("extras/SET_SELECTED_LOOKOUT", {
+                lookouts: this.selectedPackages,
+                date: this.selectedDate,
+            });
+        },
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
-        emitNext() {
-            this.showMenu = false;
-            this.$emit("next");
+        checkOptions() {
+            this.$axios
+                .post("check-lookout-booking", { dates: this.dates })
+                .then((res) => {
+                    console.log(res.data.data);
+                    this.availablePackages = res.data.data;
+                });
         },
     },
     mounted() {
         this.$store.dispatch("extras/getLookoutOptions");
+        this.checkOptions();
 
         if (this.dates.length > 0) {
             this.selectedDate = this.dates[0];
         }
 
         if (this.$store.state.extras.selectedLookouts) {
-            this.selectedLookouts = this.$store.state.extras.selectedLookouts.map(
+            this.selectedPackages = this.$store.state.extras.selectedLookouts.map(
                 (x) => x
             );
         }
