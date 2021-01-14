@@ -19,7 +19,7 @@
 
                 <div class="grid items-center grid-cols-2 mt-3 font-light gap-y-2">
                     <label class="flex items-center" v-for="date in dates" :key="date">
-                        <input type="checkbox" value="Tues, Nov 9th 2020" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                        <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                         <div>{{ showDate(date) }}</div>
                     </label>
                 </div>
@@ -40,6 +40,7 @@ export default {
     data() {
         return {
             showMenu: false,
+            selectedDate: null,
         };
     },
     computed: {
@@ -55,6 +56,22 @@ export default {
             this.showMenu = false;
             this.$emit("next");
         },
+    },
+    mounted() {
+        this.$store.dispatch("extras/getLookoutOptions");
+
+        if (this.dates.length > 0) {
+            this.selectedDate = this.dates[0];
+        }
+
+        if (this.$store.state.extras.selectedLookouts) {
+            this.selectedLookouts = this.$store.state.extras.selectedLookouts.map(
+                (x) => x
+            );
+        }
+        if (this.$store.state.extras.dateLookout) {
+            this.selectedDate = this.$store.state.extras.dateLookout;
+        }
     },
 };
 </script>

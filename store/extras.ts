@@ -5,7 +5,7 @@ export const state = () => ({
   specials: [
     { type: 'lookout', name: 'Lookout Experience', available: true, range: '50,000' },
     { type: 'massage', name: 'Massage', available: false, range: '30,000' },
-    { type: 'quadbikes', name: 'Quad Bikes', available: true, range: '25,000' },
+    { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
     { type: 'photoshoot', name: 'Photoshoot', available: true, range: '50,000' },
     { type: 'drinks', name: 'ca', available: true, range: '5,000' },
     { type: 'cake', name: 'Cake', available: true, range: '15,000' },
@@ -14,6 +14,19 @@ export const state = () => ({
   ] as { name: string, type: string, range: string, available: boolean }[],
   selected: [] as { name: string, type: string, range: string, available: boolean }[],
   selectedIndex: 0 as number,
+
+  lookoutOptions: [] as any[],
+  selectedLookouts: [] as any[],
+  dateLookout: null as String | null,
+
+  massageOptions: [] as any[],
+  selectedMassage: [] as any[],
+  dateMassage: null as String | null,
+
+  quadbikeOptions: [] as any[],
+  selectedQuadbike: [] as any[],
+  selectedQuadbikeQty: 1 as number,
+  dateQuadbike: null as String | null,
 
   decorationOptions: [] as any[],
   selectedDecorations: [] as any[],
@@ -43,6 +56,9 @@ export const getters: GetterTree<ExtraState, RootState> = {
   allSelected: (state: ExtraState) => state.selected,
   allDrinks: (state: ExtraState) => state.drinkOptions,
   allDecorations: (state: ExtraState) => state.decorationOptions,
+  allLookouts: (state: ExtraState) => state.lookoutOptions,
+  allMassages: (state: ExtraState) => state.massageOptions,
+  allQuadbikes: (state: ExtraState) => state.quadbikeOptions,
 
   cakePrice: (state: ExtraState) => {
     if (state.selectedCake) {
@@ -136,6 +152,31 @@ export const mutations: MutationTree<ExtraState> = {
   INC_INDEX: (state) => state.selectedIndex++,
   DEC_INDEX: (state) => state.selectedIndex--,
 
+  LOAD_LOOKOUT_OPTIONS: (state, lookouts) => {
+    state.lookoutOptions = lookouts
+  },
+  SET_SELECTED_LOOKOUT: (state, payload) => {
+    state.selectedLookouts = payload.lookouts;
+    state.dateLookout = payload.date;
+  },
+
+  LOAD_MASSAGE_OPTIONS: (state, massages) => {
+    state.massageOptions = massages
+  },
+  SET_SELECTED_MASSAGE: (state, payload) => {
+    state.selectedMassage = payload.massage;
+    state.dateMassage = payload.date;
+  },
+
+  LOAD_QUADBIKE_OPTIONS: (state, quadbikes) => {
+    state.quadbikeOptions = quadbikes
+  },
+  SET_SELECTED_QUADBIKE: (state, payload) => {
+    state.selectedQuadbike = payload.quadbike;
+    state.selectedQuadbikeQty = payload.quantity || 1;
+    state.dateQuadbike = payload.date;
+  },
+
   LOAD_DECORATION_OPTIONS: (state, decorations) => {
     state.decorationOptions = decorations
   },
@@ -143,7 +184,6 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedDecorations = payload.decorations;
     state.dateDecoration = payload.date;
   },
-
 
   SET_SELECTED_STAFF: (state, payload) => {
     state.selectedStaff = payload.selectedStaff
@@ -217,6 +257,30 @@ export const actions: ActionTree<ExtraState, RootState> = {
       console.log("Decorations")
       console.log(res.data.data);
       commit("LOAD_DECORATION_OPTIONS", res.data.data);
+    });
+  },
+
+  getSpecialMassages({ commit }) {
+    this.$axios.get("/massage-options").then((res) => {
+      console.log("Massages")
+      console.log(res.data.data);
+      commit("LOAD_MASSAGE_OPTIONS", res.data.data);
+    });
+  },
+
+  getLookoutOptions({ commit }) {
+    this.$axios.get("/lookout-options").then((res) => {
+      console.log("Lookout options")
+      console.log(res.data.data);
+      commit("LOAD_DECORATION_OPTIONS", res.data.data);
+    });
+  },
+
+  getQuadbikeOptions({ commit }) {
+    this.$axios.get("/quadbike-options").then((res) => {
+      console.log("Quadbike options")
+      console.log(res.data.data);
+      commit("LOAD_QUADBIKE_OPTIONS", res.data.data);
     });
   }
 

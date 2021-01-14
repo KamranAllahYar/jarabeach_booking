@@ -28,7 +28,7 @@ export const state = () => ({
 
   extra: '' as string,
   showExtra: false as boolean,
-  specials: ["lookout", "massage", "quadbikes", "photoshoot", "drinks", "cake", "roomDecoration", "domesticStaff"] as any[],
+  specials: ["lookout", "massage", "quadbike", "photoshoot", "drinks", "cake", "roomDecoration", "domesticStaff"] as any[],
 
   booking: true,
 })

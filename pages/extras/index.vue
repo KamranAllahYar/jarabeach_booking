@@ -95,6 +95,9 @@ export default {
         this.$store.dispatch("extras/updateSpecials", this.dates);
         this.$store.dispatch("extras/getSpecialDrinks");
         this.$store.dispatch("extras/getSpecialDecorations");
+        this.$store.dispatch("extras/getLookoutOptions");
+        this.$store.dispatch("extras/getSpecialMassages");
+        this.$store.dispatch("extras/getQuadbikeOptions");
     },
     middleware({ store, redirect, $toast }) {
         if (!store.state.availability_done) {

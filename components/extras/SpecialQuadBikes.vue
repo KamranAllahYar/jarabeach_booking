@@ -1,7 +1,7 @@
 <template>
     <div class="flex w-full">
-        <div class="relative w-6/12 ">
-            <img src="@/assets/images/specials/quadbikes.png" alt="" class="object-cover object-center w-full h-full">
+        <div class="relative w-6/12">
+            <img src="@/assets/images/specials/quadbike.png" alt="" class="object-cover object-center w-full h-full">
             <NavSpecials color="bg-green-900" :index="3" @next="$emit('next')" @prev="$emit('prev')" />
         </div>
         <div class="w-7/12 p-6">
@@ -15,32 +15,34 @@
 
             <div class="grid items-center grid-cols-2 mt-3 font-light gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">
-                    <input type="checkbox" value="Tues, Nov 9th 2020" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                    <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                     <div>{{ showDate(date) }}</div>
+                </label>
+            </div>
+
+            <div class="mt-6 font-semibold">How Many?</div>
+
+            <div class="grid items-center grid-cols-2 mt-3 font-light gap-y-2">
+                <label class="flex items-center" v-for="qty in 2" :key="qty">
+                    <input type="radio" :value="qty" v-model="selectedQuantity" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                    <div>{{ qty }}</div>
                 </label>
             </div>
 
             <div>
                 <div class="mt-4 font-semibold">At what time?</div>
                 <div class="mt-2 space-y-3 font-light ">
-                    <label class="flex items-center">
-                        <input type="checkbox" class="mr-3 rounded-full focus-within:ring-0 border-brand-blue-400 text-brand-blue-400">
-                        <div>Half day (12pm - 4pm) <span class="font-bold">₦25,000</span></div>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" class="mr-3 rounded-full focus-within:ring-0 border-brand-blue-400 text-brand-blue-400">
-                        <div>Half day (4pm - 8pm) <span class="font-bold">₦25,000</span></div>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" class="mr-3 rounded-full focus-within:ring-0 border-brand-blue-400 text-brand-blue-400">
-                        <div>Full day <span class="font-bold">₦50,000</span></div>
+                    <label class="flex items-center" v-for="quadbike in quadbikes" :key="quadbike.id"
+                        :class="{'opacity-50' :!isAvailable(quadbike.id)}">
+                        <input type="radio" :value="quadbike.id" :disabled="!isAvailable(quadbike.id)" v-model="selectedQuadbike" class="mr-3 rounded-full focus-within:ring-0 border-brand-blue-400 text-brand-blue-400">
+                        <div>{{ quadbike.description }} <span class="font-bold">{{ currency(quadbike.price) }}</span></div>
                     </label>
                 </div>
             </div>
 
             <div class="flex w-2/3 mx-auto mt-8 space-x-2">
-                <MainButton outline @click="$emit('prev')">Back</MainButton>
-                <MainButton @click="$emit('next')">Next</MainButton>
+                <MainButton outline @click="prev()">Back</MainButton>
+                <MainButton @click="next()">Next</MainButton>
             </div>
         </div>
     </div>
@@ -51,15 +53,101 @@ import parseISO from "date-fns/parseISO";
 import format from "date-fns/format";
 
 export default {
+    data() {
+        return {
+            selectedDate: null,
+            selectedQuadbike: null,
+            selectedQuantity: 1,
+            availableQuadbikes: {},
+        };
+    },
     computed: {
+        currentAvailableQuadbikes() {
+            if (this.selectedDate == null) return [];
+            if (this.availableQuadbikes == null) return [];
+
+            return this.availableQuadbikes[this.selectedDate];
+        },
+        quadbikes() {
+            return this.$store.getters["extras/allQuadbikes"];
+        },
         dates() {
             return this.$store.getters.bookingDates;
         },
     },
+    watch: {
+        selectedDate(newVal, oldVal) {
+            if (oldVal != null) {
+                this.selectedQuadbike = null;
+            }
+        },
+        async selectedQuantity(newVal, oldVal) {
+            await this.checkOptions();
+            if (oldVal != null) {
+                this.selectedQuadbike = null;
+            }
+        },
+    },
     methods: {
+        isAvailable(slot_id) {
+            if (this.currentAvailableQuadbikes) {
+                return this.currentAvailableQuadbikes.includes(slot_id);
+            }
+
+            return false;
+        },
+        next() {
+            console.log("NEXT");
+            this.$store.commit("extras/SET_SELECTED_QUADBIKE", {
+                quadbike: this.selectedQuadbike,
+                quantity: this.selectedQuantity,
+                date: this.selectedDate,
+            });
+            this.$emit("next");
+        },
+        prev() {
+            this.$store.commit("extras/SET_SELECTED_QUADBIKE", {
+                quadbike: this.selectedQuadbike,
+                quantity: this.selectedQuantity,
+                date: this.selectedDate,
+            });
+            this.$emit("prev");
+        },
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
+        currency(num) {
+            return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        checkOptions() {
+            return this.$axios
+                .post("check-quadbike-booking", {
+                    dates: this.dates,
+                    quantity: this.selectedQuantity,
+                })
+                .then((res) => {
+                    console.log(res.data.data);
+                    this.availableQuadbikes = res.data.data;
+                });
+        },
+    },
+    mounted() {
+        this.$store.dispatch("extras/getQuadbikeOptions");
+        this.checkOptions();
+
+        if (this.dates.length > 0) {
+            this.selectedDate = this.dates[0];
+        }
+
+        if (this.$store.state.extras.selectedQuadbike) {
+            this.selectedQuadbike = this.$store.state.extras.selectedQuadbike;
+        }
+        if (this.$store.state.extras.selectedQuadbikeQty) {
+            this.selectedQuantity = this.$store.state.extras.selectedQuadbikeQty;
+        }
+        if (this.$store.state.extras.dateQuadbike) {
+            this.selectedDate = this.$store.state.extras.dateQuadbike;
+        }
     },
 };
 </script>
