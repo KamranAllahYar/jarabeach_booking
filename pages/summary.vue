@@ -43,6 +43,12 @@
                                     <span v-else-if="extra.type == 'domesticStaff'">
                                         {{ currency($store.getters['extras/staffPrice']) }}
                                     </span>
+                                    <span v-else-if="extra.type == 'massage'">
+                                        {{ currency($store.getters['extras/massagePrice']) }}
+                                    </span>
+                                    <span v-else-if="extra.type == 'quadbike'">
+                                        {{ currency($store.getters['extras/quadbikePrice']) }}
+                                    </span>
                                     <span v-else>
                                         {{ currency(0) }}
                                     </span>

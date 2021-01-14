@@ -129,6 +129,29 @@ export const getters: GetterTree<ExtraState, RootState> = {
 
     return totalDays * price;
   },
+  massagePrice: (state: ExtraState) => {
+    let price = 0;
+    const massage = state.massageOptions.find(mo => mo.id == state.selectedMassage);
+
+    if (massage) {
+      price = massage.price;
+    }
+
+    return price;
+  },
+  quadbikePrice: (state: ExtraState) => {
+    let price = 0;
+    const quadbike = state.quadbikeOptions.find(qo => qo.id == state.selectedQuadbike);
+
+    if (quadbike) {
+      price = quadbike.price;
+    }
+    if (state.selectedQuadbikeQty > 1) {
+      price = price * state.selectedQuadbikeQty;
+    }
+
+    return price;
+  },
 }
 
 export const mutations: MutationTree<ExtraState> = {
