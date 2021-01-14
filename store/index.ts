@@ -236,6 +236,19 @@ export const actions: ActionTree<RootState, RootState> = {
         info: extraState.selectedStaff,
       }
     }
+    if (allExtras.includes('quadbike')) {
+      specialsToSend['quadbike'] = {
+        date: extraState.dateQuadbike,
+        options: extraState.selectedQuadbike,
+        quantity: extraState.selectedQuadbikeQty,
+      }
+    }
+    if (allExtras.includes('massage')) {
+      specialsToSend['massage'] = {
+        date: extraState.dateMassage,
+        options: extraState.selectedMassage,
+      }
+    }
 
     console.log(specialsToSend);
     // return;

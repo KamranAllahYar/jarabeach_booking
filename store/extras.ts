@@ -212,6 +212,19 @@ export const mutations: MutationTree<ExtraState> = {
     state.selected = [] as { name: string, type: string, range: string, available: boolean }[];
     state.selectedIndex = 0 as number;
 
+    state.lookoutOptions = [] as any[];
+    state.selectedLookouts = [] as any[];
+    state.dateLookout = null as String | null;
+
+    state.massageOptions = [] as any[];
+    state.selectedMassage = [] as any[];
+    state.dateMassage = null as String | null;
+
+    state.quadbikeOptions = [] as any[];
+    state.selectedQuadbike = [] as any[];
+    state.selectedQuadbikeQty = 1 as number;
+    state.dateQuadbike = null as String | null;
+
     state.decorationOptions = [] as any[];
     state.selectedDecorations = [] as any[];
     state.dateDecoration = null;
