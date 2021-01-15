@@ -45,13 +45,11 @@
                     </div>
                 </div>
                 <div class="grid" :class="`grid-cols-${monthDays.length}`" v-for="roomType in roomTypes" :key="roomType">
-                        <!-- v-popover.right="{ name: 'rooms-available' }" -->
                     <div v-for="day in monthDays" :key="day"
-                        class="flex items-center justify-center flex-shrink-0 text-xl text-gray-500 border border-gray-100 cursor-pointer font-extralight bg-opacity-20 h-14"
+                        class="relative flex items-center justify-center flex-shrink-0 text-xl text-gray-500 border border-gray-100 cursor-pointer font-extralight bg-opacity-20 h-14"
                         :class="roomsAvailable(roomType, day) <= 0 ? 'bg-white' : 'bg-brand-blue-300'"
                         @click="selectRoom(roomType, day)">
 
-                        <!-- <transition name="fade"> -->
                         <div v-if="isSingle(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-300 rounded-full">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -76,7 +74,41 @@
                             </svg>
                         </span>
                         <span v-else>{{ roomsAvailable(roomType, day) }}</span>
-                        <!-- </transition> -->
+
+                        <!-- POPOVER -->
+                        <div v-if="isEnd(roomType, day)" @click.stop=""
+                            class="absolute top-0 right-0 z-10 py-2 pl-3 pr-4 text-sm transform translate-x-full bg-white border rounded-lg w-36"
+                            style="--tw-translate-x: 104%"
+                            >
+                            <div v-if="loadingRoomOptions">
+                                <svg class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </div>
+                            <div v-else>
+                                <template v-for="h in hoveredRooms">
+                                    <div v-if="h.available == true" :key="h.room.id" class="flex items-center py-2 cursor-pointer"
+                                        @click="h.available == true ? addToBookedRoom(h.room.id, h.date) : ''">
+                                        <svg v-if="!isBooked(h.room.id, h.date)" viewBox="0 0 16 16" class="inline-block w-6 h-6 mr-2 text-brand-blue" fill="none" stroke="currentColor">
+                                            <path d="M8 14.703a6.75 6.75 0 100-13.5 6.75 6.75 0 000 13.5z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                        <svg v-else class="inline-block w-6 h-6 mr-2 text-brand-blue" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                        </svg>
+
+                                        <span class="text-gray-700 whitespace-nowrap">
+                                            {{ h.room.name }}
+                                        </span>
+                                    </div>
+                                </template>
+                                <div class="px-1" v-if="hoveredRooms.length <= 0">
+                                    No rooms available for booking on this date
+                                </div>
+                            </div>
+                        </div>
+                        <!-- POPOVER END -->
+
                     </div>
                 </div>
             </div>
@@ -91,59 +123,7 @@
             </div>
         </div>
 
-        <div class="flex flex-col py-2 space-y-3">
-            <template v-for="h in hoveredRooms">
-                <div v-if="h.available == true" :key="h.room.id" class="flex items-center cursor-pointer"
-                    @click="h.available == true ? addToBookedRoom(h.room.id, h.date) : ''">
-                    <svg v-if="!isBooked(h.room.id, h.date)" viewBox="0 0 16 16" class="inline-block w-6 h-6 mr-2" fill="none" stroke="currentColor">
-                        <path d="M8 14.703a6.75 6.75 0 100-13.5 6.75 6.75 0 000 13.5z" stroke="#225A89" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <svg v-else class="inline-block w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-
-                    <span class="text-gray-700">
-                        {{ h.room.name }}
-                    </span>
-                </div>
-            </template>
-            <div class="px-1" v-if="hoveredRooms.length <= 0">
-                No rooms available for booking on this date
-            </div>
-        </div>
-
-        <popover
-            event="click"
-            transition="show-from-top"
-            pointer
-            :name="`rooms-available`">
-            <div class="flex flex-col py-2 space-y-3">
-                <template v-for="h in hoveredRooms">
-                    <div v-if="h.available == true" :key="h.room.id" class="flex items-center cursor-pointer"
-                        @click="h.available == true ? addToBookedRoom(h.room.id, h.date) : ''">
-                        <svg v-if="!isBooked(h.room.id, h.date)" viewBox="0 0 16 16" class="inline-block w-6 h-6 mr-2" fill="none" stroke="currentColor">
-                            <path d="M8 14.703a6.75 6.75 0 100-13.5 6.75 6.75 0 000 13.5z" stroke="#225A89" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-
-                        <!-- <svg v-if="!isBooked(h.room.id, h.date)" class="inline-block w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M12 20a8 8 0 01-8-8 8 8 0 018-8 8 8 0 018 8 8 8 0 01-8 8m0-18A10 10 0 002 12a10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2z" />
-                        </svg> -->
-                        <svg v-else class="inline-block w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                        </svg>
-
-                        <span class="text-gray-700">
-                            {{ h.room.name }}
-                        </span>
-                    </div>
-                </template>
-                <div class="px-1" v-if="hoveredRooms.length <= 0">
-                    No rooms available for booking on this date
-                </div>
-            </div>
-        </popover>
-
-        <!-- DONT REMOVE: grid-cols-17 grid-cols-16 grid-cols-15 grid-cols-14 grid-cols-13 grid-cols-12 (for purgecss )-->
+        <!-- !!!! DONT REMOVE !!! : grid-cols-17 grid-cols-16 grid-cols-15 grid-cols-14 grid-cols-13 grid-cols-12 (for purgecss )-->
     </div>
 </template>
 
@@ -189,6 +169,7 @@ export default {
             startDate: null,
             endDate: null,
             seRoom: null,
+            loadingRoomOptions: false,
         };
     },
     computed: {
@@ -432,10 +413,11 @@ export default {
                     });
             }, 0);
         },
-        getRoomsAvailableForPeriod() {
+        async getRoomsAvailableForPeriod() {
+            this.loadingRoomOptions = true;
             const date = this.startDate;
 
-            this.$axios
+            await this.$axios
                 .post("/check-rooms", {
                     start: this.startDate,
                     end: this.endDate,
@@ -454,6 +436,8 @@ export default {
                         });
                     });
                 });
+
+            this.loadingRoomOptions = false;
         },
     },
     mounted() {
