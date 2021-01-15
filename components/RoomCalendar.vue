@@ -78,8 +78,7 @@
                         <!-- POPOVER -->
                         <div v-if="isEnd(roomType, day)" @click.stop=""
                             class="absolute top-0 right-0 z-10 py-2 pl-3 pr-4 text-sm transform translate-x-full bg-white border rounded-lg w-36"
-                            style="--tw-translate-x: 104%"
-                            >
+                            style="--tw-translate-x: 104%">
                             <div v-if="loadingRoomOptions">
                                 <svg class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -135,6 +134,13 @@ import parseISO from "date-fns/parseISO";
 import isWeekend from "date-fns/isWeekend";
 import isToday from "date-fns/isToday";
 
+var getDaysArray = function (s, e) {
+    for (var a = [], d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
+        a.push(new Date(d));
+    }
+    return a;
+};
+
 export default {
     props: ["initialRooms"],
     data() {
@@ -170,6 +176,8 @@ export default {
             endDate: null,
             seRoom: null,
             loadingRoomOptions: false,
+
+            roomIds: [],
         };
     },
     computed: {
@@ -233,28 +241,36 @@ export default {
             return `${this.calYear}-${m}-${d}`;
         },
         isBooked(room_id, dateStr) {
-            const ix = this.bookedRooms.findIndex(
-                (br) => room_id == br.room_id && br.date == dateStr
-            );
-
-            return ix >= 0;
+            return this.roomIds.includes(room_id);
         },
         addToBookedRoom(room_id, dateStr) {
-            const ix = this.bookedRooms.findIndex(
-                (br) => br.room_id == room_id && br.date == dateStr
-            );
-
-            if (ix < 0) {
-                this.bookedRooms.push({
-                    room_id: room_id,
-                    date: dateStr,
-                    isWeekend: isWeekend(parseISO(dateStr)),
-                });
+            if (this.roomIds.includes(room_id)) {
+                const ix = this.roomIds.findIndex((rid) => rid == room_id);
+                if (ix >= 0) {
+                    this.roomIds.splice(ix, 1);
+                }
             } else {
-                this.bookedRooms.splice(ix, 1);
+                this.roomIds.push(room_id);
             }
 
-            this.$emit("selected", this.bookedRooms.slice(0));
+            this.generateAndEmitBookedRooms();
+        },
+        generateAndEmitBookedRooms() {
+            const dates = this.getDatesInbetween();
+
+            let bookedRooms = [];
+
+            this.roomIds.forEach((roomId) => {
+                dates.forEach((date) => {
+                    bookedRooms.push({
+                        room_id: roomId,
+                        date: date,
+                        isWeekend: isWeekend(parseISO(date)),
+                    });
+                });
+            });
+
+            this.$emit("selected", bookedRooms);
         },
         isStart(roomType, date) {
             if (this.seRoom != roomType) return false;
@@ -287,19 +303,12 @@ export default {
         },
         selectRoom(roomType, date) {
             if (this.roomsAvailable(roomType, date) <= 0) return;
-            console.log(date, roomType);
-
             const dateStr = this.getDateStr(date);
-
-            console.log(dateStr);
 
             this.seRoom = roomType;
             if (this.startDate == null) {
                 this.startDate = dateStr;
             } else if (this.endDate == null) {
-                // if (dateStr == this.startDate) {
-                //     this.startDate = null;
-                // } else
                 if (isBefore(parseISO(dateStr), parseISO(this.startDate))) {
                     this.endDate = this.startDate;
                     this.startDate = dateStr;
@@ -416,6 +425,7 @@ export default {
         async getRoomsAvailableForPeriod() {
             this.loadingRoomOptions = true;
             const date = this.startDate;
+            this.roomIds = [];
 
             await this.$axios
                 .post("/check-rooms", {
@@ -439,6 +449,18 @@ export default {
 
             this.loadingRoomOptions = false;
         },
+        getDatesInbetween() {
+            if (this.startDate == null || this.endDate == null) return [];
+
+            var dateList = getDaysArray(
+                new Date(this.startDate),
+                new Date(this.endDate)
+            ).map((v) => v.toISOString().slice(0, 10));
+
+            console.log(dateList);
+
+            return dateList;
+        },
     },
     mounted() {
         this.getRooms();
@@ -447,9 +469,9 @@ export default {
         console.log("ROOM CALENDAR MOUNTED");
         console.log(this.initialRooms);
 
-        if (this.initialRooms) {
-            this.bookedRooms = this.initialRooms;
-        }
+        // if (this.initialRooms) {
+        //     this.bookedRooms = this.initialRooms;
+        // }
     },
 };
 </script>

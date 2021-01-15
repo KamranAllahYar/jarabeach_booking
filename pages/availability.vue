@@ -62,8 +62,10 @@ export default {
             this.$router.push({ path: "/guests" });
         },
         selectRooms(rooms) {
+            console.log("Availability page");
             console.log(rooms);
             this.rooms = rooms.slice(0);
+            console.log(this.rooms);
             this.$store.commit("UPDATE_ROOMS", rooms);
         },
     },
