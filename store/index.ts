@@ -30,7 +30,8 @@ export const state = () => ({
   showExtra: false as boolean,
   specials: ["lookout", "massage", "quadbike", "photoshoot", "drinks", "cake", "roomDecoration", "domesticStaff"] as any[],
 
-  booking: true,
+  booking: null as any,
+  discount: null as any,
 })
 
 export type RootState = ReturnType<typeof state>
@@ -62,6 +63,67 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return [...new Set(dates)];
   },
+  subTotal: (state: RootState, getters) => {
+    const roomPrices = getters.bookedRooms.reduce((price: number, room: any) => {
+      return price + room.price;
+    }, 0);
+
+    let extraPrices = 0;
+    getters["extras/allSelected"].forEach((extra: any) => {
+      if (extra.type == "cake") {
+        extraPrices += getters["extras/cakePrice"];
+      }
+      if (extra.type == "drinks") {
+        extraPrices += getters["extras/drinksPrice"];
+      }
+      if (extra.type == "photoshoot") {
+        extraPrices += getters[
+          "extras/photoshootPrice"
+        ];
+      }
+      if (extra.type == "roomDecoration") {
+        extraPrices += getters[
+          "extras/decorationPrice"
+        ];
+      }
+      if (extra.type == "domesticStaff") {
+        extraPrices += getters["extras/staffPrice"];
+      }
+      if (extra.type == "massage") {
+        extraPrices += getters["extras/massagePrice"];
+      }
+      if (extra.type == "quadbike") {
+        extraPrices += getters["extras/quadbikePrice"];
+      }
+      if (extra.type == "lookout") {
+        extraPrices += getters["extras/lookoutPrice"];
+      }
+    });
+
+    return extraPrices + roomPrices;
+  },
+  discount: (state: RootState, getters) => {
+    const discount = state.discount;
+    if (!discount) return 0;
+
+    console.log("CALC discount");
+    console.log(discount);
+
+    if (discount.type == "voucher") {
+      return discount.amount;
+    } else if (discount.type == "discount") {
+      const percent = discount.amount / 100;
+      return percent * getters.subTotal;
+    }
+
+
+
+    return 0;
+
+  },
+  totalPrice: (state: RootState, getters) => {
+    return getters.subTotal - getters.discount;
+  }
 }
 
 export const mutations: MutationTree<RootState> = {
@@ -92,9 +154,11 @@ export const mutations: MutationTree<RootState> = {
     state.other_guests = otherguests;
   },
 
+  UPDATE_DISCOUNT: (state, discount) => {
+    state.discount = discount;
+  },
   UPDATE_GUEST: (state, payload) => {
     state.guest = JSON.parse(JSON.stringify(payload.guest));
-    // state.other_guests = payload.others || []
   },
   GUEST_WEHAVEDATA: (state, payload: boolean) => {
     state.weHaveData = payload;
@@ -257,8 +321,6 @@ export const actions: ActionTree<RootState, RootState> = {
     }
 
     console.log(specialsToSend);
-    // return;
-
 
     let dataToPost: any = {
       booking: {

@@ -61,9 +61,11 @@
                     </div>
 
                     <div class="mt-6 mb-12 border border-gray-100 rounded-md bg-gray-50 ring-gray-200 focus-within:ring ring-offset-2">
-                        <form @submit.prevent class="flex justify-between p-2 ">
-                            <input class="w-full ml-2 bg-transparent outline-none" placeholder="Enter Discount code" />
-                            <button type="submit" class="px-10 py-1 text-white rounded-md focus:outline-none focus:ring bg-brand-blue-400">Apply</button>
+                        <form @submit.prevent="checkDiscount()" class="flex justify-between p-2">
+                            <input class="w-full ml-2 bg-transparent outline-none" v-model="code" placeholder="Enter Discount code" />
+                            <div class="w-40 ml-3">
+                                <MainButton :loading="loadingCode" type="submit" class="text-white rounded-md focus:outline-none focus:ring bg-brand-blue-400">Apply</MainButton>
+                            </div>
                         </form>
                     </div>
 
@@ -91,6 +93,13 @@
 <script>
 export default {
     layout: "booking",
+    data() {
+        return {
+            code: "",
+            loadingCode: false,
+            loading: false,
+        };
+    },
     computed: {
         rooms() {
             return this.$store.getters.bookedRooms;
@@ -125,12 +134,42 @@ export default {
             console.log(room);
             this.$store.commit("REMOVE_ROOM", room);
         },
+        async checkDiscount() {
+            this.$store.commit("UPDATE_DISCOUNT", null);
+            if (this.code.length <= 2) {
+                this.$toast.info("Please input a proper code");
+                return;
+            }
+            this.loadingCode = true;
+            console.log("Check for - " + this.code);
+
+            this.$axios
+                .post(`/check-discount/${this.code}`)
+                .then(({ data }) => {
+                    console.log(data);
+                    if (data.success) {
+                        this.$toasted.success(data.message);
+
+                        const discount = Object.assign({}, data.data);
+                        console.log(discount);
+                        this.$store.commit("UPDATE_DISCOUNT", discount);
+                    } else {
+                        this.$toasted.error(data.message);
+                    }
+
+                    console.log(data);
+                })
+                .finally(() => {
+                    this.loadingCode = false;
+                });
+        },
     },
     middleware({ store, redirect, $toast }) {
         if (!store.state.policy_done) {
             $toast.info("Please accept all policies first");
             redirect("/policies");
         }
+        store.commit("UPDATE_DISCOUNT", null);
     },
 };
 </script>

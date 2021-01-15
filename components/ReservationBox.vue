@@ -64,7 +64,7 @@
             </div>
             <div class="flex justify-between px-3 my-3" v-if="discount > 0">
                 <div>Discount</div>
-                <div class="font-bold">{{ currency(discount) }}</div>
+                <div class="font-bold"> - {{ currency(discount) }}</div>
             </div>
         </div>
 
@@ -90,11 +90,11 @@ export default {
             default: false,
         },
     },
-    data() {
-        return {
-            discount: 0,
-        };
-    },
+    // data() {
+    //     return {
+    //         discount: 0,
+    //     };
+    // },
     computed: {
         specials() {
             return this.$store.getters["extras/allSelected"];
@@ -109,46 +109,13 @@ export default {
             return this.$store.getters.bookedRooms;
         },
         subTotal() {
-            const roomPrices = this.rooms.reduce((price, room) => {
-                return price + room.price;
-            }, 0);
-
-            let extraPrices = 0;
-            this.specials.forEach((extra) => {
-                if (extra.type == "cake") {
-                    extraPrices += this.$store.getters["extras/cakePrice"];
-                }
-                if (extra.type == "drinks") {
-                    extraPrices += this.$store.getters["extras/drinksPrice"];
-                }
-                if (extra.type == "photoshoot") {
-                    extraPrices += this.$store.getters[
-                        "extras/photoshootPrice"
-                    ];
-                }
-                if (extra.type == "roomDecoration") {
-                    extraPrices += this.$store.getters[
-                        "extras/decorationPrice"
-                    ];
-                }
-                if (extra.type == "domesticStaff") {
-                    extraPrices += this.$store.getters["extras/staffPrice"];
-                }
-                if (extra.type == "massage") {
-                    extraPrices += this.$store.getters["extras/massagePrice"];
-                }
-                if (extra.type == "quadbike") {
-                    extraPrices += this.$store.getters["extras/quadbikePrice"];
-                }
-                if (extra.type == "lookout") {
-                    extraPrices += this.$store.getters["extras/lookoutPrice"];
-                }
-            });
-
-            return extraPrices + roomPrices;
+            return this.$store.getters.subTotal;
+        },
+        discount() {
+            return this.$store.getters.discount;
         },
         totalPrice() {
-            return this.subTotal - this.discount;
+            return this.$store.getters.totalPrice;
         },
     },
     methods: {
