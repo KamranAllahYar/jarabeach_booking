@@ -71,7 +71,7 @@
 
                     <div class="flex items-center w-full my-6 space-x-6">
                         <MainButton outline @click="gotoBack()">Back</MainButton>
-                        <MainButton @click="completeBooking()">
+                        <MainButton :loading="loading" @click="completeBooking()">
                             <div class="flex justify-center">
                                 <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
@@ -114,15 +114,22 @@ export default {
     methods: {
         async completeBooking() {
             this.loading = true;
-            const res = await this.$store.dispatch("createBooking");
-            this.loading = false;
+            const trans_ref = await this.$store.dispatch("createTransaction");
+            console.log(trans_ref);
 
-            if (res) {
-                console.log(res);
-                this.$router.push("/done");
-                this.$store.commit("RESET_STORE");
-                this.$store.commit("extras/RESET_STORE");
+            if (trans_ref) {
+                const res = await this.$store.dispatch(
+                    "createBooking",
+                    trans_ref
+                );
+                if (res) {
+                    console.log(res);
+                    this.$router.push("/done");
+                    this.$store.commit("RESET_STORE");
+                    this.$store.commit("extras/RESET_STORE");
+                }
             }
+            this.loading = false;
         },
         currency(num) {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

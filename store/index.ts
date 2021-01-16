@@ -106,9 +106,6 @@ export const getters: GetterTree<RootState, RootState> = {
     const discount = state.discount;
     if (!discount) return 0;
 
-    console.log("CALC discount");
-    console.log(discount);
-
     if (discount.type == "voucher") {
       return discount.amount;
     } else if (discount.type == "discount") {
@@ -116,10 +113,7 @@ export const getters: GetterTree<RootState, RootState> = {
       return percent * getters.subTotal;
     }
 
-
-
     return 0;
-
   },
   totalPrice: (state: RootState, getters) => {
     return getters.subTotal - getters.discount;
@@ -260,7 +254,39 @@ export const actions: ActionTree<RootState, RootState> = {
       })
   },
 
-  async createBooking({ state, rootState, rootGetters }) {
+  async createTransaction({ state, getters }) {
+    console.log(getters);
+    let dataToPost = {
+      "method": "Paystack",
+      "subtotal": getters.subTotal,
+      "total": getters.totalPrice,
+    } as any;
+
+    const discount = state.discount;
+    if (discount) {
+      if (discount.type == 'discount') {
+        dataToPost['discount'] = discount.amount;
+      } else if (discount.type == 'voucher') {
+        dataToPost['voucher'] = discount.amount;
+      }
+    }
+
+    console.log(dataToPost);
+    try {
+      const res = await this.$axios.post("transactions", dataToPost);
+      console.log(res.data);
+
+      if (res.data.success) {
+        return res.data.reference;
+      }
+
+      return false;
+    } catch (e) {
+      return false;
+    }
+  },
+
+  async createBooking({ state, rootState, rootGetters }, trans_ref) {
     //@ts-ignore
     const extraState = rootState.extras;
     console.log(extraState, rootGetters);
@@ -328,6 +354,7 @@ export const actions: ActionTree<RootState, RootState> = {
         adult_no: state.adult_no,
         child_no: state.child_no,
         extra_info: "state.extra_info",
+        trans_ref: trans_ref,
       },
       booked_rooms: state.rooms,
     }
@@ -336,6 +363,9 @@ export const actions: ActionTree<RootState, RootState> = {
 
     if (state.guest.id) {
       dataToPost.guest_id = state.guest.id;
+    }
+    if (state.discount) {
+      dataToPost.discount = state.discount;
     }
 
     try {
