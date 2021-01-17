@@ -19,13 +19,13 @@
             </div>
         </div>
 
-        <div class="flex justify-between w-full px-3 my-4 space-x-5">
-            <div class="w-1/3">
+        <div class="flex flex-col justify-between w-full px-3 my-4 space-y-5 md:space-y-0 md:space-x-5 md:flex-row">
+            <div class="w-full border-b md:w-1/3 md:border-b-0">
                 <div class="text-center">
                     <div class="text-xl font-bold uppercase ">Breakfast</div>
                     <div class="text-xs font-light text-gray-700">(between 8:30 - 10:30am)</div>
                 </div>
-                <div class="px-3 my-5 space-y-6 border-r">
+                <div class="px-3 my-5 space-y-6 md:border-r">
                     <label class="flex" v-for="option in breakfastOptions" :key="option.id"
                         :class="{'opacity-50' : !isAvailable(option.id)}">
                         <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
@@ -34,12 +34,12 @@
                 </div>
             </div>
 
-            <div class="w-1/3">
+            <div class="w-full border-b md:w-1/3 md:border-b-0">
                 <div class="text-center">
                     <div class="text-xl font-bold uppercase ">Lunch</div>
                     <div class="text-xs font-light text-gray-700">(between 1:30 - 4:00pm)</div>
                 </div>
-                <div class="px-2 my-5 space-y-6 border-r">
+                <div class="px-2 my-5 space-y-6 md:border-r">
                     <label class="flex" v-for="option in lunchOptions" :key="option.id"
                         :class="{'opacity-50' : !isAvailable(option.id)}">
                         <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="w-1/3 ">
+            <div class="w-full md:w-1/3">
                 <div class="text-center">
                     <div class="text-xl font-bold uppercase ">Dinner</div>
                     <div class="text-xs font-light text-gray-700">(from 7pm. Candles inclusive)</div>
@@ -63,7 +63,7 @@
             </div>
         </div>
         <hr>
-        <div class="flex w-2/3 mx-auto my-8 space-x-2">
+        <div class="flex w-full px-6 mx-auto my-8 space-x-2 md:px-0 md:w-2/3">
             <MainButton outline @click="prev()">Back</MainButton>
             <MainButton @click="next()">Next</MainButton>
         </div>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="text-2xl font-bold text-center">
+        <div class="text-xl font-bold text-center md:text-2xl">
             Manage your booking
         </div>
 

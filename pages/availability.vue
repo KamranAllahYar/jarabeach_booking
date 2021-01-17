@@ -1,19 +1,19 @@
 <template>
     <div class="pb-60">
-        <h1 class="mb-6 text-2xl font-bold text-center">What dates would you like to stay for?</h1>
+        <h1 class="mb-6 text-xl font-bold text-center md:text-2xl">What dates would you like to stay for?</h1>
 
-        <div class="flex justify-center space-x-6">
-            <div class="w-10/12">
+        <div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-6 md:flex-row">
+            <div class="w-full md:w-10/12">
                 <div class="pt-6 bg-white border rounded-lg shadow-lg">
                     <RoomCalendar class="w-full" @selected="selectRooms($event)" :initialRooms="rooms" />
 
-                    <div class="flex w-9/12 mx-auto mb-6 space-x-6" v-if="rooms.length > 0">
+                    <div class="flex w-11/12 mx-auto mb-6 space-x-2 md:space-x-6 md:w-9/12" v-if="rooms.length > 0">
                         <MainButton @click="gotoBack()" outline>Back</MainButton>
                         <MainButton @click="gotoNext()">Next</MainButton>
                     </div>
                 </div>
             </div>
-            <div class="flex-shrink-0 w-3/12">
+            <div class="flex-shrink-0 w-full md:w-3/12">
                 <ReservationBox />
             </div>
         </div>

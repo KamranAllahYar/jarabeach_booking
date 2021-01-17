@@ -1,14 +1,14 @@
 <template>
     <div>
-        <h1 class="mb-6 text-2xl text-center">Select an Extra experience to improve your stay!</h1>
+        <h1 class="mb-6 text-xl font-bold text-center md:text-2xl">Select an Extra experience to improve your stay!</h1>
         <!-- <pre>{{selected}}</pre> -->
-        <div class="flex justify-center space-x-3">
-            <div class="w-9/12 ">
+        <div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-3 md:flex-row">
+            <div class="w-full md:w-9/12">
                 <div class="overflow-hidden bg-white border rounded-lg shadow-lg">
                     <ExtrasLayout :currentSpecial="special" />
                 </div>
             </div>
-            <div class="flex-shrink-0 w-3/12">
+            <div class="flex-shrink-0 w-full md:w-3/12">
                 <ReservationBox />
             </div>
         </div>

@@ -2,15 +2,15 @@
     <div class="flex min-h-screen bg-white">
         <main class="flex-1 w-full pb-48 overflow-auto beach">
             <div class="my-10 text-center">
-                <img src="~/assets/logo_big.jpg" class="w-40 mx-auto" />
+                <img src="~/assets/logo_big.jpg" class="w-32 mx-auto md:w-40" />
             </div>
 
             <TopProgressBar />
 
             <div class="p-6 mx-auto mt-12 max-w-7xl">
-                <h1 class="mb-6 text-2xl font-bold text-center">Here are some extra options to improve your stay!</h1>
+                <h1 class="mb-6 text-xl font-bold text-center md:text-2xl">Here are some extra options to improve your stay!</h1>
 
-                <div class="grid grid-cols-4 gap-6">
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
                     <div v-for="(extra, i) in specials" :key="i"
                         class="w-full overflow-hidden transition-all transform border rounded-lg"
                         :class="!extra.available ? 'opacity-50' : 'cursor-pointer shadow-md hover:scale-105'"
@@ -33,7 +33,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-center w-1/2 mx-auto mt-8 space-x-5" v-if="selected.length > 0">
+                <div class="flex items-center w-full mx-auto mt-8 space-x-2 md:w-1/2" v-if="selected.length > 0">
                     <MainButton @click="gotoBack()" outline>Back</MainButton>
                     <MainButton @click="gotoNext()">Next</MainButton>
                 </div>

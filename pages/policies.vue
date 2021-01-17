@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h1 class="mb-6 text-2xl font-bold text-center">Please accept our policies</h1>
+        <h1 class="mb-6 text-xl font-bold text-center md:text-2xl">Please accept our policies</h1>
 
-        <div class="flex justify-center space-x-6">
-            <div class="w-6/12">
+        <div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-6 md:flex-row">
+            <div class="w-full md:w-6/12">
                 <div class="px-6 pt-6 text-gray-700 bg-white border rounded-lg shadow-lg">
                     <div class="border rounded-md" v-if="currentPolicy">
                         <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
@@ -22,13 +22,13 @@
                         </div>
                     </div>
 
-                    <div class="flex w-full my-6 space-x-6">
+                    <div class="flex w-full my-6 space-x-2">
                         <MainButton outline @click="gotoBack()">Back</MainButton>
                         <MainButton @click="gotoNext()">Next</MainButton>
                     </div>
                 </div>
             </div>
-            <div class="flex-shrink-0 w-3/12">
+            <div class="flex-shrink-0 w-full md:w-3/12">
                 <ReservationBox />
             </div>
         </div>

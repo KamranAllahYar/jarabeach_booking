@@ -1,12 +1,12 @@
 <template>
     <div>
-        <h1 class="mb-6 text-2xl font-bold text-center">Please give us some information about you</h1>
+        <h1 class="mb-6 text-xl font-bold text-center md:text-2xl">Please give us some information about you</h1>
 
-        <div class="flex justify-center space-x-6">
-            <div class="w-6/12">
+        <div class="flex flex-col justify-center space-y-6 md:flex-row md:space-y-0 md:space-x-6">
+            <div class="w-full md:w-6/12">
                 <div class="px-6 pt-6 text-gray-700 bg-white border rounded-lg shadow-lg">
                     <div class="border rounded-md">
-                        <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
+                        <div class="grid px-3 py-4 space-y-3 border-b md:grid-cols-2 md:space-y-0 md:space-x-3">
                             <div>
                                 <div class="text-base font-bold">Email address</div>
                                 <div class="flex items-center">
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <template v-if="showFullForm">
-                            <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
+                            <div class="grid px-3 py-4 space-y-3 border-b md:space-y-0 md:space-x-3 md:grid-cols-2">
                                 <div>
                                     <div class="text-base font-bold">First Name</div>
                                     <input type="text" v-model="guest.first_name" placeholder="Jane" class="w-full px-0 border-0" style="box-shadow: none" />
@@ -41,7 +41,7 @@
                                     <input type="text" v-model="guest.last_name" placeholder="Doe" class="w-full px-0 border-0" style="box-shadow: none" />
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
+                            <div class="grid px-3 py-4 space-y-3 border-b md:grid-cols-2 md:space-y-0 md:space-x-3">
                                 <div>
                                     <div class="text-base font-bold">Gender</div>
                                     <select v-model="guest.gender" class="w-full px-0 border-0" style="box-shadow: none">
@@ -86,7 +86,7 @@
                             <div class="px-3 py-4 border-b">
                                 <div>
                                     <div class="text-base font-bold">How did you hear about us?</div>
-                                    <select v-model="guest.hear_of_us" class="w-32 px-0 border-0" style="box-shadow: none">
+                                    <select v-model="guest.hear_of_us" class="w-48 px-0 border-0" style="box-shadow: none">
                                         <option value="">--SELECT--</option>
                                         <option value="Social Media">Social Media</option>
                                         <option value="Friend">Friend</option>
@@ -108,13 +108,13 @@
                         </label>
                     </div>
 
-                    <div class="flex w-full my-6 space-x-6">
+                    <div class="flex w-full my-6 space-x-2">
                         <MainButton outline @click="gotoBack()">Back</MainButton>
                         <MainButton :loading="initialLoad && loading" @click="gotoNext()">Next</MainButton>
                     </div>
                 </div>
             </div>
-            <div class="flex-shrink-0 w-3/12">
+            <div class="flex-shrink-0 w-full md:w-3/12">
                 <ReservationBox />
             </div>
         </div>

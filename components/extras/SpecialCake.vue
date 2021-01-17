@@ -1,17 +1,17 @@
 <template>
-    <div class="flex w-full">
-        <div class="relative w-6/12 ">
+    <div class="flex flex-col w-full md:flex-row">
+        <div class="relative w-full md:w-6/12 h-60 md:h-auto">
             <img src="@/assets/images/specials/cake.png" alt="" class="object-cover object-center w-full h-full">
             <NavSpecials color="bg-yellow-900" :index="6" @next="$emit('next')" @prev="$emit('prev')" />
         </div>
-        <div class="w-7/12 p-6">
+        <div class="w-full p-6 md:w-7/12">
             <div class="font-semibold">Cakes</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
                 Make your visit extra-special with a celebration cake. You can specify type, layer, number, color and flavour of cake and we will get it done for you.
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this</div>
 
-            <div class="grid items-center grid-cols-2 mt-3 font-light gap-y-2">
+            <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">
                     <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                     <div>{{ showDate(date) }}</div>
@@ -21,8 +21,8 @@
             <div>
                 <div class="mt-6 font-semibold">Create your cake</div>
                 <div class="mt-3 font-light">
-                    <div class="flex items-center w-full my-5 space-x-5">
-                        <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring">
+                    <div class="flex flex-col items-center w-full my-5 space-y-4 md:space-y-0 md:flex-row md:space-x-5">
+                        <div class="flex items-center w-full pl-2 border rounded-md md:w-1/3 focus-within:ring">
                             <svg class="w-5 h-5" viewBox="0 0 15 15" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path d="M.92 14.531h13.125M12.17 6.094H2.795a.937.937 0 00-.938.937v4.688c0 .518.42.937.938.937h9.375c.518 0 .937-.42.937-.937V7.03a.937.937 0 00-.937-.937zM7.482 4.688v1.406M8.42 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406zM11.232 4.688v1.406M12.17 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406zM3.732 4.688v1.406M4.67 1.875a.937.937 0 11-1.875 0c0-.518.937-1.406.937-1.406s.938.888.938 1.406z" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
@@ -35,7 +35,7 @@
                                 <option value="cupcakes">Cupcakes</option>
                             </select>
                         </div>
-                        <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring" v-if="cake.type != 'cupcakes'">
+                        <div class="flex items-center w-full pl-2 border rounded-md md:w-1/3 focus-within:ring" v-if="cake.type != 'cupcakes'">
                             <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.layers">
                                 <option :value="0">Layers</option>
                                 <option v-for="num in 2" :value="num" :key="num">
@@ -43,7 +43,7 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="flex items-center w-1/3 pl-2 border rounded-md focus-within:ring">
+                        <div class="flex items-center w-full pl-2 border rounded-md md:w-1/3 focus-within:ring">
                             <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.quantity">
                                 <option :value="0">Quantity</option>
                                 <option v-for="num in quantityOption" :value="num" :key="num">
@@ -86,7 +86,7 @@
                     <textarea name="message" id="cake_msg" rows="1" class="w-full border-gray-200 rounded focus:ring focus:ring-brand-blue-300 focus:border-0" placeholder="Message on the cake" v-model="cake.message"></textarea>
                 </div>
             </div>
-            <div class="flex w-2/3 mx-auto mt-8 space-x-2">
+            <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">
                 <MainButton outline @click="prev()">Back</MainButton>
                 <MainButton @click="next()">Next</MainButton>
             </div>

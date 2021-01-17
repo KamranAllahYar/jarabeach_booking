@@ -1,10 +1,10 @@
 <template>
-    <div class="flex w-full">
-        <div class="relative w-6/12">
+    <div class="flex flex-col w-full md:flex-row">
+        <div class="relative w-full md:w-6/12 h-60 md:h-auto">
             <img src="@/assets/images/specials/quadbike.png" alt="" class="object-cover object-center w-full h-full">
             <NavSpecials color="bg-green-900" :index="3" @next="$emit('next')" @prev="$emit('prev')" />
         </div>
-        <div class="w-7/12 p-6">
+        <div class="w-full p-6 md:w-7/12">
             <div class="font-semibold">Quad Bikes</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
                 Quad biking - external beach provider (signed disclaimer and pre-booking required).
@@ -13,7 +13,7 @@
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this</div>
 
-            <div class="grid items-center grid-cols-2 mt-3 font-light gap-y-2">
+            <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">
                     <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                     <div>{{ showDate(date) }}</div>
@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="flex w-2/3 mx-auto mt-8 space-x-2">
+            <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">
                 <MainButton outline @click="prev()">Back</MainButton>
                 <MainButton @click="next()">Next</MainButton>
             </div>

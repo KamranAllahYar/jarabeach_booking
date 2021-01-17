@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div class="flex w-full" v-show="!showStaff">
-            <div class="relative w-6/12 ">
+        <div class="flex flex-col w-full md:flex-row" v-show="!showStaff">
+            <div class="relative flex-shrink-0 w-full md:w-6/12 h-60 md:h-auto">
                 <img src="@/assets/images/specials/domesticStaff.png" alt="" class="object-cover object-center w-full h-full">
                 <NavSpecials :index="8" @prev="$emit('prev')" />
             </div>
-            <div class="flex flex-col w-7/12 p-6">
+            <div class="flex flex-col w-full p-6">
                 <div class="font-semibold">Domestic Staff</div>
 
                 <p class="mt-3 font-light leading-relaxed text-gray-600">
@@ -25,7 +25,7 @@
 
                 <div class="flex-1"></div>
 
-                <div class="flex w-2/3 mx-auto mt-8 space-x-2">
+                <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">
                     <MainButton outline @click="prev()">Back</MainButton>
                     <MainButton @click="toggleStaffInfo(true)">Next</MainButton>
                 </div>

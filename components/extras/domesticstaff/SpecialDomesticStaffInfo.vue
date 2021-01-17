@@ -24,8 +24,8 @@
             </div>
         </div>
         <div class="m-6 ">
-            <div class="flex w-full space-x-12 text-xl">
-                <div class="flex items-start w-1/2 ">
+            <div class="flex flex-col w-full space-y-6 text-xl md:flex-row md:space-y-0 md:space-x-12">
+                <div class="flex items-start w-full ">
                     <input type="checkbox" v-model="type" value="nanny" id="nanny" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400">
                     <label for="nanny" class="font-bold">Nanny
                         <div class="text-base font-light text-gray-600">
@@ -35,7 +35,7 @@
                         </div>
                     </label>
                 </div>
-                <div class="flex items-start w-1/2">
+                <div class="flex items-start w-full">
                     <input type="checkbox" v-model="type" value="driver" id="driver" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400">
                     <label for="driver" class="font-bold ">Driver
                         <div class="text-base font-light text-gray-600">
@@ -47,24 +47,24 @@
             </div>
             <div class="my-8" :class="{'opacity-50': type.length <= 0}">
                 <div class="text-xl font-bold text-center">Menu</div>
-                <div class="flex justify-between w-full my-5 space-x-3">
-                    <div class="w-1/3">
+                <div class="flex flex-col justify-between w-full my-5 space-y-3 md:space-y-0 md:space-x-3 md:flex-row">
+                    <div class="w-full">
                         <div class="text-lg font-bold">Breakfast</div>
-                        <div class="flex items-start pr-4 my-1">
+                        <div class="flex items-start my-1 md:pr-4">
                             <input type="checkbox" value="breakfast" id="breakfast" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400" v-model="menu">
                             <label for="breakfast" class="text-gray-600">Nigerian Breakfast (Boiled yam & Egg sauce) @ <span class="font-bold text-black">N3,000</span></label>
                         </div>
                     </div>
-                    <div class="w-1/3">
+                    <div class="w-full">
                         <div class="ml-4 text-lg font-bold">Lunch</div>
-                        <div class="flex items-start px-4 my-1 border-l border-r">
+                        <div class="flex items-start my-1 md:px-4 md:border-l md:border-r">
                             <input type="checkbox" value="lunch" id="lunch" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400" v-model="menu">
                             <label for="lunch" class="text-gray-600">Indomie & Egg (Wednesday’s, Friday’s & Sunday’s) Jollof Rice with Chicken & Beef Skewer @ <span class="font-bold text-black">N4,000</span></label>
                         </div>
                     </div>
-                    <div class="w-1/3 pl-2">
+                    <div class="w-full">
                         <div class="text-lg font-bold">Dinner</div>
-                        <div class="flex items-start my-1 ">
+                        <div class="flex items-start my-1 md:pl-2">
                             <input type="checkbox" value="dinner" id="dinner" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400" v-model="menu">
                             <label for="dinner" class="text-gray-600">Nigerian Special @ <span class="font-bold text-black">N5,000</span></label>
                         </div>
@@ -73,7 +73,7 @@
             </div>
         </div>
         <hr>
-        <div class="flex w-2/3 mx-auto my-8 space-x-2">
+        <div class="flex w-full px-3 mx-auto my-8 space-x-2 md:px-0 md:w-2/3">
             <MainButton outline @click="prev()">Back</MainButton>
             <MainButton @click="next()">Next</MainButton>
         </div>

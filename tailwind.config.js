@@ -31,6 +31,9 @@ module.exports = {
         '15': 'repeat(15, minmax(0, 1fr))',
         '16': 'repeat(16, minmax(0, 1fr))',
         '17': 'repeat(17, minmax(0, 1fr))',
+      },
+      height: {
+        640: '640px'
       }
     },
   },
