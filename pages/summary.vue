@@ -70,16 +70,35 @@
                     </div>
 
                     <div class="flex items-center w-full my-6 space-x-2">
-                        <MainButton outline @click="gotoBack()">Back</MainButton>
-                        <MainButton :loading="loading" @click="completeBooking()">
+                        <MainButton class="w-1/2" outline @click="gotoBack()">Back</MainButton>
+                        <!-- <MainButton :loading="loading" @click="completeBooking()">
                             <div class="flex justify-center">
                                 <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                                 </svg>
                                 Pay
                             </div>
-                        </MainButton>
-                        <!-- <nuxt-link tag="div" to="/done" class="cursor-pointer">&rarr;</nuxt-link> -->
+                        </MainButton> -->
+                        <div class="w-full">
+                            <Paystack
+                                v-if="trans_ref != null"
+                                :amount="totalPrice"
+                                :email="guestEmail"
+                                :paystackkey="paystackkey"
+                                :reference="trans_ref"
+                                :callback="completeBooking"
+                                :close="closePayment"
+                                :embed="false">
+                                <MainButton :loading="loading">
+                                    <div class="flex justify-center">
+                                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        Pay
+                                    </div>
+                                </MainButton>
+                            </Paystack>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -91,13 +110,19 @@
 </template>
 
 <script>
+import Paystack from "vue-paystack";
+
 export default {
     layout: "booking",
+    components: {
+        Paystack,
+    },
     data() {
         return {
             code: "",
             loadingCode: false,
             loading: false,
+            trans_ref: null,
         };
     },
     computed: {
@@ -110,24 +135,42 @@ export default {
         specials() {
             return this.$store.getters["extras/allSelected"];
         },
+        totalPrice() {
+            return this.$store.getters["totalPrice"] * 100;
+        },
+        guestEmail() {
+            return this.$store.state.guest.email;
+        },
+        paystackkey() {
+            return "pk_test_a0a50003277cb450d0bbf3efcfdeadd6f2015ccf";
+        },
     },
     methods: {
-        async completeBooking() {
+        async createTransaction() {
             this.loading = true;
             const trans_ref = await this.$store.dispatch("createTransaction");
             console.log(trans_ref);
 
-            if (trans_ref) {
-                const res = await this.$store.dispatch(
-                    "createBooking",
-                    trans_ref
-                );
+            this.trans_ref = trans_ref;
+            this.loading = false;
+        },
+        async completeBooking(paystack_res) {
+            console.log(paystack_res);
+
+            if (paystack_res.status == "success") {
+                const res = await this.$store.dispatch("createBooking", {
+                    trans_ref: this.trans_ref,
+                    method_ref: paystack_res.transaction,
+                });
+                console.log(res);
                 if (res) {
                     console.log(res);
                     this.$router.push("/done");
                     this.$store.commit("RESET_STORE");
                     this.$store.commit("extras/RESET_STORE");
                 }
+            }else{
+              this.$toasted.error(res.message);
             }
             this.loading = false;
         },
@@ -160,6 +203,7 @@ export default {
                         const discount = Object.assign({}, data.data);
                         console.log(discount);
                         this.$store.commit("UPDATE_DISCOUNT", discount);
+                        this.createTransaction();
                     } else {
                         this.$toasted.error(data.message);
                     }
@@ -170,6 +214,14 @@ export default {
                     this.loadingCode = false;
                 });
         },
+        closePayment() {
+            console.log("You closed payment");
+            this.$toast.error("Payment was not completed");
+            this.createTransaction();
+        },
+    },
+    mounted() {
+        this.createTransaction();
     },
     middleware({ store, redirect, $toast }) {
         if (!store.state.policy_done) {
@@ -181,3 +233,9 @@ export default {
 };
 </script>
 
+<style>
+.payButton {
+    flex: 1;
+    width: 100%;
+}
+</style>
