@@ -22,8 +22,8 @@
             </div>
             <div>
                 <div class="mt-6 font-semibold">Select Wine or Champagne or Spirit</div>
-                <div class="flex flex-wrap items-center justify-between w-full mt-3 space-y-4 md:space-y-0">
-                    <div class="flex flex-col items-start w-full mb-3 space-x-0 space-y-2 font-light md:space-y-0 md:space-x-3 md:items-end md:flex-row" v-for="(sDrink, ix) in selectedDrinks" :key="ix">
+                <div class="flex flex-wrap items-center justify-between w-full mt-3 space-y-4 md:space-y-3">
+                    <div class="flex flex-col items-start w-full space-x-0 space-y-2 font-light md:space-y-0 md:space-x-3 md:items-end md:flex-row" v-for="(sDrink, ix) in selectedDrinks" :key="ix">
                         <div class="flex items-center flex-1 pl-2 border rounded-md focus-within:ring">
                             <svg
                                 class="w-5 h-5" fill="none" viewBox="0 0 15 15"

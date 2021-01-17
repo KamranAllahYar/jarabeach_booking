@@ -31,11 +31,25 @@ export default {
 </script>
 
 <style>
+@keyframes animatedBackground {
+    from {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 200% 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+
 .beach {
     background: url("~assets/beach_top.svg");
     background-repeat: no-repeat;
-    background-position: center top;
-    background-size: contain;
+    background-position: 0px 0px;
+    /* background-size: contain; */
+    background-repeat: repeat-x;
+    animation: animatedBackground 30s linear infinite;
 }
 .bottom-beach {
     background: url("~assets/beach_bottom.svg");
