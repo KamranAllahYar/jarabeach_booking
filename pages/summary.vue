@@ -142,7 +142,7 @@ export default {
             return this.$store.state.guest.email;
         },
         paystackkey() {
-            return "pk_test_a0a50003277cb450d0bbf3efcfdeadd6f2015ccf";
+            return this.$config.PAYMENT_PUBLIC_KEY;
         },
     },
     methods: {
@@ -169,8 +169,8 @@ export default {
                     this.$store.commit("RESET_STORE");
                     this.$store.commit("extras/RESET_STORE");
                 }
-            }else{
-              this.$toasted.error(res.message);
+            } else {
+                this.$toasted.error(res.message);
             }
             this.loading = false;
         },

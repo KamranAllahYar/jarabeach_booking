@@ -1,6 +1,9 @@
 export default {
   ssr: false,
   target: 'static',
+  publicRuntimeConfig: {
+    PAYMENT_PUBLIC_KEY: process.env.PAYSTACK_LIVE_MODE == "true" ? process.env.PAYSTACK_LIVE_PK : process.env.PAYSTACK_TEST_PK,
+  },
   head: {
     title: 'Jara Beach Resort',
     meta: [
