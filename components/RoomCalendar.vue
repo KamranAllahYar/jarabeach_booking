@@ -23,6 +23,10 @@
                     </svg>
                 </div>
             </div>
+            <div class="flex-1"></div>
+            <div class="font-semibold border-b cursor-pointer border-brand-blue-400 text-brand-blue-400" @click="index = 0">
+                View Room Setup
+            </div>
         </div>
 
         <div class="flex w-full" v-for="(monthDays, k) in [firstHalfDays, secondHalfDays]" :key="k">
@@ -122,6 +126,12 @@
             </div>
         </div>
 
+        <CoolLightBox
+            :items="items"
+            :index="index"
+            @close="index = null">
+        </CoolLightBox>
+
         <!-- !!!! DONT REMOVE !!! : grid-cols-17 grid-cols-16 grid-cols-15 grid-cols-14 grid-cols-13 grid-cols-12 (for purgecss )-->
     </div>
 </template>
@@ -134,6 +144,9 @@ import parseISO from "date-fns/parseISO";
 import isWeekend from "date-fns/isWeekend";
 import isToday from "date-fns/isToday";
 
+import CoolLightBox from "vue-cool-lightbox";
+import "vue-cool-lightbox/dist/vue-cool-lightbox.min.css";
+
 var getDaysArray = function (s, e) {
     for (var a = [], d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
         a.push(new Date(d));
@@ -143,6 +156,9 @@ var getDaysArray = function (s, e) {
 
 export default {
     props: ["initialRooms"],
+    components: {
+        CoolLightBox,
+    },
     data() {
         return {
             rooms: [],
@@ -178,6 +194,9 @@ export default {
             loadingRoomOptions: false,
 
             roomIds: [],
+
+            index: null,
+            items: [require("~/assets/images/rooms_img.png")],
         };
     },
     computed: {

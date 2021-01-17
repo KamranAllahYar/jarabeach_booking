@@ -24,6 +24,7 @@
     "tailwindcss": "^2.0.1-compat",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.6",
+    "vue-cool-lightbox": "^2.7.0",
     "vue-js-popover": "^1.2.1",
     "vue-paystack": "^2.0.4",
     "vue-property-decorator": "^9.0.2",

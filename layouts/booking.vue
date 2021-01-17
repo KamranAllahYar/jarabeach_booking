@@ -49,7 +49,7 @@ export default {
     background-position: 0px 0px;
     /* background-size: contain; */
     background-repeat: repeat-x;
-    animation: animatedBackground 30s linear infinite;
+    animation: animatedBackground 60s linear infinite;
 }
 .bottom-beach {
     background: url("~assets/beach_bottom.svg");
