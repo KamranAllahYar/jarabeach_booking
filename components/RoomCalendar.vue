@@ -92,7 +92,7 @@
                             <div v-else>
                                 <template v-for="h in hoveredRooms">
                                     <div v-if="h.available == true" :key="h.room.id" class="flex items-center py-2 cursor-pointer"
-                                        @click="h.available == true ? addToBookedRoom(h.room.id, h.date) : ''">
+                                        @click="h.available == true ? addToBookedRoom(h.room, h.date) : ''">
                                         <svg v-if="!isBooked(h.room.id, h.date)" viewBox="0 0 16 16" class="inline-block w-6 h-6 mr-2 text-brand-blue" fill="none" stroke="currentColor">
                                             <path d="M8 14.703a6.75 6.75 0 100-13.5 6.75 6.75 0 000 13.5z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
@@ -250,6 +250,12 @@ export default {
                 this.calYear <= this.minYear && this.calMonth <= this.minMonth
             );
         },
+        noAdults() {
+            return this.$store.state.adult_no;
+        },
+        noChildren() {
+            return this.$store.state.child_no;
+        },
     },
     methods: {
         getDateStr(date) {
@@ -262,14 +268,23 @@ export default {
         isBooked(room_id, dateStr) {
             return this.roomIds.includes(room_id);
         },
-        addToBookedRoom(room_id, dateStr) {
-            if (this.roomIds.includes(room_id)) {
-                const ix = this.roomIds.findIndex((rid) => rid == room_id);
+        addToBookedRoom(room, dateStr) {
+            if (room.type == "standard") {
+                if (this.noAdults >= 3 || this.noChildren >= 3) {
+                    this.$toast.info(
+                        "Our standard rooms can only fit a group of 2 adults and an infant. For your group size, you need to select a family room."
+                    );
+                    return;
+                }
+            }
+
+            if (this.roomIds.includes(room.id)) {
+                const ix = this.roomIds.findIndex((rid) => rid == room.id);
                 if (ix >= 0) {
                     this.roomIds.splice(ix, 1);
                 }
             } else {
-                this.roomIds.push(room_id);
+                this.roomIds.push(room.id);
             }
 
             this.generateAndEmitBookedRooms();
