@@ -1,8 +1,8 @@
 <template>
     <div class="pb-60">
-        <h1 class="mb-6 text-xl font-bold text-center md:text-2xl">What dates would you like to stay for?</h1>
+        <h1 class="px-6 mb-6 text-xl font-bold text-center md:px-0 md:text-2xl">What dates would you like to stay for?</h1>
 
-        <div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-6 md:flex-row">
+        <div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-6 md:flex-row md:px-6">
             <div class="w-full md:w-10/12">
                 <div class="pt-6 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
                     <RoomCalendar class="w-full" @selected="selectRooms($event)" :initialRooms="rooms" />
@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex-shrink-0 w-full md:w-3/12">
+            <div class="flex-shrink-0 w-full px-6 md:px-0 md:w-3/12">
                 <ReservationBox />
             </div>
         </div>

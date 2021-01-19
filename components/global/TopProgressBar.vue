@@ -18,28 +18,6 @@
         <ProgressNav last to="/summary">
             6. <span class="hidden md:inline-block">&nbsp; Payment</span>
         </ProgressNav>
-        <!-- <nuxt-link exact tag="div" to="/guests" class="px-8 py-4 border-2 cursor-pointer"
-            :class="$store.state.guests_done ? doneClass : notDoneClass">
-            1. Guests
-        </nuxt-link>
-        <nuxt-link exact tag="div" to="/availability" class="px-8 py-4 border-2 cursor-pointer"
-            :class="$store.state.availability_done ? doneClass : notDoneClass">
-            2. Availability
-        </nuxt-link>
-        <nuxt-link exact tag="div" to="/extras" class="px-8 py-4 border-2 cursor-pointer">
-            3. Extras
-        </nuxt-link>
-        <nuxt-link exact tag="div" to="/profile" class="px-8 py-4 border-2 cursor-pointer"
-            :class="$store.state.profile_done ? doneClass : notDoneClass">
-            4. Profile
-        </nuxt-link>
-        <nuxt-link exact tag="div" to="/policies" class="px-8 py-4 border-2 cursor-pointer"
-            :class="$store.state.policy_done ? doneClass : notDoneClass">
-            5. Policies
-        </nuxt-link>
-        <nuxt-link exact tag="div" to="/summary" class="px-8 py-4 border-2 cursor-pointer" :class="notDoneClass">
-            6. Payment
-        </nuxt-link> -->
     </div>
 </template>
 

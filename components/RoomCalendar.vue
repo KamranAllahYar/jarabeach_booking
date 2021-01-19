@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col w-full">
-        <div class="flex items-center px-6 mb-6 space-x-4">
+        <div class="flex items-center px-4 mb-6 space-x-4 md:px-6">
             <div class="flex items-center h-10 text-xl font-semibold w-28 md:w-40 md:text-2xl text-brand-blue-400">
                 {{ months[calMonth-1] }}. {{calYear}}
             </div>
@@ -28,8 +28,7 @@
                 View Room Setup
             </div>
         </div>
-        <!-- [firstHalfDays, secondHalfDays] -->
-        <div class="flex w-full" v-for="(monthDays, k) in [fullDays]" :key="k">
+        <div class="flex w-full" v-for="(monthDays, k) in calTypeDays" :key="k">
             <div class="flex-shrink-0 w-32 bg-cal-box md:w-36">
                 <div class="flex items-center px-4 text-base font-bold border border-l-0 border-gray-100 md:px-6 md:text-xl h-14">
                     <span v-if="k == 0">
@@ -124,12 +123,12 @@
             </svg>
         </div>
 
-        <div class="flex items-start px-1 py-6 text-sm md:text-base md:px-6 md:py-6">
-            <div class="flex items-start w-1/3 text-gray-600 md:w-auto">
-                <div class="flex-shrink-0 w-5 h-5 mr-4 rounded-sm bg-cal-non-avail bg-opacity-20"></div> Not available
+        <div class="flex items-center px-3 py-6 text-xs md:text-base md:px-6 md:py-6">
+            <div class="flex items-center flex-shrink-0 mr-5 text-gray-600 md:w-auto">
+                <div class="flex-shrink-0 w-4 h-4 mr-2 rounded-sm md:mr-4 md:w-5 md:h-5 bg-cal-non-avail bg-opacity-20"></div> Not available
             </div>
-            <div class="flex items-start w-2/3 text-gray-600 md:ml-14 md:w-auto">
-                <div class="flex-shrink-0 w-5 h-5 mr-4 rounded-sm bg-cal-avail bg-opacity-20"></div> Available - numbers represent available rooms
+            <div class="flex items-center text-gray-600 md:ml-10 md:w-auto">
+                <div class="flex-shrink-0 w-4 h-4 mr-2 rounded-sm md:mr-4 md:w-5 md:h-5 bg-cal-avail bg-opacity-20"></div> Available - numbers represent available rooms
             </div>
         </div>
 
@@ -168,6 +167,8 @@ export default {
     },
     data() {
         return {
+            smallScreen: false,
+            windowWidth: window.innerWidth,
             rooms: [],
             calMonth: new Date().getMonth() + 1,
             calYear: new Date().getFullYear(),
@@ -206,9 +207,26 @@ export default {
             items: [require("~/assets/images/rooms_img.png")],
         };
     },
+    watch: {
+        windowWidth: {
+            handler(newWidth, oldWidth) {
+                if (newWidth <= 768) {
+                    this.smallScreen = true;
+                } else {
+                    this.smallScreen = false;
+                }
+            },
+            immediate: true,
+        },
+    },
     computed: {
         daysInMonth() {
             return new Date(this.calYear, this.calMonth, 0).getDate();
+        },
+        calTypeDays() {
+            if (this.smallScreen) return [this.fullDays];
+
+            return [this.firstHalfDays, this.secondHalfDays];
         },
         fullDays() {
             let num = this.daysInMonth;
@@ -519,6 +537,9 @@ export default {
 
             return dateList;
         },
+        onResize() {
+            this.windowWidth = window.innerWidth;
+        },
     },
     mounted() {
         this.getRooms();
@@ -530,6 +551,14 @@ export default {
         // if (this.initialRooms) {
         //     this.bookedRooms = this.initialRooms;
         // }
+
+        this.$nextTick(() => {
+            window.addEventListener("resize", this.onResize);
+        });
+        this.onResize();
+    },
+    beforeDestroy() {
+        window.removeEventListener("resize", this.onResize);
     },
 };
 </script>
