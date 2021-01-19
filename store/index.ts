@@ -32,6 +32,8 @@ export const state = () => ({
 
   booking: null as any,
   discount: null as any,
+
+  lastUpdate: null as Date | null,
 })
 
 export type RootState = ReturnType<typeof state>
@@ -150,6 +152,9 @@ export const getters: GetterTree<RootState, RootState> = {
 }
 
 export const mutations: MutationTree<RootState> = {
+  UPDATE_EXPIRY: (state, date: Date) => {
+    state.lastUpdate = date;
+  },
   UPDATE_GROUP: (state, payload) => {
     state.groupType = payload.groupType
     state.adult_no = payload.adult_no
@@ -211,11 +216,14 @@ export const mutations: MutationTree<RootState> = {
   SET_BOOKING: (state, payload) => state.booking = payload,
 
   RESET_STORE: (state) => {
-    const email = state.guest.email;
-    const days_left = differenceInDays(parseISO(state.rooms[0].date), new Date());
+    if (state.rooms.length > 0) {
+      const email = state.guest.email;
+      const days_left = differenceInDays(parseISO(state.rooms[0].date), new Date());
 
-    state.done_email = email || "";
-    state.done_days_left = days_left || 0;
+      state.done_email = email || "";
+      state.done_days_left = days_left || 0;
+    }
+
 
     state.groupType = 'individual' as string;
     state.adult_no = 0 as number;

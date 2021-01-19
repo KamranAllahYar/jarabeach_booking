@@ -4,7 +4,7 @@
             Tell us about your visiting group
         </div>
 
-        <div class="max-w-lg px-6 py-6 mx-auto mt-10 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
+        <div class="max-w-lg px-6 py-6 mx-3 mt-10 bg-white border rounded-lg shadow-lg md:mx-auto">
             <div class="border rounded-lg">
 
                 <div class="p-4">

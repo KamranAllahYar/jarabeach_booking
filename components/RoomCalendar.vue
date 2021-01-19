@@ -40,7 +40,7 @@
                     {{ roomType }}
                 </div>
             </div>
-            <div class="flex-1 overflow-y-auto">
+            <div class="flex-1 overflow-y-auto md:overflow-y-visible">
                 <div class="flex md:grid" :class="`md:grid-cols-${monthDays.length}`">
                     <div v-for="w in monthDays" :key="w" class="flex flex-col items-center justify-center flex-shrink-0 text-sm text-center text-black border border-gray-100 bg-cal-box w-14 md:w-auto h-14">
                         <div class="text-sm md:text-base">{{ dayOfWeek(w) }}.</div>
@@ -80,7 +80,7 @@
 
                         <!-- POPOVER -->
                         <div v-if="isEnd(roomType, day)" @click.stop=""
-                            class="absolute top-0 right-0 z-10 py-2 pl-3 pr-4 text-sm transform translate-x-full bg-white border rounded-lg w-36"
+                            class="absolute top-0 right-0 z-50 py-2 pl-3 pr-4 text-sm transform translate-x-full bg-white border rounded-lg w-36"
                             style="--tw-translate-x: 104%">
                             <div v-if="loadingRoomOptions">
                                 <svg class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

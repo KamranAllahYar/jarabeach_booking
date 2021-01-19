@@ -22,6 +22,9 @@ export default {
     "@/plugins/popover.js",
     { src: '@/plugins/vuex-persist', ssr: false }
   ],
+  router: {
+    middleware: 'clear'
+  },
   components: true,
   buildModules: [
     '@nuxt/typescript-build',

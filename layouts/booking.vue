@@ -19,6 +19,7 @@
 <script>
 import TopProgressBar from "@/components/global/TopProgressBar";
 export default {
+    middleware: ["clear"],
     components: {
         TopProgressBar,
     },
