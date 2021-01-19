@@ -82,4 +82,34 @@ export default {
 .p-b-e {
     background-image: url("~assets/images/progress/progress-blue-end.png");
 }
+
+@media (min-width: 768px) {
+    .p-lb-s {
+        background-image: url("~assets/images/progress/progress-light-blue-start.png");
+    }
+    .p-lb-m {
+        background-image: url("~assets/images/progress/progress-light-blue-mid.png");
+    }
+    .p-lb-e {
+        background-image: url("~assets/images/progress/progress-light-blue-end.png");
+    }
+    .p-w-s {
+        background-image: url("~assets/images/progress/progress-white-start.png");
+    }
+    .p-w-m {
+        background-image: url("~assets/images/progress/progress-white-mid.png");
+    }
+    .p-w-e {
+        background-image: url("~assets/images/progress/progress-white-end.png");
+    }
+    .p-b-s {
+        background-image: url("~assets/images/progress/progress-blue-start.png");
+    }
+    .p-b-m {
+        background-image: url("~assets/images/progress/progress-blue-mid.png");
+    }
+    .p-b-e {
+        background-image: url("~assets/images/progress/progress-blue-end.png");
+    }
+}
 </style>

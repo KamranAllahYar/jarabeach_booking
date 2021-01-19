@@ -37,6 +37,7 @@ export const state = () => ({
 export type RootState = ReturnType<typeof state>
 
 export const getters: GetterTree<RootState, RootState> = {
+  totalPeople: (state: RootState) => state.adult_no + state.child_no,
   roomsData: (state: RootState) => state.roomsData,
   policies: (state: RootState) => state.policies,
   bookedRooms: (state: RootState) => {
@@ -48,8 +49,10 @@ export const getters: GetterTree<RootState, RootState> = {
       bRooms.push({
         room_id: rData.id,
         name: rData.name,
+        type: rData.type,
         date: room.date,
-        price: room.isWeekend ? rData.weekend_price : rData.price,
+        price: rData.price,
+        single_price: rData.single_price,
         isWeekend: room.isWeekend,
       });
     });
@@ -63,10 +66,36 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return [...new Set(dates)];
   },
-  subTotal: (state: RootState, getters) => {
+  roomPrice: (state: RootState, getters) => {
     const roomPrices = getters.bookedRooms.reduce((price: number, room: any) => {
-      return price + room.price;
+      if (room.type == 'family') {
+        return price + room.price;
+      }
+      else if (room.type == 'standard') {
+        if (getters.totalPeople == 1) {
+          return price + room.single_price;
+        } else {
+          return price + room.price;
+        }
+      }
     }, 0);
+
+    return roomPrices;
+  },
+  roomDiscountPercent: (state: RootState, getters) => {
+    const totalNights = getters.bookedRooms.length;
+    let percent = 0;
+    if (totalNights == 2) percent = 5;
+    else if (totalNights == 3) percent = 10;
+    else if (totalNights >= 4) percent = 15;
+
+    return percent;
+  },
+  roomDiscount: (state: RootState, getters) => {
+    return getters.roomPrice * (getters.roomDiscountPercent / 100);
+  },
+  subTotal: (state: RootState, getters) => {
+    const roomPrices = getters.roomPrice;
 
     let extraPrices = 0;
     getters["extras/allSelected"].forEach((extra: any) => {
@@ -116,7 +145,7 @@ export const getters: GetterTree<RootState, RootState> = {
     return 0;
   },
   totalPrice: (state: RootState, getters) => {
-    return getters.subTotal - getters.discount;
+    return getters.subTotal - getters.discount - getters.roomDiscount;
   }
 }
 

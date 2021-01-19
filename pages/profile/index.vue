@@ -1,10 +1,10 @@
 <template>
     <div>
-        <h1 class="mb-6 text-xl font-bold text-center md:text-2xl">Please give us some information about you</h1>
+        <h1 class="px-6 mb-6 text-xl font-bold text-center md:px-0 md:text-2xl">Please give us some information about you</h1>
 
         <div class="flex flex-col justify-center space-y-6 md:flex-row md:space-y-0 md:space-x-6">
             <div class="w-full md:w-6/12">
-                <div class="px-6 pt-6 text-gray-700 bg-white border rounded-lg shadow-lg">
+                <div class="px-6 pt-6 text-gray-700 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
                     <div class="border rounded-md">
                         <div class="grid px-3 py-4 space-y-3 border-b md:grid-cols-2 md:space-y-0 md:space-x-3">
                             <div>
@@ -114,7 +114,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex-shrink-0 w-full md:w-3/12">
+            <div class="flex-shrink-0 w-full px-6 md:px-0 md:w-3/12">
                 <ReservationBox />
             </div>
         </div>

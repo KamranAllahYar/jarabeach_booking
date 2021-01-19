@@ -4,7 +4,7 @@
 
         <div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-6 md:flex-row">
             <div class="w-full md:w-6/12">
-                <div class="px-6 pt-6 text-gray-700 bg-white border rounded-lg shadow-lg">
+                <div class="px-6 pt-6 text-gray-700 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
                     <div class="border rounded-md">
                         <div class="flex flex-col divide-y">
                             <!-- <div class="flex items-center justify-between px-3 py-4" v-for="(room, i) in rooms" :key="i">
@@ -102,7 +102,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex-shrink-0 w-full md:w-3/12">
+            <div class="flex-shrink-0 w-full px-6 md:px-0 md:w-3/12">
                 <ReservationBox showDiscount :showGuests="false" />
             </div>
         </div>

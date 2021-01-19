@@ -1,22 +1,22 @@
 <template>
     <div class="flex justify-center w-full space-x-0">
         <ProgressNav first to="/guests" :done="$store.state.guests_done">
-            1. Guests
+            1. <span class="hidden md:inline-block">&nbsp; Guests</span>
         </ProgressNav>
         <ProgressNav to="/availability" :done="$store.state.availability_done">
-            2. Availability
+            2. <span class="hidden md:inline-block">&nbsp; Availability</span>
         </ProgressNav>
         <ProgressNav to="/extras" :done="$store.state.availability_done">
-            3. Extras
+            3. <span class="hidden md:inline-block">&nbsp; Extras</span>
         </ProgressNav>
         <ProgressNav to="/profile" :done="$store.state.profile_done">
-            4. Profile
+            4. <span class="hidden md:inline-block">&nbsp; Profile</span>
         </ProgressNav>
         <ProgressNav to="/policies" :done="$store.state.policy_done">
-            5. Policies
+            5. <span class="hidden md:inline-block">&nbsp; Policies</span>
         </ProgressNav>
         <ProgressNav last to="/summary">
-            6. Payment
+            6. <span class="hidden md:inline-block">&nbsp; Payment</span>
         </ProgressNav>
         <!-- <nuxt-link exact tag="div" to="/guests" class="px-8 py-4 border-2 cursor-pointer"
             :class="$store.state.guests_done ? doneClass : notDoneClass">

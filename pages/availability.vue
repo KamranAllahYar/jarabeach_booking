@@ -4,7 +4,7 @@
 
         <div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-6 md:flex-row">
             <div class="w-full md:w-10/12">
-                <div class="pt-6 bg-white border rounded-lg shadow-lg">
+                <div class="pt-6 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
                     <RoomCalendar class="w-full" @selected="selectRooms($event)" :initialRooms="rooms" />
 
                     <div class="flex w-11/12 mx-auto mb-6 space-x-2 md:space-x-6 md:w-9/12" v-if="rooms.length > 0">

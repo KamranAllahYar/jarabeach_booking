@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-6">
         <h1 class="mb-6 text-xl font-bold text-center md:text-2xl">Select an Extra experience to improve your stay!</h1>
         <!-- <pre>{{selected}}</pre> -->
         <div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-3 md:flex-row">

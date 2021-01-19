@@ -31,6 +31,12 @@ module.exports = {
         '15': 'repeat(15, minmax(0, 1fr))',
         '16': 'repeat(16, minmax(0, 1fr))',
         '17': 'repeat(17, minmax(0, 1fr))',
+        '27': 'repeat(27, minmax(0, 1fr))',
+        '28': 'repeat(28, minmax(0, 1fr))',
+        '29': 'repeat(29, minmax(0, 1fr))',
+        '30': 'repeat(30, minmax(0, 1fr))',
+        '31': 'repeat(31, minmax(0, 1fr))',
+        '32': 'repeat(32, minmax(0, 1fr))',
       },
       height: {
         640: '640px'

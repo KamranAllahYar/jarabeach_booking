@@ -14,7 +14,13 @@
                 <div>{{ childNo }} Child<span v-if="childNo > 1">ren</span></div>
             </div>
             <div class="flex justify-between px-3 my-3" v-if="rooms.length > 0">
-                <div>Room<span v-if="rooms.length > 1">s</span></div>
+                <div>
+                    Room<span v-if="rooms.length > 1">s</span>
+                    <br />
+                    <div class="text-xs text-gray-700" v-if="roomDiscountPercent > 0">
+                        {{roomDiscountPercent}}% Discount
+                    </div>
+                </div>
                 <div>
                     <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
                         <div>{{ formatDate(room.date) }}</div>
@@ -57,10 +63,14 @@
             </div>
         </div>
 
-        <div class="w-full text-gray-800 border rounded-md border-brand-blue-300 bg-brand-blue-100" v-if="showDiscount && discount > 0">
+        <div class="w-full text-gray-800 border rounded-md border-brand-blue-300 bg-brand-blue-100" v-if="showDiscount &&( discount > 0 || roomDiscountPercent > 0 )">
             <div class="flex justify-between px-3 my-3">
                 <div>Sub-total</div>
                 <div class="font-bold">{{ currency(subTotal) }}</div>
+            </div>
+            <div class="flex justify-between px-3 my-3" v-if="roomDiscountPercent > 0">
+                <div>{{roomDiscountPercent}}% Room Discount</div>
+                <div class="font-bold"> - {{ currency(roomDiscount) }}</div>
             </div>
             <div class="flex justify-between px-3 my-3" v-if="discount > 0">
                 <div>Discount</div>
@@ -107,6 +117,12 @@ export default {
         },
         rooms() {
             return this.$store.getters.bookedRooms;
+        },
+        roomDiscountPercent() {
+            return this.$store.getters.roomDiscountPercent;
+        },
+        roomDiscount() {
+            return this.$store.getters.roomDiscount;
         },
         subTotal() {
             return this.$store.getters.subTotal;
