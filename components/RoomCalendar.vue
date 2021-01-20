@@ -79,7 +79,7 @@
                         <span v-else>{{ roomsAvailable(roomType, day) }}</span>
 
                         <!-- POPOVER -->
-                        <div v-if="isEnd(roomType, day)" @click.stop=""
+                        <div v-if="isEnd(roomType, day) && !smallScreen" @click.stop=""
                             class="absolute top-0 right-0 z-50 py-2 pl-3 pr-4 text-sm transform translate-x-full bg-white border rounded-lg w-36"
                             style="--tw-translate-x: 104%">
                             <div v-if="loadingRoomOptions">
@@ -110,6 +110,45 @@
                             </div>
                         </div>
                         <!-- POPOVER END -->
+
+                        <!-- MOBILE POPOVER -->
+                        <template v-if="isEnd(roomType, day) && showMobileSelect">
+                            <div class="fixed inset-0 z-40 flex items-end w-screen h-screen bg-black bg-opacity-5" @click.stop>
+                                <div class="flex-1"></div>
+                                <div class="w-full px-4 pt-6 pb-12 bg-white " @click.stop>
+                                    <div class="flex justify-end">
+                                        <button @click="mobileSelectSheet = false">Done</button>
+                                    </div>
+                                    <div v-if="loadingRoomOptions">
+                                        <svg class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                    </div>
+                                    <div v-else>
+                                        <template v-for="h in hoveredRooms">
+                                            <div v-if="h.available == true" :key="h.room.id" class="flex items-center py-2 cursor-pointer"
+                                                @click="h.available == true ? addToBookedRoom(h.room, h.date) : ''">
+                                                <svg v-if="!isBooked(h.room.id, h.date)" viewBox="0 0 16 16" class="inline-block w-6 h-6 mr-2 text-brand-blue" fill="none" stroke="currentColor">
+                                                    <path d="M8 14.703a6.75 6.75 0 100-13.5 6.75 6.75 0 000 13.5z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                <svg v-else class="inline-block w-6 h-6 mr-2 text-brand-blue" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                                </svg>
+
+                                                <span class="text-gray-700 whitespace-nowrap">
+                                                    {{ h.room.name }}
+                                                </span>
+                                            </div>
+                                        </template>
+                                        <div class="px-1" v-if="hoveredRooms.length <= 0">
+                                            No rooms available for booking on this date
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <!-- MOBILE POPOVER END -->
 
                     </div>
                 </div>
@@ -167,6 +206,7 @@ export default {
     },
     data() {
         return {
+            mobileSelectSheet: false,
             smallScreen: false,
             windowWidth: window.innerWidth,
             rooms: [],
@@ -220,6 +260,9 @@ export default {
         },
     },
     computed: {
+        showMobileSelect() {
+            return this.smallScreen && this.mobileSelectSheet;
+        },
         daysInMonth() {
             return new Date(this.calYear, this.calMonth, 0).getDate();
         },
@@ -500,6 +543,7 @@ export default {
         },
         async getRoomsAvailableForPeriod() {
             this.loadingRoomOptions = true;
+            this.mobileSelectSheet = true;
             const date = this.startDate;
             this.roomIds = [];
 

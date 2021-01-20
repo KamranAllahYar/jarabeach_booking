@@ -10,7 +10,7 @@
                 <div class="p-4">
                     <div class="mb-4 font-semibold">Select Guest make-up</div>
 
-                    <div class="flex flex-col md:items-center md:flex-row md:space-x-6">
+                    <div class="flex flex-col space-y-3 md:items-center md:flex-row md:space-x-6 md:space-y-0">
                         <div class="flex items-center w-full pl-2 space-x-2 rounded-md md:w-auto focus-within:ring">
                             <svg class="flex-shrink-0 w-5 h-5" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13.422 14.531a6.552 6.552 0 00-11.845 0M7.5 3.281a3.282 3.282 0 01-3.281 3.281 3.281 3.281 0 106.562 0A3.281 3.281 0 017.5 3.283v0z" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
