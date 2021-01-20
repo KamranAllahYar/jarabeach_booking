@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center w-full space-x-0">
+    <div class="flex justify-center w-full px-3 space-x-0">
         <ProgressNav first to="/guests" :done="$store.state.guests_done">
             1. <span class="hidden md:inline-block"> Guests</span>
         </ProgressNav>
