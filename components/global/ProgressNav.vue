@@ -36,9 +36,9 @@ export default {
             }
 
             if (!this.done) {
-                if (this.last) return "p-w-e text-gray-500";
-                else if (this.first) return "p-w-s text-gray-500";
-                else if (!this.first) return "p-w-m text-gray-500";
+                if (this.last) return "p-w-e text-gray-400";
+                else if (this.first) return "p-w-s text-gray-400";
+                else if (!this.first) return "p-w-m text-gray-400";
             } else if (this.done) {
                 if (this.last) return "p-b-e text-white";
                 else if (this.first) return "p-b-s text-white";
