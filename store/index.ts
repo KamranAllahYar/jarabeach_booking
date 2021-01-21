@@ -49,7 +49,7 @@ export const getters: GetterTree<RootState, RootState> = {
       let rData = state.roomsData.find(r => r.id === room.room_id);
 
       bRooms.push({
-        room_id: rData.id,
+        room_id: room.room_id,
         name: rData.name,
         type: rData.type,
         date: room.date,
@@ -397,14 +397,14 @@ export const actions: ActionTree<RootState, RootState> = {
       booked_rooms: state.rooms,
     }
 
-    console.log(dataToPost);
-
     if (state.guest.id) {
       dataToPost.guest_id = state.guest.id;
     }
     if (state.discount) {
       dataToPost.discount = state.discount;
     }
+
+    console.log(dataToPost);
 
     try {
       const res = await this.$axios.post("bookings", dataToPost);

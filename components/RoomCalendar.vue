@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="flex-1 overflow-y-auto md:overflow-y-visible">
-                <div class="flex md:grid" :class="`md:grid-cols-${monthDays.length}`">
+                <div class="flex md:grid" :class="`grid-cols-${monthDays.length}`">
                     <div v-for="w in monthDays" :key="w" class="flex flex-col items-center justify-center flex-shrink-0 text-sm text-center text-black border border-gray-100 bg-cal-box w-14 md:w-auto h-14">
                         <div class="text-sm md:text-base">{{ dayOfWeek(w) }}.</div>
                         <div class="text-sm font-light md:text-base">{{ w }}</div>
