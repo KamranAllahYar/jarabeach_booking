@@ -23,9 +23,17 @@
             <div class="mt-6 font-semibold">How Many?</div>
 
             <div class="grid items-center grid-cols-2 mt-3 font-light gap-y-2">
-                <label class="flex items-center" v-for="qty in 2" :key="qty">
+                <!-- <label class="flex items-center" v-for="qty in 2" :key="qty">
                     <input type="radio" :value="qty" v-model="selectedQuantity" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                     <div>{{ qty }}</div>
+                </label> -->
+                <label class="flex items-center">
+                    <input type="radio" :value="1" v-model="selectedQuantity" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                    <div>One quad bike</div>
+                </label>
+                <label class="flex items-center">
+                    <input type="radio" :value="2" v-model="selectedQuantity" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                    <div>Two quad bikes</div>
                 </label>
             </div>
 

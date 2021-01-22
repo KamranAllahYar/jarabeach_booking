@@ -34,7 +34,7 @@
                             class="w-full border-0 rounded-md outline-none focus:outline-none"
                             style="box-shadow: none">
                             <option value="0">0</option>
-                            <option v-for="num in 5" :value="num" :key="num">
+                            <option v-for="num in 4" :value="num" :key="num">
                                 {{ num }}
                             </option>
                         </select>

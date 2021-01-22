@@ -245,6 +245,8 @@ export const mutations: MutationTree<RootState> = {
     state.policy_done = false as boolean;
 
     state.saveForNextTime = true as boolean;
+
+    state.discount = null as any;
   },
 }
 

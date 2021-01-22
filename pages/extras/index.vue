@@ -37,7 +37,8 @@
                     <MainButton @click="gotoBack()" outline>Back</MainButton>
                     <MainButton @click="gotoNext()">Next</MainButton>
                 </div>
-                <div v-else class="flex items-center w-1/4 mx-auto mt-8 space-x-5">
+                <div v-else class="flex items-center w-full mx-auto mt-8 space-x-2 md:w-1/2">
+                    <MainButton @click="gotoBack()" outline>Back</MainButton>
                     <MainButton @click="skip()">Skip</MainButton>
                 </div>
             </div>
