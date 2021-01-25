@@ -20,6 +20,7 @@ export default {
   ],
   plugins: [
     "@/plugins/popover.js",
+    "@/plugins/vue-tour.js",
     { src: '@/plugins/vuex-persist', ssr: false }
   ],
   router: {

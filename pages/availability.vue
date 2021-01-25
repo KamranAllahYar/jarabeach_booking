@@ -17,17 +17,30 @@
                 <ReservationBox />
             </div>
         </div>
+
+        <v-tour name="myTour" :steps="steps"></v-tour>
     </div>
 </template>
 
 <script>
-import { state } from "../store/index";
 export default {
     layout: "booking",
     data() {
         return {
             noOfDays: 1,
             rooms: [],
+            steps: [
+                {
+                    target: "#roomSetup",
+                    // header: {
+                    //     title: "Get Started",
+                    // },
+                    content: `Click here to see what<br />the rooms look like`,
+                    params: {
+                        placement: "top",
+                    },
+                },
+            ],
         };
     },
     computed: {
@@ -68,6 +81,9 @@ export default {
             console.log(this.rooms);
             this.$store.commit("UPDATE_ROOMS", rooms);
         },
+    },
+    mounted() {
+        this.$tours["myTour"].start();
     },
     created() {
         console.log("STORE_ROOMS");

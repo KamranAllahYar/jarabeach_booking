@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="flex-1"></div>
-            <div class="flex-shrink-0 text-xs font-semibold border-b cursor-pointer md:text-base border-brand-blue-400 text-brand-blue-400" @click="index = 0">
+            <div class="flex-shrink-0 text-xs font-semibold border-b cursor-pointer md:text-base border-brand-blue-400 text-brand-blue-400" @click="index = 0" id="roomSetup">
                 View Room Setup
             </div>
         </div>
