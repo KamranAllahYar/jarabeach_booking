@@ -2,6 +2,13 @@ import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import differenceInDays from 'date-fns/differenceInDays';
 import parseISO from 'date-fns/parseISO';
 
+var groupBy = function (xs: any, key: any) {
+  return xs.reduce(function (rv: any, x: any) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
+
 export const state = () => ({
   groupType: 'individual' as string,
   adult_no: 0 as number,
@@ -61,6 +68,14 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return bRooms;
   },
+  totalRooms: (state: RootState, getters) => {
+    const roomGroup = groupBy(getters.bookedRooms, 'room_id');
+    return Object.keys(roomGroup).length;
+  },
+  totalNights: (state: RootState, getters) => {
+    const roomGroup = groupBy(getters.bookedRooms, 'date');
+    return Object.keys(roomGroup).length;
+  },
   getSpecials: (state: RootState) => state.specials,
   getBooking: (state: RootState) => state.booking,
   bookingDates: (state: RootState, getters) => {
@@ -85,7 +100,7 @@ export const getters: GetterTree<RootState, RootState> = {
     return roomPrices;
   },
   roomDiscountPercent: (state: RootState, getters) => {
-    const totalNights = getters.bookedRooms.length;
+    const totalNights = getters.totalNights;
     let percent = 0;
     if (totalNights == 2) percent = 5;
     else if (totalNights == 3) percent = 10;

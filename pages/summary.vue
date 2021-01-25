@@ -19,7 +19,7 @@
                             </div> -->
                             <div class="flex items-center justify-between px-3 py-4">
                                 <div class="text-base">
-                                    <div>Stay ({{rooms.length}} Nights)</div>
+                                    <div>Stay ({{totalNights}} Nights - {{totalRooms}} Rooms)</div>
                                 </div>
                                 <div class="text-lg font-bold text-right">
                                     <div>{{ currency(roomsPrice) }}</div>
@@ -127,6 +127,12 @@ export default {
         };
     },
     computed: {
+        totalNights() {
+            return this.$store.getters.totalNights;
+        },
+        totalRooms() {
+            return this.$store.getters.totalRooms;
+        },
         rooms() {
             return this.$store.getters.bookedRooms;
         },
