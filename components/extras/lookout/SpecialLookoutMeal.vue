@@ -27,7 +27,7 @@
                 </div>
                 <div class="px-3 my-5 space-y-6 md:border-r">
                     <label class="flex" v-for="option in breakfastOptions" :key="option.id"
-                        :class="{'opacity-50' : !isAvailable(option.id)}">
+                        :class="{'opacity-25' : !isAvailable(option.id)}">
                         <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
                         <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
                     </label>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="px-2 my-5 space-y-6 md:border-r">
                     <label class="flex" v-for="option in lunchOptions" :key="option.id"
-                        :class="{'opacity-50' : !isAvailable(option.id)}">
+                        :class="{'opacity-25' : !isAvailable(option.id)}">
                         <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
                         <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
                     </label>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="px-3 my-5 space-y-6">
                     <label class="flex" v-for="option in dinnerOptions" :key="option.id"
-                        :class="{'opacity-50' : !isAvailable(option.id)}">
+                        :class="{'opacity-25' : !isAvailable(option.id)}">
                         <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
                         <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
                     </label>

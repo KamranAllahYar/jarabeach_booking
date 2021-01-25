@@ -27,7 +27,7 @@
                 <div class="mt-6 font-semibold">At what time?</div>
                 <div class="grid gap-3 mt-2 font-light md:grid-cols-2 ">
                     <label class="flex items-center" v-for="massage in massages" :key="massage.id"
-                        :class="{'opacity-50' :!isAvailable(massage.id)}">
+                        :class="{'opacity-25' :!isAvailable(massage.id)}">
                         <input type="radio" :value="massage.id" :disabled="!isAvailable(massage.id)" v-model="selectedMassage" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                         <div>{{ massage.name }}</div>
                     </label>

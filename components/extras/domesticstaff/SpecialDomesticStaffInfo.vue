@@ -45,7 +45,7 @@
                     </label>
                 </div>
             </div>
-            <div class="my-8" :class="{'opacity-50': type.length <= 0}">
+            <div class="my-8" :class="{'opacity-25': type.length <= 0}">
                 <div class="text-xl font-bold text-center">Menu</div>
                 <div class="flex flex-col justify-between w-full my-5 space-y-3 md:space-y-0 md:space-x-3 md:flex-row">
                     <div class="w-full">

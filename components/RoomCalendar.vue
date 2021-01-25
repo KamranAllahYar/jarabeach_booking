@@ -164,7 +164,12 @@
 
         <div class="flex items-center px-3 py-6 text-xs md:text-base md:px-6 md:py-6">
             <div class="flex items-center flex-shrink-0 mr-5 text-gray-600 md:w-auto">
-                <div class="flex-shrink-0 w-4 h-4 mr-2 rounded-sm md:mr-4 md:w-5 md:h-5 bg-cal-non-avail bg-opacity-20"></div> Not available
+                <div class="flex items-center justify-center flex-shrink-0 w-4 h-4 mr-2 rounded-sm md:mr-4 md:w-5 md:h-5 bg-cal-non-avail bg-opacity-20">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 19 19">
+                        <path d="M5.5415 3.1665L13.4582 15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M13.4582 3.1665L5.5415 15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div> Not available
             </div>
             <div class="flex items-center text-gray-600 md:ml-10 md:w-auto">
                 <div class="flex-shrink-0 w-4 h-4 mr-2 rounded-sm md:mr-4 md:w-5 md:h-5 bg-cal-avail bg-opacity-20"></div> Available - numbers represent available rooms

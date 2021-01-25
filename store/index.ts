@@ -350,6 +350,7 @@ export const actions: ActionTree<RootState, RootState> = {
     if (allExtras.includes('roomDecoration')) {
       specialsToSend['roomDecoration'] = {
         date: extraState.dateDecoration,
+        welcomeNote: extraState.decorationWelcomeNote,
         options: extraState.selectedDecorations.map((sd: any) => sd.id),
       }
     }

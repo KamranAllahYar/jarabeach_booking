@@ -13,7 +13,7 @@
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
                     <div v-for="(extra, i) in specials" :key="i"
                         class="w-full overflow-hidden transition-all transform border rounded-lg"
-                        :class="!extra.available ? 'opacity-50' : 'cursor-pointer shadow-md hover:scale-105'"
+                        :class="!extra.available ? 'opacity-25' : 'cursor-pointer shadow-md hover:scale-105'"
                         @click="selectSpecial(extra)">
                         <div class="flex items-center justify-between px-3 py-4">
                             <div class="text-sm font-semibold capitalize">{{extra.name}}</div>

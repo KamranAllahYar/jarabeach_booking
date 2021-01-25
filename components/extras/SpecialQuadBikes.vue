@@ -41,7 +41,7 @@
                 <div class="mt-4 font-semibold">At what time?</div>
                 <div class="mt-2 space-y-3 font-light ">
                     <label class="flex items-center" v-for="quadbike in quadbikes" :key="quadbike.id"
-                        :class="{'opacity-50' :!isAvailable(quadbike.id)}">
+                        :class="{'opacity-25' :!isAvailable(quadbike.id)}">
                         <input type="radio" :value="quadbike.id" :disabled="!isAvailable(quadbike.id)" v-model="selectedQuadbike" class="mr-3 rounded-full focus-within:ring-0 border-brand-blue-400 text-brand-blue-400">
                         <div>{{ quadbike.description }} <span class="font-bold">{{ currency(quadbike.price) }}</span></div>
                     </label>

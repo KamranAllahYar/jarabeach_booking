@@ -29,14 +29,20 @@
                     </div>
                     <div class="mt-5 text-sm text-center">Check us out on social media</div>
                     <div class="flex items-center justify-center mt-2 space-x-5">
-                        <!-- <a href="https://www.facebook.com/jarabeachresortng" target="_blank">
-                            <img src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c53e.png" alt="" class="w-8 h-8 cursor-pointer">
-                        </a> -->
-                        <a href="http://instagram.com/jarabeachresortng" target="_blank">
+                        <a title="Instagram" href="http://instagram.com/jarabeachresortng" target="_blank">
                             <img src="/insta.jpg" alt="" class="w-8 h-8 cursor-pointer">
                         </a>
-                        <a href="https://www.facebook.com/jarabeachresortng" target="_blank">
+                        <a title="Facebook" href="https://www.facebook.com/jarabeachresortng" target="_blank">
                             <img src="/facebook.jpg" alt="" class="w-6 h-6 cursor-pointer">
+                        </a>
+                        <a title="LinkedIn" href="https://www.linkedin.com/company/jara-beach-resort" target="_blank">
+                            <img src="/linkedin.png" alt="" class="w-6 h-6 cursor-pointer">
+                        </a>
+                        <a title="Google Places" href="https://www.google.com/travel/hotels/entity/CgoI6reXtp692bsUEAE/overview?g2lb=2502405%2C2502548%2C4208993%2C4254308%2C4258168%2C4260007%2C4270442%2C4271059%2C4274032%2C4285990%2C4288513%2C4289525%2C4291318%2C4296668%2C4301054%2C4303479%2C4305595%2C4308216%2C4311406%2C4313006%2C4315873%2C4317816%2C4317915%2C4324289%2C4329288%2C4270859%2C4284970%2C4291517%2C4292955%2C4316256&hl=en&gl=ng&un=1&rp=EOq3l7aevdm7FDgCQABIAQ&ictx=1&sa=X&ved=0CAAQ5JsGahcKEwjg0-XryNDtAhUAAAAAHQAAAAAQBg&hrf=KhYKBwjkDxAMGBoSBwjkDxAMGBsYASgAggElMHgxMDM5NTM4NmVlOGU2ZDIzOjB4MTQ3NzY1ZTllNmM1ZGJlYZoBJxolMHgxMDM5NTM4NmVlOGU2ZDIzOjB4MTQ3NzY1ZTllNmM1ZGJlYQ&tcfs=EhoaGAoKMjAxOS0xMi0xOBIKMjAxOS0xMi0xOVIA&utm_campaign=sharing&utm_medium=link&utm_source=htls" target="_blank" >
+                            <img src="/google.png" alt="" class="w-6 h-6 cursor-pointer">
+                        </a>
+                        <a title="Trip Advisor" href="https://www.tripadvisor.com/Hotel_Review-g304026-d19454058-Reviews-Jara_Beach_Resort-Lagos_Lagos_State.html" target="_blank">
+                            <img src="/tripadvisor.png" alt="" class="w-6 h-6 cursor-pointer">
                         </a>
                     </div>
                 </div>

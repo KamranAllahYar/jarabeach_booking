@@ -30,6 +30,7 @@ export const state = () => ({
 
   decorationOptions: [] as any[],
   selectedDecorations: [] as any[],
+  decorationWelcomeNote: "" as String,
   dateDecoration: null as String | null,
 
   selectedStaff: {
@@ -266,6 +267,7 @@ export const mutations: MutationTree<ExtraState> = {
     state.decorationOptions = [] as any[];
     state.selectedDecorations = [] as any[];
     state.dateDecoration = null;
+    state.decorationWelcomeNote = "" as String;
 
     state.selectedStaff = {
       menu: [],
