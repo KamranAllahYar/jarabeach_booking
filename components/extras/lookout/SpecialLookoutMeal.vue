@@ -109,7 +109,11 @@ export default {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         isAvailable(optionId) {
+          if(this.availableOptions) {
             return this.availableOptions.includes(optionId);
+          }
+
+          return false;
         },
     },
     mounted() {

@@ -18,8 +18,9 @@
                 <div class="mt-6 font-semibold">What date would you like to have this</div>
 
                 <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
-                    <label class="flex items-center" v-for="date in dates" :key="date">
-                        <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                    <label class="flex items-center" v-for="date in dates" :key="date" :class="{'opacity-25': !hasOptions(date)}">
+                        <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400"
+                            :disabled="!hasOptions(date)">
                         <div>{{ showDate(date) }}</div>
                     </label>
                 </div>
@@ -68,11 +69,14 @@ export default {
             return this.$store.getters.bookingDates;
         },
     },
-    watch: {
-        // selectedDate(newVal, oldVal){
-        // }
-    },
     methods: {
+        hasOptions(date) {
+            if (this.availablePackages != null) {
+                return this.availablePackages[date].length > 0;
+            }
+
+            return false;
+        },
         toggleMenuInfo(view) {
             this.$store.commit("extras/SET_SELECTED_LOOKOUT", {
                 lookouts: this.selectedPackages,
