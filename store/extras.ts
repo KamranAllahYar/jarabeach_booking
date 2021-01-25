@@ -177,6 +177,14 @@ export const mutations: MutationTree<ExtraState> = {
   LOAD_SELECTED: (state, payload) => {
     state.selected = payload
   },
+  REMOVE_EXTRA: (state, extra) => {
+    console.log(extra);
+    const ix = state.selected.findIndex(ex => ex.type === extra);
+
+    if (ix >= 0) {
+      state.selected.splice(ix, 1);
+    }
+  },
   ADD_SELECTED: (state, sp) => {
     state.selected.push(sp);
   },

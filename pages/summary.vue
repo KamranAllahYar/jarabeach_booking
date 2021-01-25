@@ -55,6 +55,7 @@
                                     <span v-else>
                                         {{ currency(0) }}
                                     </span>
+                                    <div class="text-xs font-light text-right text-red-500 cursor-pointer hover:underline" @click="removeExtra(extra)">Remove</div>
                                 </div>
                             </div>
                         </div>
@@ -146,6 +147,12 @@ export default {
         },
     },
     methods: {
+        removeExtra(extra) {
+            console.log(extra);
+            const ex = extra.type;
+            this.$store.commit("extras/REMOVE_EXTRA", ex);
+            this.createTransaction();
+        },
         async createTransaction() {
             this.loading = true;
             const trans_ref = await this.$store.dispatch("createTransaction");

@@ -53,22 +53,23 @@
                         :class="roomsAvailable(roomType, day) <= 0 ? 'bg-white' : 'bg-brand-blue-300'"
                         @click="selectRoom(roomType, day)">
 
-                        <div v-if="isSingle(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-300 rounded-full">
+                        <div v-if="isSingle(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-400 rounded-full">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
                         </div>
-                        <div v-else-if="isStart(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-300 rounded-l-full">
+                        <div v-else-if="isStart(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-400 rounded-l-full"
+                            :class="{'opacity-50 rounded-full': endDate == null}">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
                         </div>
-                        <div v-else-if="isEnd(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-300 rounded-r-full">
+                        <div v-else-if="isEnd(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-400 rounded-r-full">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
                         </div>
-                        <div v-else-if="isBetween(roomType, day)" class="w-full h-10 transform scale-110 bg-green-300"></div>
+                        <div v-else-if="isBetween(roomType, day)" class="w-full h-10 transform scale-110 bg-green-400"></div>
                         <span v-else-if="loading">-</span>
                         <span v-else-if="roomsAvailable(roomType, day) <= 0">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 19 19">
@@ -249,7 +250,13 @@ export default {
             roomIds: [],
 
             index: null,
-            items: [require("~/assets/images/rooms_img.png")],
+            items: [
+                // require("~/assets/images/rooms_img.png"),
+                "/room_1.webp",
+                "/room_2.webp",
+                "/room_3.webp",
+                "/room_4.webp",
+            ],
         };
     },
     watch: {
