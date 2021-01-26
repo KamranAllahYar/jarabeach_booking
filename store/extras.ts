@@ -230,6 +230,7 @@ export const mutations: MutationTree<ExtraState> = {
   SET_SELECTED_DECORATION: (state, payload) => {
     state.selectedDecorations = payload.decorations;
     state.dateDecoration = payload.date;
+    state.decorationWelcomeNote = payload.note;
   },
 
   SET_SELECTED_STAFF: (state, payload) => {

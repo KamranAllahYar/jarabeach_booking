@@ -29,7 +29,7 @@
                             <span class="font-bold uppercase" v-else>FREE</span>
                         </div>
                     </label>
-                    <input type="text" :key="deco.id" v-if="showNote(deco)" placeholder="What to write. 20 characters max" maxlength="20"
+                    <input type="text" :key="deco.id+'ss'" v-if="showNote(deco)" placeholder="What to write. 20 characters max" maxlength="20"
                         v-model="myWelcomeNote"
                         class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
                 </template>
@@ -61,11 +61,18 @@ export default {
         dates() {
             return this.$store.getters.bookingDates;
         },
+        isWelcomeNoteSelected() {
+            let has = false;
+            this.selectedDecorations.forEach((d) => {
+                if (d.name.toLowerCase() == "welcome note") {
+                    has = true;
+                }
+            });
+
+            return has;
+        },
         welcomeNote() {
-            if (
-                this.selectedDecorations.includes("Welcome Note") ||
-                this.selectedDecorations.includes("welcome note")
-            ) {
+            if (this.isWelcomeNoteSelected) {
                 return this.myWelcomeNote;
             }
 
@@ -76,7 +83,7 @@ export default {
         showNote(deco) {
             return (
                 deco.name.toLowerCase() == "welcome note" &&
-                this.selectedDecorations.includes(deco)
+                this.isWelcomeNoteSelected
             );
         },
         next() {

@@ -24,7 +24,16 @@
                         <div class="">
                             Your booking was successful, we’ve sent all the details you will need to
                             <span class="text-brand-blue">{{ done_email }}</span>.
-                            We look forward to welcoming you in {{ days_left }} days!
+                            We look forward to welcoming you
+                            <span v-if="days_left<= 0">
+                                tomorrow!
+                            </span>
+                            <span v-else-if="days_left == 1">
+                                in a day!
+                            </span>
+                            <span v-else>
+                                in {{ days_left }} days!
+                            </span>
                         </div>
                     </div>
                     <div class="mt-5 text-sm text-center">Check us out on social media</div>
@@ -38,7 +47,7 @@
                         <a title="LinkedIn" href="https://www.linkedin.com/company/jara-beach-resort" target="_blank">
                             <img src="/linkedin.png" alt="" class="w-6 h-6 cursor-pointer">
                         </a>
-                        <a title="Google Places" href="https://www.google.com/travel/hotels/entity/CgoI6reXtp692bsUEAE/overview?g2lb=2502405%2C2502548%2C4208993%2C4254308%2C4258168%2C4260007%2C4270442%2C4271059%2C4274032%2C4285990%2C4288513%2C4289525%2C4291318%2C4296668%2C4301054%2C4303479%2C4305595%2C4308216%2C4311406%2C4313006%2C4315873%2C4317816%2C4317915%2C4324289%2C4329288%2C4270859%2C4284970%2C4291517%2C4292955%2C4316256&hl=en&gl=ng&un=1&rp=EOq3l7aevdm7FDgCQABIAQ&ictx=1&sa=X&ved=0CAAQ5JsGahcKEwjg0-XryNDtAhUAAAAAHQAAAAAQBg&hrf=KhYKBwjkDxAMGBoSBwjkDxAMGBsYASgAggElMHgxMDM5NTM4NmVlOGU2ZDIzOjB4MTQ3NzY1ZTllNmM1ZGJlYZoBJxolMHgxMDM5NTM4NmVlOGU2ZDIzOjB4MTQ3NzY1ZTllNmM1ZGJlYQ&tcfs=EhoaGAoKMjAxOS0xMi0xOBIKMjAxOS0xMi0xOVIA&utm_campaign=sharing&utm_medium=link&utm_source=htls" target="_blank" >
+                        <a title="Google Places" href="https://www.google.com/travel/hotels/entity/CgoI6reXtp692bsUEAE/overview?g2lb=2502405%2C2502548%2C4208993%2C4254308%2C4258168%2C4260007%2C4270442%2C4271059%2C4274032%2C4285990%2C4288513%2C4289525%2C4291318%2C4296668%2C4301054%2C4303479%2C4305595%2C4308216%2C4311406%2C4313006%2C4315873%2C4317816%2C4317915%2C4324289%2C4329288%2C4270859%2C4284970%2C4291517%2C4292955%2C4316256&hl=en&gl=ng&un=1&rp=EOq3l7aevdm7FDgCQABIAQ&ictx=1&sa=X&ved=0CAAQ5JsGahcKEwjg0-XryNDtAhUAAAAAHQAAAAAQBg&hrf=KhYKBwjkDxAMGBoSBwjkDxAMGBsYASgAggElMHgxMDM5NTM4NmVlOGU2ZDIzOjB4MTQ3NzY1ZTllNmM1ZGJlYZoBJxolMHgxMDM5NTM4NmVlOGU2ZDIzOjB4MTQ3NzY1ZTllNmM1ZGJlYQ&tcfs=EhoaGAoKMjAxOS0xMi0xOBIKMjAxOS0xMi0xOVIA&utm_campaign=sharing&utm_medium=link&utm_source=htls" target="_blank">
                             <img src="/google.png" alt="" class="w-6 h-6 cursor-pointer">
                         </a>
                         <a title="Trip Advisor" href="https://www.tripadvisor.com/Hotel_Review-g304026-d19454058-Reviews-Jara_Beach_Resort-Lagos_Lagos_State.html" target="_blank">

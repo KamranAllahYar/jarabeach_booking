@@ -72,12 +72,12 @@
 
                     <div class="flex items-center w-full my-6 space-x-2">
                         <MainButton class="w-1/2" outline @click="gotoBack()">Back</MainButton>
-                        <!-- <MainButton :loading="loading" @click="completeBooking()">
+                        <!-- <MainButton :loading="loading" @click="testBooking()">
                             <div class="flex justify-center">
                                 <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                                 </svg>
-                                Pay
+                                Test Pay
                             </div>
                         </MainButton> -->
                         <div class="w-full">
@@ -186,6 +186,14 @@ export default {
                 this.$toasted.error(res.message);
             }
             this.loading = false;
+        },
+        async testBooking(){
+          const res = await this.$store.dispatch("createBooking", {
+              trans_ref: "offline",
+              method_ref: "offline booking",
+          });
+
+          console.log(res);
         },
         currency(num) {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

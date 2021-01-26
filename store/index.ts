@@ -350,17 +350,25 @@ export const actions: ActionTree<RootState, RootState> = {
       "extras": allExtras,
     } as any;
 
+    let prices = {
+      rooms: rootGetters.roomPrice,
+      subtotal: rootGetters.subTotal,
+      roomDiscount: rootGetters.roomDiscount,
+    } as any;
+
     if (allExtras.includes('cake')) {
       specialsToSend['cake'] = {
         date: extraState.dateCake,
         info: extraState.selectedCake,
       }
+      prices['cake'] = rootGetters['extras/cakePrice'];
     }
     if (allExtras.includes('photoshoot')) {
       specialsToSend['photoshoot'] = {
         date: extraState.datePhotoshoot,
         quantity: extraState.selectedPhotoshoot,
       }
+      prices['photoshoot'] = rootGetters['extras/photoshootPrice'];
     }
     if (allExtras.includes('roomDecoration')) {
       specialsToSend['roomDecoration'] = {
@@ -368,18 +376,21 @@ export const actions: ActionTree<RootState, RootState> = {
         welcomeNote: extraState.decorationWelcomeNote,
         options: extraState.selectedDecorations.map((sd: any) => sd.id),
       }
+      prices['roomDecoration'] = rootGetters['extras/decorationPrice'];
     }
     if (allExtras.includes('drinks')) {
       specialsToSend['drinks'] = {
         date: extraState.dateDrink,
         options: extraState.selectedDrinks,
       }
+      prices['drinks'] = rootGetters['extras/drinksPrice'];
     }
     if (allExtras.includes('domesticStaff')) {
       specialsToSend['domesticStaff'] = {
         dates: extraState.dateStaff,
         info: extraState.selectedStaff,
       }
+      prices['domesticStaff'] = rootGetters['extras/staffPrice'];
     }
     if (allExtras.includes('quadbike')) {
       specialsToSend['quadbike'] = {
@@ -387,18 +398,21 @@ export const actions: ActionTree<RootState, RootState> = {
         options: extraState.selectedQuadbike,
         quantity: extraState.selectedQuadbikeQty,
       }
+      prices['quadbike'] = rootGetters['extras/quadbikePrice'];
     }
     if (allExtras.includes('massage')) {
       specialsToSend['massage'] = {
         date: extraState.dateMassage,
         options: extraState.selectedMassage,
       }
+      prices['massage'] = rootGetters['extras/massagePrice'];
     }
     if (allExtras.includes('lookout')) {
       specialsToSend['lookout'] = {
         date: extraState.dateLookout,
         packages: extraState.selectedLookouts,
       }
+      prices['lookout'] = rootGetters['extras/lookoutPrice'];
     }
 
     console.log(specialsToSend);
@@ -413,6 +427,7 @@ export const actions: ActionTree<RootState, RootState> = {
         method_ref: method_ref,
       },
       booked_rooms: state.rooms,
+      prices: prices,
     }
 
     if (state.guest.id) {
@@ -423,6 +438,8 @@ export const actions: ActionTree<RootState, RootState> = {
     }
 
     console.log(dataToPost);
+
+    console.log(prices);
 
     try {
       const res = await this.$axios.post("bookings", dataToPost);
