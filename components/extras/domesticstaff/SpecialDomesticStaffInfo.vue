@@ -23,9 +23,10 @@
                 <div class="">Close</div>
             </div>
         </div>
-        <div class="m-6 ">
+
+        <div class="m-6">
             <div class="flex flex-col w-full space-y-6 text-xl md:flex-row md:space-y-0 md:space-x-12">
-                <div class="flex items-start w-full ">
+                <div class="flex items-start w-full" :class="{'opacity-25': !availableStaffRooms.nanny}">
                     <input type="checkbox" v-model="type" value="nanny" id="nanny" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400">
                     <label for="nanny" class="font-bold">Nanny
                         <div class="text-base font-light text-gray-600">
@@ -35,8 +36,8 @@
                         </div>
                     </label>
                 </div>
-                <div class="flex items-start w-full">
-                    <input type="checkbox" v-model="type" value="driver" id="driver" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400">
+                <div class="flex items-start w-full" :class="{'opacity-25': !availableStaffRooms.driver}">
+                    <input type="checkbox" v-model="type" value="driver" id="driver" :disabled="!availableStaffRooms.driver" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400">
                     <label for="driver" class="font-bold ">Driver
                         <div class="text-base font-light text-gray-600">
                             Drivers requiring accommodation are welcome to sleep in staff quarters (room access from 6pm) - bedding and water provided -
@@ -81,7 +82,7 @@
 </template>
 <script>
 export default {
-    props: ["initial"],
+    props: ["initial", "availableStaffRooms"],
     data() {
         return {
             type: [],

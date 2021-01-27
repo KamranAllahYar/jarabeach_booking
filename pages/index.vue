@@ -21,8 +21,12 @@ export default class Index extends Vue {
         this.$toast.show("Hello world");
     }
 
-    mounted(){
-      this.$router.push("/guests");
+    mounted() {
+        this.$router.push("/guests");
+    }
+
+    middleware({ redirect }: any) {
+        redirect("/guests");
     }
 }
 </script>

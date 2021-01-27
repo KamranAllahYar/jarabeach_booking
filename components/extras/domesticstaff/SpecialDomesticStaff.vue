@@ -15,11 +15,22 @@
 
                 <div>
                     <div class="mt-4 font-semibold">Select dates for domestic staff</div>
-                    <div class="mt-2 space-y-3 font-light ">
-                        <label class="flex items-center" v-for="date in dates" :key="date">
-                            <input type="checkbox" :value="date" v-model="selectedDates" class="w-5 h-5 mr-3 rounded focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
-                            <div>{{ showDate(date) }}</div>
-                        </label>
+                    <div class="mt-2 font-light ">
+                        <template v-for="date in dates">
+                            <label class="flex items-center mt-4" :key="date">
+                                <input type="checkbox" :value="date" v-model="selectedDates" class="w-5 h-5 mr-3 rounded focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                                <div>{{ showDate(date) }}</div>
+
+                            </label>
+                            <div v-if="availableStaffs[date]" :key="date+'ii'" class="ml-8 text-sm text-gray-400">
+                                <span v-if="!availableStaffs[date].nanny">
+                                    Nanny quaters is full for this day
+                                </span>
+                                <span v-if="!availableStaffs[date].driver">
+                                    Driver quaters is full for this day
+                                </span>
+                            </div>
+                        </template>
                     </div>
                 </div>
 
@@ -34,6 +45,7 @@
 
         <SpecialDomesticStaffInfo v-if="showStaff"
             :initial="selectedStaff"
+            :availableStaffRooms="availableStaffRooms"
 
             @close="toggleStaffInfo(false)"
             @prev="toggleStaffInfo(false)"
@@ -55,11 +67,44 @@ export default {
                 menu: [],
                 type: [],
             },
+            availableStaffs: {},
         };
     },
     computed: {
         dates() {
             return this.$store.getters.bookingDates;
+        },
+        availableStaffRooms() {
+            const defaultData = {
+                nanny: true,
+                driver: true,
+            };
+
+            if (this.selectedDates.length <= 0 || !this.availableStaffs) {
+                return defaultData;
+            }
+
+            if (this.selectedDates.length > 0) {
+                let nannyBool = true;
+                let driverBool = true;
+
+                this.selectedDates.forEach((date) => {
+                    const availData = this.availableStaffs[date];
+                    console.log(date);
+                    console.log(this.availableStaffs[date]);
+                    if (availData.nanny == false) nannyBool = false;
+                    if (availData.driver == false) driverBool = false;
+
+                    console.log(`nanny - ${nannyBool}, driver - ${driverBool}`);
+                });
+
+                return {
+                    nanny: nannyBool,
+                    driver: driverBool,
+                };
+            }
+
+            return defaultData;
         },
     },
     methods: {
@@ -82,7 +127,7 @@ export default {
                 selectedStaff: this.selectedStaff,
                 dates: this.selectedDates,
             });
-            this.$emit("next");
+            this.$emit("next", this.selectedDates.length <= 0);
         },
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
@@ -90,8 +135,17 @@ export default {
         updateSelection(details) {
             this.selectedStaff = details;
         },
+        checkOptions() {
+            this.$axios
+                .post("check-staffroom-booking", { dates: this.dates })
+                .then((res) => {
+                    console.log(res.data.data);
+                    this.availableStaffs = res.data.data;
+                });
+        },
     },
     mounted() {
+        this.checkOptions();
         if (this.$store.state.extras.selectedStaff.type.length > 0) {
             this.selectedStaff = Object.assign(
                 {},
