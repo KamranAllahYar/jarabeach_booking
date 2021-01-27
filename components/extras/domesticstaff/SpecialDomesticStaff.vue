@@ -10,7 +10,7 @@
 
                 <p class="mt-3 font-light leading-relaxed text-gray-600">
                     We welcome guests with nannies or drivers, subject to availability. No discounts/ offers apply to domestic staff pricing.
-                    We have (will have at the time we go live) a nannies room and a drivers room (2 max in each). Booked in advance.
+                    We have a nannies room and a drivers room (2 max in each). Booked in advance.
                 </p>
 
                 <div>

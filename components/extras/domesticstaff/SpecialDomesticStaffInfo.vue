@@ -27,7 +27,7 @@
         <div class="m-6">
             <div class="flex flex-col w-full space-y-6 text-xl md:flex-row md:space-y-0 md:space-x-12">
                 <div class="flex items-start w-full" :class="{'opacity-25': !availableStaffRooms.nanny}">
-                    <input type="checkbox" v-model="type" value="nanny" id="nanny" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400">
+                    <input type="checkbox" v-model="type" value="nanny" id="nanny" :disabled="!availableStaffRooms.nanny" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400">
                     <label for="nanny" class="font-bold">Nanny
                         <div class="text-base font-light text-gray-600">
                             If not staying in a standard or family room [as a regular guest], Nannies are welcome to sleep in our dedicated staff quarters -
