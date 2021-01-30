@@ -33,6 +33,7 @@ export const state = () => ({
   decorationWelcomeNote: "" as String,
   dateDecoration: null as String | null,
 
+  staffPrices: [] as any[],
   selectedStaff: {
     menu: [],
     type: [],
@@ -43,9 +44,11 @@ export const state = () => ({
   selectedDrinks: [] as any[],
   dateDrink: null as String | null,
 
+  cakePrice: {} as any,
   selectedCake: {},
   dateCake: null as String | null,
 
+  photoshootPrices: [] as any[],
   selectedPhotoshoot: 0 as number,
   datePhotoshoot: null as String | null,
 })
@@ -63,6 +66,9 @@ export const getters: GetterTree<ExtraState, RootState> = {
 
   cakePrice: (state: ExtraState) => {
     if (state.selectedCake) {
+      if (state.cakePrice) {
+        return +state.cakePrice.price;
+      }
       return 15000;
     }
 
@@ -86,7 +92,21 @@ export const getters: GetterTree<ExtraState, RootState> = {
   },
   photoshootPrice: (state: ExtraState) => {
     if (state.selectedPhotoshoot > 0) {
-      return 50000 + (+state.selectedPhotoshoot * 15000)
+      let photographerPrice = 50000;
+      let assistantPrice = 15000;
+
+      if (state.photoshootPrices) {
+        let p = state.photoshootPrices.find(_p => _p.name.toLowerCase() == "photographer");
+        if (p) {
+          photographerPrice = +p.price;
+        }
+        let a = state.photoshootPrices.find(_a => _a.name.toLowerCase() == "assistant");
+        if (a) {
+          assistantPrice = +a.price;
+        }
+      }
+
+      return photographerPrice + (+state.selectedPhotoshoot * assistantPrice)
     }
 
     return 50000;
@@ -106,23 +126,53 @@ export const getters: GetterTree<ExtraState, RootState> = {
   },
   staffPrice: (state: ExtraState) => {
     let price = 0;
+
+    let driverPrice = 15000;
+    let nannyPrice = 30000;
+    let breakfastPrice = 3000;
+    let lunchPrice = 4000;
+    let dinnerPrice = 5000;
+
+    if (state.staffPrices) {
+      let d = state.staffPrices.find(_d => _d.name.toLowerCase() == "driver");
+      if (d) {
+        driverPrice = +d.price;
+      }
+      let n = state.staffPrices.find(_n => _n.name.toLowerCase() == "nanny");
+      if (n) {
+        nannyPrice = +n.price;
+      }
+      let b = state.staffPrices.find(_b => _b.name.toLowerCase() == "breakfast");
+      if (b) {
+        breakfastPrice = +b.price;
+      }
+      let l = state.staffPrices.find(_l => _l.name.toLowerCase() == "lunch");
+      if (l) {
+        lunchPrice = +l.price;
+      }
+      let di = state.staffPrices.find(_di => _di.name.toLowerCase() == "dinner");
+      if (di) {
+        dinnerPrice = +di.price;
+      }
+    }
+
     if (state.selectedStaff.type.length > 0) {
       if (state.selectedStaff.type.includes('nanny')) {
-        price += 30000
+        price += nannyPrice
       }
       if (state.selectedStaff.type.includes('driver')) {
-        price += 15000
+        price += driverPrice
       }
 
       const totalStaff = state.selectedStaff.type.length;
       if (state.selectedStaff.menu.includes('breakfast')) {
-        price += totalStaff * 3000
+        price += totalStaff * breakfastPrice
       }
       if (state.selectedStaff.menu.includes('lunch')) {
-        price += totalStaff * 4000
+        price += totalStaff * lunchPrice
       }
       if (state.selectedStaff.menu.includes('dinner')) {
-        price += totalStaff * 5000
+        price += totalStaff * dinnerPrice
       }
     }
 
@@ -256,6 +306,12 @@ export const mutations: MutationTree<ExtraState> = {
     state.datePhotoshoot = payload.date;
   },
 
+  SET_MOST_PRICES: (state, payload) => {
+    state.cakePrice = payload.cake;
+    state.photoshootPrices = payload.photoshoot;
+    state.staffPrices = payload.domesticStaff;
+  },
+
   RESET_STORE: (state) => {
     state.selected = [] as { name: string, type: string, range: string, available: boolean }[];
     state.selectedIndex = 0 as number;
@@ -343,6 +399,14 @@ export const actions: ActionTree<ExtraState, RootState> = {
       console.log("Quadbike options")
       console.log(res.data.data);
       commit("LOAD_QUADBIKE_OPTIONS", res.data.data);
+    });
+  },
+
+  getMostPrices({ commit }) {
+    this.$axios.get("/prices/most").then((res) => {
+      console.log("Most prices")
+      console.log(res.data.data);
+      commit("SET_MOST_PRICES", res.data.data);
     });
   }
 

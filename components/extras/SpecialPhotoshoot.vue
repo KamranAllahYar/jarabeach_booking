@@ -9,7 +9,7 @@
             <p class="mt-3 font-light leading-relaxed text-gray-600">
                 A photographer can access Jara Beach Resort for a maximum of four hours. Includes no food or drink.
                 Assistants/ make up artists charged N15,000 each thereafter.
-                Max two shoots at any given time outdoor venue - 4 hours. Photographer Only <span class="font-bold">- N50,000</span>
+                Max two shoots at any given time outdoor venue - 4 hours. Photographer Only <span class="font-bold">- {{ currency(price) }}</span>
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this</div>
 
@@ -66,6 +66,19 @@ export default {
         dates() {
             return this.$store.getters.bookingDates;
         },
+        price() {
+            let photographerPrice = 50000;
+
+            const prices = this.$store.state.extras.photoshootPrices;
+            let p = prices.find(
+                (_p) => _p.name.toLowerCase() == "photographer"
+            );
+            if (p) {
+                photographerPrice = +p.price;
+            }
+
+            return photographerPrice;
+        },
     },
     methods: {
         next() {
@@ -84,6 +97,9 @@ export default {
         },
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
+        },
+        currency(num) {
+            return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
     },
     mounted() {

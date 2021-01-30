@@ -92,8 +92,10 @@ export default {
                     const availData = this.availableStaffs[date];
                     console.log(date);
                     console.log(this.availableStaffs[date]);
-                    if (availData.nanny == false) nannyBool = false;
-                    if (availData.driver == false) driverBool = false;
+                    if (availData) {
+                        if (availData.nanny == false) nannyBool = false;
+                        if (availData.driver == false) driverBool = false;
+                    }
 
                     console.log(`nanny - ${nannyBool}, driver - ${driverBool}`);
                 });

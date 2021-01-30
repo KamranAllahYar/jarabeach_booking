@@ -32,7 +32,7 @@
                         <div class="text-base font-light text-gray-600">
                             If not staying in a standard or family room [as a regular guest], Nannies are welcome to sleep in our dedicated staff quarters -
                             bedding and water provided - and partake in all meals and make use of Jara's facilities. A separate food menu is available.
-                            Alcohol and the snack station is not included. <span class="font-bold text-black">Cost per night: N30,000 (inc VAT).</span>
+                            Alcohol and the snack station is not included. <span class="font-bold text-black">Cost per night: {{ currency(nannyPrice) }} (inc VAT).</span>
                         </div>
                     </label>
                 </div>
@@ -41,7 +41,7 @@
                     <label for="driver" class="font-bold ">Driver
                         <div class="text-base font-light text-gray-600">
                             Drivers requiring accommodation are welcome to sleep in staff quarters (room access from 6pm) - bedding and water provided -
-                            and are not expected to remain inside the property between 9am and 6pm. <span class="font-bold text-black">Cost per night: N15,000 (inc TAX).</span>
+                            and are not expected to remain inside the property between 9am and 6pm. <span class="font-bold text-black">Cost per night: {{ currency(driverPrice) }} (inc TAX).</span>
                         </div>
                     </label>
                 </div>
@@ -53,21 +53,21 @@
                         <div class="text-lg font-bold">Breakfast</div>
                         <div class="flex items-start my-1 md:pr-4">
                             <input type="checkbox" value="breakfast" id="breakfast" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400" v-model="menu">
-                            <label for="breakfast" class="text-gray-600">Nigerian Breakfast (Boiled yam & Egg sauce) @ <span class="font-bold text-black">N3,000</span></label>
+                            <label for="breakfast" class="text-gray-600">Nigerian Breakfast (Boiled yam & Egg sauce) @ <span class="font-bold text-black">{{ currency(breakfastPrice) }}</span></label>
                         </div>
                     </div>
                     <div class="w-full">
                         <div class="ml-4 text-lg font-bold">Lunch</div>
                         <div class="flex items-start my-1 md:px-4 md:border-l md:border-r">
                             <input type="checkbox" value="lunch" id="lunch" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400" v-model="menu">
-                            <label for="lunch" class="text-gray-600">Indomie & Egg (Wednesday’s, Friday’s & Sunday’s) Jollof Rice with Chicken & Beef Skewer @ <span class="font-bold text-black">N4,000</span></label>
+                            <label for="lunch" class="text-gray-600">Indomie & Egg (Wednesday’s, Friday’s & Sunday’s) Jollof Rice with Chicken & Beef Skewer @ <span class="font-bold text-black">{{ currency(lunchPrice) }}</span></label>
                         </div>
                     </div>
                     <div class="w-full">
                         <div class="text-lg font-bold">Dinner</div>
                         <div class="flex items-start my-1 md:pl-2">
                             <input type="checkbox" value="dinner" id="dinner" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400" v-model="menu">
-                            <label for="dinner" class="text-gray-600">Nigerian Special @ <span class="font-bold text-black">N5,000</span></label>
+                            <label for="dinner" class="text-gray-600">Nigerian Special @ <span class="font-bold text-black">{{ currency(dinnerPrice) }}</span></label>
                         </div>
                     </div>
                 </div>
@@ -107,12 +107,70 @@ export default {
             this.$emit("details", details);
         },
     },
+    computed: {
+        prices() {
+            return this.$store.state.extras.staffPrices;
+        },
+        driverPrice() {
+            let price = 15000;
+
+            let p = this.prices.find((_p) => _p.name.toLowerCase() == "driver");
+            if (p) {
+                price = +p.price;
+            }
+
+            return price;
+        },
+        nannyPrice() {
+            let price = 30000;
+
+            let p = this.prices.find((_p) => _p.name.toLowerCase() == "nanny");
+            if (p) {
+                price = +p.price;
+            }
+
+            return price;
+        },
+        breakfastPrice() {
+            let price = 3000;
+
+            let p = this.prices.find((_p) => _p.name.toLowerCase() == "breakfast");
+            if (p) {
+                price = +p.price;
+            }
+
+            return price;
+        },
+        lunchPrice() {
+            let price = 4000;
+
+            let p = this.prices.find((_p) => _p.name.toLowerCase() == "lunch");
+            if (p) {
+                price = +p.price;
+            }
+
+            return price;
+        },
+        dinnerPrice() {
+            let price = 5000;
+
+            let p = this.prices.find((_p) => _p.name.toLowerCase() == "dinner");
+            if (p) {
+                price = +p.price;
+            }
+
+            return price;
+        },
+    },
     methods: {
         next() {
             this.$emit("next");
         },
         prev() {
             this.$emit("prev");
+        },
+        currency(num) {
+            return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
     },
     mounted() {

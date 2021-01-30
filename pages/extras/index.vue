@@ -99,6 +99,7 @@ export default {
         this.$store.dispatch("extras/getLookoutOptions");
         this.$store.dispatch("extras/getSpecialMassages");
         this.$store.dispatch("extras/getQuadbikeOptions");
+        this.$store.dispatch("extras/getMostPrices");
     },
     middleware({ store, redirect, $toast }) {
         if (!store.state.availability_done) {

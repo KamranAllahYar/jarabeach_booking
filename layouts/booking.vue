@@ -27,6 +27,13 @@ export default {
         console.log("Initial loadings");
         this.$store.dispatch("loadRooms");
         this.$store.dispatch("loadPolicies");
+
+        this.$store.dispatch("extras/getSpecialDrinks");
+        this.$store.dispatch("extras/getSpecialDecorations");
+        this.$store.dispatch("extras/getLookoutOptions");
+        this.$store.dispatch("extras/getSpecialMassages");
+        this.$store.dispatch("extras/getQuadbikeOptions");
+        this.$store.dispatch("extras/getMostPrices");
     },
 };
 </script>
