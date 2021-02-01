@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="flex-1"></div>
-            <div class="flex-shrink-0 text-xs font-semibold border-b cursor-pointer md:text-base border-brand-blue-400 text-brand-blue-400" @click="index = 0" id="roomSetup">
+            <div class="flex-shrink-0 text-xs font-semibold border-b cursor-pointer md:text-base border-brand-blue-400 text-brand-blue-400" @click="openSlideshow()" id="roomSetup">
                 View Room Setup
             </div>
         </div>
@@ -348,6 +348,10 @@ export default {
         },
     },
     methods: {
+        openSlideshow() {
+            this.$emit("viewsetup");
+            this.index = 0;
+        },
         getDateStr(date) {
             let m = this.calMonth;
             if (m < 10) m = `0${m}`;

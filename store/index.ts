@@ -351,9 +351,8 @@ export const actions: ActionTree<RootState, RootState> = {
     } as any;
 
     let prices = {
-      rooms: rootGetters.roomPrice,
-      subtotal: rootGetters.subTotal,
-      roomDiscount: rootGetters.roomDiscount,
+      "Rooms": rootGetters.roomPrice,
+      "Room Discount": "-"+rootGetters.roomDiscount,
     } as any;
 
     if (allExtras.includes('cake')) {
@@ -414,6 +413,9 @@ export const actions: ActionTree<RootState, RootState> = {
       }
       prices['lookout'] = rootGetters['extras/lookoutPrice'];
     }
+
+    prices["Sub Total"] = rootGetters.subTotal;
+    // prices["Total"] = rootGetters.total;
 
     console.log(specialsToSend);
 

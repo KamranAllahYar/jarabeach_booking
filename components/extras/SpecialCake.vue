@@ -29,20 +29,20 @@
                                 <path d="M1.857 8.203A1.639 1.639 0 004.67 9.35a1.631 1.631 0 002.578-.313 1.628 1.628 0 002.812 0 1.637 1.637 0 003.047-.833" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.type">
-                                <option value="">Type</option>
-                                <option value="small">Small</option>
-                                <option value="large">Large</option>
-                                <option value="cupcakes">Cupcakes</option>
+                                <option value="">Size</option>
+                                <option value="6inch">6 inches</option>
+                                <option value="8inch">8 inches</option>
+                                <!-- <option value="cupcakes">Cupcakes</option> -->
                             </select>
                         </div>
-                        <div class="flex items-center w-full pl-2 border rounded-md md:w-1/3 focus-within:ring" v-if="cake.type != 'cupcakes'">
+                        <!-- <div class="flex items-center w-full pl-2 border rounded-md md:w-1/3 focus-within:ring" v-if="cake.type != 'cupcakes'">
                             <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.layers">
                                 <option :value="0">Layers</option>
                                 <option v-for="num in 2" :value="num" :key="num">
                                     {{ num }}
                                 </option>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="flex items-center w-full pl-2 border rounded-md md:w-1/3 focus-within:ring">
                             <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.quantity">
                                 <option :value="0">Quantity</option>
@@ -64,6 +64,9 @@
                                 <option value="Vanilla">Vanilla</option>
                                 <option value="Chocolate">Chocolate</option>
                                 <option value="Red Velvet">Red Velvet</option>
+                                <option value="Lemon">Lemon</option>
+                                <option value="Coconut">Coconut</option>
+                                <option value="Fruit Cake">Fruit Cake</option>
                             </select>
                         </div>
                         <div class="flex items-center w-1/2 pl-2 border rounded-md focus-within:ring">
@@ -73,13 +76,14 @@
                                 <path d="M4.49297 9.26816c.52467 0 .95-.42533.95-.95s-.42533-.95-.95-.95-.95.42533-.95.95.42533.95.95.95zM6.84453 12.2896c.52467 0 .95-.4253.95-.95 0-.5246-.42533-.95-.95-.95s-.95.4254-.95.95c0 .5247.42533.95.95.95zM9.11602 4.64512c.52467 0 .94998-.42533.94998-.95s-.42531-.95-.94998-.95-.95.42533-.95.95.42533.95.95.95zM5.08867 5.65293c.52467 0 .95-.42533.95-.95s-.42533-.95-.95-.95-.95.42533-.95.95.42533.95.95.95z"
                                     stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.colors">
-                                <option value="">Colors</option>
-                                <option value="red">red</option>
-                                <option value="white">white</option>
-                                <option value="cream">cream</option>
-                                <option value="pink">pink</option>
-                                <option value="blue">blue</option>
+                            <select class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none" v-model="cake.toppings">
+                                <option value="">Toppings</option>
+                                <option value="Coconut">Coconut</option>
+                                <option value="Berries">Berries</option>
+                                <option value="Fruits">Fruits</option>
+                                <option value="Chocolates">Chocolates</option>
+                                <option value="Candies">Candies</option>
+                                <option value="Cookies">Cookies</option>
                             </select>
                         </div>
                     </div>
@@ -107,7 +111,7 @@ export default {
                 layers: 0,
                 quantity: 0,
                 flavour: "",
-                colors: "",
+                toppings: "",
                 message: "",
             },
         };

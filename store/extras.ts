@@ -44,8 +44,8 @@ export const state = () => ({
   selectedDrinks: [] as any[],
   dateDrink: null as String | null,
 
-  cakePrice: {} as any,
-  selectedCake: {},
+  cakePrices: [] as any[],
+  selectedCake: {} as any,
   dateCake: null as String | null,
 
   photoshootPrices: [] as any[],
@@ -66,10 +66,44 @@ export const getters: GetterTree<ExtraState, RootState> = {
 
   cakePrice: (state: ExtraState) => {
     if (state.selectedCake) {
-      if (state.cakePrice) {
-        return +state.cakePrice.price;
+      let six_inch_price = 15000;
+      let eight_inch_price = 20000;
+
+      console.log("CAKEEEE PRICE");
+      // console.log(price);
+
+      if (state.cakePrices) {
+        let p = state.cakePrices.find(_p => _p.name.toLowerCase() == "6inch");
+        if (p) {
+          six_inch_price = +p.price;
+        }
+        let e = state.cakePrices.find(_p => _p.name.toLowerCase() == "8inch");
+        if (e) {
+          eight_inch_price = +e.price;
+        }
       }
-      return 15000;
+
+      let quantity = +state.selectedCake.quantity;
+      if (quantity <= 0) quantity = 1;
+
+
+      let price = six_inch_price;
+      if (state.selectedCake.type === '6inch') {
+        console.log("its six inch");
+        console.log(six_inch_price);
+        console.log(quantity);
+        price = six_inch_price * quantity;
+      } else if (state.selectedCake.type === '8inch') {
+        console.log("its eight inch");
+        console.log(eight_inch_price);
+        console.log(quantity);
+        price = eight_inch_price * quantity;
+      }
+      console.log("CAKEEEE PRICE");
+      console.log(state.selectedCake);
+      console.log(price);
+
+      return price;
     }
 
     return 0;
@@ -307,7 +341,7 @@ export const mutations: MutationTree<ExtraState> = {
   },
 
   SET_MOST_PRICES: (state, payload) => {
-    state.cakePrice = payload.cake;
+    state.cakePrices = payload.cake;
     state.photoshootPrices = payload.photoshoot;
     state.staffPrices = payload.domesticStaff;
   },
