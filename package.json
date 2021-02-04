@@ -10,6 +10,8 @@
     "prod": "nuxt-ts build && nuxt-ts generate && pm2 restart ./ecosystem.config.js"
   },
   "dependencies": {
+    "@bugsnag/js": "^7.6.0",
+    "@bugsnag/plugin-vue": "^7.6.0",
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/date-fns": "^1.4.3",

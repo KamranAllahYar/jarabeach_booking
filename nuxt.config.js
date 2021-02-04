@@ -3,6 +3,7 @@ export default {
   target: 'static',
   publicRuntimeConfig: {
     PAYMENT_PUBLIC_KEY: process.env.PAYSTACK_LIVE_MODE == "true" ? process.env.PAYSTACK_LIVE_PK : process.env.PAYSTACK_TEST_PK,
+    BUGSNAG_KEY: process.env.BUGSNAG_KEY,
   },
   head: {
     title: 'Jara Beach Resort',
@@ -21,7 +22,8 @@ export default {
   plugins: [
     "@/plugins/popover.js",
     "@/plugins/vue-tour.js",
-    { src: '@/plugins/vuex-persist', ssr: false }
+    { src: '@/plugins/vuex-persist', ssr: false },
+    { src: '@/plugins/bugsnag', ssr: false }
   ],
   router: {
     middleware: 'clear'

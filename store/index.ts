@@ -1,6 +1,7 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import differenceInDays from 'date-fns/differenceInDays';
 import parseISO from 'date-fns/parseISO';
+import Bugsnag from '@bugsnag/js'
 
 var groupBy = function (xs: any, key: any) {
   return xs.reduce(function (rv: any, x: any) {
@@ -271,7 +272,7 @@ export const actions: ActionTree<RootState, RootState> = {
     this.$axios.get("/rooms").then((res) => {
       console.log(res.data.data);
       commit("UPDATE_ROOMS_DATA", res.data.data);
-    });
+    })
   },
 
   loadPolicies({ commit }) {
