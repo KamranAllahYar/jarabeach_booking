@@ -34,11 +34,11 @@
                             <div class="grid px-3 py-4 space-y-3 border-b md:space-y-0 md:space-x-3 md:grid-cols-2">
                                 <div>
                                     <div class="text-base font-bold">First Name</div>
-                                    <input type="text" v-model="guest.first_name" placeholder="Jane" class="w-full px-0 border-0" style="box-shadow: none" />
+                                    <input type="text" v-model="guest.first_name" placeholder="Emmanuel" class="w-full px-0 border-0" style="box-shadow: none" />
                                 </div>
                                 <div>
                                     <div class="text-base font-bold">Last Name</div>
-                                    <input type="text" v-model="guest.last_name" placeholder="Doe" class="w-full px-0 border-0" style="box-shadow: none" />
+                                    <input type="text" v-model="guest.last_name" placeholder="Christopher" class="w-full px-0 border-0" style="box-shadow: none" />
                                 </div>
                             </div>
                             <div class="grid px-3 py-4 space-y-3 border-b md:grid-cols-2 md:space-y-0 md:space-x-3">
@@ -52,7 +52,7 @@
                                 </div>
                                 <div>
                                     <div class="text-base font-bold">Date of Birth</div>
-                                    <input type="date" v-model="guest.dob" class="w-full px-0 border-0" ref="dob" style="box-shadow: none" />
+                                    <input type="date" v-model="guest.dob" :max="last18Year+'-01-01'" class="w-full px-0 border-0" ref="dob" style="box-shadow: none" />
                                 </div>
                             </div>
                             <div class="px-3 py-4 border-b">
@@ -147,6 +147,14 @@ export default {
         };
     },
     computed: {
+        last18Year() {
+            const today = new Date();
+            const currentYear = today.getFullYear();
+
+            console.log(currentYear - 18);
+
+            return currentYear - 18;
+        },
         agreed: {
             set(v) {
                 return this.$store.commit("GUEST_SAVE_DATA", v);

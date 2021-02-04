@@ -87,7 +87,7 @@
                             </select>
                         </div>
                     </div>
-                    <textarea name="message" id="cake_msg" rows="1" class="w-full border-gray-200 rounded focus:ring focus:ring-brand-blue-300 focus:border-0" placeholder="Message on the cake" v-model="cake.message"></textarea>
+                    <textarea name="message" id="cake_msg" rows="1" maxlength="20" class="w-full border-gray-200 rounded focus:ring focus:ring-brand-blue-300 focus:border-0" placeholder="Message on the cake. Max 20 characters" v-model="cake.message"></textarea>
                 </div>
             </div>
             <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">

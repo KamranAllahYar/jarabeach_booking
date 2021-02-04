@@ -8,7 +8,7 @@
             <div class="border rounded-lg">
 
                 <div class="p-4">
-                    <div class="mb-4 font-semibold">Select Guest make-up</div>
+                    <div class="mb-4 font-semibold">How many adults or children?</div>
 
                     <div class="flex flex-col space-y-3 md:items-center md:flex-row md:space-x-6 md:space-y-0">
                         <div class="flex items-center w-full pl-2 space-x-2 rounded-md md:w-auto focus-within:ring">

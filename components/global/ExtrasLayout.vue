@@ -37,7 +37,7 @@ export default {
     },
     methods: {
         gotoNext(n) {
-          console.log(n);
+            console.log(n);
             if (this.index == this.selected.length - 1) {
                 this.$router.push({ path: "/profile" });
                 return;

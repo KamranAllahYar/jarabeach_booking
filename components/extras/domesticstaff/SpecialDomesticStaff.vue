@@ -26,9 +26,9 @@
                                 <span v-if="!availableStaffs[date].nanny">
                                     Nanny quaters is full for this day
                                 </span>
-                                <span v-if="!availableStaffs[date].driver">
+                                <!-- <span v-if="!availableStaffs[date].driver">
                                     Driver quaters is full for this day
-                                </span>
+                                </span> -->
                             </div>
                         </template>
                     </div>
@@ -155,8 +155,10 @@ export default {
             );
         }
 
-        if (this.$store.state.extras.dateStaff) {
+        if (this.$store.state.extras.dateStaff && this.$store.state.extras.dateStaff.length > 0) {
             this.selectedDates = this.$store.state.extras.dateStaff;
+        }else{
+          this.selectedDates = this.dates;
         }
     },
 };

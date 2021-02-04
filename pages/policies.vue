@@ -11,7 +11,7 @@
                         </div>
 
                         <div class="px-3 py-4">
-                            <div v-html="currentPolicy.content"></div>
+                            <pre class="w-full overflow-y-auto h-80" v-html="currentPolicy.content"></pre>
                         </div>
 
                         <div class="flex justify-start px-3 py-4">
@@ -59,9 +59,9 @@ export default {
 
             if (!this.agreed) {
                 this.$toasted.error("Please accept the policy first", {
-                  duration: 6000,
-                  position: "bottom-center",
-                  className: "bg-yellow-500"
+                    duration: 6000,
+                    position: "bottom-center",
+                    className: "bg-yellow-500",
                 });
                 return;
             }
@@ -97,4 +97,15 @@ export default {
 </script>
 
 <style>
+pre {
+    font-family: "Maison Neue", "Source Sans Pro", -apple-system,
+        BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+        sans-serif;
+
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
 </style>
