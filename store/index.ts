@@ -31,8 +31,7 @@ export const state = () => ({
   profile_done: false as boolean,
   policy_done: false as boolean,
 
-  done_email: "" as string,
-  done_days_left: 0 as number,
+  done_data: {} as any,
 
   extra: '' as string,
   showExtra: false as boolean,
@@ -236,8 +235,11 @@ export const mutations: MutationTree<RootState> = {
       const email = state.guest.email;
       const days_left = differenceInDays(parseISO(state.rooms[0].date), new Date());
 
-      state.done_email = email || "";
-      state.done_days_left = days_left || 0;
+      state.done_data = {
+        email: email || "",
+        days_left: days_left || 0,
+        booking_ref: "",
+      }
     }
 
 
@@ -341,7 +343,7 @@ export const actions: ActionTree<RootState, RootState> = {
     }
   },
 
-  async createBooking({ state, rootState, rootGetters }, { trans_ref, method_ref }) {
+  async createBooking({ state, rootState, rootGetters }, { trans_ref, method_ref, method }) {
     //@ts-ignore
     const extraState = rootState.extras;
     console.log(extraState, rootGetters);
@@ -353,7 +355,7 @@ export const actions: ActionTree<RootState, RootState> = {
 
     let prices = {
       "Rooms": rootGetters.roomPrice,
-      "Room Discount": "-"+rootGetters.roomDiscount,
+      "Room Discount": "-" + rootGetters.roomDiscount,
     } as any;
 
     if (allExtras.includes('cake')) {
@@ -428,6 +430,7 @@ export const actions: ActionTree<RootState, RootState> = {
         extra_info: "state.extra_info",
         trans_ref: trans_ref,
         method_ref: method_ref,
+        method: method,
       },
       booked_rooms: state.rooms,
       prices: prices,

@@ -22,18 +22,38 @@
                             </svg>
                         </div>
                         <div class="">
-                            Your booking was successful, we’ve sent all the details you will need to
-                            <span class="text-brand-blue">{{ done.email }}</span>.
+                            Your booking #{{ done.booking_ref }} is confirmed. To complete your booking make payment within the next 30 minutes to either of the following bank accounts:
+
+                            <br />
+                            <br />
+
+                            <b>LITTLE COMPANY NIGERIA LIMITED</b> <br />
+                            Access Bank<br />
+                            <b>0813609546</b>
+                            <br />
+                            <br />
+
+                            <b>LITTLE COMPANY NIGERIA LIMITED</b> <br />
+                            Guaranty Trust Bank (GTB)<br />
+                            <b>0504697451</b>
+
+                            <br />
+                            <br />
+
+                            We've also sent details to <span class="text-brand-blue">{{ done.email }}</span>
+
+                            <!-- Your booking was successful, we’ve sent all the details you will need to
+                            <span class="text-brand-blue">{{ done_email }}</span>.
                             We look forward to welcoming you
-                            <span v-if="done.days_left<= 0">
+                            <span v-if="days_left<= 0">
                                 tomorrow!
                             </span>
-                            <span v-else-if="done.days_left == 1">
+                            <span v-else-if="days_left == 1">
                                 in a day!
                             </span>
                             <span v-else>
-                                in {{ done.days_left }} days!
-                            </span>
+                                in {{ days_left }} days!
+                            </span> -->
                         </div>
                     </div>
                     <div class="mt-5 text-sm text-center">Check us out on social media</div>
