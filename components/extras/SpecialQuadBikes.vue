@@ -92,7 +92,9 @@ export default {
         async selectedQuantity(newVal, oldVal) {
             await this.checkOptions();
             if (oldVal != null) {
-                this.selectedQuadbike = null;
+                if (!this.$store.state.editMode) {
+                    this.selectedQuadbike = null;
+                }
             }
         },
     },
@@ -128,10 +130,19 @@ export default {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         checkOptions() {
+            let oldBookingId = null;
+            if (this.$store.state.editMode) {
+                console.log("in edit mode");
+                if (this.$store.state.editBooking) {
+                    oldBookingId = this.$store.state.editBooking.id;
+                }
+            }
+
             return this.$axios
                 .post("check-quadbike-booking", {
                     dates: this.dates,
                     quantity: this.selectedQuantity,
+                    oldBookingId: oldBookingId,
                 })
                 .then((res) => {
                     console.log(res.data.data);

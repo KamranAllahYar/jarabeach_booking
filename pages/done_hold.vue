@@ -22,7 +22,7 @@
                             </svg>
                         </div>
                         <div class="">
-                            Your booking #{{ done.booking_ref }} is confirmed. To complete your booking make payment within the next 30 minutes to either of the following bank accounts:
+                            Your booking <b>#{{ done.booking.ref }}</b> is confirmed. To complete your booking make payment within the next 30 minutes to either of the following bank accounts:
 
                             <br />
                             <br />

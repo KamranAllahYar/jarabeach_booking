@@ -32,6 +32,7 @@
             </div>
         </div>
 
+        {{ selectedPackages }}
         <SpecialLookoutMeal v-show="showMenu"
             :initial="selectedPackages"
             :options="options"
@@ -110,8 +111,19 @@ export default {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
         checkOptions() {
+            let oldBookingId = null;
+            if (this.$store.state.editMode) {
+                console.log("in edit mode");
+                if (this.$store.state.editBooking) {
+                    oldBookingId = this.$store.state.editBooking.id;
+                }
+            }
+
             this.$axios
-                .post("check-lookout-booking", { dates: this.dates })
+                .post("check-lookout-booking", {
+                    dates: this.dates,
+                    oldBookingId: oldBookingId,
+                })
                 .then((res) => {
                     console.log(res.data.data);
                     this.availablePackages = res.data.data;

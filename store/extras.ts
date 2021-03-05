@@ -254,6 +254,13 @@ export const getters: GetterTree<ExtraState, RootState> = {
   },
 }
 
+function getSpecialObjFromStr(specials: any[], specialStr: String): any {
+  const special = specials.find(s => s.type == specialStr);
+  if (special) return special;
+
+  return null;
+}
+
 export const mutations: MutationTree<ExtraState> = {
   LOAD_EXTRAS: (state, payload) => {
     state.specials = payload
@@ -277,6 +284,9 @@ export const mutations: MutationTree<ExtraState> = {
     if (ix >= 0) {
       state.selected.splice(ix, 1);
     }
+  },
+  EMPTY_SELECTED: (state, sp) => {
+    state.selected = [];
   },
 
   RESET_INDEX: (state) => state.selectedIndex = 0,
@@ -384,12 +394,121 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedPhotoshoot = 0 as number;
     state.datePhotoshoot = null;
   },
+
+  TRANSFORM_CAKE: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldCake = payload.cake;
+
+    if (oldDates.includes(oldCake.date)) {
+      state.dateCake = oldCake.date;
+      state.selectedCake = oldCake.data;
+    }
+  },
+  TRANSFORM_DECORATION: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldDecos = payload.decos;
+
+    state.selectedDecorations = [];
+    oldDecos.forEach((deco: any) => {
+      if (oldDates.includes(deco.date)) {
+        state.dateDecoration = deco.date;
+        if (deco.note) state.decorationWelcomeNote = deco.note;
+
+        const option = state.decorationOptions.find((dOption) => dOption.id == deco.option_id);
+        state.selectedDecorations.push(option);
+      }
+    });
+  },
+  TRANSFORM_DRINKS: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldDrinks = payload.drinks;
+
+    state.selectedDrinks = [];
+    oldDrinks.forEach((drink: any) => {
+      if (oldDates.includes(drink.date)) {
+        state.dateDrink = drink.date;
+        state.selectedDrinks.push({ id: drink.option_id, qty: drink.quantity });
+      }
+    });
+  },
+  TRANSFORM_PHOTOSHOOT: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldPhotoshoot = payload.photoshoot;
+
+    if (oldDates.includes(oldPhotoshoot.date)) {
+      state.datePhotoshoot = oldPhotoshoot.date;
+      state.selectedPhotoshoot = oldPhotoshoot.quantity;
+    }
+  },
+  TRANSFORM_STAFF: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldStaff = payload.staff;
+
+    console.log(oldStaff)
+
+    state.dateStaff = [];
+    oldStaff.dates.forEach((oldDate: string) => {
+      if (oldDates.includes(oldDate)) {
+        state.dateStaff!.push(oldDate);
+      }
+    })
+
+    state.selectedStaff.menu = oldStaff.data.menu;
+    state.selectedStaff.type = oldStaff.data.type;
+  },
+  TRANSFORM_QUADBIKE: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldQuadbike = payload.quadbike;
+
+    console.log(oldQuadbike)
+
+    if (oldDates.includes(oldQuadbike.date)) {
+      state.dateQuadbike = oldQuadbike.date;
+      state.selectedQuadbike = oldQuadbike.option_id;
+      state.selectedQuadbikeQty = oldQuadbike.quantity;
+    }
+  },
+  TRANSFORM_MASSAGE: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldMassage = payload.massage;
+
+    console.log(oldMassage)
+
+    if (oldDates.includes(oldMassage.date)) {
+      state.dateMassage = oldMassage.date;
+      state.selectedMassage = oldMassage.slot_id;
+    }
+  },
+  TRANSFORM_LOOKOUTS: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldLookout = payload.lookouts;
+
+    state.selectedLookouts = [];
+    let packages: any[] = [];
+    oldLookout.forEach((lookout: any) => {
+      if (oldDates.includes(lookout.date)) {
+        console.log("----------");
+        console.log(lookout);
+        state.dateLookout = lookout.date;
+        packages.push(lookout.package_id);
+      }
+    });
+    state.selectedLookouts = packages;
+    console.log(state.selectedLookouts);
+  },
 }
 
 export const actions: ActionTree<ExtraState, RootState> = {
 
-  updateSpecials({ commit }, dates: string[]) {
-    this.$axios.post("/extras", { dates }).then((res) => {
+  updateSpecials({ commit, rootState }, dates: string[]) {
+    let oldBookingId = null;
+    if (rootState.editMode) {
+      if (rootState.editBooking) {
+        oldBookingId = rootState.editBooking.id;
+      }
+    }
+
+    this.$axios.post("/extras", { dates, oldBookingId: oldBookingId }).then((res) => {
       console.log("EXTRASSS")
       console.log(res.data);
       commit("LOAD_EXTRAS", res.data);
@@ -442,6 +561,70 @@ export const actions: ActionTree<ExtraState, RootState> = {
       console.log(res.data.data);
       commit("SET_MOST_PRICES", res.data.data);
     });
+  },
+
+  //TODO: update the date to reflect current dates not oldBooking dates
+  loadOldExtras({ commit, state }, oldBooking) {
+    console.log("YESSS EXTRASS OLD BOOKING");
+    commit("EMPTY_SELECTED");
+
+    if (oldBooking.massage) {
+      const s = getSpecialObjFromStr(state.specials, 'massage');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_MASSAGE", { massage: oldBooking.massage, dates: oldBooking.dates });
+      };
+    }
+    if (oldBooking.quadbike) {
+      const s = getSpecialObjFromStr(state.specials, 'quadbike');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_QUADBIKE", { quadbike: oldBooking.quadbike, dates: oldBooking.dates });
+      };
+    }
+    if (oldBooking.lookouts) {
+      const s = getSpecialObjFromStr(state.specials, 'lookout');
+
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_LOOKOUTS", { lookouts: oldBooking.lookouts, dates: oldBooking.dates });
+      };
+    }
+    if (oldBooking.cake) {
+      const s = getSpecialObjFromStr(state.specials, 'cake');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_CAKE", { cake: oldBooking.cake, dates: oldBooking.dates });
+      };
+    }
+    if (oldBooking.drinks) {
+      const s = getSpecialObjFromStr(state.specials, 'drinks');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_DRINKS", { drinks: oldBooking.drinks, dates: oldBooking.dates });
+      };
+    }
+    if (oldBooking.photoshoot) {
+      const s = getSpecialObjFromStr(state.specials, 'photoshoot');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_PHOTOSHOOT", { photoshoot: oldBooking.photoshoot, dates: oldBooking.dates });
+      };
+    }
+    if (oldBooking.decorations) {
+      const s = getSpecialObjFromStr(state.specials, 'roomDecoration');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_DECORATION", { decos: oldBooking.decorations, dates: oldBooking.dates });
+      };
+    }
+    if (oldBooking.domestic_staff) {
+      const s = getSpecialObjFromStr(state.specials, 'domesticStaff');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_STAFF", { staff: oldBooking.domestic_staff, dates: oldBooking.dates });
+      };
+    }
   }
 
 }

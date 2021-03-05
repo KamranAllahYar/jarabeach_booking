@@ -81,8 +81,12 @@ export default {
         selectedPackages(v) {
             this.$emit("details", v);
         },
-        date() {
-            this.selectedPackages = [];
+        date(newVal, oldVal) {
+            if (oldVal != null) {
+                if (!this.$store.state.editMode) {
+                    this.selectedPackages = [];
+                }
+            }
         },
     },
     computed: {
@@ -109,11 +113,11 @@ export default {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         isAvailable(optionId) {
-          if(this.availableOptions) {
-            return this.availableOptions.includes(optionId);
-          }
+            if (this.availableOptions) {
+                return this.availableOptions.includes(optionId);
+            }
 
-          return false;
+            return false;
         },
     },
     mounted() {

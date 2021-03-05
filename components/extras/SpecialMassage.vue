@@ -67,9 +67,11 @@ export default {
         },
     },
     watch: {
-        selectedDate(newVal, oldVal) {
+        selectedDate(_, oldVal) {
             if (oldVal != null) {
-                this.selectedMassage = null;
+                if (!this.$store.state.editMode) {
+                    this.selectedMassage = null;
+                }
             }
         },
     },
@@ -101,8 +103,19 @@ export default {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
         checkOptions() {
+            let oldBookingId = null;
+            if (this.$store.state.editMode) {
+                console.log("in edit mode");
+                if (this.$store.state.editBooking) {
+                    oldBookingId = this.$store.state.editBooking.id;
+                }
+            }
+
             this.$axios
-                .post("check-massage-booking", { dates: this.dates })
+                .post("check-massage-booking", {
+                    dates: this.dates,
+                    oldBookingId: oldBookingId,
+                })
                 .then((res) => {
                     console.log(res.data.data);
                     this.availableMassages = res.data.data;

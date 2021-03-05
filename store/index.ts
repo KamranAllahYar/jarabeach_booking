@@ -1,6 +1,7 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import differenceInDays from 'date-fns/differenceInDays';
 import parseISO from 'date-fns/parseISO';
+import format from 'date-fns/format';
 import Bugsnag from '@bugsnag/js'
 
 var groupBy = function (xs: any, key: any) {
@@ -41,6 +42,9 @@ export const state = () => ({
   discount: null as any,
 
   lastUpdate: null as Date | null,
+
+  editMode: false as boolean,
+  editBooking: null as any,
 })
 
 export type RootState = ReturnType<typeof state>
@@ -167,6 +171,66 @@ export const getters: GetterTree<RootState, RootState> = {
 }
 
 export const mutations: MutationTree<RootState> = {
+  CANCEL_EDIT: (state: RootState) => {
+    state.editMode = false;
+    state.editBooking = null;
+  },
+  UPDATE_EDIT_MODE: (state: RootState, value) => {
+    state.editMode = value;
+  },
+  SET_EDIT_BOOKINGS: (state: RootState, updateBooking) => {
+    state.editBooking = updateBooking;
+  },
+  TRANSFORM_EDIT_TO_REAL: (state: RootState, booking) => {
+    const oldBooking = booking;
+
+    console.log(booking);
+
+    // Guest info transformation
+    state.adult_no = oldBooking.adult_no;
+    state.child_no = oldBooking.child_no;
+    let otherguests = [];
+    for (let i = 0; i < oldBooking.adult_no; i++) {
+      otherguests.push({
+        first_name: "",
+        last_name: "",
+        type: 'adult',
+        num: i + 1,
+      });
+    }
+    for (let i = 0; i < oldBooking.child_no; i++) {
+      otherguests.push({
+        first_name: "",
+        last_name: "",
+        type: 'child',
+        num: i + 1,
+      });
+    }
+
+    state.other_guests = otherguests;
+    // state.guests_done = true;
+
+    // ROOM TRANSFORMATION
+    state.rooms = oldBooking.rooms.map((room: any) => {
+      return {
+        isWeekend: false,
+        room_id: room.room_id,
+        date: format(parseISO(room.date), "yyyy-MM-dd"),
+      }
+    });
+    // state.availability_done = true;
+
+    //Guest TRANSFORMATION
+    state.guest = oldBooking.guest;
+    state.guest.identification = oldBooking.guest.id_url;
+    state.guest.dob = format(parseISO(oldBooking.guest.dob), "yyyy-MM-dd");
+    state.profile_done = true;
+
+    //POLICIES TRANSFORMATION
+    state.policy_done = true;
+
+
+  },
   UPDATE_EXPIRY: (state, date: Date) => {
     state.lastUpdate = date;
   },
@@ -235,11 +299,9 @@ export const mutations: MutationTree<RootState> = {
       const email = state.guest.email;
       const days_left = differenceInDays(parseISO(state.rooms[0].date), new Date());
 
-      state.done_data = {
-        email: email || "",
-        days_left: days_left || 0,
-        booking_ref: "",
-      }
+      state.done_data.email = email || "";
+      state.done_data.days_left = days_left || 0;
+      state.done_data.booking_ref = "";
     }
 
 
@@ -265,6 +327,9 @@ export const mutations: MutationTree<RootState> = {
     state.saveForNextTime = true as boolean;
 
     state.discount = null as any;
+
+    state.editMode = false as boolean;
+    state.editBooking = null as any;
   },
 }
 
@@ -427,7 +492,7 @@ export const actions: ActionTree<RootState, RootState> = {
         full_names: state.other_guests || [],
         adult_no: state.adult_no,
         child_no: state.child_no,
-        extra_info: "state.extra_info",
+        extra_info: "ex",
         trans_ref: trans_ref,
         method_ref: method_ref,
         method: method,
@@ -458,6 +523,7 @@ export const actions: ActionTree<RootState, RootState> = {
         console.log(sRes.data);
 
         this.app.$toast.success(res.data.message);
+        state.done_data.booking = newBooking;
       } else {
         this.app.$toast.error(res.data.message);
       }
@@ -467,5 +533,16 @@ export const actions: ActionTree<RootState, RootState> = {
       return false;
     }
   },
+
+  loadOldBooking({ state, dispatch, commit }) {
+    if (!state.editMode) {
+      this.app.$toast.info("You are currently not in Edit mode");
+      return;
+    }
+
+    const oldBooking = state.editBooking;
+    commit("TRANSFORM_EDIT_TO_REAL", oldBooking);
+    dispatch("extras/loadOldExtras", oldBooking);
+  }
 
 }

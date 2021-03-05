@@ -1,6 +1,8 @@
 <template>
     <div class="flex min-h-screen bg-white">
         <main class="flex-1 w-full pb-48 overflow-auto beach">
+            <UpdateBookingBanner v-if="$store.state.editMode" />
+
             <div class="my-10 text-center">
                 <img src="~/assets/logo_big.jpg" class="w-32 mx-auto md:w-40" />
             </div>

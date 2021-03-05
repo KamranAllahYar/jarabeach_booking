@@ -52,7 +52,6 @@
                         class="relative flex items-center justify-center flex-shrink-0 text-xl text-gray-500 border border-gray-100 cursor-pointer font-extralight bg-opacity-20 w-14 md:w-auto h-14"
                         :class="roomsAvailable(roomType, day) <= 0 ? 'bg-white' : 'bg-brand-blue-300'"
                         @click="selectRoom(roomType, day)">
-
                         <div v-if="isSingle(roomType, day)" class="flex items-center justify-center w-full h-10 transform scale-110 bg-green-400 rounded-full">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -194,6 +193,7 @@ import isBefore from "date-fns/isBefore";
 import parseISO from "date-fns/parseISO";
 import isWeekend from "date-fns/isWeekend";
 import isToday from "date-fns/isToday";
+import format from "date-fns/format";
 
 import CoolLightBox from "vue-cool-lightbox";
 import "vue-cool-lightbox/dist/vue-cool-lightbox.min.css";
@@ -563,11 +563,17 @@ export default {
             const date = this.startDate;
             this.roomIds = [];
 
-            await this.$axios
+            let bookingId = null;
+            if (this.$store.state.editMode) {
+                bookingId = this.$store.state.editBooking.id;
+            }
+
+            return await this.$axios
                 .post("/check-rooms", {
                     start: this.startDate,
                     end: this.endDate,
                     type: this.seRoom,
+                    booking_id: bookingId,
                 })
                 .then((res) => {
                     console.log(res.data.data);
@@ -581,9 +587,10 @@ export default {
                             date: date,
                         });
                     });
+                })
+                .finally(() => {
+                    this.loadingRoomOptions = false;
                 });
-
-            this.loadingRoomOptions = false;
         },
         getDatesInbetween() {
             if (this.startDate == null || this.endDate == null) return [];
@@ -608,9 +615,38 @@ export default {
         console.log("ROOM CALENDAR MOUNTED");
         console.log(this.initialRooms);
 
-        // if (this.initialRooms) {
-        //     this.bookedRooms = this.initialRooms;
-        // }
+        if (this.initialRooms) {
+            this.bookedRooms = this.initialRooms;
+            console.log("-----------ALL INITIAL ROOMS");
+            console.log(this.initialRooms);
+            console.log(this.roomIds);
+
+            const firstRoom = this.initialRooms[0];
+
+            if (firstRoom) {
+                if (firstRoom.room_id > 0 && firstRoom.room_id < 5) {
+                    this.seRoom = "standard";
+                } else {
+                    this.seRoom = "family";
+                }
+
+                const allDates = this.initialRooms.map((r) => r.date);
+                allDates.sort(function (a, b) {
+                    return new parseISO(a) - format(parseISO(b), "yyyy-MM-dd");
+                });
+
+                this.startDate = allDates[0];
+                this.endDate = allDates[allDates.length - 1];
+                console.log("This is start date: " + this.startDate);
+                console.log("This is end date: " + this.endDate);
+                this.getRoomsAvailableForPeriod().then(() => {
+                    this.roomIds = this.initialRooms.map((v) => v.room_id);
+                    this.roomIds = [...new Set(this.roomIds)];
+                });
+
+                console.log(allDates);
+            }
+        }
 
         this.$nextTick(() => {
             window.addEventListener("resize", this.onResize);
