@@ -59,15 +59,17 @@ export const getters: GetterTree<RootState, RootState> = {
     state.rooms.forEach(room => {
       let rData = state.roomsData.find(r => r.id === room.room_id);
 
-      bRooms.push({
-        room_id: room.room_id,
-        name: rData.name,
-        type: rData.type,
-        date: room.date,
-        price: rData.price,
-        single_price: rData.single_price,
-        isWeekend: room.isWeekend,
-      });
+      if (rData) {
+        bRooms.push({
+          room_id: room.room_id,
+          name: rData.name,
+          type: rData.type,
+          date: room.date,
+          price: rData.price,
+          single_price: rData.single_price,
+          isWeekend: room.isWeekend,
+        });
+      }
     });
 
     return bRooms;
@@ -167,7 +169,20 @@ export const getters: GetterTree<RootState, RootState> = {
   },
   totalPrice: (state: RootState, getters) => {
     return getters.subTotal - getters.discount - getters.roomDiscount;
-  }
+  },
+  differenceToPay: (state: RootState, getters) => {
+    let diff = getters.totalPrice - state.editBooking.payment.total;
+
+    if (diff < 0) {
+      diff = 0;
+    }
+
+    if (state.editBooking.previous_change) {
+      diff = diff + 25000;
+    }
+
+    return diff;
+  },
 }
 
 export const mutations: MutationTree<RootState> = {
@@ -362,11 +377,24 @@ export const actions: ActionTree<RootState, RootState> = {
 
   async createTransaction({ state, getters }) {
     console.log(getters);
-    let dataToPost = {
-      "method": "Paystack",
-      "subtotal": getters.subTotal,
-      "total": getters.totalPrice,
-    } as any;
+    let dataToPost = {} as any;
+    if (!state.editMode) {
+      dataToPost = {
+        "method": "Paystack",
+        "subtotal": getters.subTotal,
+        "total": getters.totalPrice,
+      };
+    } else {
+      console.log(state.editBooking.previous_change);
+      let diff = getters.differenceToPay;
+
+      dataToPost = {
+        "method": "Paystack",
+        "subtotal": getters.subTotal,
+        "previousTotal": getters.totalPrice,
+        "total": diff,
+      };
+    }
 
     const discount = state.discount;
     if (discount) {
@@ -490,6 +518,10 @@ export const actions: ActionTree<RootState, RootState> = {
     }
     if (state.discount) {
       dataToPost.discount = state.discount;
+    }
+
+    if (state.editMode) {
+      dataToPost.oldBookingId = state.editBooking.id;
     }
 
     console.log(dataToPost);

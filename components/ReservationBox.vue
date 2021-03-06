@@ -83,9 +83,16 @@
             <div class="text-xl font-bold">{{ currency(totalPrice) }}</div>
         </div>
 
-        <div v-if="$store.state.editMode" class="flex justify-between w-full px-3 py-3 border rounded-md border-brand-blue-300 bg-brand-blue-100">
-            <div class="text-xl">Difference to Pay</div>
-            <div class="text-xl font-bold">{{ currency(differenceToPay) }}</div>
+        <div v-if="$store.state.editMode" class="w-full px-3 py-3 border rounded-md border-brand-blue-300 bg-brand-blue-100">
+
+            <div class="flex justify-between">
+                <div class="text-xl">Difference to Pay</div>
+                <div class="text-xl font-bold">{{ currency(differenceToPay) }}</div>
+            </div>
+            <div class="flex justify-between text-xs">
+                <div>Previous Cost</div>
+                <div class="font-bold">{{ currency(editBooking.payment.total) }}</div>
+            </div>
         </div>
     </div>
 </template>
@@ -115,13 +122,7 @@ export default {
             return this.$store.state.editBooking;
         },
         differenceToPay() {
-            const diff = this.editBooking.payment.total - this.totalPrice;
-
-            if (diff > 0) {
-                return diff;
-            }
-
-            return 0;
+            return this.$store.getters.differenceToPay;
         },
         specials() {
             return this.$store.getters["extras/allSelected"];

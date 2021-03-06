@@ -151,6 +151,9 @@ export default {
             return this.$store.getters["extras/allSelected"];
         },
         totalPrice() {
+            if (this.$store.state.editMode) {
+                return this.$store.getters["differenceToPay"] * 100;
+            }
             return this.$store.getters["totalPrice"] * 100;
         },
         guestEmail() {

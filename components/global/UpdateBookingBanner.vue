@@ -10,7 +10,10 @@
 export default {
     methods: {
         cancelEdit() {
+            this.$router.push({ path: "/guests" });
             this.$store.commit("CANCEL_EDIT");
+            this.$store.commit("RESET_STORE");
+            this.$store.commit("extras/RESET_STORE");
         },
     },
 };

@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        {{ selectedPackages }}
+        <!-- {{ selectedPackages }} -->
         <SpecialLookoutMeal v-show="showMenu"
             :initial="selectedPackages"
             :options="options"

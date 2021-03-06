@@ -107,7 +107,21 @@ export default {
         },
         async loadOldBooking() {
             await this.$store.dispatch("loadRooms");
+
+            await Promise.allSettled([
+                this.$store.dispatch("loadRooms"),
+                this.$store.dispatch("loadPolicies"),
+
+                this.$store.dispatch("extras/getSpecialDrinks"),
+                this.$store.dispatch("extras/getSpecialDecorations"),
+                this.$store.dispatch("extras/getLookoutOptions"),
+                this.$store.dispatch("extras/getSpecialMassages"),
+                this.$store.dispatch("extras/getQuadbikeOptions"),
+                this.$store.dispatch("extras/getMostPrices"),
+            ]);
+
             this.$store.dispatch("loadOldBooking");
+            this.$router.push({ path: "/availability" });
         },
         gotoBack() {
             this.$router.push({ path: "/guests" });

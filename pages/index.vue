@@ -1,9 +1,7 @@
 <template>
     <div class="text-center">
-        <div class="flex flex-col items-center justify-center w-full h-64">
+        <div class="flex flex-col items-center justify-center h-64 max-w-md mx-auto">
             <Logo />
-            <h1 class="mt-10">Enjoy Jara's overnight experience</h1>
-            <h1 class="mt-10">On this trip what’s most important to you?</h1>
         </div>
     </div>
 </template>

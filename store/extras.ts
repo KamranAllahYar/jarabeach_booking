@@ -399,9 +399,9 @@ export const mutations: MutationTree<ExtraState> = {
     const oldDates = payload.dates;
     const oldCake = payload.cake;
 
+    state.selectedCake = oldCake.data;
     if (oldDates.includes(oldCake.date)) {
       state.dateCake = oldCake.date;
-      state.selectedCake = oldCake.data;
     }
   },
   TRANSFORM_DECORATION: (state, payload) => {
@@ -412,11 +412,12 @@ export const mutations: MutationTree<ExtraState> = {
     oldDecos.forEach((deco: any) => {
       if (oldDates.includes(deco.date)) {
         state.dateDecoration = deco.date;
-        if (deco.note) state.decorationWelcomeNote = deco.note;
-
-        const option = state.decorationOptions.find((dOption) => dOption.id == deco.option_id);
-        state.selectedDecorations.push(option);
       }
+
+      if (deco.note) state.decorationWelcomeNote = deco.note;
+
+      const option = state.decorationOptions.find((dOption) => dOption.id == deco.option_id);
+      if (option) state.selectedDecorations.push(option);
     });
   },
   TRANSFORM_DRINKS: (state, payload) => {
@@ -427,17 +428,18 @@ export const mutations: MutationTree<ExtraState> = {
     oldDrinks.forEach((drink: any) => {
       if (oldDates.includes(drink.date)) {
         state.dateDrink = drink.date;
-        state.selectedDrinks.push({ id: drink.option_id, qty: drink.quantity });
       }
+
+      state.selectedDrinks.push({ id: drink.option_id, qty: drink.quantity });
     });
   },
   TRANSFORM_PHOTOSHOOT: (state, payload) => {
     const oldDates = payload.dates;
     const oldPhotoshoot = payload.photoshoot;
 
+    state.selectedPhotoshoot = oldPhotoshoot.quantity;
     if (oldDates.includes(oldPhotoshoot.date)) {
       state.datePhotoshoot = oldPhotoshoot.date;
-      state.selectedPhotoshoot = oldPhotoshoot.quantity;
     }
   },
   TRANSFORM_STAFF: (state, payload) => {
@@ -564,22 +566,24 @@ export const actions: ActionTree<ExtraState, RootState> = {
   },
 
   //TODO: update the date to reflect current dates not oldBooking dates
-  loadOldExtras({ commit, state }, oldBooking) {
+  loadOldExtras({ commit, state, rootGetters }, oldBooking) {
     console.log("YESSS EXTRASS OLD BOOKING");
     commit("EMPTY_SELECTED");
+
+    const newBookingDates = rootGetters.bookingDates;
 
     if (oldBooking.massage) {
       const s = getSpecialObjFromStr(state.specials, 'massage');
       if (s) {
         commit("ADD_SELECTED", s);
-        commit("TRANSFORM_MASSAGE", { massage: oldBooking.massage, dates: oldBooking.dates });
+        commit("TRANSFORM_MASSAGE", { massage: oldBooking.massage, dates: newBookingDates });
       };
     }
     if (oldBooking.quadbike) {
       const s = getSpecialObjFromStr(state.specials, 'quadbike');
       if (s) {
         commit("ADD_SELECTED", s);
-        commit("TRANSFORM_QUADBIKE", { quadbike: oldBooking.quadbike, dates: oldBooking.dates });
+        commit("TRANSFORM_QUADBIKE", { quadbike: oldBooking.quadbike, dates: newBookingDates });
       };
     }
     if (oldBooking.lookouts) {
@@ -587,42 +591,42 @@ export const actions: ActionTree<ExtraState, RootState> = {
 
       if (s) {
         commit("ADD_SELECTED", s);
-        commit("TRANSFORM_LOOKOUTS", { lookouts: oldBooking.lookouts, dates: oldBooking.dates });
+        commit("TRANSFORM_LOOKOUTS", { lookouts: oldBooking.lookouts, dates: newBookingDates });
       };
     }
     if (oldBooking.cake) {
       const s = getSpecialObjFromStr(state.specials, 'cake');
       if (s) {
         commit("ADD_SELECTED", s);
-        commit("TRANSFORM_CAKE", { cake: oldBooking.cake, dates: oldBooking.dates });
+        commit("TRANSFORM_CAKE", { cake: oldBooking.cake, dates: newBookingDates });
       };
     }
     if (oldBooking.drinks) {
       const s = getSpecialObjFromStr(state.specials, 'drinks');
       if (s) {
         commit("ADD_SELECTED", s);
-        commit("TRANSFORM_DRINKS", { drinks: oldBooking.drinks, dates: oldBooking.dates });
+        commit("TRANSFORM_DRINKS", { drinks: oldBooking.drinks, dates: newBookingDates });
       };
     }
     if (oldBooking.photoshoot) {
       const s = getSpecialObjFromStr(state.specials, 'photoshoot');
       if (s) {
         commit("ADD_SELECTED", s);
-        commit("TRANSFORM_PHOTOSHOOT", { photoshoot: oldBooking.photoshoot, dates: oldBooking.dates });
+        commit("TRANSFORM_PHOTOSHOOT", { photoshoot: oldBooking.photoshoot, dates: newBookingDates });
       };
     }
     if (oldBooking.decorations) {
       const s = getSpecialObjFromStr(state.specials, 'roomDecoration');
       if (s) {
         commit("ADD_SELECTED", s);
-        commit("TRANSFORM_DECORATION", { decos: oldBooking.decorations, dates: oldBooking.dates });
+        commit("TRANSFORM_DECORATION", { decos: oldBooking.decorations, dates: newBookingDates });
       };
     }
     if (oldBooking.domestic_staff) {
       const s = getSpecialObjFromStr(state.specials, 'domesticStaff');
       if (s) {
         commit("ADD_SELECTED", s);
-        commit("TRANSFORM_STAFF", { staff: oldBooking.domestic_staff, dates: oldBooking.dates });
+        commit("TRANSFORM_STAFF", { staff: oldBooking.domestic_staff, dates: newBookingDates });
       };
     }
   }

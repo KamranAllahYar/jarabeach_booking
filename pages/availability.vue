@@ -62,10 +62,15 @@ export default {
                 this.rooms.splice(i, 1);
             }
         },
-        gotoNext() {
+        async gotoNext() {
             this.$store.commit("UPDATE_ROOMS", this.rooms);
 
             this.$store.commit("COMPLETE_AVAILABILITY");
+
+            if (this.$store.state.editMode) {
+                const oldBooking = this.$store.state.editBooking;
+                await this.$store.dispatch("extras/loadOldExtras", oldBooking);
+            }
 
             this.$router.push({ path: "/extras" });
         },
