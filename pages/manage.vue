@@ -105,7 +105,8 @@ export default {
                     this.loading = false;
                 });
         },
-        loadOldBooking() {
+        async loadOldBooking() {
+            await this.$store.dispatch("loadRooms");
             this.$store.dispatch("loadOldBooking");
         },
         gotoBack() {

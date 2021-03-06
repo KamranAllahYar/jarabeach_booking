@@ -189,26 +189,10 @@ export const mutations: MutationTree<RootState> = {
     // Guest info transformation
     state.adult_no = oldBooking.adult_no;
     state.child_no = oldBooking.child_no;
-    let otherguests = [];
-    for (let i = 0; i < oldBooking.adult_no; i++) {
-      otherguests.push({
-        first_name: "",
-        last_name: "",
-        type: 'adult',
-        num: i + 1,
-      });
-    }
-    for (let i = 0; i < oldBooking.child_no; i++) {
-      otherguests.push({
-        first_name: "",
-        last_name: "",
-        type: 'child',
-        num: i + 1,
-      });
-    }
+    let otherguests = oldBooking.full_names;
 
     state.other_guests = otherguests;
-    // state.guests_done = true;
+    state.guests_done = true;
 
     // ROOM TRANSFORMATION
     state.rooms = oldBooking.rooms.map((room: any) => {
@@ -218,7 +202,7 @@ export const mutations: MutationTree<RootState> = {
         date: format(parseISO(room.date), "yyyy-MM-dd"),
       }
     });
-    // state.availability_done = true;
+    state.availability_done = true;
 
     //Guest TRANSFORMATION
     state.guest = oldBooking.guest;
@@ -336,7 +320,7 @@ export const mutations: MutationTree<RootState> = {
 export const actions: ActionTree<RootState, RootState> = {
 
   loadRooms({ commit }) {
-    this.$axios.get("/rooms").then((res) => {
+    return this.$axios.get("/rooms").then((res) => {
       console.log(res.data.data);
       commit("UPDATE_ROOMS_DATA", res.data.data);
     })

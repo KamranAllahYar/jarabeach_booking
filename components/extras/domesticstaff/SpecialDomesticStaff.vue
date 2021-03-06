@@ -138,8 +138,18 @@ export default {
             this.selectedStaff = details;
         },
         checkOptions() {
+            let oldBookingId = null;
+            if (this.$store.state.editMode) {
+                console.log("in edit mode");
+                if (this.$store.state.editBooking) {
+                    oldBookingId = this.$store.state.editBooking.id;
+                }
+            }
             this.$axios
-                .post("check-staffroom-booking", { dates: this.dates })
+                .post("check-staffroom-booking", {
+                    dates: this.dates,
+                    oldBookingId: oldBookingId,
+                })
                 .then((res) => {
                     console.log(res.data.data);
                     this.availableStaffs = res.data.data;
@@ -155,10 +165,13 @@ export default {
             );
         }
 
-        if (this.$store.state.extras.dateStaff && this.$store.state.extras.dateStaff.length > 0) {
+        if (
+            this.$store.state.extras.dateStaff &&
+            this.$store.state.extras.dateStaff.length > 0
+        ) {
             this.selectedDates = this.$store.state.extras.dateStaff;
-        }else{
-          this.selectedDates = this.dates;
+        } else {
+            this.selectedDates = this.dates;
         }
     },
 };
