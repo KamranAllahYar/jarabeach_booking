@@ -200,6 +200,9 @@ export default {
             this.loading = false;
         },
         async testBooking() {
+            if (this.loading) return;
+
+            this.loading = true;
             const res = await this.$store.dispatch("createBooking", {
                 trans_ref: this.trans_ref,
                 method_ref: "offline booking",
@@ -212,6 +215,7 @@ export default {
                 this.$store.commit("RESET_STORE");
                 this.$store.commit("extras/RESET_STORE");
             }
+            this.loading = false;
         },
         currency(num) {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
