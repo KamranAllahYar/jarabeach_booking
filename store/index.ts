@@ -391,8 +391,9 @@ export const actions: ActionTree<RootState, RootState> = {
       dataToPost = {
         "method": "Paystack",
         "subtotal": getters.subTotal,
+        "total": getters.totalPrice,
         "previousTotal": getters.totalPrice,
-        "total": diff,
+        "differenceForUpdate": diff,
       };
     }
 

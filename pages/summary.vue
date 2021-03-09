@@ -72,42 +72,41 @@
 
                     <div class="flex items-center w-full my-6 space-x-2">
                         <MainButton class="w-1/2" outline @click="gotoBack()">Back</MainButton>
-                        <!-- <MainButton :loading="loading" @click="testBooking()">
-                            <div class="flex justify-center">
-                                <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                                </svg>
-                                Test Pay
+                        <template v-if="shouldShowPaymentButton">
+                            <MainButton :loading="loading" @click="testBooking()">
+                                <div class="flex justify-center">
+                                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    Book on Hold
+                                </div>
+                            </MainButton>
+                            <div class="w-full">
+                                <Paystack
+                                    v-if="trans_ref != null"
+                                    :amount="totalPrice"
+                                    :email="guestEmail"
+                                    :paystackkey="paystackkey"
+                                    :reference="trans_ref"
+                                    :callback="completeBooking"
+                                    :close="closePayment"
+                                    :embed="false">
+                                    <MainButton :loading="loading">
+                                        <div class="flex justify-center">
+                                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            Pay Now
+                                        </div>
+                                    </MainButton>
+                                </Paystack>
                             </div>
-                        </MainButton> -->
-                        <MainButton :loading="loading" @click="testBooking()">
-                            <div class="flex justify-center">
-                                <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                                </svg>
-                                Book on Hold
-                            </div>
-                        </MainButton>
-                        <div class="w-full">
-                            <Paystack
-                                v-if="trans_ref != null"
-                                :amount="totalPrice"
-                                :email="guestEmail"
-                                :paystackkey="paystackkey"
-                                :reference="trans_ref"
-                                :callback="completeBooking"
-                                :close="closePayment"
-                                :embed="false">
-                                <MainButton :loading="loading">
-                                    <div class="flex justify-center">
-                                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                                        </svg>
-                                        Pay Now
-                                    </div>
-                                </MainButton>
-                            </Paystack>
-                        </div>
+                        </template>
+                        <template v-else>
+                            <MainButton :loading="loading" @click="updateBooking()">
+                                Update Booking
+                            </MainButton>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -135,6 +134,14 @@ export default {
         };
     },
     computed: {
+        shouldShowPaymentButton() {
+            if (!this.$store.state.editMode) return true;
+            if (this.$store.state.editMode) {
+                if (this.totalPrice <= 0) return false;
+            }
+
+            return true;
+        },
         totalNights() {
             return this.$store.getters.totalNights;
         },
@@ -196,6 +203,24 @@ export default {
                 }
             } else {
                 this.$toasted.error(res.message);
+            }
+            this.loading = false;
+        },
+        async updateBooking() {
+            if (this.loading) return;
+
+            this.loading = true;
+            const res = await this.$store.dispatch("createBooking", {
+                trans_ref: this.trans_ref,
+                method_ref: "update booking",
+                method: "Update",
+            });
+
+            if (res) {
+                console.log(res);
+                this.$router.push("/done");
+                this.$store.commit("RESET_STORE");
+                this.$store.commit("extras/RESET_STORE");
             }
             this.loading = false;
         },
