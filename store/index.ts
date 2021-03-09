@@ -296,7 +296,7 @@ export const mutations: MutationTree<RootState> = {
   RESET_STORE: (state) => {
     if (state.rooms.length > 0) {
       const email = state.guest.email;
-      const days_left = differenceInDays(parseISO(state.rooms[0].date), new Date());
+      const days_left = differenceInDays(parseISO(state.rooms[0].date), new Date()) + 1;
 
       state.done_data.email = email || "";
       state.done_data.days_left = days_left || 0;
