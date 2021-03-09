@@ -145,7 +145,23 @@ export default {
         },
     },
     methods: {
+        showMessage(name) {
+            this.$toast.error(`The ${name} field is required`);
+        },
         next() {
+            if (!this.cake.type) {
+                this.showMessage("size");
+                return;
+            }
+            if (!this.cake.quantity) {
+                this.showMessage("quantity");
+                return;
+            }
+            if (!this.cake.flavour) {
+                this.showMessage("flavour");
+                return;
+            }
+
             this.$store.commit("extras/SET_SELECTED_CAKE", {
                 cake: this.cake,
                 date: this.selectedDate,

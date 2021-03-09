@@ -36,7 +36,7 @@ export const state = () => ({
   staffPrices: [] as any[],
   selectedStaff: {
     menu: [],
-    type: [],
+    type: ['nanny'],
   } as any,
   dateStaff: [] as String[] | null,
 

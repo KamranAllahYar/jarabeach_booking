@@ -85,7 +85,7 @@ export default {
     props: ["initial", "availableStaffRooms"],
     data() {
         return {
-            type: [],
+            type: ['nanny'],
             menu: [],
         };
     },

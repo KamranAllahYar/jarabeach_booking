@@ -65,7 +65,7 @@ export default {
             selectedDates: [],
             selectedStaff: {
                 menu: [],
-                type: [],
+                type: ['nanny'],
             },
             availableStaffs: {},
         };
