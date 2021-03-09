@@ -1,14 +1,9 @@
-/*!
-  * vue-router v3.4.9
-  * (c) 2020 Evan You
+/**
+  * vue-class-component v7.2.6
+  * (c) 2015-present Evan You
   * @license MIT
   */
 
-/*!
- * Vue.js v2.6.12
- * (c) 2014-2020 Evan You
- * Released under the MIT License.
- */
 
 /*!
  * vue-client-only v2.0.0
@@ -22,19 +17,7 @@
  * Released under the MIT License.
  */
 
-/*!
- * vuex v3.5.1
- * (c) 2020 Evan You
- * @license MIT
- */
-
 /*! (c) 2020 Andrea Giammarchi */
-
-/**
-  * vue-class-component v7.2.6
-  * (c) 2015-present Evan You
-  * @license MIT
-  */
 
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
@@ -59,4 +42,23 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ */
+
+
+/*!
+  * vue-router v3.5.1
+  * (c) 2021 Evan You
+  * @license MIT
+  */
+
+/*!
+ * Vue.js v2.6.12
+ * (c) 2014-2020 Evan You
+ * Released under the MIT License.
+ */
+
+/*!
+ * vuex v3.6.2
+ * (c) 2021 Evan You
+ * @license MIT
  */
