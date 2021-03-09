@@ -28,7 +28,13 @@ export default {
   router: {
     middleware: 'clear'
   },
-  components: true,
+  components: [
+    '~/components', // shortcut to { path: '~/components' }
+    { path: '~/components/extras/', prefix: '' },
+    { path: '~/components/extras/lookout', prefix: '' },
+    { path: '~/components/extras/domesticstaff', prefix: '' },
+    { path: '~/components/global', prefix: '' },
+  ],
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/tailwindcss',

@@ -3,7 +3,6 @@
         <div class="flex flex-col w-full md:flex-row" v-show="!showStaff">
             <div class="relative flex-shrink-0 w-full md:w-6/12 h-60 md:h-auto">
                 <img src="@/assets/images/specials/domesticStaff.png" alt="" class="object-cover object-center w-full h-full">
-                <NavSpecials :index="8" @prev="$emit('prev')" />
             </div>
             <div class="flex flex-col w-full p-6">
                 <div class="font-semibold">Domestic Staff</div>

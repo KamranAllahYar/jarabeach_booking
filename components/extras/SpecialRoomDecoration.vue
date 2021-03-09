@@ -2,7 +2,6 @@
     <div class="flex flex-col w-full md:flex-row">
         <div class="relative w-full md:w-6/12 h-60 md:h-auto">
             <img src="@/assets/images/specials/roomDecoration.png" alt="" class="object-cover object-center w-full h-full">
-            <NavSpecials color="bg-red-500" :index="7" @next="$emit('next')" @prev="$emit('prev')" />
         </div>
 
         <div class="w-full p-6 md:w-7/12">

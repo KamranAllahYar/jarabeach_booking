@@ -2,10 +2,9 @@
     <div class="flex flex-col w-full md:flex-row md:h-640">
         <div class="relative w-full md:h-auto md:w-6/12 h-60">
             <img src="@/assets/images/specials/drinks.png" alt="" class="object-cover object-center w-full h-full">
-            <NavSpecials color="bg-green-700" :index="5" @next="$emit('next')" @prev="$emit('prev')" />
         </div>
         <div class="flex flex-col w-full h-full py-6 md:w-7/12">
-            <div class="flex-1 px-6 pb-4 md:overflow-y-auto">
+            <div class="flex-1 px-6 pb-4 md:overflow-y-auto" id="con_scroll">
                 <div class="font-semibold">Premium Drink Collection</div>
                 <p class="mt-3 font-light leading-relaxed text-gray-600">
                     We have curated a small, but memorable range of champagnes, wines and spirits -
@@ -114,6 +113,12 @@ export default {
                 id: this.drinks[0].id,
                 qty: 1,
             });
+            this.$nextTick(() => {
+                var container = this.$el.querySelector("#con_scroll");
+                container.scrollTop = container.scrollHeight;
+            });
+            // setTimeout(() => {
+            // }, 1000);
         },
         removeDrink(ix) {
             this.selectedDrinks.splice(ix, 1);

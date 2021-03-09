@@ -17,12 +17,12 @@
     "@nuxtjs/pwa": "^3.0.2",
     "@nuxtjs/toast": "^3.3.1",
     "@tailwindcss/forms": "^0.2.1",
-    "autoprefixer": "^10.2.5",
+    "autoprefixer": "^9",
     "core-js": "^3.6.5",
     "nuxt": "^2.14.6",
     "nuxt-property-decorator": "^2.8.8",
-    "postcss": "^8.2.7",
-    "tailwindcss": "^2.0.1-compat",
+    "postcss": "^7",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.6",
     "vue-cool-lightbox": "^2.7.0",
@@ -35,6 +35,6 @@
   "devDependencies": {
     "@nuxt/types": "^2.14.6",
     "@nuxt/typescript-build": "^2.0.3",
-    "@nuxtjs/tailwindcss": "^3.1.0"
+    "@nuxtjs/tailwindcss": "^3.4.2"
   }
 }
