@@ -23,6 +23,13 @@
                 </div>
                 <div>
                     <div class="mt-6 font-semibold">Select Wine or Champagne or Spirit</div>
+
+                    <div @click="addDrinks" class="flex items-center flex-1 flex-shrink-0 h-10 mb-3 text-xs cursor-pointer text-brand-blue hover:text-brand-blue-300">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        <div>Add</div>
+                    </div>
                     <div class="flex flex-wrap items-center justify-between w-full mt-3 space-y-4 md:space-y-3">
                         <div class="flex flex-col items-center w-full space-x-0 space-y-2 font-light md:space-y-0 md:space-x-3 md:items-end md:flex-row" v-for="(sDrink, ix) in selectedDrinks" :key="ix">
                             <div class="flex items-center flex-1 pl-2 border rounded-md focus-within:ring">
@@ -46,13 +53,13 @@
                                 </select>
                             </div>
                             <div class="flex-1 hidden md:block"></div>
-                            <div @click="addDrinks" v-if="ix == selectedDrinks.length-1" class="flex items-center flex-1 flex-shrink-0 h-10 mb-3 text-xs cursor-pointer text-brand-blue hover:text-brand-blue-300">
+                            <!-- <div @click="addDrinks" v-if="ix == selectedDrinks.length-1" class="flex items-center flex-1 flex-shrink-0 h-10 mb-3 text-xs cursor-pointer text-brand-blue hover:text-brand-blue-300">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                 </svg>
                                 <div>Add</div>
-                            </div>
-                            <div @click="removeDrink(ix)" v-else class="flex items-center flex-1 flex-shrink-0 h-10 mb-3 text-xs cursor-pointer text-brand-red hover:text-red-300">
+                            </div> -->
+                            <div @click="removeDrink(ix)" class="flex items-center flex-1 flex-shrink-0 h-10 mb-3 text-xs cursor-pointer text-brand-red hover:text-red-300">
                                 <div>Remove</div>
                             </div>
                         </div>
@@ -60,10 +67,10 @@
                 </div>
             </div>
             <div class="border-t">
-              <div class="flex w-full px-6 mx-auto mt-6 space-x-2 md:px-0 md:w-2/3">
-                  <MainButton outline @click="prev()">Back</MainButton>
-                  <MainButton @click="next()">Next</MainButton>
-              </div>
+                <div class="flex w-full px-6 mx-auto mt-6 space-x-2 md:px-0 md:w-2/3">
+                    <MainButton outline @click="prev()">Back</MainButton>
+                    <MainButton @click="next()">Next</MainButton>
+                </div>
             </div>
         </div>
     </div>
@@ -103,7 +110,7 @@ export default {
             this.$emit("prev");
         },
         addDrinks() {
-            this.selectedDrinks.push({
+            this.selectedDrinks.unshift({
                 id: this.drinks[0].id,
                 qty: 1,
             });
@@ -124,12 +131,12 @@ export default {
             );
         }
 
-        if (this.drinks.length > 0 && this.selectedDrinks.length <= 0) {
-            this.selectedDrinks.push({
-                id: this.drinks[0].id,
-                qty: 1,
-            });
-        }
+        // if (this.drinks.length > 0 && this.selectedDrinks.length <= 0) {
+        //     this.selectedDrinks.push({
+        //         id: this.drinks[0].id,
+        //         qty: 1,
+        //     });
+        // }
 
         if (this.dates.length > 0) {
             this.selectedDate = this.dates[0];
