@@ -91,7 +91,9 @@ export default {
         },
     },
     mounted() {
+      setTimeout(() => {
         this.$tours["myTour"].start();
+      }, 100)
     },
     created() {
         console.log("STORE_ROOMS");
