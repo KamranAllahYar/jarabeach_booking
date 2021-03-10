@@ -285,7 +285,7 @@ export const mutations: MutationTree<ExtraState> = {
       state.selected.splice(ix, 1);
     }
   },
-  EMPTY_SELECTED: (state, sp) => {
+  EMPTY_SELECTED: (state) => {
     state.selected = [];
   },
 
@@ -567,7 +567,6 @@ export const actions: ActionTree<ExtraState, RootState> = {
 
   //TODO: update the date to reflect current dates not oldBooking dates
   loadOldExtras({ commit, state, rootGetters }, oldBooking) {
-    console.log("YESSS EXTRASS OLD BOOKING");
     commit("EMPTY_SELECTED");
 
     const newBookingDates = rootGetters.bookingDates;
@@ -586,7 +585,7 @@ export const actions: ActionTree<ExtraState, RootState> = {
         commit("TRANSFORM_QUADBIKE", { quadbike: oldBooking.quadbike, dates: newBookingDates });
       };
     }
-    if (oldBooking.lookouts) {
+    if (oldBooking.lookouts.length <= 0) {
       const s = getSpecialObjFromStr(state.specials, 'lookout');
 
       if (s) {
@@ -601,7 +600,7 @@ export const actions: ActionTree<ExtraState, RootState> = {
         commit("TRANSFORM_CAKE", { cake: oldBooking.cake, dates: newBookingDates });
       };
     }
-    if (oldBooking.drinks) {
+    if (oldBooking.drinks.length <= 0) {
       const s = getSpecialObjFromStr(state.specials, 'drinks');
       if (s) {
         commit("ADD_SELECTED", s);
@@ -615,7 +614,7 @@ export const actions: ActionTree<ExtraState, RootState> = {
         commit("TRANSFORM_PHOTOSHOOT", { photoshoot: oldBooking.photoshoot, dates: newBookingDates });
       };
     }
-    if (oldBooking.decorations) {
+    if (oldBooking.decorations.length <= 0) {
       const s = getSpecialObjFromStr(state.specials, 'roomDecoration');
       if (s) {
         commit("ADD_SELECTED", s);
