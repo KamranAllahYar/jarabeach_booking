@@ -585,7 +585,7 @@ export const actions: ActionTree<ExtraState, RootState> = {
         commit("TRANSFORM_QUADBIKE", { quadbike: oldBooking.quadbike, dates: newBookingDates });
       };
     }
-    if (oldBooking.lookouts.length <= 0) {
+    if (oldBooking.lookouts.length >= 0) {
       const s = getSpecialObjFromStr(state.specials, 'lookout');
 
       if (s) {
@@ -600,7 +600,7 @@ export const actions: ActionTree<ExtraState, RootState> = {
         commit("TRANSFORM_CAKE", { cake: oldBooking.cake, dates: newBookingDates });
       };
     }
-    if (oldBooking.drinks.length <= 0) {
+    if (oldBooking.drinks.length >= 0) {
       const s = getSpecialObjFromStr(state.specials, 'drinks');
       if (s) {
         commit("ADD_SELECTED", s);
@@ -614,7 +614,7 @@ export const actions: ActionTree<ExtraState, RootState> = {
         commit("TRANSFORM_PHOTOSHOOT", { photoshoot: oldBooking.photoshoot, dates: newBookingDates });
       };
     }
-    if (oldBooking.decorations.length <= 0) {
+    if (oldBooking.decorations.length >= 0) {
       const s = getSpecialObjFromStr(state.specials, 'roomDecoration');
       if (s) {
         commit("ADD_SELECTED", s);
