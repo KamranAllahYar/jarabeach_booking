@@ -84,12 +84,15 @@
         </div>
 
         <div v-if="$store.state.editMode" class="w-full px-3 py-3 border rounded-md border-brand-blue-300 bg-brand-blue-100">
-
+            <div v-if="$store.state.editBooking.previous_change"  class="flex justify-between">
+                <div class="text-xs">Booking Transfer Charge</div>
+                <div class="text-xs font-bold">{{ currency(25000) }}</div>
+            </div>
             <div class="flex justify-between">
                 <div class="text-xl">Difference to Pay</div>
                 <div class="text-xl font-bold">{{ currency(differenceToPay) }}</div>
             </div>
-            <div class="flex justify-between text-xs">
+            <div class="flex justify-between mt-8 text-xs">
                 <div>Previous Cost</div>
                 <div class="font-bold">{{ currency(editBooking.payment.total) }}</div>
             </div>
