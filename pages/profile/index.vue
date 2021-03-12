@@ -4,13 +4,13 @@
 
         <div class="flex flex-col justify-center space-y-6 md:flex-row md:space-y-0 md:space-x-6">
             <div class="w-full md:w-6/12">
-                <div class="px-6 pt-6 text-gray-700 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
+                <form @submit.prevent class="px-6 pt-6 text-gray-700 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
                     <div class="border rounded-md">
                         <div class="grid px-3 py-4 space-y-3 border-b md:grid-cols-2 md:space-y-0 md:space-x-3">
                             <div>
                                 <div class="text-base font-bold">Email address</div>
                                 <div class="flex items-center">
-                                    <input type="email" required v-model="guest.email" placeholder="email@example.com" class="w-full px-0 border-0" style="box-shadow: none" />
+                                    <input type="email" required v-model="guest.email" class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" style="box-shadow: none" />
                                     <Loading v-if="loading" />
                                     <svg v-if="weHaveData && !wantsToUpdate" class="inline-block w-6 h-6 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -19,7 +19,7 @@
                             </div>
                             <div v-if="showFullForm">
                                 <div class="text-base font-bold">Phone number</div>
-                                <input type="tel" required v-model="guest.phone" placeholder="08012345678" class="w-full px-0 border-0" style="box-shadow: none" />
+                                <input type="tel" required v-model="guest.phone" class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" style="box-shadow: none" />
                             </div>
                         </div>
                         <div class="px-3 py-4 border-b" v-if="weHaveData && !wantsToUpdate">
@@ -34,17 +34,17 @@
                             <div class="grid px-3 py-4 space-y-3 border-b md:space-y-0 md:space-x-3 md:grid-cols-2">
                                 <div>
                                     <div class="text-base font-bold">First Name</div>
-                                    <input type="text" v-model="guest.first_name" placeholder="Emmanuel" class="w-full px-0 border-0" style="box-shadow: none" />
+                                    <input required type="text" v-model="guest.first_name" class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" style="box-shadow: none" />
                                 </div>
                                 <div>
                                     <div class="text-base font-bold">Last Name</div>
-                                    <input type="text" v-model="guest.last_name" placeholder="Christopher" class="w-full px-0 border-0" style="box-shadow: none" />
+                                    <input required type="text" v-model="guest.last_name" class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" style="box-shadow: none" />
                                 </div>
                             </div>
                             <div class="grid px-3 py-4 space-y-3 border-b md:grid-cols-2 md:space-y-0 md:space-x-3">
                                 <div>
                                     <div class="text-base font-bold">Gender</div>
-                                    <select v-model="guest.gender" class="w-full px-0 border-0" style="box-shadow: none">
+                                    <select required v-model="guest.gender" class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" style="box-shadow: none">
                                         <option value="">--SELECT--</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -52,18 +52,18 @@
                                 </div>
                                 <div>
                                     <div class="text-base font-bold">Date of Birth</div>
-                                    <input type="date" v-model="guest.dob" :max="last18Year+'-01-01'" class="w-full px-0 border-0" ref="dob" style="box-shadow: none" />
+                                    <input type="date" required v-model="guest.dob" :max="last18Year+'-01-01'" class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" ref="dob" style="box-shadow: none" />
                                 </div>
                             </div>
                             <div class="px-3 py-4 border-b">
                                 <div>
                                     <textarea type="text" v-model="guest.concerns"
-                                        class="w-full px-2 border-b border-gray-200 rounded-md" placeholder="State any dietary concerns (e.g Vegeterian)"></textarea>
+                                        class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" placeholder="State any dietary concerns (e.g Vegeterian)"></textarea>
                                 </div>
                             </div>
                             <div class="px-3 py-4 border-b">
                                 <div>
-                                    <div class="text-base font-bold">Upload Identification</div>
+                                    <div class="mb-2 text-base font-bold">Upload Image Identification (i.e. passport, national ID, drivers license)</div>
 
                                     <img v-if="guest.identification && !hasFileUpload" :src="guest.identification" class="w-3/5" />
 
@@ -86,7 +86,7 @@
                             <div class="px-3 py-4 border-b">
                                 <div>
                                     <div class="text-base font-bold">How did you hear about us?</div>
-                                    <select v-model="guest.hear_of_us" class="w-48 px-0 border-0" style="box-shadow: none">
+                                    <select v-model="guest.hear_of_us" class="px-0 px-3 border-transparent rounded-md w-52 bg-brand-blue-100" style="box-shadow: none">
                                         <option value="">--SELECT--</option>
                                         <option value="Social Media">Social Media</option>
                                         <option value="Friend">Friend</option>
@@ -109,10 +109,10 @@
                     </div>
 
                     <div class="flex w-full my-6 space-x-2">
-                        <MainButton outline @click="gotoBack()">Back</MainButton>
-                        <MainButton :loading="initialLoad && loading" @click="gotoNext()">Next</MainButton>
+                        <MainButton type="button" outline @click="gotoBack()">Back</MainButton>
+                        <MainButton :loading="loading" @click="gotoNext()">Next</MainButton>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="flex-shrink-0 w-full px-6 md:px-0 md:w-3/12">
                 <ReservationBox />
@@ -192,13 +192,22 @@ export default {
         async gotoNext() {
             console.log("go to next");
             if (this.initialLoad && !this.wantsToUpdate) {
+                console.log("sd");
                 this.confirmGuest();
                 return;
             }
+            console.log("sss");
 
             let guestFormData = new FormData();
             if (this.hasFileUpload) {
                 guestFormData.append("identification", this.file);
+            } else {
+                if (!this.guest.identification) {
+                    this.$toast.info(
+                        "Please you must include a means of identification"
+                    );
+                    return;
+                }
             }
 
             if (this.guest.id) {
@@ -238,12 +247,6 @@ export default {
         },
 
         gotoBack() {
-            // if (this.from) {
-            //     this.$router.push({ path: this.from.fullPath });
-            //     return;
-            // }
-            // this.$router.push({ path: "/extras" });
-
             this.$router.go(-1);
         },
 
@@ -261,6 +264,8 @@ export default {
                 this.$toast.show("Please enter a valid email address");
                 return;
             }
+
+            console.log("confirming guest");
 
             this.loading = true;
             const res = await this.$store.dispatch(

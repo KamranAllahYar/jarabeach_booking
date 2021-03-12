@@ -12,7 +12,7 @@
 
             <div class="p-6 mx-auto mt-12 max-w-7xl">
                 <div>
-                    <div class="text-3xl font-semibold text-center">Congratulations</div>
+                    <div class="text-3xl font-semibold text-center">Booking Held!<br />Payment required to confirm your visit</div>
                     <div class="max-w-md px-6 py-6 mx-auto mt-10 bg-white border rounded-lg shadow-lg">
                         <div class="flex items-center justify-center pb-6">
                             <svg
@@ -41,6 +41,11 @@
                             <br />
 
                             We've also sent details to <span class="text-brand-blue">{{ done.email }}</span>
+                            <br />
+                            Be sure to check your spam folder if not seen in your inbox.
+                            <br />
+                            <br />
+                            Find out all you need to know <a class="underline text-brand-blue" href="https://www.jarabeachresort.com/faq-s">here</a> ahead of your trip.
 
                             <!-- Your booking was successful, we’ve sent all the details you will need to
                             <span class="text-brand-blue">{{ done_email }}</span>.

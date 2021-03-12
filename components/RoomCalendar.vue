@@ -80,7 +80,7 @@
 
                         <!-- POPOVER -->
                         <div v-if="isEnd(roomType, day) && !smallScreen" @click.stop=""
-                            class="absolute top-0 right-0 z-50 py-2 pl-3 pr-4 text-sm transform translate-x-full bg-white border rounded-lg w-36"
+                            class="absolute top-0 right-0 z-50 w-48 py-2 pl-3 pr-4 text-sm transform translate-x-full bg-white border rounded-lg"
                             style="--tw-translate-x: 104%">
                             <div v-if="loadingRoomOptions">
                                 <svg class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -100,7 +100,7 @@
                                         </svg>
 
                                         <span class="text-gray-700 whitespace-nowrap">
-                                            {{ h.room.name }}
+                                            {{ h.room.name }} Room
                                         </span>
                                     </div>
                                 </template>
@@ -137,7 +137,7 @@
                                                 </svg>
 
                                                 <span class="text-gray-700 whitespace-nowrap">
-                                                    {{ h.room.name }}
+                                                    {{ h.room.name }} Room
                                                 </span>
                                             </div>
                                         </template>

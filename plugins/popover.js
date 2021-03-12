@@ -1,4 +1,4 @@
 import Vue from 'vue'
 import Popover from 'vue-js-popover'
 
-Vue.use(Popover)
+Vue.use(Popover, { tooltip: true })

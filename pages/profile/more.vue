@@ -34,7 +34,7 @@
 
                     <div class="flex w-full my-6 space-x-2">
                         <MainButton outline @click="gotoBack()">Back</MainButton>
-                        <MainButton outline @click="gotoNext()">Skip</MainButton>
+                        <!-- <MainButton outline @click="gotoNext()">Skip</MainButton> -->
                         <MainButton @click="gotoNext()">Next</MainButton>
                     </div>
                 </div>

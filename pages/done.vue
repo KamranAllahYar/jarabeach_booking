@@ -34,8 +34,16 @@
                             <span v-else>
                                 in {{ done.days_left }} days!
                             </span>
+
+                            <br />
+                            <br />
+                            Be sure to check your spam folder if not seen in your inbox.
+                            <br />
+                            <br />
+                            Find out all you need to know <a class="underline text-brand-blue" href="https://www.jarabeachresort.com/faq-s">here</a> ahead of your trip.
                         </div>
                     </div>
+
                     <div class="mt-5 text-sm text-center">Check us out on social media</div>
                     <div class="flex items-center justify-center mt-2 space-x-5">
                         <a title="Instagram" href="http://instagram.com/jarabeachresortng" target="_blank">
