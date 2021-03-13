@@ -10,7 +10,7 @@ export const state = () => ({
     { type: 'drinks', name: 'ca', available: true, range: '15,000' },
     { type: 'cake', name: 'Cake', available: true, range: '15,000' },
     { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
-    { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '15,000' }
+    { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' }
   ] as { name: string, type: string, range: string, available: boolean }[],
   selected: [] as { name: string, type: string, range: string, available: boolean }[],
   selectedIndex: 0 as number,
@@ -190,25 +190,26 @@ export const getters: GetterTree<ExtraState, RootState> = {
       }
     }
 
-    if (state.selectedStaff.type.length > 0) {
-      if (state.selectedStaff.type.includes('nanny')) {
-        price += nannyPrice
-      }
-      if (state.selectedStaff.type.includes('driver')) {
-        price += driverPrice
-      }
+    price += nannyPrice;
+    // if (state.selectedStaff.type.length > 0) {
+    //   if (state.selectedStaff.type.includes('nanny')) {
+    //     price += nannyPrice
+    //   }
+    //   if (state.selectedStaff.type.includes('driver')) {
+    //     price += driverPrice
+    //   }
 
-      const totalStaff = state.selectedStaff.type.length;
-      if (state.selectedStaff.menu.includes('breakfast')) {
-        price += totalStaff * breakfastPrice
-      }
-      if (state.selectedStaff.menu.includes('lunch')) {
-        price += totalStaff * lunchPrice
-      }
-      if (state.selectedStaff.menu.includes('dinner')) {
-        price += totalStaff * dinnerPrice
-      }
-    }
+    //   const totalStaff = state.selectedStaff.type.length;
+    //   if (state.selectedStaff.menu.includes('breakfast')) {
+    //     price += totalStaff * breakfastPrice
+    //   }
+    //   if (state.selectedStaff.menu.includes('lunch')) {
+    //     price += totalStaff * lunchPrice
+    //   }
+    //   if (state.selectedStaff.menu.includes('dinner')) {
+    //     price += totalStaff * dinnerPrice
+    //   }
+    // }
 
     const totalDays = state.dateStaff?.length || 0;
 

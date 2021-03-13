@@ -254,6 +254,7 @@ export const mutations: MutationTree<RootState> = {
         last_name: "",
         type: 'child',
         num: i + 1,
+        age: state.children_ages[i],
       });
     }
 

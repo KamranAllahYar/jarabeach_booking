@@ -8,7 +8,7 @@
                     <div class="border rounded-md">
                         <div class="px-3 py-4 border-b" v-for="(guest, ix) in others" :key="ix">
                             <div class="text-base font-bold capitalize">
-                                {{ guest.type }} {{ guest.num }}
+                                {{ guest.type }} {{ guest.num }} <span v-if="guest.age">(Age: {{ guest.age }})</span>
                             </div>
                             <div class="flex items-center">
                                 <div class="mr-3">
@@ -59,6 +59,15 @@ export default {
             this.$router.push({ path: "/profile" });
         },
         gotoNext() {
+            for (let i = 0; i < this.others.length; i++) {
+                const guest = this.others[i];
+                if (guest.firs_name == "" || guest.last_name == "") {
+                    this.$toast.info(
+                        "Please provide the full names of all the guests before you can move forward"
+                    );
+                    return;
+                }
+            }
             this.$router.push({ path: "/policies" });
         },
     },

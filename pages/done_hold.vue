@@ -22,7 +22,9 @@
                             </svg>
                         </div>
                         <div class="">
-                            Your booking <b>#{{ done.booking.ref }}</b> is confirmed. To complete your booking make payment within the next 30 minutes to either of the following bank accounts:
+                            Your booking <b>#{{ done.booking.ref }}</b> has been held and payment is required to confirm your visit.
+                            <br />
+                            To complete your booking make payment within the next 30 minutes to either of the following bank accounts:
 
                             <br />
                             <br />
@@ -37,6 +39,9 @@
                             Guaranty Trust Bank (GTB)<br />
                             <b>0504697451</b>
 
+                            <br />
+                            <br />
+                            Please send your proof of payment to <b class="text-brand-blue">bookings@jarabeachresort.com</b>
                             <br />
                             <br />
 

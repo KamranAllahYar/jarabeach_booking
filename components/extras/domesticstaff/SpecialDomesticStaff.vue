@@ -8,8 +8,11 @@
                 <div class="font-semibold">Domestic Staff</div>
 
                 <p class="mt-3 font-light leading-relaxed text-gray-600">
-                    We welcome guests with nannies or drivers, subject to availability. No discounts/ offers apply to domestic staff pricing.
-                    We have a nannies room and a drivers room (2 max in each). Booked in advance.
+                    Nannies are welcome to sleep in our dedicated staff quarters - bedding and water provided - and partake in all meals
+                    and make use of Jara's facilities. A separate food menu is available. Alcohol and the snack station is not included.
+                    Cost per night: N30,000 (inc VAT).
+                    <!-- We welcome guests with nannies or drivers, subject to availability. No discounts/ offers apply to domestic staff pricing.
+                    We have a nannies room and a drivers room (2 max in each). Booked in advance. -->
                 </p>
 
                 <div>
@@ -19,7 +22,6 @@
                             <label class="flex items-center mt-4" :key="date">
                                 <input type="checkbox" :value="date" v-model="selectedDates" class="w-5 h-5 mr-3 rounded focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                                 <div>{{ showDate(date) }}</div>
-
                             </label>
                             <div v-if="availableStaffs[date]" :key="date+'ii'" class="ml-8 text-sm text-gray-400">
                                 <span v-if="!availableStaffs[date].nanny">
@@ -37,7 +39,7 @@
 
                 <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">
                     <MainButton outline @click="prev()">Back</MainButton>
-                    <MainButton @click="toggleStaffInfo(true)">Next</MainButton>
+                    <MainButton @click="next()">Next</MainButton>
                 </div>
             </div>
         </div>
@@ -64,7 +66,7 @@ export default {
             selectedDates: [],
             selectedStaff: {
                 menu: [],
-                type: ['nanny'],
+                type: ["nanny"],
             },
             availableStaffs: {},
         };

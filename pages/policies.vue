@@ -14,11 +14,20 @@
                             <pre class="w-full overflow-y-auto h-80" v-html="currentPolicy.content"></pre>
                         </div>
 
-                        <div class="flex justify-start px-3 py-4">
+                        <div class="px-3 py-4">
                             <label class="inline-flex items-center font-bold cursor-pointer">
                                 <input type="checkbox" v-model="agreed" class="w-6 h-6 mr-4 text-green-600 rounded-full focus:ring-1 focus:ring-green-600" />
                                 I accept Jara's booking terms and condition
                             </label>
+
+                            <div class="mt-6">
+                                I specifically confirm that I:
+                                <ol class="pl-6 mt-1 list-decimal">
+                                    <li>understand the use of illegal drugs is strictly prohibited</li>
+                                    <li>understand my booking permits only the number of guests stated on my booking</li>
+                                    <li>agree to abide by all house rules and regulations set forth to ensure the peace and enjoyment for all guests</li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
 

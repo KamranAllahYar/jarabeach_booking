@@ -73,14 +73,21 @@
                     <div class="flex items-center w-full my-6 space-x-2">
                         <MainButton class="w-1/2" outline @click="gotoBack()">Back</MainButton>
                         <template v-if="shouldShowPaymentButton">
-                            <MainButton :loading="loading" @click="testBooking()" v-if="shouldShowBookOnHold">
-                                <div class="flex justify-center" v-popover:tooltip="'This is a string value'">
-                                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    Book on Hold
+                            <div class="relative flex-shrink-0" v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimerToggle(true)" @mouseleave="holdDisclaimerToggle(false)">
+                                <MainButton :loading="loading" @click.native="bookOnHoldBooking()">
+                                    <div class="flex justify-center" v-popover:tooltip="'This is a string value'">
+                                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        Book on Hold
+                                    </div>
+                                </MainButton>
+                                <div v-if="holdDisclaimer" class="absolute p-2 mx-auto text-xs bg-white border-2 rounded border-brand-blue-300" style="top: -120px">
+                                    Booking will only be held for <b>30 mins</b>. You must send a proof of payment to
+                                    <b>bookings@jarabeachresort.com</b> within that time or the hold on the
+                                    booking will be cancelled.
                                 </div>
-                            </MainButton>
+                            </div>
                             <div class="w-full">
                                 <Paystack
                                     v-if="trans_ref != null"
@@ -131,6 +138,7 @@ export default {
             loadingCode: false,
             loading: false,
             trans_ref: null,
+            holdDisclaimer: false,
         };
     },
     computed: {
@@ -176,6 +184,9 @@ export default {
         },
     },
     methods: {
+        holdDisclaimerToggle(v) {
+            this.holdDisclaimer = v;
+        },
         removeExtra(extra) {
             console.log(extra);
             const ex = extra.type;
@@ -229,7 +240,8 @@ export default {
             }
             this.loading = false;
         },
-        async testBooking() {
+        async bookOnHoldBooking() {
+          console.log("Clickling book on hold")
             if (this.loading) return;
 
             this.loading = true;
