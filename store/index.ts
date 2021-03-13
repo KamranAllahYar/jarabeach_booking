@@ -252,7 +252,7 @@ export const mutations: MutationTree<RootState> = {
       otherguests.push({
         first_name: "",
         last_name: "",
-        type: 'child',
+        type: state.children_ages[i] == '0 - 2' ? 'infant' : 'child',
         num: i + 1,
         age: state.children_ages[i],
       });
