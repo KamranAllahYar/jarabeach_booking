@@ -5,7 +5,10 @@
         <div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-6 md:flex-row md:px-6">
             <div class="w-full md:w-10/12">
                 <div class="pt-6 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
-                    <RoomCalendar class="w-full" @selected="selectRooms($event)" :initialRooms="rooms" @viewsetup="closeTour()" />
+                    <NewRoomCalendar class="w-full" @selected="selectRooms($event)" :initialRooms="rooms" @viewsetup="closeTour()" />
+                    <!-- <hr /> -->
+
+                    <!-- <RoomCalendar class="w-full" @selected="selectRooms($event)" :initialRooms="rooms" @viewsetup="closeTour()" /> -->
 
                     <div class="flex w-11/12 mx-auto mb-6 space-x-2 md:space-x-6 md:w-9/12" v-if="rooms.length > 0">
                         <MainButton @click="gotoBack()" outline>Back</MainButton>

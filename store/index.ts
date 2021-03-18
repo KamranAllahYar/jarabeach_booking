@@ -249,10 +249,14 @@ export const mutations: MutationTree<RootState> = {
       });
     }
     for (let i = 0; i < payload.child_no; i++) {
+      let childType = 'child';
+      if(state.children_ages[i] == '0 - 2') childType = 'infant';
+      if(state.children_ages[i] == '3 - 5') childType = 'child';
+
       otherguests.push({
         first_name: "",
         last_name: "",
-        type: state.children_ages[i] == '0 - 2' ? 'infant' : 'child',
+        type: childType,
         num: i + 1,
         age: state.children_ages[i],
       });
