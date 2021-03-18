@@ -103,7 +103,7 @@
                                         </svg>
 
                                         <span class="text-gray-700 whitespace-nowrap">
-                                            {{ h.room.name }} Room
+                                            {{ h.room.name }}
                                         </span>
                                     </div>
                                 </template>
