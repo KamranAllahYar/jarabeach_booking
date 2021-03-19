@@ -10,7 +10,7 @@
                 There are only 2 quad bikes available so the application will need to take this into consideration when managing availability.
                 The guest can also select the number of quad bikes they want (1 or 2)
             </p>
-            <div class="mt-6 font-semibold">What date would you like to have this</div>
+            <div class="mt-6 font-semibold">What date would you like to have this?</div>
 
             <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">

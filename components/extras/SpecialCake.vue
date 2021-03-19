@@ -8,7 +8,7 @@
             <p class="mt-3 font-light leading-relaxed text-gray-600">
                 Make your visit extra-special with a celebration cake. You can specify type, layer, number, color and flavour of cake and we will get it done for you.
             </p>
-            <div class="mt-6 font-semibold">What date would you like to have this</div>
+            <div class="mt-6 font-semibold">What date would you like to have this?</div>
 
             <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">

@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="flex justify-between px-3 my-3" v-if="childNo > 0">
-                <div>Children</div>
+                <div></div>
                 <div>{{ childNo }} Child<span v-if="childNo > 1">ren</span></div>
             </div>
             <div class="flex justify-between px-3 my-3" v-if="rooms.length > 0">

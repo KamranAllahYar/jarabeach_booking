@@ -1,6 +1,6 @@
 <template>
     <div class="pb-60">
-        <h1 class="px-6 mb-6 text-xl font-bold text-center md:px-0 md:text-2xl">What dates would you like to stay for?</h1>
+        <h1 class="px-6 mb-6 text-xl font-bold text-center md:px-0 md:text-2xl">Select the dates you would like to stay</h1>
 
         <div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-6 md:flex-row md:px-6">
             <div class="w-full md:w-10/12">
@@ -21,7 +21,29 @@
             </div>
         </div>
 
-        <v-tour name="myTour" :steps="steps"></v-tour>
+        <v-tour name="myTour" :steps="steps">
+            <template slot-scope="tour">
+                <transition name="fade">
+                    <v-step
+                        v-if="tour.steps[tour.currentStep]"
+                        :key="tour.currentStep"
+                        :step="tour.steps[tour.currentStep]"
+                        :previous-step="tour.previousStep"
+                        :next-step="tour.nextStep"
+                        :stop="tour.stop"
+                        :skip="tour.skip"
+                        :is-first="tour.isFirst"
+                        :is-last="tour.isLast"
+                        :labels="tour.labels">
+                        <template v-if="tour.isLast">
+                            <div slot="actions">
+                                <button @click="tour.stop" class="px-3 py-1 border">Close</button>
+                            </div>
+                        </template>
+                    </v-step>
+                </transition>
+            </template>
+        </v-tour>
     </div>
 </template>
 
@@ -94,9 +116,9 @@ export default {
         },
     },
     mounted() {
-      setTimeout(() => {
-        this.$tours["myTour"].start();
-      }, 100)
+        setTimeout(() => {
+            this.$tours["myTour"].start();
+        }, 100);
     },
     created() {
         console.log("STORE_ROOMS");

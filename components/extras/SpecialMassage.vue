@@ -13,7 +13,7 @@
                 No matter the occasion, make it even more memorable with a romantic couples massage.
                 Romantic Outdoor Massage (one masseuse): 2 Hours (minimum) <span class="font-bold"> = N30,000</span>
             </p>
-            <div class="mt-6 font-semibold">What date would you like to have this</div>
+            <div class="mt-6 font-semibold">What date would you like to have this?</div>
 
             <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">

@@ -14,7 +14,7 @@
                     The perfect location for that extra-special romantic occasion. We will be happy to organise extras like flowers or cake for you at an additional cost.
 
                 </p>
-                <div class="mt-6 font-semibold">What date would you like to have this</div>
+                <div class="mt-6 font-semibold">What date would you like to have this?</div>
 
                 <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
                     <label class="flex items-center" v-for="date in dates" :key="date" :class="{'opacity-25': !hasOptions(date)}">

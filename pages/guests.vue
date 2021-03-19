@@ -8,7 +8,7 @@
             <div class="border rounded-lg">
 
                 <div class="p-4">
-                    <div class="mb-4 font-semibold">How many adults or children?</div>
+                    <div class="mb-4 font-semibold">How many adults or children(0-17yrs)?</div>
 
                     <div class="flex flex-col space-y-3 md:items-center md:flex-row md:space-x-6 md:space-y-0">
                         <div class="flex items-center w-full pl-2 space-x-2 rounded-md md:w-auto focus-within:ring">
@@ -76,7 +76,8 @@
                                 <path d="M8 1.55a1.5 1.5 0 01.596 2.876 1.5 1.5 0 01-2.01-.876M9.323 11.334a2 2 0 01-2.646 0M11.5 7.333a1 1 0 01-2 0M6.5 7.333a1 1 0 01-2 0" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
 
-                            <select v-model="child.age" class="w-full border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
+                            <select placeholder="Select" v-model="child.age" class="w-full border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
+                                <option value="">Select</option>
                                 <option value="0 - 2">0 - 2</option>
                                 <option value="3 - 5">3 - 5</option>
                                 <option value="6 - 17">6 - 17</option>
@@ -124,7 +125,7 @@ export default {
 
             const diff = v - this.childrenAges.length;
             for (let ix = 0; ix < diff; ix++) {
-                this.childrenAges.push({ age: "0 - 1" });
+                this.childrenAges.push({ age: "" });
             }
 
             this.updateStores();

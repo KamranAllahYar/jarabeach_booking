@@ -13,7 +13,7 @@
                     The following items represent some of the items currently available to buy.
                     We can source any bottle found in Nigeria, so if it's not listed, please do not hesitate to let us know what you'd like us to prepare for you.
                 </p>
-                <div class="mt-6 font-semibold">What date would you like to have this</div>
+                <div class="mt-6 font-semibold">What date would you like to have this?</div>
                 <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
                     <label class="flex items-center" v-for="date in dates" :key="date">
                         <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">

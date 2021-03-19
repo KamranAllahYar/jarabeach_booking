@@ -10,7 +10,7 @@
                 Assistants/ make up artists charged N15,000 each thereafter.
                 Max two shoots at any given time outdoor venue - 4 hours. Photographer Only <span class="font-bold">- {{ currency(price) }}</span>
             </p>
-            <div class="mt-6 font-semibold">What date would you like to have this</div>
+            <div class="mt-6 font-semibold">What date would you like to have this?</div>
 
             <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">
