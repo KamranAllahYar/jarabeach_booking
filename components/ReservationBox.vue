@@ -11,7 +11,13 @@
             </div>
             <div class="flex justify-between px-3 my-3" v-if="childNo > 0">
                 <div></div>
-                <div>{{ childNo }} Child<span v-if="childNo > 1">ren</span></div>
+                <div class="text-right">
+                    <!-- {{ childNo }} Child<span v-if="childNo > 1">ren</span> -->
+                    <!-- <br /> -->
+                    <div v-for="(qty, age) in childrenAges" :key="age">
+                        {{ qty }} {{ ageToString(age, qty) }}
+                    </div>
+                </div>
             </div>
             <div class="flex justify-between px-3 my-3" v-if="rooms.length > 0">
                 <div>
@@ -84,7 +90,7 @@
         </div>
 
         <div v-if="$store.state.editMode" class="w-full px-3 py-3 border rounded-md border-brand-blue-300 bg-brand-blue-100">
-            <div v-if="$store.state.editBooking.previous_change"  class="flex justify-between">
+            <div v-if="$store.state.editBooking.previous_change" class="flex justify-between">
                 <div class="text-xs">Booking Transfer Charge</div>
                 <div class="text-xs font-bold">{{ currency(25000) }}</div>
             </div>
@@ -130,6 +136,22 @@ export default {
         specials() {
             return this.$store.getters["extras/allSelected"];
         },
+        childrenAges() {
+            const children = this.$store.state.other_guests.filter(
+                (g) => g.type != "adult"
+            );
+            let ageObj = {};
+
+            children.forEach((child) => {
+                if (!ageObj[child.age]) {
+                    ageObj[child.age] = 1;
+                } else {
+                    ageObj[child.age]++;
+                }
+            });
+
+            return ageObj;
+        },
         childNo() {
             return this.$store.state.child_no;
         },
@@ -161,6 +183,25 @@ export default {
         },
         currency(num) {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        ageToString(age, qty) {
+            const translate = {
+                "0 - 2": "Infant",
+                "3 - 5": "Child",
+                "6 - 17": "Teen",
+            };
+
+            const translatePlural = {
+                "0 - 2": "Infants",
+                "3 - 5": "Children",
+                "6 - 17": "Teens",
+            };
+
+            if (qty > 1) {
+                return translatePlural[age];
+            }
+
+            return translate[age];
         },
     },
 };

@@ -398,6 +398,11 @@ export default {
         noChildren() {
             return this.$store.state.child_no;
         },
+        noTeens() {
+            return this.$store.state.other_guests.filter(
+                (child) => child.type == "teen"
+            ).length;
+        },
     },
     methods: {
         openSlideshow() {
@@ -407,9 +412,21 @@ export default {
         isBooked(room_id, dateStr) {
             return this.roomIds.includes(room_id);
         },
+        checkCanBookBasedOnPeople() {},
         addToBookedRoom(room, dateStr) {
             if (room.type == "standard") {
-                if (this.noAdults >= 3 || this.noChildren >= 3) {
+                let shouldStop = false;
+
+                const bigPeople = this.noAdults + this.noTeens;
+                const smallPeople = this.noChildren;
+
+                if (bigPeople > 2) {
+                    shouldStop = true;
+                } else if (smallPeople > 2) {
+                    shouldStop = true;
+                }
+
+                if (shouldStop) {
                     this.$toast.info(
                         "Our standard rooms can only fit a group of 2 adults and an infant. For your group size, you need to select a family room."
                     );
