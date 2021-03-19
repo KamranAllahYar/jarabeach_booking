@@ -366,7 +366,7 @@ export default {
             if (room.type == "standard") {
                 if (this.noAdults >= 3 || this.noChildren >= 3) {
                     this.$toast.info(
-                        "Our standard rooms can only fit a group of 2 adults and an infant. For your group size, you need to select a family room."
+                        "Our standard rooms welcomes a group of two adults and an infant and toddler only. For your group size, you need to select a family room."
                     );
                     return;
                 }

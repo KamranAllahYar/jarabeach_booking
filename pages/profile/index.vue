@@ -103,6 +103,13 @@
 
                     <div class="flex justify-start my-4" v-if="showFullForm">
                         <label class="inline-flex items-center cursor-pointer">
+                            <input type="checkbox" v-model="guest.agreed_mailinglist" checked class="w-4 h-4 mr-4 rounded-full text-brand-blue focus:ring-1 focus:ring-green-600" />
+                            Sign up for our mailing list
+                        </label>
+                    </div>
+
+                    <div class="flex justify-start my-4" v-if="showFullForm">
+                        <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" v-model="agreed" checked class="w-4 h-4 mr-4 rounded-full text-brand-blue focus:ring-1 focus:ring-green-600" />
                             Remember information for next visit
                         </label>
@@ -143,6 +150,7 @@ export default {
                 concerns: "",
                 identification: "",
                 hear_of_us: "",
+                agreed_mailinglist: true,
             },
         };
     },
@@ -221,6 +229,7 @@ export default {
             guestFormData.append("gender", this.guest.gender);
             guestFormData.append("concerns", this.guest.concerns);
             guestFormData.append("hear_of_us", this.guest.hear_of_us);
+            guestFormData.append("agreed_mailinglist", this.guest.agreed_mailinglist);
 
             for (var pair of guestFormData.entries()) {
                 console.log(pair[0] + ", " + pair[1]);
