@@ -16,6 +16,12 @@
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                     </svg>
                                 </div>
+                                <div class="mt-2">
+                                    <div class="text-base font-bold">Email address confirmation</div>
+                                    <div class="flex items-center">
+                                        <input type="email" required v-model="guest.email_confirm" class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" style="box-shadow: none" />
+                                    </div>
+                                </div>
                             </div>
                             <div v-if="showFullForm">
                                 <div class="text-base font-bold">Phone number</div>
@@ -142,6 +148,7 @@ export default {
             guest: {
                 id: "",
                 email: "",
+                email_confirm: "",
                 phone: "",
                 first_name: "",
                 last_name: "",
@@ -229,7 +236,10 @@ export default {
             guestFormData.append("gender", this.guest.gender);
             guestFormData.append("concerns", this.guest.concerns);
             guestFormData.append("hear_of_us", this.guest.hear_of_us);
-            guestFormData.append("agreed_mailinglist", this.guest.agreed_mailinglist);
+            guestFormData.append(
+                "agreed_mailinglist",
+                this.guest.agreed_mailinglist
+            );
 
             for (var pair of guestFormData.entries()) {
                 console.log(pair[0] + ", " + pair[1]);
@@ -274,6 +284,11 @@ export default {
                 return;
             }
 
+            if (this.guest.email != this.guest.email_confirm) {
+                this.$toast.show("Please confirm that your email address is correct");
+                return;
+            }
+
             console.log("confirming guest");
 
             this.loading = true;
@@ -311,6 +326,11 @@ export default {
                 return;
             }
 
+            if (this.guest.email != this.guest.email_confirm) {
+                this.$toast.show("Please confirm that your email address is correct");
+                return;
+            }
+
             this.loading = true;
             const res = await this.$store.dispatch("saveGuest", formData);
 
@@ -328,6 +348,10 @@ export default {
         console.log("CREATED PROFILE");
         if (this.$store.state.guest) {
             this.guest = Object.assign({}, this.$store.state.guest);
+
+            if (this.guest.email) {
+                this.guest.email_confirm = this.guest.email;
+            }
         }
     },
     middleware({ store, redirect, $toast }) {

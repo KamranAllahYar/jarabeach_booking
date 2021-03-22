@@ -246,6 +246,7 @@ export const mutations: MutationTree<RootState> = {
         last_name: "",
         type: 'adult',
         num: i + 1,
+        age: "",
       });
     }
     for (let i = 0; i < payload.child_no; i++) {

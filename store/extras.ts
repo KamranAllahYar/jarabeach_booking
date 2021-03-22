@@ -44,6 +44,7 @@ export const state = () => ({
   selectedDrinks: [] as any[],
   dateDrink: null as String | null,
 
+  cakeOptions: [] as any[],
   cakePrices: [] as any[],
   selectedCake: {} as any,
   dateCake: null as String | null,
@@ -59,6 +60,7 @@ export const getters: GetterTree<ExtraState, RootState> = {
   allSpecials: (state: ExtraState) => state.specials,
   allSelected: (state: ExtraState) => state.selected,
   allDrinks: (state: ExtraState) => state.drinkOptions,
+  allCakes: (state: ExtraState) => state.cakeOptions,
   allDecorations: (state: ExtraState) => state.decorationOptions,
   allLookouts: (state: ExtraState) => state.lookoutOptions,
   allMassages: (state: ExtraState) => state.massageOptions,
@@ -341,6 +343,9 @@ export const mutations: MutationTree<ExtraState> = {
     state.dateDrink = payload.date
   },
 
+  LOAD_CAKE_OPTIONS: (state, cakes) => {
+    state.cakeOptions = cakes
+  },
   SET_SELECTED_CAKE: (state, payload) => {
     state.selectedCake = payload.cake;
     state.dateCake = payload.date;
@@ -389,6 +394,7 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedDrinks = [] as any[];
     state.dateDrink = null;
 
+    state.cakeOptions = [] as any[];
     state.selectedCake = {};
     state.dateCake = null;
 
@@ -523,6 +529,14 @@ export const actions: ActionTree<ExtraState, RootState> = {
       console.log("Drinks")
       console.log(res.data.data);
       commit("LOAD_DRINK_OPTIONS", res.data.data);
+    });
+  },
+
+  getSpecialCakes({ commit }) {
+    this.$axios.get("/cake-options").then((res) => {
+      console.log("Cakes")
+      console.log(res.data.data);
+      commit("LOAD_CAKE_OPTIONS", res.data.data);
     });
   },
 

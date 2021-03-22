@@ -179,6 +179,8 @@ export default {
         },
     },
     mounted() {
+        this.$store.dispatch("extras/getSpecialCakes");
+
         if (this.dates.length > 0) {
             this.selectedDate = this.dates[0];
         }

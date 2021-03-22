@@ -95,6 +95,7 @@ export default {
     mounted() {
         this.$store.dispatch("extras/updateSpecials", this.dates);
         this.$store.dispatch("extras/getSpecialDrinks");
+        this.$store.dispatch("extras/getSpecialCakes");
         this.$store.dispatch("extras/getSpecialDecorations");
         this.$store.dispatch("extras/getLookoutOptions");
         this.$store.dispatch("extras/getSpecialMassages");
