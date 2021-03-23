@@ -117,6 +117,13 @@ export const getters: GetterTree<RootState, RootState> = {
   roomDiscount: (state: RootState, getters) => {
     return getters.roomPrice * (getters.roomDiscountPercent / 100);
   },
+  memberDiscount: (state: RootState, getters) => {
+    if(state.guest.is_member){
+      return getters.roomPrice * (20 / 100);
+    }
+
+    return 0;
+  },
   subTotal: (state: RootState, getters) => {
     const roomPrices = getters.roomPrice;
 
@@ -168,7 +175,7 @@ export const getters: GetterTree<RootState, RootState> = {
     return 0;
   },
   totalPrice: (state: RootState, getters) => {
-    return getters.subTotal - getters.discount - getters.roomDiscount;
+    return getters.subTotal - getters.discount - getters.roomDiscount - getters.memberDiscount;
   },
   differenceToPay: (state: RootState, getters) => {
     let diff = getters.totalPrice - state.editBooking.payment.total;
@@ -440,6 +447,7 @@ export const actions: ActionTree<RootState, RootState> = {
     let prices = {
       "Rooms": rootGetters.roomPrice,
       "Room Discount": "-" + rootGetters.roomDiscount,
+      "Member Discount": "-" + rootGetters.memberDiscount,
     } as any;
 
     if (allExtras.includes('cakes')) {

@@ -86,7 +86,7 @@
                                             <span v-else>Add file</span>
                                         </template>
                                     </div>
-                                    <input type="file" class="hidden" ref="file" @input="handleFileUpload()" accept="image/x-png,image/gif,image/jpeg" />
+                                    <input type="file" class="hidden" ref="file" @input="handleFileUpload()" accept="image/x-png,image/gif,image/jpeg,application/pdf" />
                                 </div>
                             </div>
                             <div class="px-3 py-4 border-b">
@@ -158,6 +158,7 @@ export default {
                 identification: "",
                 hear_of_us: "",
                 agreed_mailinglist: true,
+                is_member: false,
             },
         };
     },
