@@ -85,13 +85,10 @@
                                                     <path d="M400 432H96v16h304c8.8 0 16-7.2 16-16v-16c0 8.8-7.2 16-16 16z" fill="#cad1d8" />
                                                 </svg>
                                                 Identification
-                                                <!-- View<br />Identification -->
                                             </div>
-
                                         </div>
                                         <img v-else :src="guest.identification" class="w-3/5" @click="lightboxIndex = 0" />
                                     </template>
-
                                     <CoolLightBox
                                         :items="itemsForLightBox"
                                         :index="lightboxIndex"
