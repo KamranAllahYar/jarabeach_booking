@@ -39,6 +39,7 @@
                 <div>{{ extra.name }}</div>
                 <div>
                     <span v-if="extra.type == 'cakes'">
+                        <!-- {{ $store.getters['extras/cakesPrice'] }} -->
                         {{ currency($store.getters['extras/cakesPrice']) }}
                     </span>
                     <span v-else-if="extra.type == 'drinks'">

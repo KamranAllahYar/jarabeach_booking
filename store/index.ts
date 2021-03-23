@@ -445,7 +445,7 @@ export const actions: ActionTree<RootState, RootState> = {
     if (allExtras.includes('cakes')) {
       specialsToSend['cakes'] = {
         date: extraState.dateCake,
-        info: extraState.selectedCakes,
+        options: extraState.selectedCakes,
       }
       prices['cakes'] = rootGetters['extras/cakesPrice'];
     }

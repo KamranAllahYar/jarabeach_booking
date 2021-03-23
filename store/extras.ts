@@ -45,7 +45,7 @@ export const state = () => ({
   dateDrink: null as String | null,
 
   cakeOptions: [] as any[],
-  cakePrices: [] as any[],
+  // cakePrices: [] as any[],
   selectedCakes: [] as any,
   dateCake: null as String | null,
 
@@ -66,7 +66,7 @@ export const getters: GetterTree<ExtraState, RootState> = {
   allMassages: (state: ExtraState) => state.massageOptions,
   allQuadbikes: (state: ExtraState) => state.quadbikeOptions,
 
-  cakePrice: (state: ExtraState) => {
+  cakesPrice: (state: ExtraState) => {
     if (state.selectedCakes.length <= 0) return 0;
     let price = 0;
 
@@ -329,7 +329,7 @@ export const mutations: MutationTree<ExtraState> = {
   },
 
   SET_MOST_PRICES: (state, payload) => {
-    state.cakePrices = payload.cake;
+    // state.cakePrices = payload.cake;
     state.photoshootPrices = payload.photoshoot;
     state.staffPrices = payload.domesticStaff;
   },

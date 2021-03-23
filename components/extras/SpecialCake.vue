@@ -104,7 +104,7 @@
                             <div class="flex items-center flex-1 pl-2 border rounded-md focus-within:ring">
                                 <select v-model="sCake.qty" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
                                     <option value="0">Qty</option>
-                                    <option v-for="num in 20" :value="num" :key="num">
+                                    <option v-for="num in 3" :value="num" :key="num">
                                         {{ num }}
                                     </option>
                                 </select>
