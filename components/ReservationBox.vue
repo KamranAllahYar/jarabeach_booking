@@ -26,9 +26,9 @@
                     <div class="text-xs text-gray-700" v-if="roomDiscountPercent > 0">
                         {{roomDiscountPercent}}% Discount
                     </div>
-                    <div class="text-xs text-gray-700" v-if="memberDiscount > 0">
-                        20% Member Discount
-                    </div>
+                    <!-- <div class="text-xs text-gray-700" v-if="memberDiscount > 0">
+                        100Club Discount
+                    </div> -->
                 </div>
                 <div>
                     <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
@@ -83,12 +83,16 @@
                 <div class="font-bold"> - {{ currency(roomDiscount) }}</div>
             </div>
             <div class="flex justify-between px-3 my-3" v-if="memberDiscount > 0">
-                <div>20% Member Discount</div>
+                <div>100Club Discount</div>
                 <div class="font-bold"> - {{ currency(memberDiscount) }}</div>
             </div>
             <div class="flex justify-between px-3 my-3" v-if="discount > 0">
                 <div>Discount</div>
                 <div class="font-bold"> - {{ currency(discount) }}</div>
+            </div>
+            <div class="flex justify-between px-3 my-3" v-if="extraPeoplePrice > 0">
+                <div>Extra People</div>
+                <div class="font-bold"> + {{ currency(extraPeoplePrice) }}</div>
             </div>
         </div>
 
@@ -183,6 +187,9 @@ export default {
         },
         discount() {
             return this.$store.getters.discount;
+        },
+        extraPeoplePrice() {
+            return this.$store.getters.extraPeoplePrice;
         },
         totalPrice() {
             return this.$store.getters.totalPrice;

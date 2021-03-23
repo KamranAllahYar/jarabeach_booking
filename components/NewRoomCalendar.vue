@@ -392,16 +392,11 @@ export default {
                 this.calYear <= this.minYear && this.calMonth <= this.minMonth
             );
         },
-        noAdults() {
-            return this.$store.state.adult_no;
+        bigPeople() {
+            return this.$store.getters.bigPeople;
         },
-        noChildren() {
-            return this.$store.state.child_no;
-        },
-        noTeens() {
-            return this.$store.state.other_guests.filter(
-                (child) => child.type == "teen"
-            ).length;
+        smallPeople() {
+            return this.$store.getters.smallPeople;
         },
     },
     methods: {
@@ -414,32 +409,28 @@ export default {
         },
         checkCanBookBasedOnPeople() {},
         addToBookedRoom(room, dateStr) {
-            if (room.type == "standard") {
-                let shouldStop = false;
-
-                const bigPeople = this.noAdults + this.noTeens;
-                const smallPeople = this.noChildren;
-
-                if (bigPeople > 2) {
-                    shouldStop = true;
-                } else if (smallPeople > 2) {
-                    shouldStop = true;
-                }
-
-                if (shouldStop) {
-                    this.$toast.info(
-                        "Our standard rooms welcomes a group of two adults and an infant and toddler only. For your group size, you need to select a family room."
-                    );
-                    return;
-                }
-            }
-
             if (this.roomIds.includes(room.id)) {
                 const ix = this.roomIds.findIndex((rid) => rid == room.id);
                 if (ix >= 0) {
                     this.roomIds.splice(ix, 1);
                 }
             } else {
+                if (room.type == "standard") {
+                    let shouldStop = false;
+
+                    if (this.bigPeople > 2) {
+                        shouldStop = true;
+                    } else if (this.smallPeople > 2) {
+                        shouldStop = true;
+                    }
+
+                    if (shouldStop) {
+                        this.$toast.info(
+                            "Our standard rooms welcomes a group of two adults and an infant and toddler only. For your group size, you need to select a family room."
+                        );
+                        return;
+                    }
+                }
                 this.roomIds.push(room.id);
             }
 

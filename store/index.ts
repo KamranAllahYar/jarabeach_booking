@@ -51,6 +51,11 @@ export type RootState = ReturnType<typeof state>
 
 export const getters: GetterTree<RootState, RootState> = {
   totalPeople: (state: RootState) => state.adult_no + state.child_no,
+  noAdults: (state: RootState) => state.adult_no,
+  noChildren: (state: RootState) => state.child_no,
+  noTeens: (state: RootState) => state.other_guests.filter((child) => child.type == "teen").length,
+  bigPeople: (state: RootState, getters) => getters.noAdults + getters.noTeens,
+  smallPeople: (state: RootState, getters) => getters.noChildren - getters.noTeens,
   roomsData: (state: RootState) => state.roomsData,
   policies: (state: RootState) => state.policies,
   bookedRooms: (state: RootState) => {
@@ -89,6 +94,23 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return [...new Set(dates)];
   },
+  extraPeoplePrice: (state: RootState, getters) => {
+    let price = 0;
+    const bigMax = 3;
+    const smallMax = 2;
+
+    if (getters.bigPeople > bigMax) {
+      const bigExtra = getters.bigPeople - bigMax;
+      price += bigExtra * 50000;
+    }
+
+    if (getters.smallPeople > smallMax) {
+      const smallExtra = getters.smallPeople - smallMax;
+      price += smallExtra * 50000;
+    }
+
+    return price;
+  },
   roomPrice: (state: RootState, getters) => {
     const roomPrices = getters.bookedRooms.reduce((price: number, room: any) => {
       if (room.type == 'family') {
@@ -118,7 +140,7 @@ export const getters: GetterTree<RootState, RootState> = {
     return getters.roomPrice * (getters.roomDiscountPercent / 100);
   },
   memberDiscount: (state: RootState, getters) => {
-    if(state.guest.is_member){
+    if (state.guest.is_member) {
       return getters.roomPrice * (20 / 100);
     }
 
@@ -175,9 +197,10 @@ export const getters: GetterTree<RootState, RootState> = {
     return 0;
   },
   totalPrice: (state: RootState, getters) => {
-    return getters.subTotal - getters.discount - getters.roomDiscount - getters.memberDiscount;
+    return getters.subTotal - getters.discount - getters.roomDiscount - getters.memberDiscount + getters.extraPeoplePrice;
   },
   differenceToPay: (state: RootState, getters) => {
+    if (!state.editBooking) return 0;
     let diff = getters.totalPrice - state.editBooking.payment.total;
 
     if (diff < 0) {
@@ -258,8 +281,8 @@ export const mutations: MutationTree<RootState> = {
     }
     for (let i = 0; i < payload.child_no; i++) {
       let childType = 'teen';
-      if(state.children_ages[i] == '0 - 2') childType = 'infant';
-      if(state.children_ages[i] == '3 - 5') childType = 'child';
+      if (state.children_ages[i] == '0 - 2') childType = 'infant';
+      if (state.children_ages[i] == '3 - 5') childType = 'child';
 
       otherguests.push({
         first_name: "",
@@ -447,7 +470,8 @@ export const actions: ActionTree<RootState, RootState> = {
     let prices = {
       "Rooms": rootGetters.roomPrice,
       "Room Discount": "-" + rootGetters.roomDiscount,
-      "Member Discount": "-" + rootGetters.memberDiscount,
+      "100Club Member Discount": "-" + rootGetters.memberDiscount,
+      "Extra People Cost": "+" + rootGetters.extraPeoplePrice,
     } as any;
 
     if (allExtras.includes('cakes')) {
