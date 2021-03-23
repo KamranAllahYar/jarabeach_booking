@@ -36,7 +36,7 @@ export const state = () => ({
 
   extra: '' as string,
   showExtra: false as boolean,
-  specials: ["lookout", "massage", "quadbike", "photoshoot", "drinks", "cake", "roomDecoration", "domesticStaff"] as any[],
+  specials: ["lookout", "massage", "quadbike", "photoshoot", "drinks", "cakes", "roomDecoration", "domesticStaff"] as any[],
 
   booking: null as any,
   discount: null as any,
@@ -122,8 +122,8 @@ export const getters: GetterTree<RootState, RootState> = {
 
     let extraPrices = 0;
     getters["extras/allSelected"].forEach((extra: any) => {
-      if (extra.type == "cake") {
-        extraPrices += getters["extras/cakePrice"];
+      if (extra.type == "cakes") {
+        extraPrices += getters["extras/cakesPrice"];
       }
       if (extra.type == "drinks") {
         extraPrices += getters["extras/drinksPrice"];
@@ -442,12 +442,12 @@ export const actions: ActionTree<RootState, RootState> = {
       "Room Discount": "-" + rootGetters.roomDiscount,
     } as any;
 
-    if (allExtras.includes('cake')) {
-      specialsToSend['cake'] = {
+    if (allExtras.includes('cakes')) {
+      specialsToSend['cakes'] = {
         date: extraState.dateCake,
-        info: extraState.selectedCake,
+        info: extraState.selectedCakes,
       }
-      prices['cake'] = rootGetters['extras/cakePrice'];
+      prices['cakes'] = rootGetters['extras/cakesPrice'];
     }
     if (allExtras.includes('photoshoot')) {
       specialsToSend['photoshoot'] = {

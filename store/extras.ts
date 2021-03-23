@@ -7,8 +7,8 @@ export const state = () => ({
     { type: 'massage', name: 'Massage', available: false, range: '30,000' },
     { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
     { type: 'photoshoot', name: 'Photoshoot', available: true, range: '50,000' },
-    { type: 'drinks', name: 'ca', available: true, range: '15,000' },
-    { type: 'cake', name: 'Cake', available: true, range: '15,000' },
+    { type: 'drinks', name: 'Drinks', available: true, range: '15,000' },
+    { type: 'cakes', name: 'Cake', available: true, range: '15,000' },
     { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
     { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' }
   ] as { name: string, type: string, range: string, available: boolean }[],
@@ -46,7 +46,7 @@ export const state = () => ({
 
   cakeOptions: [] as any[],
   cakePrices: [] as any[],
-  selectedCake: {} as any,
+  selectedCakes: [] as any,
   dateCake: null as String | null,
 
   photoshootPrices: [] as any[],
@@ -67,48 +67,20 @@ export const getters: GetterTree<ExtraState, RootState> = {
   allQuadbikes: (state: ExtraState) => state.quadbikeOptions,
 
   cakePrice: (state: ExtraState) => {
-    if (state.selectedCake) {
-      let six_inch_price = 15000;
-      let eight_inch_price = 20000;
+    if (state.selectedCakes.length <= 0) return 0;
+    let price = 0;
 
-      console.log("CAKEEEE PRICE");
-      // console.log(price);
+    for (let i = 0; i < state.selectedCakes.length; i++) {
+      const sCake = state.selectedCakes[i];
 
-      if (state.cakePrices) {
-        let p = state.cakePrices.find(_p => _p.name.toLowerCase() == "6inch");
-        if (p) {
-          six_inch_price = +p.price;
-        }
-        let e = state.cakePrices.find(_p => _p.name.toLowerCase() == "8inch");
-        if (e) {
-          eight_inch_price = +e.price;
-        }
+      const cake = state.cakeOptions.find(dko => dko.id == sCake.id);
+
+      if (cake) {
+        price += (+cake.price * +sCake.qty);
       }
-
-      let quantity = +state.selectedCake.quantity;
-      if (quantity <= 0) quantity = 1;
-
-
-      let price = six_inch_price;
-      if (state.selectedCake.type === '6inch') {
-        console.log("its six inch");
-        console.log(six_inch_price);
-        console.log(quantity);
-        price = six_inch_price * quantity;
-      } else if (state.selectedCake.type === '8inch') {
-        console.log("its eight inch");
-        console.log(eight_inch_price);
-        console.log(quantity);
-        price = eight_inch_price * quantity;
-      }
-      console.log("CAKEEEE PRICE");
-      console.log(state.selectedCake);
-      console.log(price);
-
-      return price;
     }
 
-    return 0;
+    return price;
   },
   drinksPrice: (state: ExtraState) => {
     if (state.selectedDrinks.length <= 0) return 0;
@@ -347,7 +319,7 @@ export const mutations: MutationTree<ExtraState> = {
     state.cakeOptions = cakes
   },
   SET_SELECTED_CAKE: (state, payload) => {
-    state.selectedCake = payload.cake;
+    state.selectedCakes = payload.cakes;
     state.dateCake = payload.date;
   },
 
@@ -395,21 +367,25 @@ export const mutations: MutationTree<ExtraState> = {
     state.dateDrink = null;
 
     state.cakeOptions = [] as any[];
-    state.selectedCake = {};
+    state.selectedCakes = [] as any[];
     state.dateCake = null;
 
     state.selectedPhotoshoot = 0 as number;
     state.datePhotoshoot = null;
   },
 
-  TRANSFORM_CAKE: (state, payload) => {
+  TRANSFORM_CAKES: (state, payload) => {
     const oldDates = payload.dates;
-    const oldCake = payload.cake;
+    const oldCakes = payload.cakes;
 
-    state.selectedCake = oldCake.data;
-    if (oldDates.includes(oldCake.date)) {
-      state.dateCake = oldCake.date;
-    }
+    state.selectedCakes = [];
+    oldCakes.forEach((cake: any) => {
+      if (oldDates.includes(cake.date)) {
+        state.dateCake = cake.date;
+      }
+
+      state.selectedCakes.push({ id: cake.option_id, qty: cake.quantity });
+    });
   },
   TRANSFORM_DECORATION: (state, payload) => {
     const oldDates = payload.dates;
@@ -608,11 +584,18 @@ export const actions: ActionTree<ExtraState, RootState> = {
         commit("TRANSFORM_LOOKOUTS", { lookouts: oldBooking.lookouts, dates: newBookingDates });
       };
     }
-    if (oldBooking.cake) {
-      const s = getSpecialObjFromStr(state.specials, 'cake');
+    // if (oldBooking.cake) {
+    //   const s = getSpecialObjFromStr(state.specials, 'cakes');
+    //   if (s) {
+    //     commit("ADD_SELECTED", s);
+    //     commit("TRANSFORM_CAKES", { cake: oldBooking.cakes, dates: newBookingDates });
+    //   };
+    // }
+    if (oldBooking.cakes.length >= 0) {
+      const s = getSpecialObjFromStr(state.specials, 'cakes');
       if (s) {
         commit("ADD_SELECTED", s);
-        commit("TRANSFORM_CAKE", { cake: oldBooking.cake, dates: newBookingDates });
+        commit("TRANSFORM_CAKES", { cakes: oldBooking.cakes, dates: newBookingDates });
       };
     }
     if (oldBooking.drinks.length >= 0) {

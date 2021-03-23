@@ -28,8 +28,8 @@
                             <div class="flex items-center justify-between px-3 py-4" v-for="extra in specials" :key="extra.id">
                                 <div>{{ extra.name }}</div>
                                 <div class="text-lg font-bold">
-                                    <span v-if="extra.type == 'cake'">
-                                        {{ currency($store.getters['extras/cakePrice']) }}
+                                    <span v-if="extra.type == 'cakes'">
+                                        {{ currency($store.getters['extras/cakesPrice']) }}
                                     </span>
                                     <span v-else-if="extra.type == 'drinks'">
                                         {{ currency($store.getters['extras/drinksPrice']) }}

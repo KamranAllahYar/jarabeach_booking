@@ -58,10 +58,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between px-3 my-3" v-if="fullBooking.cake">
+                    <!-- <div class="flex items-center justify-between px-3 my-3" v-if="fullBooking.cake">
                         <div>Cake</div>
                         <div class="font-bold">
                             {{ formatDate(fullBooking.cake.date) }}
+                        </div>
+                    </div> -->
+                    <div class="flex items-center justify-between px-3 my-3" v-if="fullBooking.cakes[0]">
+                        <div>Cakes</div>
+                        <div class="font-bold">
+                            {{ formatDate(fullBooking.cakes[0].date) }}
                         </div>
                     </div>
                     <div class="flex items-center justify-between px-3 my-3" v-if="fullBooking.photoshoot">
