@@ -101,14 +101,14 @@
                                     <option v-for="cake in cakes" :value="cake.id" :key="cake.id">{{cake.name}}</option>
                                 </select>
                             </div>
-                            <div class="flex items-center flex-1 pl-2 border rounded-md focus-within:ring">
+                            <!-- <div class="flex items-center flex-1 pl-2 border rounded-md focus-within:ring">
                                 <select v-model="sCake.qty" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
                                     <option value="0">Qty</option>
                                     <option v-for="num in 3" :value="num" :key="num">
                                         {{ num }}
                                     </option>
                                 </select>
-                            </div>
+                            </div> -->
                             <div class="flex-1 hidden md:block"></div>
                             <div @click="removeCake(ix)" v-if="selectedCakes.length > 1" class="flex items-center flex-1 flex-shrink-0 h-10 mb-3 text-xs cursor-pointer text-brand-red hover:text-red-300">
                                 <div>Remove</div>
