@@ -106,7 +106,7 @@ export const getters: GetterTree<RootState, RootState> = {
 
     if (getters.smallPeople > smallMax) {
       const smallExtra = getters.smallPeople - smallMax;
-      price += smallExtra * 50000;
+      price += smallExtra * 35000;
     }
 
     return price;
