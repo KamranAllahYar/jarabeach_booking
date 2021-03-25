@@ -351,6 +351,7 @@ export const mutations: MutationTree<RootState> = {
     if (!state.saveForNextTime) {
       state.guest = {} as any;
     }
+    state.guest.is_member = false;
 
     state.weHaveData = false as boolean;
     state.other_guests = [] as any[];
