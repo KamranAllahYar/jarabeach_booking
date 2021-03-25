@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- <pre>{{index}}</pre> -->
         <SpecialLookout v-if="currentSpecial == 'lookout'" @next="gotoNext()" @prev="gotoPrev()" />
 
         <SpecialMassage v-else-if="currentSpecial == 'massage'" @next="gotoNext()" @prev="gotoPrev()" />

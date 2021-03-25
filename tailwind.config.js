@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'sans': ['Maison Neue'],
+        'navbar': ['Arial', 'Helvetica', 'sans-serif'],
       },
       colors: {
         brand: {

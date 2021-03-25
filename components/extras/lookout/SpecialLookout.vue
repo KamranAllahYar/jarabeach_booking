@@ -31,7 +31,6 @@
             </div>
         </div>
 
-        <!-- {{ selectedPackages }} -->
         <SpecialLookoutMeal v-show="showMenu"
             :initial="selectedPackages"
             :options="options"

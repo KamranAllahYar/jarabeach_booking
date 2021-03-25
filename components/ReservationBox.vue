@@ -73,7 +73,7 @@
             </div>
         </div>
 
-        <div class="w-full text-gray-800 border rounded-md border-brand-blue-300 bg-brand-blue-100" v-if="showDiscount &&( discount > 0 || roomDiscountPercent > 0 )">
+        <div class="w-full text-gray-800 border rounded-md border-brand-blue-300 bg-brand-blue-100" v-if="showDiscount">
             <div class="flex justify-between px-3 my-3">
                 <div>Sub-total</div>
                 <div class="font-bold">{{ currency(subTotal) }}</div>

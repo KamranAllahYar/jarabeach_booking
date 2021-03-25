@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="flex-shrink-0 w-full md:w-3/12">
-                <ReservationBox />
+                <ReservationBox showDiscount />
             </div>
         </div>
     </div>
