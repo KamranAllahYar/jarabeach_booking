@@ -91,7 +91,7 @@
                 <div class="font-bold"> - {{ currency(discount) }}</div>
             </div>
             <div class="flex justify-between px-3 my-3" v-if="extraPeoplePrice > 0">
-                <div>Extra People</div>
+                <div>Extra Guest(s)</div>
                 <div class="font-bold"> + {{ currency(extraPeoplePrice) }}</div>
             </div>
         </div>
