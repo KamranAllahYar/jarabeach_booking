@@ -1,7 +1,7 @@
 import differenceInSeconds from 'date-fns/differenceInSeconds'
 import parseISO from 'date-fns/parseISO'
 
-export default function ({ store, redirect }) {
+export default function ({ store, redirect, route }) {
   let lastUpdate = store.state.lastUpdate;
 
   if (!(lastUpdate instanceof Date)) {
@@ -27,7 +27,9 @@ export default function ({ store, redirect }) {
     store.commit("RESET_STORE");
     store.commit("extras/RESET_STORE");
 
-    redirect("/");
+    if (route.path != "/") {
+      redirect("/");
+    }
   }
 
   store.commit("UPDATE_EXPIRY", new Date());
