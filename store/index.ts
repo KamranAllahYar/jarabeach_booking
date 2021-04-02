@@ -96,8 +96,11 @@ export const getters: GetterTree<RootState, RootState> = {
   },
   extraPeoplePrice: (state: RootState, getters) => {
     let price = 0;
-    const bigMax = 3;
-    let smallMax = 2;
+    const noOfRooms = getters.totalRooms;
+    if (noOfRooms == 0) return price;
+
+    const bigMax = 3 * noOfRooms;
+    let smallMax = 2 * noOfRooms;
 
     if (getters.bigPeople > bigMax) {
       const bigExtra = getters.bigPeople - bigMax;

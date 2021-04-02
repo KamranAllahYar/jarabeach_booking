@@ -64,7 +64,7 @@ export default {
     animation: animatedBackground 60s linear infinite;
 }
 .bottom-beach {
-    background: url("~assets/beach_bottom.svg");
+    background: url("~assets/beach_bottom.jpg");
     background-repeat: no-repeat;
     background-position: center bottom;
     background-size: contain;
