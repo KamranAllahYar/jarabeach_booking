@@ -96,6 +96,9 @@ export const getters: GetterTree<RootState, RootState> = {
   },
   extraPeoplePrice: (state: RootState, getters) => {
     let price = 0;
+    const bigPrice = 50000;
+    const smallPrice = 35000;
+
     const noOfRooms = getters.totalRooms;
     if (noOfRooms == 0) return price;
 
@@ -104,14 +107,14 @@ export const getters: GetterTree<RootState, RootState> = {
 
     if (getters.bigPeople > bigMax) {
       const bigExtra = getters.bigPeople - bigMax;
-      price += bigExtra * 50000;
+      price += bigExtra * bigPrice;
     } else {
       smallMax = smallMax + (bigMax - getters.bigPeople);
     }
 
     if (getters.smallPeople > smallMax) {
       const smallExtra = getters.smallPeople - smallMax;
-      price += smallExtra * 35000;
+      price += smallExtra * smallPrice;
     }
 
     return price;
