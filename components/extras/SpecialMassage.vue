@@ -10,11 +10,10 @@
                 or shaded by Jara's exclusive Lookout, your cares being eased away by one of our expert masseuses.
             </p>
             <p class="mt-2 font-light leading-relaxed text-gray-600">
-                No matter the occasion, make it even more memorable with a romantic couples massage.
-                Romantic Outdoor Massage (one masseuse): 2 Hours (minimum) <span class="font-bold"> = N30,000</span>
+                Outdoor Massage (one masseuse): 2 Hours (minimum) <span class="font-bold"> = N30,000</span>
             </p>
-            <div class="mt-6 font-semibold">What date would you like to have this?</div>
 
+            <div class="mt-6 font-semibold">What date would you like to have this?</div>
             <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">
                     <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">

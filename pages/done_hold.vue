@@ -2,17 +2,16 @@
 <template>
     <div class="flex min-h-screen bg-white">
         <main class="flex-1 w-full pb-48 overflow-auto beach">
-            <div class="my-10 text-center">
-                <nuxt-link to="/">
-                    <img src="~/assets/logo_big.jpg" class="w-40 mx-auto" />
-                </nuxt-link>
+            <Navbar />
+            <div class="py-10 text-center">
+                <!-- <img src="~/assets/logo_big.jpg" class="w-32 mx-auto md:w-40" /> -->
             </div>
 
             <!-- <TopProgressBar /> -->
 
             <div class="p-6 mx-auto mt-12 max-w-7xl">
                 <div>
-                    <div class="text-3xl font-semibold text-center">Booking Held!<br />Payment required to confirm your visit</div>
+                    <div class="text-3xl font-semibold text-center"> Booking held for the next 30 minutes!<br />Payment required to confirm your visit</div>
                     <div class="max-w-md px-6 py-6 mx-auto mt-10 bg-white border rounded-lg shadow-lg">
                         <div class="flex items-center justify-center pb-6">
                             <svg

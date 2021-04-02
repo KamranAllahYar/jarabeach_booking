@@ -11,7 +11,10 @@
             <TopProgressBar />
 
             <div class="relative z-20 p-6 mx-auto mt-12 max-w-7xl">
-                <h1 class="mb-6 text-xl font-bold text-center md:text-2xl">Here you can book in any extra special experiences!</h1>
+                <h1 class="mb-6 text-xl font-bold text-center md:text-2xl">
+                    Here you can book in any extra special experiences. <br />
+                    Please select the ones you wish to add to your booking.
+                </h1>
 
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
                     <div v-for="(extra, i) in specials" :key="i"

@@ -6,9 +6,16 @@
         <div class="flex flex-col w-full p-6 md:w-7/12">
             <div class="font-semibold">Photoshoot</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
+                Jara has an abundance of beautiful areas perfect for personal photoshoots. Whether
+                pre-wedding, anniversary or birthday, an external photographer can access Jara Beach
+                Resort for two hours and receive a soft drink - for ₦20,000. Access for assistants/
+                make up artists is charged ₦15,000 each thereafter. Commercial photoshoot enquiries
+                are handled directly by our bookings department - more details here:
+                <a class="text-brand-blue-500" href="https://www.jarabeachresort.com/photo-shoots">https://www.jarabeachresort.com/photo-shoots</a>
+                <!--
                 A photographer can access Jara Beach Resort for a maximum of four hours. Includes no food or drink.
                 Assistants/ make up artists charged N15,000 each thereafter.
-                Max two shoots at any given time outdoor venue - 4 hours. Photographer Only <span class="font-bold">- {{ currency(price) }}</span>
+                Max two shoots at any given time outdoor venue - 4 hours. Photographer Only <span class="font-bold">- {{ currency(price) }}</span> -->
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this?</div>
 

@@ -6,7 +6,7 @@
             </div>
             <div class="flex-1 ml-3">
                 <div class="text-xl font-semibold">Lookout Experience</div>
-                <div class="text-xs font-light text-gray-600">There are three package options to choose from across breakfast, lunch and dinner. Only 1 slot available for 2 people per meal. Must be booked in advance.</div>
+                <div class="text-xs font-light text-gray-600">There are three dining package options to choose from across breakfast, lunch and dinner. Only 1 slot available for 2 people per meal. Must be booked in advance.</div>
             </div>
             <div class="flex items-center ml-6 mr-3 space-x-1 text-gray-600 cursor-pointer" @click="$emit('close')">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

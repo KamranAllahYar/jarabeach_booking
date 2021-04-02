@@ -6,9 +6,10 @@
         <div class="w-full p-6 md:w-7/12">
             <div class="font-semibold">Quad Bikes</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
-                Quad biking - external beach provider (signed disclaimer and pre-booking required).
-                There are only 2 quad bikes available so the application will need to take this into consideration when managing availability.
-                The guest can also select the number of quad bikes they want (1 or 2)
+                Jara is proud to offer quad bike hire - available via a local partner (signed waiver and
+                pre-booking required). Half and full day hire is available, to ride on the beachfront or at
+                the back of the property on the sandy road. Quad bikes are ideal for small-average size
+                guest riders.
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this?</div>
 
@@ -38,6 +39,7 @@
 
             <div>
                 <div class="mt-4 font-semibold">At what time?</div>
+                {{ selectedQuadbike }}
                 <div class="mt-2 space-y-3 font-light ">
                     <label class="flex items-center" v-for="quadbike in quadbikes" :key="quadbike.id"
                         :class="{'opacity-25' :!isAvailable(quadbike.id)}">
@@ -106,6 +108,13 @@ export default {
             return false;
         },
         next() {
+            if (
+                this.selectedQuadbike == null ||
+                this.selectedQuadbike.length <= 0
+            ) {
+                this.$toast.info("Please select a time slot to proceed");
+                return;
+            }
             console.log("NEXT");
             this.$store.commit("extras/SET_SELECTED_QUADBIKE", {
                 quadbike: this.selectedQuadbike,

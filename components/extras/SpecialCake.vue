@@ -98,7 +98,12 @@
                                     <path d="M1.857 8.203A1.639 1.639 0 004.67 9.35a1.631 1.631 0 002.578-.313 1.628 1.628 0 002.812 0 1.637 1.637 0 003.047-.833" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <select v-model="sCake.id" class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
-                                    <option v-for="cake in cakes" :value="cake.id" :key="cake.id">{{cake.name}}</option>
+                                    <optgroup label="Size and type of cakes">
+                                        <option v-for="cake in cakeOptions" :value="cake.id" :key="cake.id">{{cake.name}}</option>
+                                    </optgroup>
+                                    <optgroup label="Toppings">
+                                        <option v-for="cake in toppingOptions" :value="cake.id" :key="cake.id">{{cake.name}}</option>
+                                    </optgroup>
                                 </select>
                             </div>
                             <!-- <div class="flex items-center flex-1 pl-2 border rounded-md focus-within:ring">
@@ -163,6 +168,16 @@ export default {
     computed: {
         dates() {
             return this.$store.getters.bookingDates;
+        },
+        cakeOptions() {
+            return this.cakes.filter(
+                (cake) => !cake.name.toLowerCase().includes("topping")
+            );
+        },
+        toppingOptions() {
+            return this.cakes.filter((cake) =>
+                cake.name.toLowerCase().includes("topping")
+            );
         },
         // quantityOption() {
         //     if (this.cake.type == "cupcakes") {

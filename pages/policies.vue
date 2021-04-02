@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="px-6 mb-6 text-xl font-bold text-center md:px-0 md:text-2xl">Please accept our policies (required)</h1>
+        <h1 class="px-6 mb-6 text-xl font-bold text-center md:px-0 md:text-2xl">Please accept our house rules (required)</h1>
 
         <div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-6 md:flex-row">
             <div class="w-full md:w-6/12">
@@ -17,7 +17,7 @@
                         <div class="px-3 py-4">
                             <label class="inline-flex items-center font-bold cursor-pointer">
                                 <input type="checkbox" v-model="agreed" class="w-6 h-6 mr-4 text-green-600 rounded-full focus:ring-1 focus:ring-green-600" />
-                                I accept Jara's booking terms and condition
+                                I accept Jara's booking terms and conditions
                             </label>
 
                             <div class="mt-6">
