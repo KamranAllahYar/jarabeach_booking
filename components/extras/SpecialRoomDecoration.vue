@@ -9,6 +9,10 @@
             <p class="mt-3 font-light leading-relaxed text-gray-600">
                 There are a number of expected extras we offer for free, including romantic room decoration, or happy birthday messages, simple decorations etc.
                 This is only avaliable on date of arrival.
+
+                <br />
+                <br />
+                Helium Balloons or bespoke Special Decoration on request
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this?</div>
 
@@ -20,18 +24,31 @@
             </div>
             <div class="space-y-4">
                 <div class="mt-6 font-semibold">Select Room Decoration</div>
-                <template v-for="deco in decorations">
-                    <label class="flex items-center" :key="deco.id">
+                <div v-for="deco in decorations" :key="deco.id">
+                    <label class="inline-flex items-center" :key="deco.id">
                         <input type="checkbox" :value="deco" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
-                        <div>{{ deco.name }} -
+                        <div class="inline-block">
+                            {{ deco.name }} -
                             <span class="font-bold uppercase" v-if="deco.price >0">{{ currency(deco.price) }}</span>
                             <span class="font-bold uppercase" v-else>FREE</span>
                         </div>
                     </label>
+
                     <input type="text" :key="deco.id+'ss'" v-if="showNote(deco)" placeholder="What to write. 20 characters max" maxlength="20"
                         v-model="myWelcomeNote"
                         class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
-                </template>
+
+                    <input type="text" :key="deco.id+'pt'" v-if="showPetalsNote(deco)" placeholder="What to write. 7 characters max" maxlength="7"
+                        v-model="myPetalsNote"
+                        class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
+
+                    <select v-model="myBalloonsColor" v-if="showColorOptions(deco)" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                        <option value="">Select Color</option>
+                        <option value="Blue">Blue</option>
+                        <option value="Red">Red</option>
+                        <option value="Pink">Pink</option>
+                    </select>
+                </div>
             </div>
             <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">
                 <MainButton outline @click="prev()">Back</MainButton>
@@ -51,6 +68,8 @@ export default {
             selectedDate: null,
             selectedDecorations: [],
             myWelcomeNote: "",
+            myPetalsNote: "",
+            myBalloonsColor: "",
         };
     },
     computed: {
@@ -70,9 +89,43 @@ export default {
 
             return has;
         },
+        isBalloonSelected() {
+            let has = false;
+            this.selectedDecorations.forEach((d) => {
+                if (d.name.toLowerCase() == "balloons") {
+                    has = true;
+                }
+            });
+
+            return has;
+        },
+        isPetalsSelected() {
+            let has = false;
+            this.selectedDecorations.forEach((d) => {
+                if (d.name.toLowerCase() == "flower petals") {
+                    has = true;
+                }
+            });
+
+            return has;
+        },
         welcomeNote() {
             if (this.isWelcomeNoteSelected) {
                 return this.myWelcomeNote;
+            }
+
+            return null;
+        },
+        petalsNote() {
+            if (this.isPetalsSelected) {
+                return this.myPetalsNote;
+            }
+
+            return null;
+        },
+        balloonsColor() {
+            if (this.isBalloonSelected) {
+                return this.myBalloonsColor;
             }
 
             return null;
@@ -85,12 +138,25 @@ export default {
                 this.isWelcomeNoteSelected
             );
         },
+        showColorOptions(deco) {
+            return (
+                deco.name.toLowerCase() == "balloons" && this.isBalloonSelected
+            );
+        },
+        showPetalsNote(deco) {
+            return (
+                deco.name.toLowerCase() == "flower petals" &&
+                this.isPetalsSelected
+            );
+        },
         next() {
             console.log("NEXT");
             this.$store.commit("extras/SET_SELECTED_DECORATION", {
-                note: this.welcomeNote,
                 decorations: this.selectedDecorations,
                 date: this.selectedDate,
+                note: this.welcomeNote,
+                petalsNote: this.petalsNote,
+                balloonsColor: this.balloonsColor,
             });
             this.$emit("next");
         },
@@ -126,6 +192,12 @@ export default {
         }
         if (this.$store.state.extras.decorationWelcomeNote) {
             this.myWelcomeNote = this.$store.state.extras.decorationWelcomeNote;
+        }
+        if (this.$store.state.extras.decorationPetalsNote) {
+            this.myPetalsNote = this.$store.state.extras.decorationPetalsNote;
+        }
+        if (this.$store.state.extras.decorationBalloonsColor) {
+            this.myBalloonsColor = this.$store.state.extras.decorationBalloonsColor;
         }
     },
 };

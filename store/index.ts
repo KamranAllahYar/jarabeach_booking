@@ -502,6 +502,8 @@ export const actions: ActionTree<RootState, RootState> = {
       specialsToSend['roomDecoration'] = {
         date: extraState.dateDecoration,
         welcomeNote: extraState.decorationWelcomeNote,
+        petalsNote: extraState.decorationPetalsNote,
+        balloonsColor: extraState.decorationBalloonsColor,
         options: extraState.selectedDecorations.map((sd: any) => sd.id),
       }
       prices['roomDecoration'] = rootGetters['extras/decorationPrice'];
