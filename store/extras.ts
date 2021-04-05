@@ -47,6 +47,7 @@ export const state = () => ({
   cakeOptions: [] as any[],
   // cakePrices: [] as any[],
   selectedCakes: [] as any,
+  cakeMessage: "" as any,
   dateCake: null as String | null,
 
   photoshootPrices: [] as any[],
@@ -321,6 +322,7 @@ export const mutations: MutationTree<ExtraState> = {
   SET_SELECTED_CAKE: (state, payload) => {
     state.selectedCakes = payload.cakes;
     state.dateCake = payload.date;
+    state.cakeMessage = payload.message;
   },
 
   SET_SELECTED_PHOTOSHOOT: (state, payload) => {
@@ -367,6 +369,7 @@ export const mutations: MutationTree<ExtraState> = {
     state.dateDrink = null;
 
     state.cakeOptions = [] as any[];
+    state.cakeMessage = "" as any;
     state.selectedCakes = [] as any[];
     state.dateCake = null;
 
@@ -382,6 +385,10 @@ export const mutations: MutationTree<ExtraState> = {
     oldCakes.forEach((cake: any) => {
       if (oldDates.includes(cake.date)) {
         state.dateCake = cake.date;
+      }
+
+      if (cake.message) {
+        state.cakeMessage = cake.message;
       }
 
       state.selectedCakes.push({ id: cake.option_id, qty: cake.quantity });

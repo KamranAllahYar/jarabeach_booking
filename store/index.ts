@@ -487,6 +487,7 @@ export const actions: ActionTree<RootState, RootState> = {
       specialsToSend['cakes'] = {
         date: extraState.dateCake,
         options: extraState.selectedCakes,
+        message: extraState.cakeMessage,
       }
       prices['cakes'] = rootGetters['extras/cakesPrice'];
     }

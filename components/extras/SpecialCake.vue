@@ -120,6 +120,9 @@
                             </div>
                         </div>
                     </div>
+
+                    <label class="block mt-6 mb-1 font-bold">Message on the cake</label>
+                    <textarea v-model="cakeMessage" name="message" id="cake_msg" rows="1" maxlength="20" class="w-full border-gray-200 rounded focus:ring focus:ring-brand-blue-300 focus:border-0" placeholder="Message on the cake. Max 20 characters"></textarea>
                 </div>
             </div>
             <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">
@@ -139,6 +142,7 @@ export default {
         return {
             selectedDate: null,
             selectedCakes: [],
+            cakeMessage: "",
             // cake: {
             //     type: "",
             //     layers: 0,
@@ -211,6 +215,7 @@ export default {
             this.$store.commit("extras/SET_SELECTED_CAKE", {
                 cakes: this.selectedCakes,
                 date: this.selectedDate,
+                message: this.cakeMessage,
             });
             this.$emit("next");
         },
@@ -245,6 +250,10 @@ export default {
             this.selectedCakes = this.$store.state.extras.selectedCakes.map(
                 (x) => x
             );
+        }
+
+        if (this.$store.state.extras.cakeMessage) {
+            this.cakeMessage = this.$store.state.extras.cakeMessage;
         }
 
         if (this.cakes.length > 0 && this.selectedCakes.length <= 0) {
