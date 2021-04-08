@@ -613,7 +613,7 @@ export default {
                 .post("/check-rooms", {
                     start: this.startDate,
                     end: this.endDate,
-                    type: this.seRoom,
+                    // type: this.seRoom,
                     booking_id: bookingId,
                 })
                 .then((res) => {
@@ -628,6 +628,11 @@ export default {
                             date: date,
                         });
                     });
+                    if (this.seRoom == "family") {
+                        this.hoveredRooms.sort((a, b) =>
+                            a.type > b.type ? 1 : -1
+                        );
+                    }
                 })
                 .finally(() => {
                     this.loadingRoomOptions = false;
