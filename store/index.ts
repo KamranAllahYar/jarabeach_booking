@@ -131,23 +131,29 @@ export const getters: GetterTree<RootState, RootState> = {
       }
     });
 
-    const standardMax = 2;
-    const familyMax = 6;
+    const standardBigMax = 2;
+    const familyBigMax = 6;
+    const standardSmallMax = 2;
+    const familySmallMax = 2;
 
-    let totalMax = 0;
+    let totalBigMax = 0;
+    let totalSmallMax = 0;
     roomTypes.forEach((type: any) => {
       if (type == 'standard') {
-        totalMax += standardMax;
+        totalBigMax += standardBigMax;
+        totalSmallMax += standardSmallMax;
       } else if (type == 'family') {
-        totalMax += familyMax;
+        totalBigMax += familyBigMax;
+        totalSmallMax += familySmallMax;
       }
     });
 
-    return getters.bigPeople <= totalMax;
+    const bigDiff = totalBigMax - getters.bigPeople;
+    if (bigDiff < 0) return false;
 
-    return getters.bigPeople;
+    totalSmallMax += bigDiff;
 
-
+    return getters.smallPeople <= totalSmallMax;
   },
   roomPrice: (state: RootState, getters) => {
     const roomPrices = getters.bookedRooms.reduce((price: number, room: any) => {

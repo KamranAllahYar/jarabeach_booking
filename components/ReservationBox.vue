@@ -191,6 +191,9 @@ export default {
         extraPeoplePrice() {
             return this.$store.getters.extraPeoplePrice;
         },
+        confirmEnoughRooms() {
+            return this.$store.getters.confirmEnoughRooms;
+        },
         totalPrice() {
             return this.$store.getters.totalPrice;
         },
