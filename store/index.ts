@@ -79,6 +79,10 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return bRooms;
   },
+  uniqueRooms: (state: RootState, getters) => {
+    const roomGroup = groupBy(getters.bookedRooms, 'room_id');
+    return Object.keys(roomGroup);
+  },
   totalRooms: (state: RootState, getters) => {
     const roomGroup = groupBy(getters.bookedRooms, 'room_id');
     return Object.keys(roomGroup).length;
@@ -118,6 +122,32 @@ export const getters: GetterTree<RootState, RootState> = {
     }
 
     return price;
+  },
+  confirmEnoughRooms: (state: RootState, getters) => {
+    const roomTypes = getters.uniqueRooms.map((roomid: any) => {
+      const r = state.roomsData.find(r => r.id == roomid);
+      if (r) {
+        return r.type;
+      }
+    });
+
+    const standardMax = 2;
+    const familyMax = 6;
+
+    let totalMax = 0;
+    roomTypes.forEach((type: any) => {
+      if (type == 'standard') {
+        totalMax += standardMax;
+      } else if (type == 'family') {
+        totalMax += familyMax;
+      }
+    });
+
+    return getters.bigPeople <= totalMax;
+
+    return getters.bigPeople;
+
+
   },
   roomPrice: (state: RootState, getters) => {
     const roomPrices = getters.bookedRooms.reduce((price: number, room: any) => {

@@ -1,5 +1,5 @@
 <template>
-    <button v-on="$listeners" :class="buttonDesign"
+    <button v-on="$listeners" :class="[buttonDesign, disabled ? disabledClass : '']" :disabled="disabled"
         class="w-full px-4 py-2 font-bold border rounded-lg focus:ring-2 ring-offset-1 ring-brand-blue-400 border-brand-blue-400 hover:border-brand-blue-500 focus:outline-none">
         <div v-if="loading" class="py-1 text-center">
             <Loading class="mx-auto" :color="!outline ? 'text-white' : ''" />
@@ -19,6 +19,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         buttonDesign() {
@@ -26,6 +30,9 @@ export default {
                 return "bg-transparent text-brand-blue-400 hover:text-brand-blue-500";
 
             return "bg-brand-blue-400 hover:bg-brand-blue-500 text-white";
+        },
+        disabledClass() {
+            return "opacity-50 cursor-not-allowed";
         },
     },
 };

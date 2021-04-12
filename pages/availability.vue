@@ -18,6 +18,7 @@
             </div>
             <div class="flex-shrink-0 w-full px-6 md:px-0 md:w-3/12">
                 <ReservationBox showDiscount />
+                ER - {{ enoughRooms }}
             </div>
         </div>
 
@@ -72,6 +73,9 @@ export default {
         roomOptions() {
             return this.$store.getters.roomsData;
         },
+        enoughRooms() {
+            return this.$store.getters.confirmEnoughRooms;
+        },
     },
     methods: {
         addRoom() {
@@ -88,6 +92,13 @@ export default {
             }
         },
         async gotoNext() {
+            if (!this.enoughRooms) {
+                this.$toast.info(
+                    "You have not selected enough rooms to accomodate the amount of guests you expect"
+                );
+                return;
+            }
+
             this.$store.commit("UPDATE_ROOMS", this.rooms);
 
             this.$store.commit("COMPLETE_AVAILABILITY");
