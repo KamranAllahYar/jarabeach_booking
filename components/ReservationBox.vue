@@ -90,15 +90,21 @@
                 <div>Discount</div>
                 <div class="font-bold"> - {{ currency(discount) }}</div>
             </div>
-            <div class="flex justify-between px-3 my-3" v-if="extraPeoplePrice > 0">
+            <div class="flex justify-between px-3 my-3" v-if="!hideExtraGuests && extraPeoplePrice > 0">
                 <div>Extra Guest(s)</div>
                 <div class="font-bold"> + {{ currency(extraPeoplePrice) }}</div>
             </div>
         </div>
 
-        <div class="flex justify-between w-full px-3 py-3 border rounded-md border-brand-blue-300 bg-brand-blue-100">
-            <div class="text-xl">Total</div>
-            <div class="text-xl font-bold">{{ currency(totalPrice) }}</div>
+        <div class="w-full px-3 py-3 border rounded-md border-brand-blue-300 bg-brand-blue-100">
+            <div class="flex justify-between w-full">
+                <div class="text-sm">VAT (5%)</div>
+                <div class="text-sm font-bold">{{ currency(totalPrice*0.05) }}</div>
+            </div>
+            <div class="flex justify-between w-full">
+                <div class="text-xl">Total</div>
+                <div class="text-xl font-bold">{{ currency(totalPrice) }}</div>
+            </div>
         </div>
 
         <div v-if="$store.state.editMode" class="w-full px-3 py-3 border rounded-md border-brand-blue-300 bg-brand-blue-100">
@@ -129,6 +135,10 @@ export default {
             default: true,
         },
         showDiscount: {
+            type: Boolean,
+            default: false,
+        },
+        hideExtraGuests: {
             type: Boolean,
             default: false,
         },

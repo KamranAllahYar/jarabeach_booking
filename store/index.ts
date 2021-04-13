@@ -240,8 +240,14 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return 0;
   },
-  totalPrice: (state: RootState, getters) => {
+  preTotal: (state: RootState, getters) => {
     return getters.subTotal - getters.discount - getters.roomDiscount - getters.memberDiscount + getters.extraPeoplePrice;
+  },
+  taxTotal: (state: RootState, getters) => {
+    return getters.preTotal * 0.05;
+  },
+  totalPrice: (state: RootState, getters) => {
+    return getters.preTotal + getters.taxTotal;
   },
   differenceToPay: (state: RootState, getters) => {
     if (!state.editBooking) return 0;
@@ -463,6 +469,7 @@ export const actions: ActionTree<RootState, RootState> = {
       dataToPost = {
         "method": "Paystack",
         "subtotal": getters.subTotal,
+        "taxTotal": getters.taxTotal,
         "total": getters.totalPrice,
       };
     } else {
