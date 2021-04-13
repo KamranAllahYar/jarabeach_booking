@@ -39,7 +39,6 @@
 
             <div>
                 <div class="mt-4 font-semibold">At what time?</div>
-                {{ selectedQuadbike }}
                 <div class="mt-2 space-y-3 font-light ">
                     <label class="flex items-center" v-for="quadbike in quadbikes" :key="quadbike.id"
                         :class="{'opacity-25' :!isAvailable(quadbike.id)}">

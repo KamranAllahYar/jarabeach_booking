@@ -98,8 +98,8 @@
 
         <div class="w-full px-3 py-3 border rounded-md border-brand-blue-300 bg-brand-blue-100">
             <div class="flex justify-between w-full">
-                <div class="text-sm">VAT (5%)</div>
-                <div class="text-sm font-bold">{{ currency(totalPrice*0.05) }}</div>
+                <div class="text-sm">Consumption Tax (5%)</div>
+                <div class="text-sm font-bold">{{ currency(taxTotal) }}</div>
             </div>
             <div class="flex justify-between w-full">
                 <div class="text-xl">Total</div>
@@ -191,6 +191,9 @@ export default {
         },
         memberDiscount() {
             return this.$store.getters.memberDiscount;
+        },
+        taxTotal() {
+            return this.$store.getters.taxTotal;
         },
         subTotal() {
             return this.$store.getters.subTotal;

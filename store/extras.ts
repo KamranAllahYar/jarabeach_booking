@@ -6,7 +6,7 @@ export const state = () => ({
     { type: 'lookout', name: 'Lookout Experience', available: true, range: '15,000' },
     { type: 'massage', name: 'Massage', available: false, range: '30,000' },
     { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
-    { type: 'photoshoot', name: 'Photoshoot', available: true, range: '50,000' },
+    { type: 'photoshoot', name: 'Photoshoot', available: true, range: '20,000' },
     { type: 'drinks', name: 'Drinks', available: true, range: '15,000' },
     { type: 'cakes', name: 'Cake', available: true, range: '15,000' },
     { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
@@ -103,7 +103,7 @@ export const getters: GetterTree<ExtraState, RootState> = {
   },
   photoshootPrice: (state: ExtraState) => {
     if (state.selectedPhotoshoot > 0) {
-      let photographerPrice = 50000;
+      let photographerPrice = 20000;
       let assistantPrice = 15000;
 
       if (state.photoshootPrices) {
