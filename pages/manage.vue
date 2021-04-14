@@ -27,7 +27,7 @@
                                     <path d="M13.4221 14.5312a6.55244 6.55244 0 00-2.4175-2.7337 6.5535 6.5535 0 00-3.50495-1.0163 6.55326 6.55326 0 00-3.50492 1.0163 6.55215 6.55215 0 00-2.41758 2.7337M7.5 3.28125A3.28189 3.28189 0 014.21875 6.5625c0 .87024.3457 1.70484.96106 2.32019A3.28121 3.28121 0 0010.7812 6.5625a3.28119 3.28119 0 01-2.32014-.96106A3.28121 3.28121 0 017.5 3.28125v0z" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M11.1473 11.8919a9.11006 9.11006 0 002.1193-.6294.93767.93767 0 00.4894-.5152.93758.93758 0 00-.0125-.7104l-.86-2.00628a2.8125 2.8125 0 01-.2275-1.10812V5.625A5.15617 5.15617 0 007.49976.46875 5.15627 5.15627 0 002.34351 5.625v1.2975a2.8125 2.8125 0 01-.2275 1.10812l-.86 2.00628a.9374.9374 0 00-.01252.7104.93765.93765 0 00.48939.5152 9.10925 9.10925 0 002.11938.6294" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                                <input type="text" v-model="last_name" required placeholder="Genevieve" class="w-full px-0 border-0 border-transparent rounded-md" style="box-shadow: none" />
+                                <input type="text" v-model="last_name" required placeholder="Okpala" class="w-full px-0 border-0 border-transparent rounded-md" style="box-shadow: none" />
                             </div>
                         </div>
                     </div>

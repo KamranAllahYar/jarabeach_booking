@@ -27,7 +27,7 @@ export default {
     computed: {
         buttonDesign() {
             if (this.outline)
-                return "bg-transparent text-brand-blue-400 hover:text-brand-blue-500";
+                return "bg-white text-brand-blue-400 hover:text-brand-blue-500";
 
             return "bg-brand-blue-400 hover:bg-brand-blue-500 text-white";
         },
