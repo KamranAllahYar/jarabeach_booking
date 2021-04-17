@@ -23,7 +23,7 @@ export default function ({ store, redirect, route }) {
   console.log(new Date());
   console.log(seconds);
 
-  if (seconds > 3600) { // 1 Hour
+  if (seconds > 600) { // 10minutes
     store.commit("RESET_STORE");
     store.commit("extras/RESET_STORE");
 

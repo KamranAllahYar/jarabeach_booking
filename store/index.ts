@@ -11,6 +11,10 @@ var groupBy = function (xs: any, key: any) {
   }, {});
 };
 
+var onlyUnique = function (value: any, index: any, self: string | any[]) {
+  return self.indexOf(value) === index;
+}
+
 export const state = () => ({
   groupType: 'individual' as string,
   adult_no: 0 as number,
@@ -78,6 +82,29 @@ export const getters: GetterTree<RootState, RootState> = {
     });
 
     return bRooms;
+  },
+  dateFromTo: (state: RootState, getters) => {
+    const dates = getters.bookedRooms.map((room: any) => room.date);
+
+    let orderedDates = dates.sort(function (a: string, b: string) {
+      return Date.parse(a) > Date.parse(b);
+    });
+
+    if (orderedDates.length == 0) return;
+
+    if (orderedDates.length == 1) {
+      return format(parseISO(orderedDates[0]), "do MMM Y");
+    } else {
+      return format(parseISO(orderedDates[0]), "do MMM Y") + " - " + format(parseISO(orderedDates[orderedDates.length - 1]), "do MMM Y");;
+    }
+  },
+  roomsDetailsStandard: (state: RootState, getters) => {
+    const rooms = getters.bookedRooms.filter((room: any) => room.type == 'standard').map((room: any) => room.room_id);
+    return rooms.filter(onlyUnique);
+  },
+  roomsDetailsFamily: (state: RootState, getters) => {
+    const rooms = getters.bookedRooms.filter((room: any) => room.type == 'family').map((room: any) => room.room_id);
+    return rooms.filter(onlyUnique);
   },
   uniqueRooms: (state: RootState, getters) => {
     const roomGroup = groupBy(getters.bookedRooms, 'room_id');

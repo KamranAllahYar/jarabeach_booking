@@ -31,10 +31,13 @@
                     </div> -->
                 </div>
                 <div>
-                    <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
+                    <div class="text-xs text-right">{{ dateFromTo }}</div>
+                    <div class="text-sm text-right" v-if="roomsDetailsStandard.length > 0">Standard Room {{ formatAndString(roomsDetailsStandard) }}</div>
+                    <div class="text-sm text-right" v-if="roomsDetailsFamily.length > 0">Family Room {{ formatAndString(roomsDetailsFamily) }}</div>
+                    <!-- <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
                         <div>{{ formatDate(room.date) }}</div>
                         <div class="text-xs text-gray-600">{{ room.name }}</div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -149,6 +152,15 @@ export default {
     //     };
     // },
     computed: {
+        dateFromTo() {
+            return this.$store.getters.dateFromTo;
+        },
+        roomsDetailsStandard() {
+            return this.$store.getters.roomsDetailsStandard;
+        },
+        roomsDetailsFamily() {
+            return this.$store.getters.roomsDetailsFamily;
+        },
         editBooking() {
             return this.$store.state.editBooking;
         },
@@ -212,8 +224,18 @@ export default {
         },
     },
     methods: {
+        formatAndString(arr) {
+            if (arr.length == 1) return arr[0];
+
+            arr.sort();
+            const last = arr[arr.length - 1];
+
+            arr.pop();
+
+            return arr.join(", ") + " & " + last;
+        },
         formatDate(date) {
-            return format(parseISO(date), "do MMM  Y");
+            return format(parseISO(date), "do MMM Y");
         },
         currency(num) {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
