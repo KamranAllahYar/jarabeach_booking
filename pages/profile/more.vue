@@ -44,11 +44,14 @@
                     </div>
 
                     <div class="flex w-full my-6 space-x-2">
-                        <StartOverButton></StartOverButton>
                         <MainButton outline @click="gotoBack()">Back</MainButton>
                         <!-- <MainButton outline @click="gotoNext()">Skip</MainButton> -->
                         <MainButton @click="gotoNext()">Next</MainButton>
                     </div>
+                </div>
+
+                <div class="flex items-center w-full my-6 space-x-2">
+                    <StartOverButton class="w-full"></StartOverButton>
                 </div>
             </div>
             <div class="flex-shrink-0 w-full px-6 md:px-0 md:w-3/12">

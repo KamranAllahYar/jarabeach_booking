@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <MainButton class="whitespace-nowrap" @click="clearBooking()" outline>Start Over</MainButton>
+    <div class="mx-auto" style="max-width: 160px">
+        <MainButton class="whitespace-nowrap" @click="clearBooking()" outline>Restart Booking</MainButton>
     </div>
 </template>
 

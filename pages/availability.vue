@@ -11,15 +11,16 @@
                     <!-- <RoomCalendar class="w-full" @selected="selectRooms($event)" :initialRooms="rooms" @viewsetup="closeTour()" /> -->
 
                     <div class="flex w-11/12 mx-auto mt-6 mb-6 space-x-2 md:space-x-6 md:w-9/12" v-if="rooms.length > 0">
-                        <StartOverButton></StartOverButton>
                         <MainButton @click="gotoBack()" outline>Back</MainButton>
                         <MainButton @click="gotoNext()">Next</MainButton>
                     </div>
                 </div>
+                <div class="flex items-center w-full my-6 space-x-2">
+                    <StartOverButton class="w-full"></StartOverButton>
+                </div>
             </div>
             <div class="flex-shrink-0 w-full px-6 md:px-0 md:w-3/12">
                 <ReservationBox showDiscount hideExtraGuests />
-                <!-- ER - {{ enoughRooms }} -->
             </div>
         </div>
 

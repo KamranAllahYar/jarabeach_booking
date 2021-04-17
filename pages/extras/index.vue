@@ -40,14 +40,16 @@
                 </div>
 
                 <div class="flex items-center w-full mx-auto mt-8 space-x-2 md:w-1/2" v-if="selected.length > 0">
-                    <StartOverButton></StartOverButton>
                     <MainButton @click="gotoBack()" outline>Back</MainButton>
                     <MainButton @click="gotoNext()">Next</MainButton>
                 </div>
                 <div v-else class="flex items-center w-full mx-auto mt-8 space-x-2 md:w-1/2">
-                    <StartOverButton></StartOverButton>
                     <MainButton @click="gotoBack()" outline>Back</MainButton>
                     <MainButton @click="skip()">Skip</MainButton>
+                </div>
+
+                <div class="flex items-center w-full my-6 space-x-2">
+                    <StartOverButton class="w-full"></StartOverButton>
                 </div>
             </div>
 
