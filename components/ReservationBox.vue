@@ -19,6 +19,18 @@
                     </div>
                 </div>
             </div>
+            <div class="flex items-center justify-between px-3 my-3" v-if="rooms.length > 0">
+                <div>
+                    Duration
+                </div>
+                <div>
+                    <div class="text-xs text-right">{{ dateFromTo }}</div>
+                    <!-- <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
+                        <div>{{ formatDate(room.date) }}</div>
+                        <div class="text-xs text-gray-600">{{ room.name }}</div>
+                    </div> -->
+                </div>
+            </div>
             <div class="flex justify-between px-3 my-3" v-if="rooms.length > 0">
                 <div>
                     Room<span v-if="rooms.length > 1">s</span>
@@ -31,7 +43,7 @@
                     </div> -->
                 </div>
                 <div>
-                    <div class="text-xs text-right">{{ dateFromTo }}</div>
+                    <!-- <div class="text-xs text-right">{{ dateFromTo }}</div> -->
                     <div class="text-sm text-right" v-if="roomsDetailsStandard.length > 0">Standard Room {{ formatAndString(roomsDetailsStandard) }}</div>
                     <div class="text-sm text-right" v-if="roomsDetailsFamily.length > 0">Family Room {{ formatAndString(roomsDetailsFamily) }}</div>
                     <!-- <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
