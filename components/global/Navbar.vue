@@ -28,7 +28,8 @@
                 </a>
             </div> -->
             <div class="flex-1"></div>
-            <div class="underline cursor-pointer" v-if="canClearBooking" @click="clearBooking()">Clear current booking</div>
+            <!-- <div class="underline cursor-pointer" v-if="canClearBooking" @click="clearBooking()">Clear current booking</div>
+            <StartOverButton></StartOverButton> -->
         </div>
     </div>
 </template>
@@ -43,7 +44,7 @@ export default {
     methods: {
         clearBooking() {
             if (
-                confirm(
+                window.confirm(
                     "Are you sure you want to clear this booking? You will loose all the progress so far!"
                 )
             ) {

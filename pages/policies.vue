@@ -32,6 +32,7 @@
                     </div>
 
                     <div class="flex w-full my-6 space-x-2">
+                        <StartOverButton></StartOverButton>
                         <MainButton outline @click="gotoBack()">Back</MainButton>
                         <MainButton @click="gotoNext()">Next</MainButton>
                     </div>

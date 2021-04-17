@@ -144,6 +144,7 @@
                     </div>
 
                     <div class="flex w-full my-6 space-x-2">
+                        <StartOverButton></StartOverButton>
                         <MainButton type="button" outline @click="gotoBack()">Back</MainButton>
                         <MainButton :loading="loading" @click="gotoNext()">Next</MainButton>
                     </div>
