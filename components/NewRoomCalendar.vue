@@ -98,8 +98,8 @@
 
                         <!-- POPOVER -->
                         <div v-if="isEnd(roomType, compDate.dateStr) && !smallScreen" @click.stop=""
-                            class="absolute bottom-0 right-0 z-50 w-64 py-2 pl-3 pr-4 text-sm transform translate-x-full bg-white border rounded-lg"
-                            style="--tw-translate-x: 104%">
+                            class="absolute bottom-0 right-0 z-50 py-2 pl-3 pr-4 text-sm transform translate-x-full bg-white border rounded-lg"
+                            style="--tw-translate-x: 104%; width: 330px">
                             <div v-if="loadingRoomOptions">
                                 <svg class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
