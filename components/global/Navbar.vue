@@ -27,6 +27,31 @@
                     OVERNIGHT BOOKING
                 </a>
             </div> -->
+            <div class="flex-1"></div>
+            <div class="underline cursor-pointer" v-if="canClearBooking" @click="clearBooking()">Clear current booking</div>
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    computed: {
+        canClearBooking() {
+            return this.$store.state.guests_done;
+        },
+    },
+    methods: {
+        clearBooking() {
+            if (
+                confirm(
+                    "Are you sure you want to clear this booking? You will loose all the progress so far!"
+                )
+            ) {
+                this.$store.commit("RESET_STORE");
+                this.$store.commit("extras/RESET_STORE");
+                this.$router.push("/");
+            }
+        },
+    },
+};
+</script>

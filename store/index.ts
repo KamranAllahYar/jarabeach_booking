@@ -165,6 +165,7 @@ export const getters: GetterTree<RootState, RootState> = {
 
     let totalBigMax = 0;
     let totalSmallMax = 0;
+
     roomTypes.forEach((type: any) => {
       if (type == 'standard') {
         totalBigMax += standardBigMax;
