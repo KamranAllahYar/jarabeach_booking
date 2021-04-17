@@ -20,7 +20,7 @@ export default {
             ) {
                 this.$store.commit("RESET_STORE");
                 this.$store.commit("extras/RESET_STORE");
-                this.$router.push("/");
+                this.$router.push("/guests");
             }
         },
     },
