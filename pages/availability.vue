@@ -93,7 +93,7 @@ export default {
         },
         async gotoNext() {
             if (!this.enoughRooms) {
-                this.$toast.info(
+                this.$toast.error(
                     "You have not selected enough rooms to accomodate the amount of guests you expect"
                 );
                 return;

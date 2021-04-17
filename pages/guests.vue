@@ -93,8 +93,10 @@
                 <MainButton @click="gotoNext()">Next</MainButton>
             </div>
         </div>
-        <div class="flex justify-center">
-            <button class="mx-auto mt-5 font-semibold text-center cursor-pointer text-brand-blue" @click="$router.push({path: '/manage'})">Manage Booking</button>
+
+        <div class="flex justify-center max-w-lg px-6 py-6 mx-auto">
+            <!-- <button class="mx-auto mt-5 font-semibold text-center cursor-pointer text-brand-blue" @click="$router.push({path: '/manage'})">Manage Booking</button> -->
+            <MainButton @click="$router.push({path: '/manage'})" outline class="mx-auto">Manage Booking</MainButton>
         </div>
     </div>
 </template>

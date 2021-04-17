@@ -5,7 +5,7 @@
             <Navbar />
 
             <div class="py-16 text-center">
-                <!-- <img src="~/assets/logo_big.jpg" class="w-32 mx-auto md:w-40" /> -->
+                <img src="~/assets/logo_big.jpg" class="w-32 mx-auto mt-16 md:w-40" />
             </div>
 
             <TopProgressBar />
