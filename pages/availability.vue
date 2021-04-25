@@ -129,9 +129,16 @@ export default {
         },
     },
     mounted() {
-        setTimeout(() => {
-            this.$tours["myTour"].start();
-        }, 100);
+        const trigger = "viewTour";
+
+        const hasShown = window.localStorage.getItem(trigger);
+
+        if (!hasShown) {
+            setTimeout(() => {
+                this.$tours["myTour"].start();
+                window.localStorage.setItem(trigger, true);
+            }, 100);
+        }
     },
     created() {
         console.log("STORE_ROOMS");
