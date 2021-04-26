@@ -56,19 +56,18 @@ export default {
     }
 }
 
-.beach {
+/* .beach {
     background: url("~assets/beach_top.svg");
     background-repeat: no-repeat;
     background-position: 0px 0px;
-    /* background-size: contain; */
     background-repeat: repeat-x;
     animation: animatedBackground 60s linear infinite;
-}
+} */
 .bottom-beach {
     background: url("~assets/beach_bottom.jpg");
     background-repeat: no-repeat;
     background-position: center bottom;
-    background-size: contain;
+    background-size: cover;
     z-index: 0;
 }
 </style>
