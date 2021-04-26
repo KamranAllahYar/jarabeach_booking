@@ -418,22 +418,6 @@ export default {
                     this.roomIds.splice(ix, 1);
                 }
             } else {
-                // if (room.type == "standard") {
-                //     let shouldStop = false;
-
-                //     if (this.bigPeople > 2) {
-                //         shouldStop = true;
-                //     } else if (this.smallPeople > 2) {
-                //         shouldStop = true;
-                //     }
-
-                //     if (shouldStop) {
-                //         this.$toast.info(
-                //             "Our standard rooms welcomes a group of two adults and an infant and toddler only. For your group size, you need to select a family room."
-                //         );
-                //         return;
-                //     }
-                // }
                 this.roomIds.push(room.id);
             }
 
@@ -614,6 +598,14 @@ export default {
             this.notAllRooms = false;
             if (this.seRoom == "standard") {
                 if (this.bigPeople <= 2) {
+                    this.notAllRooms = true;
+                } else if (this.smallPeople <= 1) {
+                    this.notAllRooms = true;
+                }
+            } else if (this.seRoom == "family") {
+                if (this.bigPeople <= 3) {
+                    this.notAllRooms = true;
+                } else if (this.smallPeople <= 2) {
                     this.notAllRooms = true;
                 }
             }
