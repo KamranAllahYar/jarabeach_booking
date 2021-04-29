@@ -138,7 +138,17 @@ export const getters: GetterTree<RootState, RootState> = {
 
     if (getters.bigPeople > bigMax) {
       const bigExtra = getters.bigPeople - bigMax;
-      price += bigExtra * bigPrice;
+
+      if (getters.noTeens > 0) {
+        const noOfTeens = getters.noTeens;
+
+        const teenPrice = smallPrice * noOfTeens;
+        const normalPrice = (bigExtra - +noOfTeens) * bigPrice;
+
+        price += teenPrice + normalPrice;
+      } else {
+        price += bigExtra * bigPrice;
+      }
     } else {
       smallMax = smallMax + (bigMax - getters.bigPeople);
     }
