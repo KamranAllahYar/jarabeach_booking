@@ -43,7 +43,12 @@
                 <div>
                     <!-- <div class="text-xs text-right">{{ dateFromTo }}</div> -->
                     <div class="text-sm text-right" v-if="roomsDetailsStandard.length > 0">Standard Room {{ formatAndString(roomsDetailsStandard) }}</div>
-                    <div class="text-sm text-right" v-if="roomsDetailsFamily.length > 0">Family Room {{ formatAndString(roomsDetailsFamily) }}</div>
+                    <div class="text-sm text-right" v-if="roomsDetailsFamily.length > 0">
+                        <div v-if="roomsDetailsFamily.includes(6)">Family Room 6</div>
+                        <div v-if="formatAndStringCabin(roomsDetailsFamily)">
+                            Family Cabin {{ formatAndStringCabin(roomsDetailsFamily) }}
+                        </div>
+                    </div>
                     <!-- <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
                         <div>{{ formatDate(room.date) }}</div>
                         <div class="text-xs text-gray-600">{{ room.name }}</div>
@@ -238,6 +243,27 @@ export default {
     },
     methods: {
         formatAndString(arr) {
+            if (arr.length == 1) return arr[0];
+
+            arr.sort();
+            const last = arr[arr.length - 1];
+
+            arr.pop();
+
+            return arr.join(", ") + " & " + last;
+        },
+        formatAndStringCabin(arr) {
+            console.log("array -----");
+            console.log(arr);
+            const index = arr.indexOf(6);
+            if (index > -1) {
+                arr.splice(index, 1);
+                console.log("splicing--");
+            }
+            console.log(index);
+            console.log(arr);
+
+            if (arr.length == 0) return false;
             if (arr.length == 1) return arr[0];
 
             arr.sort();

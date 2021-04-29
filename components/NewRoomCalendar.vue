@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col w-full">
         <div class="flex items-center px-4 mb-6 space-x-4 md:px-6">
-            <div class="flex items-center h-10 text-base font-semibold w-28 md:w-40 md:text-lg text-brand-blue-400">
+            <div class="flex items-center h-10 text-xs font-semibold w-28 md:w-40 md:text-lg text-brand-blue-400">
                 {{ startDateStr }}<br />
                 {{ endDateStr }}
             </div>
@@ -24,7 +24,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="flex-1"></div>
+            <div class="md:flex-1"></div>
             <div class="flex-shrink-0 text-xs font-semibold border-b cursor-pointer md:text-base border-brand-blue-400 text-brand-blue-400" @click="openSlideshow()" id="roomSetup">
                 View Room Setup
             </div>

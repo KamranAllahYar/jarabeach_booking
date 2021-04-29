@@ -10,8 +10,8 @@
 
             <TopProgressBar />
 
-            <div class="relative z-20 pt-10 pb-6 mx-auto max-w-7xl">
-                <h1 class="mb-6 text-xl font-bold text-center md:text-2xl">
+            <div class="relative z-20 px-6 pt-10 pb-6 mx-auto max-w-7xl md:px-0">
+                <h1 class="mb-6 text-base font-bold text-center md:text-2xl">
                     Here you can book in any extra special experiences. <br />
                     Please select the ones you wish to add to your booking.
                 </h1>

@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <div class="flex items-center justify-between border-b">
+        <div class="flex items-center justify-between py-3 border-b md:py-0">
             <div class="w-24 h-20">
                 <img src="@/assets/images/specials/lookout.png" alt="" class="object-cover object-center w-full h-full">
             </div>
@@ -8,7 +8,7 @@
                 <div class="text-xl font-semibold">Lookout Experience</div>
                 <div class="text-xs font-light text-gray-600">There are three dining package options to choose from across breakfast, lunch and dinner. Only 1 slot available for 2 people per meal. Must be booked in advance.</div>
             </div>
-            <div class="flex items-center ml-6 mr-3 space-x-1 text-gray-600 cursor-pointer" @click="$emit('close')">
+            <div class="items-center hidden ml-6 mr-3 space-x-1 text-gray-600 cursor-pointer md:flex" @click="$emit('close')">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path
                         stroke-linecap="round" stroke-linejoin="round" stroke-width="1"

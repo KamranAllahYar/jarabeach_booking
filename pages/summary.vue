@@ -70,10 +70,10 @@
                         </form>
                     </div>
 
-                    <div class="flex items-center w-full my-6 space-x-2">
+                    <div class="flex flex-col items-center w-full my-6 space-y-2 md:space-y-0 md:flex-row md:space-x-2">
                         <MainButton class="w-3/12" outline @click="gotoBack()">Back</MainButton>
                         <template v-if="shouldShowPaymentButton">
-                            <div class="relative flex-shrink-0 w-5/12" v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimerToggle(true)" @mouseleave="holdDisclaimerToggle(false)">
+                            <div class="relative flex-shrink-0 w-full md:w-5/12" v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimerToggle(true)" @mouseleave="holdDisclaimerToggle(false)">
                                 <MainButton :loading="loading" @click.native="bookOnHoldBooking()">
                                     <div class="flex justify-center">
                                         <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -88,7 +88,7 @@
                                     booking will be cancelled.
                                 </div>
                             </div>
-                            <div class="flex-shrink-0 w-4/12 ">
+                            <div class="flex-shrink-0 w-full md:w-4/12 ">
                                 <Paystack
                                     v-if="trans_ref != null"
                                     :amount="totalPrice"
