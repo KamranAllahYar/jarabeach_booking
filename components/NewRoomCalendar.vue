@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col w-full">
-        <div class="flex items-center px-4 mb-6 space-x-4 md:px-6">
+        <div class="flex items-center px-2 mb-6 space-x-4 md:px-6">
             <div class="flex items-center h-10 text-xs font-semibold w-28 md:w-40 md:text-lg text-brand-blue-400">
                 {{ startDateStr }}<br />
                 {{ endDateStr }}
