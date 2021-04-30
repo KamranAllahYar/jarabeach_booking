@@ -142,10 +142,14 @@ export const getters: GetterTree<RootState, RootState> = {
       if (getters.noTeens > 0) {
         const noOfTeens = getters.noTeens;
 
-        const teenPrice = smallPrice * noOfTeens;
-        const normalPrice = (bigExtra - +noOfTeens) * bigPrice;
+        if (bigExtra <= noOfTeens) {
+          price += smallPrice * bigExtra;
+        } else {
+          const teenPrice = smallPrice * noOfTeens;
+          const normalPrice = (bigExtra - noOfTeens) * bigPrice;
 
-        price += teenPrice + normalPrice;
+          price += teenPrice + normalPrice;
+        }
       } else {
         price += bigExtra * bigPrice;
       }
