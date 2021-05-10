@@ -28,6 +28,9 @@
                 </a>
             </div> -->
             <div class="flex-1"></div>
+            <div>
+              For all takeover, retreat, or private bookings, please email <a href="mailto:bookings@jarabeachresort.com">bookings@jarabeachresort.com</a>
+            </div>
             <!-- <div class="underline cursor-pointer" v-if="canClearBooking" @click="clearBooking()">Clear current booking</div>
             <StartOverButton></StartOverButton> -->
         </div>
