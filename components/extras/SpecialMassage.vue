@@ -75,6 +75,11 @@ export default {
     },
     methods: {
         isAvailable(slot_id) {
+            if (this.selectedDate == this.dates[0]) {
+                if (slot_id == 1) return false;
+                else if (slot_id == 2) return false;
+            }
+
             if (this.currentAvailableMassages) {
                 console.log(this.currentAvailableMassages);
                 return this.currentAvailableMassages.includes(slot_id);
