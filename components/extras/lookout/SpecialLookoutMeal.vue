@@ -71,7 +71,7 @@
 </template>
 <script>
 export default {
-    props: ["initial", "options", "availableOptions", "date"],
+    props: ["initial", "options", "availableOptions", "date", "fisrDay"],
     data() {
         return {
             selectedPackages: [],
@@ -113,6 +113,12 @@ export default {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         isAvailable(optionId) {
+            if (this.fisrDay) {
+                if (optionId == 1) return false;
+                else if (optionId == 2) return false;
+                else if (optionId == 3) return false;
+            }
+
             if (this.availableOptions) {
                 return this.availableOptions.includes(optionId);
             }

@@ -36,6 +36,7 @@
             :options="options"
             :availableOptions="currentAvailablePackages"
             :date="selectedDate"
+            :fisrDay="isFirstDay"
             @close="toggleMenuInfo(false)"
             @prev="toggleMenuInfo(false)"
             @next="next()"
@@ -66,6 +67,12 @@ export default {
         },
         dates() {
             return this.$store.getters.bookingDates;
+        },
+        isFirstDay() {
+            if (this.selectedDate == null) return false;
+            if (this.selectedDate == this.dates[0]) return true;
+
+            return false;
         },
     },
     methods: {
