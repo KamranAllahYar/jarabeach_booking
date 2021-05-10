@@ -87,7 +87,7 @@
                                     <b>bookings@jarabeachresort.com</b> within that time or the hold on the
                                     booking will be cancelled.
                                     <br />
-                                    <i>Option not available between 6pm-9am WAT</i>
+                                    <i class="text-red-800">Option not available between 6pm-9am WAT</i>
                                 </div>
                             </div>
                             <div class="flex-shrink-0 w-full md:w-4/12 ">

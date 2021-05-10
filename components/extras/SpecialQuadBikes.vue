@@ -100,6 +100,11 @@ export default {
     },
     methods: {
         isAvailable(slot_id) {
+            if (this.selectedDate == this.dates[0]) {
+                if (slot_id == 1) return false;
+                if (slot_id == 3) return false;
+            }
+
             if (this.currentAvailableQuadbikes) {
                 return this.currentAvailableQuadbikes.includes(slot_id);
             }
