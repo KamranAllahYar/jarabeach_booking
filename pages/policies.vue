@@ -5,12 +5,12 @@
         <div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-6 md:flex-row">
             <div class="w-full md:w-6/12">
                 <div class="px-6 pt-6 text-gray-700 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
-                    <div class="border rounded-md" v-if="currentPolicy">
+                    <div class="bg-white border rounded-md" v-if="currentPolicy">
                         <div class="grid grid-cols-2 px-3 py-4 space-x-3 border-b">
                             <div class="text-base font-bold capitalize">{{ currentPolicy.name }}</div>
                         </div>
 
-                        <div class="px-3 py-4">
+                        <div class="px-3 py-4 bg-gray-100">
                             <pre class="w-full overflow-y-auto h-80" v-html="currentPolicy.content"></pre>
                         </div>
 
