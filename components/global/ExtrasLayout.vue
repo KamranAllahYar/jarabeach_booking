@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="relative">
         <SpecialLookout v-if="currentSpecial == 'lookout'" @next="gotoNext()" @prev="gotoPrev()" />
 
         <SpecialMassage v-else-if="currentSpecial == 'massage'" @next="gotoNext()" @prev="gotoPrev()" />
@@ -15,11 +15,12 @@
         <SpecialRoomDecoration v-else-if="currentSpecial == 'roomDecoration'" @next="gotoNext()" @prev="gotoPrev()" />
 
         <SpecialDomesticStaff v-else-if="currentSpecial == 'domesticStaff'" @next="gotoNext()" @prev="gotoPrev()" />
+
+        <button @click="removeExtra()" class="absolute px-2 py-1 text-sm text-red-500 capitalize transition-colors rounded-sm top-2 right-2 hover:bg-red-500 hover:text-white">remove extra</button>
     </div>
 </template>
 
 <script>
-
 export default {
     props: {
         currentSpecial: {
@@ -36,6 +37,17 @@ export default {
         },
     },
     methods: {
+        removeExtra() {
+            const confirmRemove = confirm(
+                "Are you sure you want to remove this Extra?"
+            );
+
+            if (confirmRemove) {
+                this.gotoNext();
+                console.log(this.currentSpecial);
+                this.$store.commit("extras/REMOVE_EXTRA", this.currentSpecial);
+            }
+        },
         gotoNext() {
             console.log(this.index);
             if (this.index == this.selected.length - 1) {

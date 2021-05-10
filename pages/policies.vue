@@ -23,7 +23,7 @@
                             <div class="mt-6">
                                 I specifically confirm that I:
                                 <ol class="pl-6 mt-1 list-decimal">
-                                    <li>understand the use of illegal drugs is strictly prohibited</li>
+                                    <li>understand the use of illegal drugs is strictly prohibited including marijuana</li>
                                     <li>understand my booking permits only the number of guests stated on my booking</li>
                                     <li>agree to abide by all house rules and regulations set forth to ensure the peace and enjoyment for all guests</li>
                                 </ol>

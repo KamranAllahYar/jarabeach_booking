@@ -8,10 +8,10 @@
                 <div class="font-semibold">The Lookout Experience</div>
                 <p class="mt-3 font-light leading-relaxed text-gray-600">
                     The Lookout provides an experience like no other in the city. Pre-booked exclusively,
-                    the Lookout is only open for three dining sessions a day
+                    the Lookout is only open for three dining sessions a day.
                     A speaker is included so you can connect your own playlist,
                     or listen to Jara's own - curated to suit the sweet and soothing sound of the waves lapping against the beach.
-                    The perfect location for that extra-special romantic occasion. We will be happy to organise extras like flowers or cake for you at an additional cost.
+                    The perfect location for that extra-special romantic occasion. We will be happy to organise extras like flowers or cake for you at an additional cost, on request.
 
                 </p>
                 <div class="mt-6 font-semibold">What date would you like to have this?</div>

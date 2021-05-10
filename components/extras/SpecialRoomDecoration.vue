@@ -8,7 +8,6 @@
             <div class="font-semibold">Room Decoration</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
                 There are a number of expected extras we offer for free, including romantic room decoration, or happy birthday messages, simple decorations etc.
-                This is only avaliable on date of arrival.
 
                 <br />
                 <br />

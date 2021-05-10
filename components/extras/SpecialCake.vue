@@ -6,7 +6,9 @@
         <div class="w-full p-6 md:w-7/12">
             <div class="font-semibold">Cakes</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
-                Make your visit extra-special with a celebration cake. You can specify type, layer, number, color and flavour of cake and we will get it done for you.
+                Make your visit extra-special with a celebration cake.
+                You can specify type, layer, number, colour and flavour of cake and
+                we will arrange with our third-party provider for you.
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this?</div>
 
@@ -81,7 +83,7 @@
                 </div> -->
 
                 <div>
-                    <div class="mt-6 font-semibold">Select your Cake</div>
+                    <div class="mt-6 font-semibold">Select your Cake (click +Add for toppings etc)</div>
 
                     <div @click="addCakes" class="flex items-center flex-shrink-0 w-20 h-10 mb-3 text-xs cursor-pointer text-brand-blue hover:text-brand-blue-300">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

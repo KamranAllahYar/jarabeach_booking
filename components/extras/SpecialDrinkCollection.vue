@@ -7,19 +7,12 @@
             <div class="flex-1 px-6 pb-4 md:overflow-y-auto" id="con_scroll">
                 <div class="font-semibold">Premium Drink Collection</div>
                 <p class="mt-3 font-light leading-relaxed text-gray-600">
-                    Jara’s all-inclusive drink offering includes <br />
-
                     Our Premium Collection is available to any guest wishing to make their stay
                     extra-special. We have curated a small, but memorable range of champagne, wines and
                     spirits - available to be purchased during your stay via POS or bank transfer (JARA is a
                     completely cashless resort) or pre-bought on this page. Please select which date you
                     would like your bottle (if your first day is selected, your order will be available in your
                     room on arrival in your room, as default).
-                    <!-- We have curated a small, but memorable range of champagnes, wines and spirits -
-                    available to be purchased during your stay via POS or bank transfer (JARA is a completely cashless resort).
-                    Items can also be pre-ordered at the time of booking.
-                    The following items represent some of the items currently available to buy.
-                    We can source any bottle found in Nigeria, so if it's not listed, please do not hesitate to let us know what you'd like us to prepare for you. -->
                 </p>
                 <div class="mt-6 font-semibold">What date would you like to have this?</div>
                 <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">

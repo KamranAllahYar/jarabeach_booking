@@ -7,6 +7,8 @@
                 <div class="overflow-hidden bg-white border rounded-lg shadow-lg">
                     <ExtrasLayout :currentSpecial="special" />
                 </div>
+
+                <!-- <MainButton @click="removeExtra()">Remove</MainButton> -->
             </div>
             <div class="flex-shrink-0 w-full md:w-3/12">
                 <ReservationBox showDiscount />
@@ -26,6 +28,12 @@ export default {
     computed: {
         selected() {
             return this.$store.getters["extras/allSelected"];
+        },
+    },
+    methods: {
+        removeExtra() {
+            console.log(this.special);
+            this.$store.commit("extras/REMOVE_EXTRA", this.special);
         },
     },
     mounted() {
