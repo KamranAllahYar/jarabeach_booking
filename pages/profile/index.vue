@@ -404,7 +404,7 @@ export default {
     },
     middleware({ store, redirect, $toast }) {
         if (!store.state.availability_done) {
-            $toast.info("Please provide availability first");
+            // $toast.info("Please provide availability first");
             redirect("/availability");
         }
     },

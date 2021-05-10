@@ -315,7 +315,7 @@ export default {
     },
     middleware({ store, redirect, $toast }) {
         if (!store.state.policy_done) {
-            $toast.info("Please accept all policies first");
+            // $toast.info("Please accept all policies first");
             redirect("/policies");
         }
         store.commit("UPDATE_DISCOUNT", null);

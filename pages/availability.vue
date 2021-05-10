@@ -148,7 +148,7 @@ export default {
     },
     middleware({ store, redirect, $toast }) {
         if (!store.state.guests_done) {
-            $toast.info("Please tell us the number of guests first");
+            // $toast.info("Please tell us the number of guests first");
             redirect("/guests");
         }
     },

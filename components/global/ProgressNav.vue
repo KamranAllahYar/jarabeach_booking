@@ -1,5 +1,5 @@
 <template>
-    <nuxt-link :to="to" class="flex items-center justify-center h-16 w-44 prog" :class="classesName">
+    <nuxt-link :to="to" class="flex items-center justify-center h-16 w-44 prog" :class="[classesName, hoverClass]">
         <slot></slot>
     </nuxt-link>
 </template>
@@ -28,6 +28,7 @@ export default {
         current() {
             return this.$route.path.includes(this.to);
         },
+        hoverClass() {},
         classesName() {
             if (this.current) {
                 if (this.last) return "p-lb-e font-bold text-brand-blue";
@@ -36,9 +37,9 @@ export default {
             }
 
             if (!this.done) {
-                if (this.last) return "p-w-e text-gray-400";
-                else if (this.first) return "p-w-s text-gray-400";
-                else if (!this.first) return "p-w-m text-gray-400";
+                if (this.last) return "p-w-e text-gray-400 cursor-default";
+                else if (this.first) return "p-w-s text-gray-400 cursor-default";
+                else if (!this.first) return "p-w-m text-gray-400 cursor-default";
             } else if (this.done) {
                 if (this.last) return "p-b-e text-white";
                 else if (this.first) return "p-b-s text-white";

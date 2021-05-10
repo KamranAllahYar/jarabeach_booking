@@ -102,7 +102,7 @@ export default {
     },
     middleware({ store, redirect, $toast }) {
         if (!store.state.profile_done) {
-            $toast.info("Please provide profile information first");
+            // $toast.info("Please provide profile information first");
             redirect("/profile");
         }
     },
