@@ -37,7 +37,7 @@
                         v-model="myWelcomeNote"
                         class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
 
-                    <input type="text" :key="deco.id+'pt'" v-if="showPetalsNote(deco)" placeholder="What to write. 7 characters max" maxlength="7"
+                    <input type="text" :key="deco.id+'pt'" v-if="showPetalsNote(deco)" placeholder="What to write. 10 characters max" maxlength="10"
                         v-model="myPetalsNote"
                         class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
 

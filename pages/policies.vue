@@ -26,6 +26,7 @@
                                     <li>understand the use of illegal drugs is strictly prohibited including marijuana</li>
                                     <li>understand my booking permits only the number of guests stated on my booking</li>
                                     <li>agree to abide by all house rules and regulations set forth to ensure the peace and enjoyment for all guests</li>
+                                    <li>agree to pay the access road toll fee owned and operated by the Museyo Youth Community; N500 for a car or SUV or N1,000 for a vehicle above six passengers, where cash is required.</li>
                                 </ol>
                             </div>
                         </div>
@@ -63,7 +64,9 @@ export default {
             return this.policies[this.currentPolicyId];
         },
         policies() {
-            return this.$store.getters.policies;
+            const allPolicies = this.$store.getters.policies;
+
+            return [allPolicies[0]];
         },
     },
     methods: {

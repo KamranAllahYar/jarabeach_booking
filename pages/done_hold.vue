@@ -15,17 +15,18 @@
                     <div class="text-3xl font-semibold text-center"> Booking held for the next 30 minutes!<br />Payment required to confirm your visit</div>
                     <div class="max-w-md px-6 py-6 mx-auto mt-10 bg-white border rounded-lg shadow-lg">
                         <div class="flex items-center justify-center pb-6">
-                            <div class="bg-yellow-600 rounded-full">
+                            <!-- <div class="bg-yellow-600 rounded-full">
                                 <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                            </div>
+                            </div> -->
                             <!-- <svg
                                 class="text-red-500"
                                 width="100" height="100" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path d="M50 9.375C27.5996 9.375 9.375 27.5996 9.375 50S27.5996 90.625 50 90.625 90.625 72.4004 90.625 50 72.4004 9.375 50 9.375zm21.1426 27.0098l-26.25 31.25c-.288.3429-.6463.62-1.0506.8124a3.1254 3.1254 0 01-1.2932.3028h-.0527a3.12647 3.12647 0 01-1.2712-.2707c-.4-.1784-.7582-.4388-1.0511-.7645l-11.25-12.5a3.12609 3.12609 0 01-.6537-1.0502 3.12547 3.12547 0 01-.1949-1.2217c.0171-.4161.1172-.8246.2944-1.2015s.428-.7146.7376-.9932a3.12443 3.12443 0 011.0651-.6291 3.12487 3.12487 0 011.2259-.1666 3.1267 3.1267 0 011.1944.3222c.3727.1859.7044.4445.9758.7605l8.8457 9.8281 23.9433-28.4981a3.1253 3.1253 0 012.1153-1.0708 3.12522 3.12522 0 012.2582.7223 3.12485 3.12485 0 011.1013 2.0997 3.12528 3.12528 0 01-.6896 2.2684z" fill="#5ACBC9" />
                             </svg> -->
+                            <img src="~/assets/held.png" class='w-20 h-20' />
                         </div>
                         <div class="">
                             Your booking <b>#{{ done.booking.ref }}</b> has been held and payment is required to confirm your visit.

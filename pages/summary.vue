@@ -124,7 +124,7 @@
                 </div>
             </div>
             <div class="flex-shrink-0 w-full px-6 md:px-0 md:w-3/12">
-                <ReservationBox showDiscount :showGuests="false" />
+                <ReservationBox showDiscount :showGuests="true" />
             </div>
         </div>
     </div>
