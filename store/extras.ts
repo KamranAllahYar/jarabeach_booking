@@ -299,7 +299,10 @@ export const mutations: MutationTree<ExtraState> = {
 
     allClashes = [...new Set(allClashes)];
     console.log(allClashes);
-    state.clashes['lookout'] = allClashes;
+    state.clashes['lookout'] = {
+      date: payload.date,
+      clash: allClashes,
+    };
   },
 
   LOAD_MASSAGE_OPTIONS: (state, massages) => {
@@ -313,7 +316,10 @@ export const mutations: MutationTree<ExtraState> = {
 
     const option = state.massageOptions.find(mo => mo.id == payload.massage);
     if (option) {
-      state.clashes['massage'] = option.clash;
+      state.clashes['massage'] = {
+        date: payload.date,
+        clash: option.clash
+      };
     }
   },
 
@@ -330,7 +336,10 @@ export const mutations: MutationTree<ExtraState> = {
 
     const option = state.quadbikeOptions.find(qo => qo.id == payload.quadbike);
     if (option) {
-      state.clashes['quadbike'] = option.clash;
+      state.clashes['quadbike'] = {
+        date: payload.date,
+        clash: option.clash
+      };
     }
   },
 

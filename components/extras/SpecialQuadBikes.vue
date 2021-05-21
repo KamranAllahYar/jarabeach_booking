@@ -114,12 +114,16 @@ export default {
             for (var key in AC) {
                 if (key != "quadbike") {
                     if (AC.hasOwnProperty(key)) {
-                        const compClashes = AC[key].filter((value) =>
-                            clashes.includes(value)
-                        );
+                        const clashData = AC[key];
 
-                        if (compClashes.length > 0) {
-                            hasClash = key;
+                        if (clashData.date == this.selectedDate) {
+                            const compClashes = clashData.clash.filter(
+                                (value) => clashes.includes(value)
+                            );
+
+                            if (compClashes.length > 0) {
+                                hasClash = key;
+                            }
                         }
                     }
                 }
