@@ -55,6 +55,8 @@ export const state = () => ({
   photoshootPrices: [] as any[],
   selectedPhotoshoot: 0 as number,
   datePhotoshoot: null as String | null,
+
+  clashes: {} as any,
 })
 
 export type ExtraState = ReturnType<typeof state>
@@ -68,6 +70,7 @@ export const getters: GetterTree<ExtraState, RootState> = {
   allLookouts: (state: ExtraState) => state.lookoutOptions,
   allMassages: (state: ExtraState) => state.massageOptions,
   allQuadbikes: (state: ExtraState) => state.quadbikeOptions,
+  allClashes: (state: ExtraState) => state.clashes,
 
   cakesPrice: (state: ExtraState) => {
     if (state.selectedCakes.length <= 0) return 0;
@@ -248,6 +251,9 @@ export const mutations: MutationTree<ExtraState> = {
   },
   REMOVE_EXTRA: (state, extra) => {
     console.log(extra);
+    if (state.clashes[extra]) {
+      delete state.clashes[extra];
+    }
     const ix = state.selected.findIndex(ex => ex.type === extra);
 
     if (ix >= 0) {
@@ -275,16 +281,40 @@ export const mutations: MutationTree<ExtraState> = {
     state.lookoutOptions = lookouts
   },
   SET_SELECTED_LOOKOUT: (state, payload) => {
+    state.clashes['lookout']
+
     state.selectedLookouts = payload.lookouts;
     state.dateLookout = payload.date;
+
+    console.log("lookout clashes");
+    console.log(payload.lookouts);
+
+    let allClashes = [] as any[];
+    payload.lookouts.forEach((package_id: number) => {
+      const option = state.lookoutOptions.find(lo => lo.id == package_id);
+      if (option) {
+        allClashes.push(...option.clash);
+      }
+    });
+
+    allClashes = [...new Set(allClashes)];
+    console.log(allClashes);
+    state.clashes['lookout'] = allClashes;
   },
 
   LOAD_MASSAGE_OPTIONS: (state, massages) => {
     state.massageOptions = massages
   },
   SET_SELECTED_MASSAGE: (state, payload) => {
+    delete state.clashes['massage'];
+
     state.selectedMassage = payload.massage;
     state.dateMassage = payload.date;
+
+    const option = state.massageOptions.find(mo => mo.id == payload.massage);
+    if (option) {
+      state.clashes['massage'] = option.clash;
+    }
   },
 
   LOAD_QUADBIKE_OPTIONS: (state, quadbikes) => {
@@ -382,6 +412,8 @@ export const mutations: MutationTree<ExtraState> = {
 
     state.selectedPhotoshoot = 0 as number;
     state.datePhotoshoot = null;
+
+    state.clashes = {};
   },
 
   TRANSFORM_CAKES: (state, payload) => {

@@ -24,11 +24,16 @@
             <div>
                 <div class="mt-6 font-semibold">At what time?</div>
                 <div class="grid gap-3 mt-2 font-light md:grid-cols-2 ">
-                    <label class="flex items-center" v-for="massage in massages" :key="massage.id"
-                        :class="{'opacity-25' :!isAvailable(massage.id)}">
-                        <input type="radio" :value="massage.id" :disabled="!isAvailable(massage.id)" v-model="selectedMassage" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
-                        <div>{{ massage.name }}</div>
-                    </label>
+                    <div v-for="massage in massages" :key="massage.id">
+                        <label class="flex items-center"
+                            :class="{'opacity-25' :!isAvailable(massage.id)}">
+                            <input type="radio" :value="massage.id" :disabled="!isAvailable(massage.id)" v-model="selectedMassage" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                            <div>{{ massage.name }}</div>
+                        </label>
+                        <div v-if="hasClashes(massage.clash)" class="ml-6 text-xs text-red-500" :key="massage.id+'error'">
+                            {{ hasClashes(massage.clash) }}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">
@@ -63,6 +68,9 @@ export default {
         dates() {
             return this.$store.getters.bookingDates;
         },
+        allClashes() {
+            return this.$store.getters["extras/allClashes"];
+        },
     },
     watch: {
         selectedDate(_, oldVal) {
@@ -74,6 +82,32 @@ export default {
         },
     },
     methods: {
+        hasClashes(clashes) {
+          console.log("clashes to compare");
+          console.log(clashes);
+            const AC = this.allClashes;
+
+            let hasClash = false;
+            for (var key in AC) {
+                if (key != "massage") {
+                    if (AC.hasOwnProperty(key)) {
+                        const compClashes = AC[key].filter((value) =>
+                            clashes.includes(value)
+                        );
+
+                        if (compClashes.length > 0) {
+                            hasClash = key;
+                        }
+                    }
+                }
+            }
+
+            if (hasClash) {
+                return `This time slot clashes with a previously ${hasClash} extra`;
+            }
+
+            return false;
+        },
         isAvailable(slot_id) {
             if (this.selectedDate == this.dates[0]) {
                 if (slot_id == 1) return false;
@@ -81,7 +115,7 @@ export default {
             }
 
             if (this.currentAvailableMassages) {
-                console.log(this.currentAvailableMassages);
+                // console.log(this.currentAvailableMassages);
                 return this.currentAvailableMassages.includes(slot_id);
             }
 

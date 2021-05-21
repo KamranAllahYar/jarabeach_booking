@@ -26,11 +26,15 @@
                     <div class="text-xs font-light text-gray-700">(between 8:30 - 10:30am)</div>
                 </div>
                 <div class="px-3 my-5 space-y-6 md:border-r">
-                    <label class="flex" v-for="option in breakfastOptions" :key="option.id"
-                        :class="{'opacity-25' : !isAvailable(option.id)}">
-                        <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
-                        <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
-                    </label>
+                    <div v-for="option in breakfastOptions" :key="option.id">
+                        <label class="flex" :class="{'opacity-25' : !isAvailable(option.id)}">
+                            <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
+                            <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
+                        </label>
+                        <div v-if="hasClashes(option.clash)" class="ml-6 text-xs text-red-500" :key="option.id+'error'">
+                            {{ hasClashes(option.clash) }}
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -40,11 +44,15 @@
                     <div class="text-xs font-light text-gray-700">(between 1:30 - 4:00pm)</div>
                 </div>
                 <div class="px-2 my-5 space-y-6 md:border-r">
-                    <label class="flex" v-for="option in lunchOptions" :key="option.id"
-                        :class="{'opacity-25' : !isAvailable(option.id)}">
-                        <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
-                        <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
-                    </label>
+                    <div v-for="option in lunchOptions" :key="option.id">
+                        <label class="flex" :class="{'opacity-25' : !isAvailable(option.id)}">
+                            <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
+                            <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
+                        </label>
+                        <div v-if="hasClashes(option.clash)" class="ml-6 text-xs text-red-500" :key="option.id+'error'">
+                            {{ hasClashes(option.clash) }}
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -54,11 +62,15 @@
                     <div class="text-xs font-light text-gray-700">(from 7pm. Candles inclusive)</div>
                 </div>
                 <div class="px-3 my-5 space-y-6">
-                    <label class="flex" v-for="option in dinnerOptions" :key="option.id"
-                        :class="{'opacity-25' : !isAvailable(option.id)}">
-                        <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
-                        <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
-                    </label>
+                    <div v-for="option in dinnerOptions" :key="option.id">
+                        <label class="flex" :class="{'opacity-25' : !isAvailable(option.id)}">
+                            <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
+                            <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
+                        </label>
+                        <div v-if="hasClashes(option.clash)" class="ml-6 text-xs text-red-500" :key="option.id+'error'">
+                            {{ hasClashes(option.clash) }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,8 +113,37 @@ export default {
         dinnerOptions() {
             return this.options.filter((o) => o.type.toLowerCase() == "dinner");
         },
+        allClashes() {
+            return this.$store.getters["extras/allClashes"];
+        },
     },
     methods: {
+        hasClashes(clashes) {
+            console.log("clashes to compare");
+            console.log(clashes);
+            const AC = this.allClashes;
+
+            let hasClash = false;
+            for (var key in AC) {
+                if (key != "lookout") {
+                    if (AC.hasOwnProperty(key)) {
+                        const compClashes = AC[key].filter((value) =>
+                            clashes.includes(value)
+                        );
+
+                        if (compClashes.length > 0) {
+                            hasClash = key;
+                        }
+                    }
+                }
+            }
+
+            if (hasClash) {
+                return `This time slot clashes with a previously selected ${hasClash} extra`;
+            }
+
+            return false;
+        },
         next() {
             this.$emit("next");
         },
