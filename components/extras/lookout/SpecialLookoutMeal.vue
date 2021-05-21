@@ -119,8 +119,6 @@ export default {
     },
     methods: {
         hasClashes(clashes) {
-            console.log("clashes to compare");
-            console.log(clashes);
             const AC = this.allClashes;
 
             let hasClash = false;
@@ -139,7 +137,7 @@ export default {
             }
 
             if (hasClash) {
-                return `This time slot clashes with a previously selected ${hasClash} extra`;
+                return `Note: This time slot clashes with a previously selected ${hasClash} extra`;
             }
 
             return false;

@@ -324,6 +324,14 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedQuadbike = payload.quadbike;
     state.selectedQuadbikeQty = payload.quantity || 1;
     state.dateQuadbike = payload.date;
+
+    console.log("Quad bike");
+    console.log(payload.quadbike);
+
+    const option = state.quadbikeOptions.find(qo => qo.id == payload.quadbike);
+    if (option) {
+      state.clashes['quadbike'] = option.clash;
+    }
   },
 
   LOAD_DECORATION_OPTIONS: (state, decorations) => {

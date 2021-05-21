@@ -40,11 +40,16 @@
             <div>
                 <div class="mt-4 font-semibold">At what time?</div>
                 <div class="mt-2 space-y-3 font-light ">
-                    <label class="flex items-center" v-for="quadbike in quadbikes" :key="quadbike.id"
-                        :class="{'opacity-25' :!isAvailable(quadbike.id)}">
-                        <input type="radio" :value="quadbike.id" :disabled="!isAvailable(quadbike.id)" v-model="selectedQuadbike" class="mr-3 rounded-full focus-within:ring-0 border-brand-blue-400 text-brand-blue-400">
-                        <div>{{ quadbike.description }} <span class="font-bold">{{ currency(quadbike.price) }}</span></div>
-                    </label>
+                    <div v-for="quadbike in quadbikes" :key="quadbike.id">
+                        <label class="flex items-center"
+                            :class="{'opacity-25' :!isAvailable(quadbike.id)}">
+                            <input type="radio" :value="quadbike.id" :disabled="!isAvailable(quadbike.id)" v-model="selectedQuadbike" class="mr-3 rounded-full focus-within:ring-0 border-brand-blue-400 text-brand-blue-400">
+                            <div>{{ quadbike.description }} <span class="font-bold">{{ currency(quadbike.price) }}</span></div>
+                        </label>
+                        <div v-if="hasClashes(quadbike.clash)" class="text-xs text-red-500 ml-7" :key="quadbike.id+'error'">
+                            {{ hasClashes(quadbike.clash) }}
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -82,6 +87,9 @@ export default {
         dates() {
             return this.$store.getters.bookingDates;
         },
+        allClashes() {
+            return this.$store.getters["extras/allClashes"];
+        },
     },
     watch: {
         selectedDate(newVal, oldVal) {
@@ -99,6 +107,30 @@ export default {
         },
     },
     methods: {
+        hasClashes(clashes) {
+            const AC = this.allClashes;
+
+            let hasClash = false;
+            for (var key in AC) {
+                if (key != "quadbike") {
+                    if (AC.hasOwnProperty(key)) {
+                        const compClashes = AC[key].filter((value) =>
+                            clashes.includes(value)
+                        );
+
+                        if (compClashes.length > 0) {
+                            hasClash = key;
+                        }
+                    }
+                }
+            }
+
+            if (hasClash) {
+                return `Note: This time slot clashes with a previously selected ${hasClash} extra`;
+            }
+
+            return false;
+        },
         isAvailable(slot_id) {
             if (this.selectedDate == this.dates[0]) {
                 if (slot_id == 1) return false;
