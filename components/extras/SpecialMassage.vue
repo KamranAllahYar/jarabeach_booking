@@ -30,8 +30,8 @@
                             <input type="radio" :value="massage.id" :disabled="!isAvailable(massage.id)" v-model="selectedMassage" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                             <div>{{ massage.name }}</div>
                         </label>
-                        <div v-if="hasClashes(massage.clash)" class="ml-6 text-xs text-red-500" :key="massage.id+'error'">
-                            {{ hasClashes(massage.clash) }}
+                        <div v-if="hasClashes(massage.clash, massage.id)" class="ml-6 text-xs text-red-500" :key="massage.id+'error'">
+                            {{ hasClashes(massage.clash, massage.id) }}
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,9 @@ export default {
         },
     },
     methods: {
-        hasClashes(clashes) {
+        hasClashes(clashes, id) {
+            if (id != this.selectedMassage) return false;
+
             const AC = this.allClashes;
 
             let hasClash = false;
@@ -105,7 +107,7 @@ export default {
             }
 
             if (hasClash) {
-                return `Note: This time slot clashes with a previously ${hasClash} extra`;
+                return `This time slot conflicts with your ${hasClash} booking`;
             }
 
             return false;

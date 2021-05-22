@@ -46,8 +46,8 @@
                             <input type="radio" :value="quadbike.id" :disabled="!isAvailable(quadbike.id)" v-model="selectedQuadbike" class="mr-3 rounded-full focus-within:ring-0 border-brand-blue-400 text-brand-blue-400">
                             <div>{{ quadbike.description }} <span class="font-bold">{{ currency(quadbike.price) }}</span></div>
                         </label>
-                        <div v-if="hasClashes(quadbike.clash)" class="text-xs text-red-500 ml-7" :key="quadbike.id+'error'">
-                            {{ hasClashes(quadbike.clash) }}
+                        <div v-if="hasClashes(quadbike.clash, quadbike.id)" class="text-xs text-red-500 ml-7" :key="quadbike.id+'error'">
+                            {{ hasClashes(quadbike.clash, quadbike.id) }}
                         </div>
                     </div>
                 </div>
@@ -107,7 +107,9 @@ export default {
         },
     },
     methods: {
-        hasClashes(clashes) {
+        hasClashes(clashes, id) {
+            if (id != this.selectedQuadbike) return false;
+
             const AC = this.allClashes;
 
             let hasClash = false;
@@ -130,7 +132,7 @@ export default {
             }
 
             if (hasClash) {
-                return `Note: This time slot clashes with a previously selected ${hasClash} extra`;
+                return `This time slot conflicts with your ${hasClash} booking`;
             }
 
             return false;

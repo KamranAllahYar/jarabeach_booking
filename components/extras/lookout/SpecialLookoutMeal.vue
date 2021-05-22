@@ -31,8 +31,8 @@
                             <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
                             <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
                         </label>
-                        <div v-if="hasClashes(option.clash)" class="ml-6 text-xs text-red-500" :key="option.id+'error'">
-                            {{ hasClashes(option.clash) }}
+                        <div v-if="hasClashes(option.clash, option.id)" class="ml-6 text-xs text-red-500" :key="option.id+'error'">
+                            {{ hasClashes(option.clash, option.id) }}
                         </div>
                     </div>
                 </div>
@@ -49,8 +49,8 @@
                             <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
                             <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
                         </label>
-                        <div v-if="hasClashes(option.clash)" class="ml-6 text-xs text-red-500" :key="option.id+'error'">
-                            {{ hasClashes(option.clash) }}
+                        <div v-if="hasClashes(option.clash, option.id)" class="ml-6 text-xs text-red-500" :key="option.id+'error'">
+                            {{ hasClashes(option.clash, option.id) }}
                         </div>
                     </div>
                 </div>
@@ -67,8 +67,8 @@
                             <input type="checkbox" :disabled="!isAvailable(option.id)" :value="option.id" class="mt-1 mr-2 rounded-full focus:ring-0 text-brand-blue-400 border-brand-blue-400" v-model="selectedPackages">
                             <div>{{ option.description }}: <span class="font-bold">{{ currency(option.price) }} per couple</span></div>
                         </label>
-                        <div v-if="hasClashes(option.clash)" class="ml-6 text-xs text-red-500" :key="option.id+'error'">
-                            {{ hasClashes(option.clash) }}
+                        <div v-if="hasClashes(option.clash, option.id)" class="ml-6 text-xs text-red-500" :key="option.id+'error'">
+                            {{ hasClashes(option.clash, option.id) }}
                         </div>
                     </div>
                 </div>
@@ -118,7 +118,9 @@ export default {
         },
     },
     methods: {
-        hasClashes(clashes) {
+        hasClashes(clashes, id) {
+            if (!this.selectedPackages.includes(id)) return false;
+
             const AC = this.allClashes;
 
             let hasClash = false;
@@ -141,7 +143,7 @@ export default {
             }
 
             if (hasClash) {
-                return `Note: This time slot clashes with a previously selected ${hasClash} extra`;
+                return `This time slot conflicts with your ${hasClash} booking`;
             }
 
             return false;
