@@ -21,6 +21,9 @@ export default {
                 this.$store.commit("RESET_STORE");
                 this.$store.commit("extras/RESET_STORE");
                 this.$router.push("/guests");
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
             }
         },
     },
