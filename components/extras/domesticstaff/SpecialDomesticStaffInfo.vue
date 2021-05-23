@@ -36,7 +36,7 @@
                         </div>
                     </label>
                 </div>
-                <!-- <div class="flex items-start w-full" :class="{'opacity-25': !availableStaffRooms.driver}">
+                <div class="flex items-start w-full" :class="{'opacity-25': !availableStaffRooms.driver}">
                     <input type="checkbox" v-model="type" value="driver" id="driver" :disabled="!availableStaffRooms.driver" class="mt-1 mr-3 border rounded focus:ring-0 border-brand-blue-300 text-brand-blue-400">
                     <label for="driver" class="font-bold ">Driver
                         <div class="text-base font-light text-gray-600">
@@ -44,7 +44,7 @@
                             and are not expected to remain inside the property between 9am and 6pm. <span class="font-bold text-black">Cost per night: {{ currency(driverPrice) }} (inc TAX).</span>
                         </div>
                     </label>
-                </div> -->
+                </div>
             </div>
             <div class="my-8" :class="{'opacity-25': type.length <= 0}">
                 <div class="text-xl font-bold text-center">Menu</div>

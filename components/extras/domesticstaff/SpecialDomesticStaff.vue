@@ -16,6 +16,18 @@
                 </p>
 
                 <div>
+                    <div class="mt-4 font-semibold">Select your domestic staff</div>
+                    <div class="mt-2 font-light ">
+                        <template v-for="staff in ['nanny', 'driver']">
+                            <label class="flex items-center mt-4" :key="staff">
+                                <input type="checkbox" :value="staff" v-model="selectedStaff.type" class="w-5 h-5 mr-3 rounded focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
+                                <div class="capitalize">{{ staff }}</div>
+                            </label>
+                        </template>
+                    </div>
+                </div>
+
+                <div>
                     <div class="mt-4 font-semibold">Select dates for domestic staff</div>
                     <div class="mt-2 font-light ">
                         <template v-for="date in dates">
@@ -23,14 +35,18 @@
                                 <input type="checkbox" :value="date" v-model="selectedDates" class="w-5 h-5 mr-3 rounded focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                                 <div>{{ showDate(date) }}</div>
                             </label>
-                            <div v-if="availableStaffs[date]" :key="date+'ii'" class="ml-8 text-sm text-gray-400">
+                            <!-- {{ checkAvailableDate(date, selectedStaff.type) }} -->
+                            <div v-if="!checkAvailableDate(date, selectedStaff.type)" :key="date+'iis'" class="ml-8 text-sm text-gray-400">
+                                Unavailable
+                            </div>
+                            <!-- <div v-if="availableStaffs[date]" :key="date+'ii'" class="ml-8 text-sm text-gray-400">
                                 <span v-if="!availableStaffs[date].nanny">
                                     Nanny quaters is full for this day
                                 </span>
-                                <!-- <span v-if="!availableStaffs[date].driver">
+                                <span v-if="!availableStaffs[date].driver">
                                     Driver quaters is full for this day
-                                </span> -->
-                            </div>
+                                </span>
+                            </div> -->
                         </template>
                     </div>
                 </div>
@@ -58,6 +74,14 @@
 <script>
 import parseISO from "date-fns/parseISO";
 import format from "date-fns/format";
+
+function removeItemOnce(arr, value) {
+    var index = arr.indexOf(value);
+    if (index > -1) {
+        arr.splice(index, 1);
+    }
+    return arr;
+}
 
 export default {
     data() {
@@ -111,6 +135,68 @@ export default {
         },
     },
     methods: {
+        checkAvailableDate(date, staffTypes) {
+            console.log("recalculate");
+            console.log(staffTypes);
+            const availData = this.availableStaffs[date];
+
+            if (availData) {
+                if (availData.nanny >= 2 && availData.driver >= 2) {
+                    this.selectedDates = removeItemOnce(
+                        this.selectedDates,
+                        date
+                    );
+                    return false;
+                }
+
+                if (
+                    staffTypes.includes("nanny") &&
+                    !staffTypes.includes("driver")
+                ) {
+                    console.log(date + "---nanny");
+                    if (availData.nanny >= 2) {
+                        this.selectedDates = removeItemOnce(
+                            this.selectedDates,
+                            date
+                        );
+                        return false;
+                    }
+                }
+                if (
+                    staffTypes.includes("driver") &&
+                    !staffTypes.includes("nanny")
+                ) {
+                    console.log(date + "---driver");
+                    if (availData.driver >= 2) {
+                        this.selectedDates = removeItemOnce(
+                            this.selectedDates,
+                            date
+                        );
+                        return false;
+                    }
+                }
+
+                if (
+                    staffTypes.includes("driver") &&
+                    staffTypes.includes("nanny")
+                ) {
+                    if (availData.nanny >= 2 || availData.driver >= 2) {
+                        this.selectedDates = removeItemOnce(
+                            this.selectedDates,
+                            date
+                        );
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            {
+                this.selectedDates = removeItemOnce(this.selectedDates, date);
+                return false;
+            }
+        },
         toggleStaffInfo(view) {
             this.$store.commit("extras/SET_SELECTED_STAFF", {
                 selectedStaff: this.selectedStaff,
@@ -133,7 +219,12 @@ export default {
             this.$emit("next", this.selectedDates.length <= 0);
         },
         showDate(date) {
-            return format(parseISO(date), "iii, MMM. do yyyy");
+            let d = parseISO(date);
+            try {
+                d = format(parseISO(date), "iii, MMM. do yyyy");
+            } catch {}
+
+            return d;
         },
         updateSelection(details) {
             this.selectedStaff = details;
@@ -152,6 +243,7 @@ export default {
                     oldBookingId: oldBookingId,
                 })
                 .then((res) => {
+                    console.log("Staff data");
                     console.log(res.data.data);
                     this.availableStaffs = res.data.data;
                 });
