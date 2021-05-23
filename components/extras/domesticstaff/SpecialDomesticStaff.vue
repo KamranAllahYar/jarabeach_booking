@@ -7,13 +7,35 @@
             <div class="flex flex-col w-full p-6">
                 <div class="font-semibold">Domestic Staff</div>
 
-                <p class="mt-3 font-light leading-relaxed text-gray-600">
-                    Nannies are welcome to sleep in our dedicated staff quarters - bedding and water provided - and partake in all meals
+                <div class="mt-3 text-sm font-light leading-relaxed text-gray-600">
+                    <!-- Nannies are welcome to sleep in our dedicated staff quarters - bedding and water provided - and partake in all meals
                     and make use of Jara's facilities. A separate food menu is available. Alcohol and the snack station is not included.
-                    Cost per night: N30,000 (inc VAT).
+                    Cost per night: N30,000 (inc VAT). -->
                     <!-- We welcome guests with nannies or drivers, subject to availability. No discounts/ offers apply to domestic staff pricing.
                     We have a nannies room and a drivers room (2 max in each). Booked in advance. -->
-                </p>
+
+                    We welcome guests with nannies or drivers, subject to availability. No discounts/ offers apply to domestic staff pricing.
+                    <div class="h-2"></div>
+
+                    WE HAVE ONE ROOM WITH TWO BEDS - AVAILABLE FOR NANNIES OR DRIVERS.
+                    <div class="h-2"></div>
+
+                    <b class="font-bold">NANNIES</b>
+                    <br />
+                    If not staying in a standard or family room [as a regular guest], Nannies are welcome to sleep in our dedicated staff quarters - bedding and water provided - and partake in all meals and make use of Jara's facilities. A separate food menu is available. Alcohol and the snack station is not included. Cost per night: N30,000 + 5% con tax.
+
+                    <div class="h-2"></div>
+                    <b class="font-bold">DRIVERS</b>
+                    <br />
+                    Drivers requiring accommodation are welcome to sleep in the allocated room, subject to availability (room access from 6pm) - bedding and water provided - and are not expected to remain inside the property between 9am and 6pm. Cost per night: N15,000 + 5% con tax. Food is available from a separate menu (below) and consumed in their room or at the back of the property, when paid in advance.
+
+                    <div class="h-2"></div>
+                    BREAKFAST Nigerian Breakfast (Boiled yam & Egg sauce) @ <b class="font-bold">N3,000</b>
+                    <br />
+                    LUNCH Indomie & Egg or Jollof Rice with Chicken & Beef Skewer@ <b class="font-bold">N4,000</b>
+                    <br />
+                    DINNER Nigerian Special @ <b class="font-bold">N5,000</b>
+                </div>
 
                 <div>
                     <div class="mt-4 font-semibold">Select your domestic staff</div>
