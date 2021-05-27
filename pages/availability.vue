@@ -96,7 +96,8 @@ export default {
         async gotoNext() {
             if (!this.enoughRooms) {
                 this.$toast.error(
-                    "You have not selected enough rooms to accomodate the amount of guests you expect"
+                    `You have not selected enough rooms to accommodate the number / type of guests in your booking request -
+                    please click <a target='_blank' class='mx-2 font-bold text-yellow-100' href='https://www.jarabeachresort.com/room-detail'>here</a> for room information.`
                 );
                 return;
             }
