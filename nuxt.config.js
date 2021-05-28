@@ -56,5 +56,13 @@ export default {
   toast: {
     position: 'top-right',
     duration: 4000,
+  },
+  pwa: {
+    manifest: {
+      name: 'Jara Beach Resort',
+      short_name: 'Jara Beach Resort',
+      lang: 'en',
+      description: 'Jara Beach Resort Booking',
+    }
   }
 }
