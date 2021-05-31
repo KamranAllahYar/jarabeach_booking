@@ -7,29 +7,31 @@
             <a href="https://www.jarabeachresort.com/" class="px-2 cursor-pointer hover:opacity-50">
                 HOME
             </a>
-            <!-- <a href="https://www.jarabeachresort.com/" class="px-2 cursor-pointer hover:opacity-50">
-                ABOUT
-            </a>
-            <a href="https://www.jarabeachresort.com/" class="px-2 cursor-pointer hover:opacity-50">
-                EXPERIENCE
-            </a>
-            <a href="https://www.jarabeachresort.com/" class="px-2 cursor-pointer hover:opacity-50">
-                GALLERY
-            </a>
-            <a href="https://www.jarabeachresort.com/" class="px-2 cursor-pointer hover:opacity-50">
-                EVENT BOOKINGS
-            </a>
+            <!--
+              <a href="https://www.jarabeachresort.com/" class="px-2 cursor-pointer hover:opacity-50">
+                  ABOUT
+              </a>
+              <a href="https://www.jarabeachresort.com/" class="px-2 cursor-pointer hover:opacity-50">
+                  EXPERIENCE
+              </a>
+              <a href="https://www.jarabeachresort.com/" class="px-2 cursor-pointer hover:opacity-50">
+                  GALLERY
+              </a>
+              <a href="https://www.jarabeachresort.com/" class="px-2 cursor-pointer hover:opacity-50">
+                  EVENT BOOKINGS
+              </a>
+            -->
             <div class="flex items-center justify-between space-x-4">
-                <a href="https://www.jarabeachresort.com/day-pass" class="px-4 py-2 transition-colors duration-700 border border-white cursor-pointer hover:text-black hover:bg-white">
+                <a href="https://www.jarabeachresort.com/day-pass" class="px-4 py-2 transition-colors duration-500 border border-white cursor-pointer hover:text-black hover:bg-white">
                     DAYPASS BOOKING
                 </a>
-                <a href="https://www.jarabeachresort.com/book" class="px-4 py-2 transition-colors duration-700 border border-white cursor-pointer hover:text-black hover:bg-white">
+                <!-- <a href="https://www.jarabeachresort.com/book" class="px-4 py-2 transition-colors duration-700 border border-white cursor-pointer hover:text-black hover:bg-white">
                     OVERNIGHT BOOKING
-                </a>
-            </div> -->
+                </a> -->
+            </div>
             <div class="flex-1"></div>
             <div>
-              For all takeover, retreat, or private bookings, please email <a href="mailto:bookings@jarabeachresort.com">bookings@jarabeachresort.com</a>
+                For all takeover, retreat, or private bookings, please email <a href="mailto:bookings@jarabeachresort.com">bookings@jarabeachresort.com</a>
             </div>
             <!-- <div class="underline cursor-pointer" v-if="canClearBooking" @click="clearBooking()">Clear current booking</div>
             <StartOverButton></StartOverButton> -->
