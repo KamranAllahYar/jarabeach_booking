@@ -25,9 +25,12 @@
                 </div>
             </div>
             <div class="md:flex-1"></div>
-            <div class="flex-shrink-0 text-xs font-semibold border-b cursor-pointer md:text-base border-brand-blue-400 text-brand-blue-400" @click="openSlideshow()" id="roomSetup">
+            <!-- <div class="flex-shrink-0 text-xs font-semibold border-b cursor-pointer md:text-base border-brand-blue-400 text-brand-blue-400" @click="openSlideshow()" id="roomSetup">
                 View Room Setup
-            </div>
+            </div> -->
+            <a target="_blank" href="https://www.jarabeachresort.com/room-detail" class="flex-shrink-0 text-xs font-semibold border-b cursor-pointer md:text-base border-brand-blue-400 text-brand-blue-400" id="roomSetup">
+                View Room Setup
+            </a>
         </div>
 
         <div class="flex items-center px-3 py-3 text-xs md:text-base md:px-6 md:py-3">

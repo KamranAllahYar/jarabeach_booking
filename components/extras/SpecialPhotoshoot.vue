@@ -11,7 +11,7 @@
                 Resort for two hours and receive a soft drink - for ₦20,000. Access for assistants/
                 make up artists is charged ₦15,000 each thereafter. Commercial photoshoot enquiries
                 are handled directly by our bookings department - more details here:
-                <a class="text-brand-blue-500" href="https://www.jarabeachresort.com/photo-shoots">https://www.jarabeachresort.com/photo-shoots</a>
+                <a target="_blank" class="text-brand-blue-500" href="https://www.jarabeachresort.com/photo-shoots">https://www.jarabeachresort.com/photo-shoots</a>
                 <!--
                 A photographer can access Jara Beach Resort for a maximum of four hours. Includes no food or drink.
                 Assistants/ make up artists charged N15,000 each thereafter.
