@@ -49,6 +49,7 @@ export const state = () => ({
 
   editMode: false as boolean,
   editBooking: null as any,
+  adminEditMode: false as boolean,
 })
 
 export type RootState = ReturnType<typeof state>
@@ -300,7 +301,10 @@ export const getters: GetterTree<RootState, RootState> = {
     }
 
     if (state.editBooking.previous_change) {
-      diff = diff + 25000;
+      if (state.adminEditMode == true) {
+      } else {
+        diff = diff + 25000;
+      }
     }
 
     return diff;
@@ -308,6 +312,9 @@ export const getters: GetterTree<RootState, RootState> = {
 }
 
 export const mutations: MutationTree<RootState> = {
+  UPDATE_ADMIN_EDIT_MODE: (state: RootState, value) => {
+    state.adminEditMode = value;
+  },
   CANCEL_EDIT: (state: RootState) => {
     state.editMode = false;
     state.editBooking = null;
@@ -456,6 +463,7 @@ export const mutations: MutationTree<RootState> = {
 
     state.editMode = false as boolean;
     state.editBooking = null as any;
+    state.adminEditMode = false as boolean;
   },
 }
 
@@ -645,6 +653,7 @@ export const actions: ActionTree<RootState, RootState> = {
       },
       booked_rooms: state.rooms,
       prices: prices,
+      admin_edit_mode: state.adminEditMode,
     }
 
     if (state.guest.id) {

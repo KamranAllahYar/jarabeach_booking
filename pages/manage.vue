@@ -34,7 +34,9 @@
 
                     <div class="flex w-full mt-6 space-x-3">
                         <MainButton type="button" outline @click="gotoBack()">Back</MainButton>
-                        <MainButton :loading="loading">Find Booking</MainButton>
+                        <MainButton :loading="loading">
+                            Find Booking
+                        </MainButton>
                     </div>
                 </form>
             </div>
@@ -119,35 +121,6 @@
                 <MainButton @click="loadOldBooking()">Update Booking</MainButton>
             </div>
         </div>
-
-        <!-- <div class="flex items-center justify-center max-w-2xl mx-auto space-x-6">
-            <div class="w-1/2 mx-auto mt-6 text-gray-800 border rounded-md border-brand-blue-300 bg-brand-blue-100" v-if="fullBooking">
-                <div class="px-3 py-3 text-xl font-bold border-b border-brand-blue-300">Your Booking</div>
-
-                <div class="flex items-center justify-between px-3 my-3">
-                    <div>Booking Ref</div>
-                    <div class="font-bold">
-                        #{{ fullBooking.ref }}
-                    </div>
-                </div>
-                <div class="flex items-center justify-between px-3 my-3" v-for="(value, key) in fullBooking.prices" :key="key">
-                    <div>{{ key }}</div>
-                    <div class="font-bold">
-                        {{ value }}
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-1/2">
-                <MainButton @click="loadOldBooking()">UPDATE DATES</MainButton>
-            </div>
-
-        </div> -->
-
-        <!-- <pre>
-          {{ $store.state.editBooking }}
-        </pre> -->
-
     </div>
 </template>
 
@@ -162,6 +135,7 @@ export default {
             last_name: "",
             loading: false,
             fullBooking: null,
+            admin_mode: false,
         };
     },
     computed: {
@@ -180,7 +154,7 @@ export default {
         },
         async findBooking() {
             this.loading = true;
-            this.$axios
+            await this.$axios
                 .post("bookings/manage", {
                     booking_ref: this.booking_ref,
                     last_name: this.last_name,
@@ -234,6 +208,25 @@ export default {
         formatDate(date) {
             return format(parseISO(date), "do MMM  Y");
         },
+    },
+    mounted() {
+        console.log(this.$route.query);
+
+        if (
+            this.$route.query.ref &&
+            this.$route.query.name &&
+            this.$route.query.admin
+        ) {
+            this.booking_ref = this.$route.query.ref;
+            this.last_name = this.$route.query.name;
+            this.admin_mode = this.$route.query.admin == 1 ? true : false;
+
+            this.$store.commit("UPDATE_ADMIN_EDIT_MODE", this.admin_mode);
+
+            this.findBooking().then(() => {
+                this.loadOldBooking();
+            });
+        }
     },
 };
 </script>

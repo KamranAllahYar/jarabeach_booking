@@ -29,8 +29,8 @@
                     OVERNIGHT BOOKING
                 </a> -->
             </div>
-            <div class="flex-1"></div>
-            <div>
+            <div class="flex-1 hidden md:block"></div>
+            <div class="hidden md:block">
                 For all takeover, retreat, or private bookings, please email <a href="mailto:bookings@jarabeachresort.com">bookings@jarabeachresort.com</a>
             </div>
             <!-- <div class="underline cursor-pointer" v-if="canClearBooking" @click="clearBooking()">Clear current booking</div>
