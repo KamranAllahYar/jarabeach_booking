@@ -349,8 +349,6 @@ export const mutations: MutationTree<RootState> = {
 
     //POLICIES TRANSFORMATION
     state.policy_done = true;
-
-
   },
   UPDATE_EXPIRY: (state, date: Date) => {
     state.lastUpdate = date;

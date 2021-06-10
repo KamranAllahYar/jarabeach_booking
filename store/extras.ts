@@ -261,6 +261,7 @@ export const mutations: MutationTree<ExtraState> = {
     }
   },
   ADD_SELECTED: (state, sp) => {
+    console.log("ADDING A SELECTED ------- " + sp);
     state.selected.push(sp);
   },
   REMOVE_SELECTED: (state, sp) => {
@@ -641,7 +642,8 @@ export const actions: ActionTree<ExtraState, RootState> = {
         commit("TRANSFORM_QUADBIKE", { quadbike: oldBooking.quadbike, dates: newBookingDates });
       };
     }
-    if (oldBooking.lookouts.length >= 0) {
+
+    if (oldBooking.lookouts.length >= 1) {
       const s = getSpecialObjFromStr(state.specials, 'lookout');
 
       if (s) {
@@ -656,14 +658,14 @@ export const actions: ActionTree<ExtraState, RootState> = {
     //     commit("TRANSFORM_CAKES", { cake: oldBooking.cakes, dates: newBookingDates });
     //   };
     // }
-    if (oldBooking.cakes.length >= 0) {
+    if (oldBooking.cakes.length >= 1) {
       const s = getSpecialObjFromStr(state.specials, 'cakes');
       if (s) {
         commit("ADD_SELECTED", s);
         commit("TRANSFORM_CAKES", { cakes: oldBooking.cakes, dates: newBookingDates });
       };
     }
-    if (oldBooking.drinks.length >= 0) {
+    if (oldBooking.drinks.length >= 1) {
       const s = getSpecialObjFromStr(state.specials, 'drinks');
       if (s) {
         commit("ADD_SELECTED", s);
@@ -677,7 +679,7 @@ export const actions: ActionTree<ExtraState, RootState> = {
         commit("TRANSFORM_PHOTOSHOOT", { photoshoot: oldBooking.photoshoot, dates: newBookingDates });
       };
     }
-    if (oldBooking.decorations.length >= 0) {
+    if (oldBooking.decorations.length >= 1) {
       const s = getSpecialObjFromStr(state.specials, 'roomDecoration');
       if (s) {
         commit("ADD_SELECTED", s);
