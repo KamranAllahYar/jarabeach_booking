@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed top-0 z-50 flex items-center w-full h-20 font-navbar" style="background-color: #242323">
+    <div class="fixed top-0 z-40 flex items-center w-full h-20 font-navbar" style="background-color: #242323">
         <div class="flex items-center justify-start w-full max-w-6xl mx-auto space-x-6 font-light text-white">
             <div>
                 <img style="width: 57px; height: 57px" src="~/assets/white-logo.webp" />
