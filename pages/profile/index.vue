@@ -186,7 +186,7 @@ export default {
                 last_name: "",
                 dob: "",
                 gender: "",
-                concerns: "",
+                concerns: " ",
                 identification: "",
                 hear_of_us: "",
                 agreed_mailinglist: true,
@@ -278,7 +278,10 @@ export default {
             guestFormData.append("last_name", this.guest.last_name);
             guestFormData.append("dob", this.guest.dob);
             guestFormData.append("gender", this.guest.gender);
-            guestFormData.append("concerns", this.guest.concerns);
+            guestFormData.append(
+                "concerns",
+                this.guest.concerns ? this.guest.concerns : " "
+            );
             guestFormData.append("hear_of_us", this.guest.hear_of_us);
             guestFormData.append(
                 "agreed_mailinglist",
@@ -388,7 +391,8 @@ export default {
         },
 
         isValidEmail(email) {
-            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            const re =
+                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(String(email).toLowerCase());
         },
     },

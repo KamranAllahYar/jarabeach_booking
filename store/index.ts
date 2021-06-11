@@ -26,7 +26,7 @@ export const state = () => ({
   policies: [] as any[],
 
   guest: {} as any,
-  saveForNextTime: true as boolean,
+  saveForNextTime: false as boolean,
   guestFormData: {} as FormData,
   weHaveData: false as boolean,
   other_guests: [] as any[],
@@ -457,7 +457,7 @@ export const mutations: MutationTree<RootState> = {
     state.profile_done = false as boolean;
     state.policy_done = false as boolean;
 
-    state.saveForNextTime = true as boolean;
+    state.saveForNextTime = false as boolean;
 
     state.discount = null as any;
 
