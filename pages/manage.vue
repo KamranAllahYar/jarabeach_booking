@@ -221,6 +221,8 @@ export default {
             this.last_name = this.$route.query.name;
             this.admin_mode = this.$route.query.admin == 1 ? true : false;
 
+            this.$store.commit("TOGGLE_FULL_PAGE_LOADER", true);
+
             this.$store.commit("UPDATE_ADMIN_EDIT_MODE", this.admin_mode);
 
             this.findBooking().then(() => {

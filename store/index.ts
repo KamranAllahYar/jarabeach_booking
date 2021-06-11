@@ -50,6 +50,8 @@ export const state = () => ({
   editMode: false as boolean,
   editBooking: null as any,
   adminEditMode: false as boolean,
+
+  fullPageLoader: false as boolean,
 })
 
 export type RootState = ReturnType<typeof state>
@@ -312,6 +314,9 @@ export const getters: GetterTree<RootState, RootState> = {
 }
 
 export const mutations: MutationTree<RootState> = {
+  TOGGLE_FULL_PAGE_LOADER: (state: RootState, value) => {
+    state.fullPageLoader = value
+  },
   UPDATE_ADMIN_EDIT_MODE: (state: RootState, value) => {
     state.adminEditMode = value;
   },

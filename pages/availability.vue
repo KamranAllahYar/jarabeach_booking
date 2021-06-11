@@ -140,6 +140,10 @@ export default {
                 window.localStorage.setItem(trigger, true);
             }, 100);
         }
+
+        setTimeout(() => {
+          this.$store.commit("TOGGLE_FULL_PAGE_LOADER", false);
+        }, 2000);
     },
     created() {
         console.log("STORE_ROOMS");
