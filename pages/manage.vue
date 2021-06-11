@@ -222,12 +222,15 @@ export default {
             this.admin_mode = this.$route.query.admin == 1 ? true : false;
 
             this.$store.commit("TOGGLE_FULL_PAGE_LOADER", true);
+            this.$store.commit("RESET_STORE");
 
-            this.$store.commit("UPDATE_ADMIN_EDIT_MODE", this.admin_mode);
+            setTimeout(() => {
+                this.$store.commit("UPDATE_ADMIN_EDIT_MODE", this.admin_mode);
 
-            this.findBooking().then(() => {
-                this.loadOldBooking();
-            });
+                this.findBooking().then(() => {
+                    this.loadOldBooking();
+                });
+            }, 1000);
         }
     },
 };
