@@ -13,14 +13,23 @@
                 <br />
                 Helium Balloons or bespoke Special Decoration on request
             </p>
-            <div class="mt-6 font-semibold">What date would you like to have this?</div>
 
+            <div class="mt-6 font-semibold">What date would you like to have this?</div>
             <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">
                     <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
                     <div>{{ showDate(date) }}</div>
                 </label>
             </div>
+
+            <div class="mt-6 font-semibold">What room would you like to have this in?</div>
+            <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
+                <label class="flex items-center" v-for="(room, i) in rooms" :key="i">
+                    <input type="radio" :value="room.name" v-model="selectedRoom" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
+                    <div>{{ room.name }}</div>
+                </label>
+            </div>
+
             <div class="space-y-4">
                 <div class="mt-6 font-semibold">Select Room Decoration</div>
                 <div v-for="deco in decorations" :key="deco.id">
@@ -64,6 +73,7 @@ import format from "date-fns/format";
 export default {
     data() {
         return {
+            selectedRoom: null,
             selectedDate: null,
             selectedDecorations: [],
             myWelcomeNote: "",
@@ -72,6 +82,22 @@ export default {
         };
     },
     computed: {
+        rooms() {
+            const rooms = this.$store.getters.uniqueBookedRooms;
+            let uniqueRooms = [];
+
+            rooms.forEach((r) => {
+                const itsThere = uniqueRooms.some(
+                    (i) => i.room_id == r.room_id
+                );
+
+                if (!itsThere) {
+                    uniqueRooms.push(r);
+                }
+            });
+
+            return uniqueRooms;
+        },
         decorations() {
             return this.$store.getters["extras/allDecorations"];
         },
@@ -151,11 +177,12 @@ export default {
         next() {
             console.log("NEXT");
             this.$store.commit("extras/SET_SELECTED_DECORATION", {
+                note: this.welcomeNote,
                 decorations: this.selectedDecorations,
                 date: this.selectedDate,
-                note: this.welcomeNote,
                 petalsNote: this.petalsNote,
                 balloonsColor: this.balloonsColor,
+                room: this.selectedRoom,
             });
             this.$emit("next");
         },
@@ -164,6 +191,9 @@ export default {
                 note: this.welcomeNote,
                 decorations: this.selectedDecorations,
                 date: this.selectedDate,
+                petalsNote: this.petalsNote,
+                balloonsColor: this.balloonsColor,
+                room: this.selectedRoom,
             });
             this.$emit("prev");
         },
@@ -181,10 +211,14 @@ export default {
             this.selectedDate = this.dates[0];
         }
 
+        this.selectedRoom = this.rooms[0].name;
+
         if (this.$store.state.extras.selectedDecorations) {
-            this.selectedDecorations = this.$store.state.extras.selectedDecorations.map(
-                (x) => x
-            );
+            this.selectedDecorations =
+                this.$store.state.extras.selectedDecorations.map((x) => x);
+        }
+        if (this.$store.state.extras.decorationRoom) {
+            this.selectedRoom = this.$store.state.extras.decorationRoom;
         }
         if (this.$store.state.extras.dateDecoration) {
             this.selectedDate = this.$store.state.extras.dateDecoration;
@@ -196,7 +230,8 @@ export default {
             this.myPetalsNote = this.$store.state.extras.decorationPetalsNote;
         }
         if (this.$store.state.extras.decorationBalloonsColor) {
-            this.myBalloonsColor = this.$store.state.extras.decorationBalloonsColor;
+            this.myBalloonsColor =
+                this.$store.state.extras.decorationBalloonsColor;
         }
     },
 };

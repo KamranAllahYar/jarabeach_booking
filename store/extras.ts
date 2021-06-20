@@ -33,6 +33,7 @@ export const state = () => ({
   decorationWelcomeNote: "" as String,
   decorationPetalsNote: "" as String,
   decorationBalloonsColor: "" as String,
+  decorationRoom: null as String | number | null,
   dateDecoration: null as String | null,
 
   staffPrices: [] as any[],
@@ -354,6 +355,8 @@ export const mutations: MutationTree<ExtraState> = {
 
     state.decorationPetalsNote = payload.petalsNote;
     state.decorationBalloonsColor = payload.balloonsColor;
+
+    state.decorationRoom = payload.room;
   },
 
   SET_SELECTED_STAFF: (state, payload) => {
@@ -412,6 +415,7 @@ export const mutations: MutationTree<ExtraState> = {
     state.decorationWelcomeNote = "" as String;
     state.decorationPetalsNote = "" as String;
     state.decorationBalloonsColor = "" as String;
+    state.decorationRoom = null as String | number | null;
 
     state.selectedStaff = {
       menu: [],
@@ -464,6 +468,7 @@ export const mutations: MutationTree<ExtraState> = {
       if (deco.note) state.decorationWelcomeNote = deco.note;
       if (deco.petals_note) state.decorationPetalsNote = deco.petals_note;
       if (deco.balloons_color) state.decorationBalloonsColor = deco.balloons_color;
+      if (deco.room) state.decorationRoom = deco.room;
 
       const option = state.decorationOptions.find((dOption) => dOption.id == deco.option_id);
       if (option) state.selectedDecorations.push(option);

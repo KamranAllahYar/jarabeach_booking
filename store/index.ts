@@ -86,6 +86,9 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return bRooms;
   },
+  uniqueBookedRooms: (state: RootState, getters) => {
+    return getters.bookedRooms.filter(onlyUnique);
+  },
   dateFromTo: (state: RootState, getters) => {
     const dates = getters.bookedRooms.map((room: any) => room.date);
 
@@ -441,7 +444,6 @@ export const mutations: MutationTree<RootState> = {
       state.done_data.booking_ref = "";
     }
 
-
     state.groupType = 'individual' as string;
     state.adult_no = 0 as number;
     state.child_no = 0 as number;
@@ -600,6 +602,7 @@ export const actions: ActionTree<RootState, RootState> = {
         welcomeNote: extraState.decorationWelcomeNote,
         petalsNote: extraState.decorationPetalsNote,
         balloonsColor: extraState.decorationBalloonsColor,
+        room: extraState.decorationRoom,
         options: extraState.selectedDecorations.map((sd: any) => sd.id),
       }
       prices['roomDecoration'] = rootGetters['extras/decorationPrice'];
