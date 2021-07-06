@@ -2,6 +2,9 @@ import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import differenceInDays from 'date-fns/differenceInDays';
 import parseISO from 'date-fns/parseISO';
 import format from 'date-fns/format';
+import isSameDay from 'date-fns/isSameDay';
+import isSameMonth from 'date-fns/isSameMonth';
+import isSameYear from 'date-fns/isSameYear';
 import Bugsnag from '@bugsnag/js'
 
 var groupBy = function (xs: any, key: any) {
@@ -56,6 +59,8 @@ export const state = () => ({
   adminEditMode: false as boolean,
 
   fullPageLoader: false as boolean,
+
+  noDiscountDates: [] as string[],
 })
 
 export type RootState = ReturnType<typeof state>
@@ -64,6 +69,7 @@ export const getters: GetterTree<RootState, RootState> = {
   totalPeople: (state: RootState) => state.adult_no + state.child_no,
   noAdults: (state: RootState) => state.adult_no,
   noChildren: (state: RootState) => state.child_no,
+  noDiscountDates: (state: RootState) => state.noDiscountDates,
   noTeens: (state: RootState) => state.other_guests.filter((child) => child.type == "teen").length,
   bigPeople: (state: RootState, getters) => getters.noAdults + getters.noTeens,
   smallPeople: (state: RootState, getters) => getters.noChildren - getters.noTeens,
@@ -224,7 +230,35 @@ export const getters: GetterTree<RootState, RootState> = {
     return roomPrices;
   },
   roomDiscountPercent: (state: RootState, getters) => {
-    const totalNights = getters.totalNights;
+    const roomGroup = groupBy(getters.bookedRooms, 'date');
+
+    const myDates = Object.keys(roomGroup);
+    const noDiscountDates = getters.noDiscountDates;
+    let t = 0;
+
+    myDates.forEach(date => {
+      let shouldCount = true;
+      noDiscountDates.some((noDate: string) => {
+        console.log("----");
+        console.log(parseISO(date));
+        console.log(parseISO(noDate));
+        console.log("Day -- " + isSameDay(parseISO(date), parseISO(noDate)));
+        console.log("Month -- " + isSameMonth(parseISO(date), parseISO(noDate)));
+        // if ((isSameDay(parseISO(date), parseISO(noDate)) && isSameMonth(parseISO(date), parseISO(noDate)))) {
+        if ((isSameDay(parseISO(date), parseISO(noDate)) && isSameMonth(parseISO(date), parseISO(noDate)) && isSameYear(parseISO(date), parseISO(noDate)))) {
+          console.log("Will not count - STOP")
+          shouldCount = false;
+          return true;
+        }
+      });
+
+      if (shouldCount) t++;
+    });
+
+    console.log("Total nights: " + t);
+
+    // const totalNights = getters.totalNights;
+    const totalNights = t;
     let percent = 0;
     if (totalNights == 2) percent = 5;
     else if (totalNights == 3) percent = 10;
@@ -441,6 +475,10 @@ export const mutations: MutationTree<RootState> = {
   COMPLETE_POLICY: (state) => state.policy_done = true,
   SET_BOOKING: (state, payload) => state.booking = payload,
 
+  UPDATE_NO_DISCOUNT_DATES: (state, dates: string[]) => {
+    state.noDiscountDates = dates;
+  },
+
   RESET_STORE: (state) => {
     if (state.rooms.length > 0) {
       const email = state.guest.email;
@@ -494,6 +532,13 @@ export const actions: ActionTree<RootState, RootState> = {
     this.$axios.get("/policies").then((res) => {
       console.log(res.data.data);
       commit("UPDATE_POLICIES", res.data.data);
+    });
+  },
+
+  loadNoDiscountDates({ commit }) {
+    this.$axios.get("/no-discount-dates").then((res) => {
+      console.log(res.data.data);
+      commit("UPDATE_NO_DISCOUNT_DATES", res.data.data);
     });
   },
 
