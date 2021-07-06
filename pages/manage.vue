@@ -51,6 +51,12 @@
                             #{{ fullBooking.ref }}
                         </div>
                     </div>
+                    <div class="flex items-center justify-between px-3 my-3">
+                        <div>Number of Nights</div>
+                        <div class="font-bold">
+                            {{ totalNights }} Night<span v-if="totalNights > 1">s</span>
+                        </div>
+                    </div>
                     <div class="flex items-start justify-between px-3 my-3">
                         <div>Room(s)</div>
                         <div class="font-bold">
@@ -125,10 +131,6 @@
                 </div>
 
                 <MainButton @click="loadOldBooking()">Update Booking</MainButton>
-
-                <pre>
-                  {{ fullBooking }}
-                </pre>
             </div>
         </div>
     </div>
@@ -137,6 +139,14 @@
 <script>
 import format from "date-fns/format";
 import parseISO from "date-fns/parseISO";
+
+var groupBy = function (xs, key) {
+    return xs.reduce(function (rv, x) {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+    }, {});
+};
+
 export default {
     layout: "booking",
     data() {
@@ -151,6 +161,13 @@ export default {
     computed: {
         rooms() {
             return this.$store.getters.roomsData;
+        },
+        totalNights() {
+            if (this.fullBooking) {
+                return Object.keys(groupBy(this.fullBooking.rooms, "date"))
+                    .length;
+            }
+            return 0;
         },
     },
     methods: {
