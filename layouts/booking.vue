@@ -48,6 +48,7 @@ export default {
         this.$store.dispatch("extras/getSpecialDecorations");
         this.$store.dispatch("extras/getLookoutOptions");
         this.$store.dispatch("extras/getSpecialMassages");
+        this.$store.dispatch("extras/getSpecialNewmassages");
         this.$store.dispatch("extras/getQuadbikeOptions");
         this.$store.dispatch("extras/getMostPrices");
     },

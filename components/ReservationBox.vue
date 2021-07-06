@@ -78,6 +78,9 @@
                     <span v-else-if="extra.type == 'massage'">
                         {{ currency($store.getters['extras/massagePrice']) }}
                     </span>
+                    <span v-else-if="extra.type == 'newmassage'">
+                        {{ currency($store.getters['extras/newmassagePrice']) }}
+                    </span>
                     <span v-else-if="extra.type == 'quadbike'">
                         {{ currency($store.getters['extras/quadbikePrice']) }}
                     </span>

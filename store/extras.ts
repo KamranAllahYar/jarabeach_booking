@@ -4,7 +4,8 @@ import { GetterTree, MutationTree, ActionTree } from 'vuex';
 export const state = () => ({
   specials: [
     { type: 'lookout', name: 'Lookout Experience', available: true, range: '15,000' },
-    { type: 'massage', name: 'Massage', available: false, range: '30,000' },
+    // { type: 'massage', name: 'Massage', available: false, range: '30,000' },
+    { type: 'newmassage', name: 'Massage', available: true, range: '10,000' },
     { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
     { type: 'photoshoot', name: 'Photoshoot', available: true, range: '20,000' },
     { type: 'drinks', name: 'Drinks', available: true, range: '15,000' },
@@ -22,6 +23,11 @@ export const state = () => ({
   massageOptions: [] as any[],
   selectedMassage: [] as any[],
   dateMassage: null as String | null,
+
+  newmassageOptions: [] as any[],
+  selectedNewmassage: null as any,
+  dateNewmassage: null as String | null,
+  timeNewmassage: null as String | null,
 
   quadbikeOptions: [] as any[],
   selectedQuadbike: [] as any[],
@@ -70,6 +76,7 @@ export const getters: GetterTree<ExtraState, RootState> = {
   allDecorations: (state: ExtraState) => state.decorationOptions,
   allLookouts: (state: ExtraState) => state.lookoutOptions,
   allMassages: (state: ExtraState) => state.massageOptions,
+  allNewmassages: (state: ExtraState) => state.newmassageOptions,
   allQuadbikes: (state: ExtraState) => state.quadbikeOptions,
   allClashes: (state: ExtraState) => state.clashes,
 
@@ -206,6 +213,16 @@ export const getters: GetterTree<ExtraState, RootState> = {
 
     return price;
   },
+  newmassagePrice: (state: ExtraState) => {
+    let price = 0;
+    const newmassage = state.newmassageOptions.find(mo => mo.id == state.selectedNewmassage);
+
+    if (newmassage) {
+      price = newmassage.price;
+    }
+
+    return price;
+  },
   quadbikePrice: (state: ExtraState) => {
     let price = 0;
     const quadbike = state.quadbikeOptions.find(qo => qo.id == state.selectedQuadbike);
@@ -325,6 +342,25 @@ export const mutations: MutationTree<ExtraState> = {
     }
   },
 
+  LOAD_NEWMASSAGE_OPTIONS: (state, newmassages) => {
+    state.newmassageOptions = newmassages
+  },
+  SET_SELECTED_NEWMASSAGE: (state, payload) => {
+    delete state.clashes['newmassage'];
+
+    state.selectedNewmassage = payload.newmassage;
+    state.dateNewmassage = payload.date;
+    state.timeNewmassage = payload.time;
+
+    const option = state.newmassageOptions.find(mo => mo.id == payload.newmassage);
+    if (option) {
+      state.clashes['newmassage'] = {
+        date: payload.date,
+        clash: option.clash
+      };
+    }
+  },
+
   LOAD_QUADBIKE_OPTIONS: (state, quadbikes) => {
     state.quadbikeOptions = quadbikes
   },
@@ -403,6 +439,11 @@ export const mutations: MutationTree<ExtraState> = {
     state.massageOptions = [] as any[];
     state.selectedMassage = [] as any[];
     state.dateMassage = null as String | null;
+
+    state.newmassageOptions = [] as any[];
+    state.selectedNewmassage = null as any;
+    state.dateNewmassage = null as String | null;
+    state.timeNewmassage = null as String | null;
 
     state.quadbikeOptions = [] as any[];
     state.selectedQuadbike = [] as any[];
@@ -535,6 +576,18 @@ export const mutations: MutationTree<ExtraState> = {
       state.selectedMassage = oldMassage.slot_id;
     }
   },
+  TRANSFORM_NEWMASSAGE: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldNewmassage = payload.newmassage;
+
+    console.log(oldNewmassage)
+
+    if (oldDates.includes(oldNewmassage.date)) {
+      state.dateNewmassage = oldNewmassage.date;
+      state.timeNewmassage = oldNewmassage.time;
+      state.selectedNewmassage = oldNewmassage.option_id;
+    }
+  },
   TRANSFORM_LOOKOUTS: (state, payload) => {
     const oldDates = payload.dates;
     const oldLookout = payload.lookouts;
@@ -603,6 +656,14 @@ export const actions: ActionTree<ExtraState, RootState> = {
     });
   },
 
+  getSpecialNewmassages({ commit }) {
+    this.$axios.get("/newmassage-options").then((res) => {
+      console.log("NewMassages")
+      console.log(res.data.data);
+      commit("LOAD_NEWMASSAGE_OPTIONS", res.data.data);
+    });
+  },
+
   getLookoutOptions({ commit }) {
     this.$axios.get("/lookout-options").then((res) => {
       console.log("Lookout options")
@@ -638,6 +699,13 @@ export const actions: ActionTree<ExtraState, RootState> = {
       if (s) {
         commit("ADD_SELECTED", s);
         commit("TRANSFORM_MASSAGE", { massage: oldBooking.massage, dates: newBookingDates });
+      };
+    }
+    if (oldBooking.new_massage) {
+      const s = getSpecialObjFromStr(state.specials, 'newmassage');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_NEWMASSAGE", { newmassage: oldBooking.new_massage, dates: newBookingDates });
       };
     }
     if (oldBooking.quadbike) {

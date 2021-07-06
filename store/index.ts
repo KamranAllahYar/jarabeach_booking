@@ -40,7 +40,11 @@ export const state = () => ({
 
   extra: '' as string,
   showExtra: false as boolean,
-  specials: ["lookout", "massage", "quadbike", "photoshoot", "drinks", "cakes", "roomDecoration", "domesticStaff"] as any[],
+  specials: [
+    "lookout", "massage", "newmassage", "quadbike",
+    "photoshoot", "drinks", "cakes", "roomDecoration",
+    "domesticStaff"
+  ] as any[],
 
   booking: null as any,
   discount: null as any,
@@ -264,6 +268,9 @@ export const getters: GetterTree<RootState, RootState> = {
       }
       if (extra.type == "massage") {
         extraPrices += getters["extras/massagePrice"];
+      }
+      if (extra.type == "newmassage") {
+        extraPrices += getters["extras/newmassagePrice"];
       }
       if (extra.type == "quadbike") {
         extraPrices += getters["extras/quadbikePrice"];
@@ -635,6 +642,14 @@ export const actions: ActionTree<RootState, RootState> = {
         options: extraState.selectedMassage,
       }
       prices['massage'] = rootGetters['extras/massagePrice'];
+    }
+    if (allExtras.includes('newmassage')) {
+      specialsToSend['newmassage'] = {
+        date: extraState.dateNewmassage,
+        options: extraState.selectedNewmassage,
+        time: extraState.timeNewmassage,
+      }
+      prices['newmassage'] = rootGetters['extras/newmassagePrice'];
     }
     if (allExtras.includes('lookout')) {
       specialsToSend['lookout'] = {

@@ -98,10 +98,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between px-3 my-3" v-if="fullBooking.massage">
+                    <!-- <div class="flex items-center justify-between px-3 my-3" v-if="fullBooking.massage">
                         <div>Massage</div>
                         <div class="font-bold">
                             {{ formatDate(fullBooking.massage.date) }}
+                        </div>
+                    </div> -->
+                    <div class="flex items-center justify-between px-3 my-3" v-if="fullBooking.new_massage">
+                        <div>Massage</div>
+                        <div class="font-bold">
+                            {{ formatDate(fullBooking.new_massage.date) }}
                         </div>
                     </div>
                     <div class="flex items-center justify-between px-3 my-3" v-if="fullBooking.quadbike">
@@ -119,6 +125,10 @@
                 </div>
 
                 <MainButton @click="loadOldBooking()">Update Booking</MainButton>
+
+                <pre>
+                  {{ fullBooking }}
+                </pre>
             </div>
         </div>
     </div>
@@ -188,6 +198,7 @@ export default {
                 this.$store.dispatch("extras/getSpecialDecorations"),
                 this.$store.dispatch("extras/getLookoutOptions"),
                 this.$store.dispatch("extras/getSpecialMassages"),
+                this.$store.dispatch("extras/getSpecialNewmassages"),
                 this.$store.dispatch("extras/getQuadbikeOptions"),
                 this.$store.dispatch("extras/getMostPrices"),
             ]);

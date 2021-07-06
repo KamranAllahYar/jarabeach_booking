@@ -4,6 +4,8 @@
 
         <SpecialMassage v-else-if="currentSpecial == 'massage'" @next="gotoNext()" @prev="gotoPrev()" />
 
+        <SpecialNewMassage v-else-if="currentSpecial == 'newmassage'" @next="gotoNext()" @prev="gotoPrev()" />
+
         <SpecialQuadBikes v-else-if="currentSpecial == 'quadbike' || currentSpecial == 'quadbikes'" @next="gotoNext()" @prev="gotoPrev()" />
 
         <SpecialPhotoshoot v-if="currentSpecial == 'photoshoot'" @next="gotoNext()" @prev="gotoPrev()" />
