@@ -69,7 +69,7 @@
                             </div>
                             <div class="px-3 py-4 border-b">
                                 <div>
-                                    <div class="mb-2 text-base font-bold">Upload Image Identification (i.e. passport, national ID, drivers license)</div>
+                                    <div class="mb-2 text-base font-bold">Upload Image [face] identification (i.e. passport, national ID, driver's license)</div>
 
                                     <template v-if="guest.identification && !hasFileUpload">
                                         <div v-if="isPdf(guest.identification)" class="my-3">

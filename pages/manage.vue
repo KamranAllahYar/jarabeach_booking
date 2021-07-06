@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="flex items-start justify-between px-3 my-3">
-                        <div>Rooms</div>
+                        <div>Room(s)</div>
                         <div class="font-bold">
                             <div class="mb-1 text-right" v-for="(room, ix) in fullBooking.rooms" :key="ix">
                                 <div>{{ formatDate(room.date) }}</div>
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                     <div class="flex items-center justify-between px-3 my-3" v-if="fullBooking.lookouts[0]">
-                        <div>Lookouts</div>
+                        <div>Lookout Experience</div>
                         <div class="font-bold">
                             {{ formatDate(fullBooking.lookouts[0].date) }}
                         </div>
