@@ -68,14 +68,17 @@
                             <option value="">Select Date</option>
                             <option :value="date" v-for="date in breakfastDates" :key="date">{{ showDate(date) }}</option>
                         </select>
-                        <div class="grid items-center mt-3 font-light md:grid-cols-3 gap-y-2" v-if="breakfastAvailableTimes.length > 0">
+                        <div class="grid items-center mt-3 font-light md:grid-cols-3 gap-y-2" v-if="breakfastAvailableTimes && breakfastAvailableTimes.length > 0">
                             <label class="flex items-center" v-for="(time, i) in breakfastAvailableTimes" :key="i">
                                 <input type="radio" :value="time" v-model="myBreakfastTime" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
                                 <div>{{ time }}</div>
                             </label>
                         </div>
                         <div class="mt-3 font-light" v-else>
-                            Not available for this date
+                            <template v-if="breakfastLoading">Loading...</template>
+                            <template v-else>
+                                Not available for this date
+                            </template>
                         </div>
                     </div>
 
@@ -85,7 +88,10 @@
                             <option :value="date" v-for="date in picnicDates" :key="date">{{ showDate(date) }}</option>
                         </select>
                         <div class="mt-3 font-light" v-else>
-                            Not available during your visit
+                            <template v-if="picnicLoading">Loading...</template>
+                            <template v-else>
+                                Not available during your visit
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -117,6 +123,8 @@ export default {
             breakfastDates: [],
             breakfastDateTimes: {},
             picnicDates: [],
+            breakfastLoading: false,
+            picnicLoading: false,
             // breakfastTimes: ["9am", "9:30am", "10am"],
         };
     },
@@ -324,6 +332,7 @@ export default {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         checkPicnicOptions() {
+            this.picnicLoading = true;
             let oldBookingId = null;
             if (this.$store.state.editMode) {
                 console.log("in edit mode");
@@ -340,9 +349,13 @@ export default {
                 .then((res) => {
                     console.log(res.data.data);
                     this.picnicDates = res.data.data;
+                })
+                .finally(() => {
+                    this.picnicLoading = false;
                 });
         },
         checkBreakfastOptions() {
+            this.breakfastLoading = true;
             let oldBookingId = null;
             if (this.$store.state.editMode) {
                 console.log("in edit mode");
@@ -360,6 +373,9 @@ export default {
                     console.log("Breakfast options");
                     console.log(res.data.data);
                     this.breakfastDateTimes = res.data.data;
+                })
+                .finally(() => {
+                    this.breakfastLoading = false;
                 });
         },
     },
