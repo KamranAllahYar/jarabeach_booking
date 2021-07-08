@@ -51,7 +51,10 @@
 
                 <div>
                     <div class="mt-4 font-semibold">Select dates for domestic staff</div>
-                    <div class="mt-2 font-light ">
+                    <div class="mt-2 font-light">
+                        <template v-if="dates.length < 1">
+                            No dates available
+                        </template>
                         <template v-for="date in dates">
                             <label class="flex items-center mt-4" :key="date">
                                 <input type="checkbox" :value="date" v-model="selectedDates" class="w-5 h-5 mr-3 rounded focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">

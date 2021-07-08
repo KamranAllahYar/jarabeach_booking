@@ -155,26 +155,29 @@ export const getters: GetterTree<ExtraState, RootState> = {
     let lunchPrice = 4000;
     let dinnerPrice = 5000;
 
+    console.log('staff prices');
+    console.log(state.staffPrices);
+
     if (state.staffPrices) {
       let d = state.staffPrices.find(_d => _d.name.toLowerCase() == "driver");
       if (d) {
-        driverPrice = d.price;
+        driverPrice = +d.price;
       }
       let n = state.staffPrices.find(_n => _n.name.toLowerCase() == "nanny");
       if (n) {
-        nannyPrice = n.price;
+        nannyPrice = +n.price;
       }
       let b = state.staffPrices.find(_b => _b.name.toLowerCase() == "breakfast");
       if (b) {
-        breakfastPrice = b.price;
+        breakfastPrice = +b.price;
       }
       let l = state.staffPrices.find(_l => _l.name.toLowerCase() == "lunch");
       if (l) {
-        lunchPrice = l.price;
+        lunchPrice = +l.price;
       }
       let di = state.staffPrices.find(_di => _di.name.toLowerCase() == "dinner");
       if (di) {
-        dinnerPrice = di.price;
+        dinnerPrice = +di.price;
       }
     }
 

@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div>
-                    <div class="text-xs text-right">{{ totalNights }} night<span v-if="totalNights > 1">s</span></div>
+                    <div class="text-base text-right">{{ totalNights }} night<span v-if="totalNights > 1">s</span></div>
                     <div class="text-xs text-right">{{ dateFromTo }}</div>
                     <!-- <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
                         <div>{{ formatDate(room.date) }}</div>

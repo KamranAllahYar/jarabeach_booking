@@ -239,14 +239,13 @@ export const getters: GetterTree<RootState, RootState> = {
     myDates.forEach(date => {
       let shouldCount = true;
       noDiscountDates.some((noDate: string) => {
-        console.log("----");
-        console.log(parseISO(date));
-        console.log(parseISO(noDate));
-        console.log("Day -- " + isSameDay(parseISO(date), parseISO(noDate)));
-        console.log("Month -- " + isSameMonth(parseISO(date), parseISO(noDate)));
+        // console.log("----");
+        // console.log(parseISO(date));
+        // console.log(parseISO(noDate));
+        // console.log("Day -- " + isSameDay(parseISO(date), parseISO(noDate)));
+        // console.log("Month -- " + isSameMonth(parseISO(date), parseISO(noDate)));
         // if ((isSameDay(parseISO(date), parseISO(noDate)) && isSameMonth(parseISO(date), parseISO(noDate)))) {
         if ((isSameDay(parseISO(date), parseISO(noDate)) && isSameMonth(parseISO(date), parseISO(noDate)) && isSameYear(parseISO(date), parseISO(noDate)))) {
-          console.log("Will not count - STOP")
           shouldCount = false;
           return true;
         }
@@ -537,7 +536,7 @@ export const actions: ActionTree<RootState, RootState> = {
 
   loadNoDiscountDates({ commit }) {
     this.$axios.get("/no-discount-dates").then((res) => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       commit("UPDATE_NO_DISCOUNT_DATES", res.data.data);
     });
   },
