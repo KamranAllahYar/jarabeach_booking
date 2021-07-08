@@ -10,7 +10,7 @@ export const state = () => ({
     { type: 'photoshoot', name: 'Photoshoot', available: true, range: '20,000' },
     { type: 'drinks', name: 'Drinks', available: true, range: '15,000' },
     { type: 'cakes', name: 'Cake', available: true, range: '15,000' },
-    { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
+    { type: 'roomDecoration', name: 'Personalised Experience', available: true, range: '0' },
     { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' }
   ] as { name: string, type: string, range: string, available: boolean }[],
   selected: [] as { name: string, type: string, range: string, available: boolean }[],
@@ -41,6 +41,9 @@ export const state = () => ({
   decorationBalloonsColor: "" as String,
   decorationRoom: null as String | number | null,
   dateDecoration: null as String | null,
+  decorationPicnicDate: null as any,
+  decorationBreakfastDate: null as any,
+  decorationBreakfastTime: null as any,
 
   staffPrices: [] as any[],
   selectedStaff: {
@@ -395,6 +398,10 @@ export const mutations: MutationTree<ExtraState> = {
     state.decorationPetalsNote = payload.petalsNote;
     state.decorationBalloonsColor = payload.balloonsColor;
 
+    state.decorationPicnicDate = payload.picnicDate;
+    state.decorationBreakfastDate = payload.breakfastDate;
+    state.decorationBreakfastTime = payload.breakfastTime;
+
     state.decorationRoom = payload.room;
   },
 
@@ -460,6 +467,9 @@ export const mutations: MutationTree<ExtraState> = {
     state.decorationPetalsNote = "" as String;
     state.decorationBalloonsColor = "" as String;
     state.decorationRoom = null as String | number | null;
+    state.decorationPicnicDate = null as any;
+    state.decorationBreakfastDate = null as any;
+    state.decorationBreakfastTime = null as any;
 
     state.selectedStaff = {
       menu: [],
@@ -512,6 +522,9 @@ export const mutations: MutationTree<ExtraState> = {
       if (deco.note) state.decorationWelcomeNote = deco.note;
       if (deco.petals_note) state.decorationPetalsNote = deco.petals_note;
       if (deco.balloons_color) state.decorationBalloonsColor = deco.balloons_color;
+      if (deco.picnic_date) state.decorationPicnicDate = deco.picnic_date;
+      if (deco.breakfast_date) state.decorationBreakfastDate = deco.breakfast_date;
+      if (deco.breakfast_time) state.decorationBreakfastTime = deco.breakfast_time;
       if (deco.room) state.decorationRoom = deco.room;
 
       const option = state.decorationOptions.find((dOption) => dOption.id == deco.option_id);

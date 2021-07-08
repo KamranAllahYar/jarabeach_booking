@@ -5,9 +5,9 @@
         </div>
 
         <div class="w-full p-6 md:w-7/12">
-            <div class="font-semibold">Room Decoration</div>
+            <div class="font-semibold">Personalised Experience</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
-                There are a number of expected extras we offer for free, including romantic room decoration, or happy birthday messages, simple decorations etc.
+                There are a number of expected extras we offer for free, including romantic room decoration, or happy birthday messages, simple decorations, floating breakfast, sunset picnic etc.
 
                 <br />
                 <br />
@@ -31,31 +31,57 @@
             </div>
 
             <div class="space-y-4">
-                <div class="mt-6 font-semibold">Select Room Decoration</div>
+                <div class="mt-6 font-semibold">Select Personalised Experience</div>
                 <div v-for="deco in decorations" :key="deco.id">
                     <label class="inline-flex items-center" :key="deco.id">
                         <input type="checkbox" :value="deco" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
                         <div class="inline-block">
-                            {{ deco.name }} -
+                            {{ realDecoName(deco.name) }} -
                             <span class="font-bold uppercase" v-if="deco.price >0">{{ currency(deco.price) }}</span>
                             <span class="font-bold uppercase" v-else>FREE</span>
                         </div>
                     </label>
 
-                    <input type="text" :key="deco.id+'ss'" v-if="showNote(deco)" placeholder="What to write. 20 characters max" maxlength="20"
-                        v-model="myWelcomeNote"
-                        class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
+                    <div class="md:ml-8" v-if="showNote(deco)">
+                        <input type="text" :key="deco.id+'ss'" placeholder="What to write. 20 characters max" maxlength="20"
+                            v-model="myWelcomeNote"
+                            class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
+                    </div>
 
-                    <input type="text" :key="deco.id+'pt'" v-if="showPetalsNote(deco)" placeholder="What to write. 10 characters max" maxlength="10"
-                        v-model="myPetalsNote"
-                        class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
+                    <div class="md:ml-8" v-if="showPetalsNote(deco)">
+                        <input type="text" :key="deco.id+'pt'" placeholder="What to write. 10 characters max" maxlength="10"
+                            v-model="myPetalsNote"
+                            class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
+                    </div>
 
-                    <select v-model="myBalloonsColor" v-if="showColorOptions(deco)" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
-                        <option value="">Select Color</option>
-                        <option value="Blue">Blue</option>
-                        <option value="Red">Red</option>
-                        <option value="Pink">Pink</option>
-                    </select>
+                    <div class="md:ml-8" v-if="showColorOptions(deco)">
+                        <select v-model="myBalloonsColor" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                            <option value="">Select Color</option>
+                            <option value="Blue">Blue</option>
+                            <option value="Red">Red</option>
+                            <option value="Pink">Pink</option>
+                        </select>
+                    </div>
+
+                    <div class="md:ml-8" v-if="showBreakfastOptions(deco)">
+                        <select v-model="myBreakfastDate" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                            <option value="">Select Date</option>
+                            <option :value="date" v-for="date in breakfastDates" :key="date">{{ showDate(date) }}</option>
+                        </select>
+                        <div class="grid items-center mt-3 font-light md:grid-cols-3 gap-y-2">
+                            <label class="flex items-center" v-for="(time, i) in breakfastTimes" :key="i">
+                                <input type="radio" :value="time" v-model="myBreakfastTime" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
+                                <div>{{ time }}</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="md:ml-8" v-if="showPicnicOptions(deco)">
+                        <select v-model="myPicnicDate" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                            <option value="">Select Date</option>
+                            <option :value="date" v-for="date in picnicDates" :key="date">{{ showDate(date) }}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">
@@ -79,6 +105,12 @@ export default {
             myWelcomeNote: "",
             myPetalsNote: "",
             myBalloonsColor: "",
+            myPicnicDate: "",
+            myBreakfastDate: "",
+            myBreakfastTime: "",
+            breakfastDates: [],
+            picnicDates: [],
+            breakfastTimes: ["9am", "9:30am", "10am"],
         };
     },
     computed: {
@@ -124,6 +156,26 @@ export default {
 
             return has;
         },
+        isBreakfastSelected() {
+            let has = false;
+            this.selectedDecorations.forEach((d) => {
+                if (d.name.toLowerCase() == "breakfast") {
+                    has = true;
+                }
+            });
+
+            return has;
+        },
+        isPicnicSelected() {
+            let has = false;
+            this.selectedDecorations.forEach((d) => {
+                if (d.name.toLowerCase() == "picnic") {
+                    has = true;
+                }
+            });
+
+            return has;
+        },
         isPetalsSelected() {
             let has = false;
             this.selectedDecorations.forEach((d) => {
@@ -155,13 +207,49 @@ export default {
 
             return null;
         },
+        breakfastDate() {
+            if (this.isBreakfastSelected) {
+                return this.myBreakfastDate;
+            }
+
+            return null;
+        },
+        breakfastTime() {
+            if (this.isBreakfastSelected) {
+                return this.myBreakfastTime;
+            }
+
+            return null;
+        },
+        picnicDate() {
+            if (this.isPicnicSelected) {
+                return this.myPicnicDate;
+            }
+
+            return null;
+        },
     },
     methods: {
+        realDecoName(deconame) {
+            if (deconame.toLowerCase() == "picnic") return "Sunset Picnic";
+            if (deconame.toLowerCase() == "breakfast") return "Floating Breakfast (Pool)";
+
+            return deconame;
+        },
         showNote(deco) {
             return (
                 deco.name.toLowerCase() == "welcome note" &&
                 this.isWelcomeNoteSelected
             );
+        },
+        showBreakfastOptions(deco) {
+            return (
+                deco.name.toLowerCase() == "breakfast" &&
+                this.isBreakfastSelected
+            );
+        },
+        showPicnicOptions(deco) {
+            return deco.name.toLowerCase() == "picnic" && this.isPicnicSelected;
         },
         showColorOptions(deco) {
             return (
@@ -182,6 +270,9 @@ export default {
                 date: this.selectedDate,
                 petalsNote: this.petalsNote,
                 balloonsColor: this.balloonsColor,
+                breakfastDate: this.breakfastDate,
+                breakfastTime: this.breakfastTime,
+                picnicDate: this.picnicDate,
                 room: this.selectedRoom,
             });
             this.$emit("next");
@@ -193,6 +284,9 @@ export default {
                 date: this.selectedDate,
                 petalsNote: this.petalsNote,
                 balloonsColor: this.balloonsColor,
+                breakfastDate: this.breakfastDate,
+                breakfastTime: this.breakfastTime,
+                picnicDate: this.picnicDate,
                 room: this.selectedRoom,
             });
             this.$emit("prev");
@@ -232,6 +326,30 @@ export default {
         if (this.$store.state.extras.decorationBalloonsColor) {
             this.myBalloonsColor =
                 this.$store.state.extras.decorationBalloonsColor;
+        }
+
+        if (this.dates.length > 0) {
+            this.breakfastDates = [...new Set(this.dates)];
+            if (this.breakfastDates.length > 1) {
+                this.breakfastDates.shift();
+            }
+            this.myBreakfastDate = this.breakfastDates[0];
+        }
+
+        if (this.dates.length > 0) {
+            this.picnicDates = [...new Set(this.dates)];
+            this.myPicnicDate = this.picnicDates[0];
+        }
+        if (this.$store.state.extras.decorationBreakfastDate) {
+            this.myBreakfastDate =
+                this.$store.state.extras.decorationBreakfastDate;
+        }
+        if (this.$store.state.extras.decorationBreakfastTime) {
+            this.myBreakfastTime =
+                this.$store.state.extras.decorationBreakfastTime;
+        }
+        if (this.$store.state.extras.decorationPicnicDate) {
+            this.myPicnicDate = this.$store.state.extras.decorationPicnicDate;
         }
     },
 };

@@ -653,6 +653,9 @@ export const actions: ActionTree<RootState, RootState> = {
         welcomeNote: extraState.decorationWelcomeNote,
         petalsNote: extraState.decorationPetalsNote,
         balloonsColor: extraState.decorationBalloonsColor,
+        picnicDate: extraState.decorationPicnicDate,
+        breakfastDate: extraState.decorationBreakfastDate,
+        breakfastTime: extraState.decorationBreakfastTime,
         room: extraState.decorationRoom,
         options: extraState.selectedDecorations.map((sd: any) => sd.id),
       }
