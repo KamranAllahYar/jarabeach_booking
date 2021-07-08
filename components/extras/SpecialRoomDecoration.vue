@@ -68,19 +68,25 @@
                             <option value="">Select Date</option>
                             <option :value="date" v-for="date in breakfastDates" :key="date">{{ showDate(date) }}</option>
                         </select>
-                        <div class="grid items-center mt-3 font-light md:grid-cols-3 gap-y-2">
-                            <label class="flex items-center" v-for="(time, i) in breakfastTimes" :key="i">
+                        <div class="grid items-center mt-3 font-light md:grid-cols-3 gap-y-2" v-if="breakfastAvailableTimes.length > 0">
+                            <label class="flex items-center" v-for="(time, i) in breakfastAvailableTimes" :key="i">
                                 <input type="radio" :value="time" v-model="myBreakfastTime" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
                                 <div>{{ time }}</div>
                             </label>
                         </div>
+                        <div class="mt-3 font-light" v-else>
+                            Not available for this date
+                        </div>
                     </div>
 
                     <div class="md:ml-8" v-if="showPicnicOptions(deco)">
-                        <select v-model="myPicnicDate" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                        <select v-if="picnicDates.length > 0" v-model="myPicnicDate" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
                             <option value="">Select Date</option>
                             <option :value="date" v-for="date in picnicDates" :key="date">{{ showDate(date) }}</option>
                         </select>
+                        <div class="mt-3 font-light" v-else>
+                            Not available during your visit
+                        </div>
                     </div>
                 </div>
             </div>
@@ -107,11 +113,23 @@ export default {
             myBalloonsColor: "",
             myPicnicDate: "",
             myBreakfastDate: "",
-            myBreakfastTime: "",
+            myBreakfastTime: null,
             breakfastDates: [],
+            breakfastDateTimes: {},
             picnicDates: [],
-            breakfastTimes: ["9am", "9:30am", "10am"],
+            // breakfastTimes: ["9am", "9:30am", "10am"],
         };
+    },
+    watch: {
+        myBreakfastDate() {
+            if (this.breakfastAvailableTimes) {
+                if (
+                    !this.breakfastAvailableTimes.includes(this.myBreakfastTime)
+                ) {
+                    this.myBreakfastTime = null;
+                }
+            }
+        },
     },
     computed: {
         rooms() {
@@ -208,7 +226,7 @@ export default {
             return null;
         },
         breakfastDate() {
-            if (this.isBreakfastSelected) {
+            if (this.isBreakfastSelected && this.breakfastTime) {
                 return this.myBreakfastDate;
             }
 
@@ -228,11 +246,19 @@ export default {
 
             return null;
         },
+        breakfastAvailableTimes() {
+            if (this.myBreakfastDate) {
+                return this.breakfastDateTimes[this.myBreakfastDate];
+            }
+
+            return [];
+        },
     },
     methods: {
         realDecoName(deconame) {
             if (deconame.toLowerCase() == "picnic") return "Sunset Picnic";
-            if (deconame.toLowerCase() == "breakfast") return "Floating Breakfast (Pool)";
+            if (deconame.toLowerCase() == "breakfast")
+                return "Floating Breakfast (Pool)";
 
             return deconame;
         },
@@ -297,6 +323,45 @@ export default {
         currency(num) {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
+        checkPicnicOptions() {
+            let oldBookingId = null;
+            if (this.$store.state.editMode) {
+                console.log("in edit mode");
+                if (this.$store.state.editBooking) {
+                    oldBookingId = this.$store.state.editBooking.id;
+                }
+            }
+
+            this.$axios
+                .post("check-decoration-picnic-booking", {
+                    dates: this.dates,
+                    oldBookingId: oldBookingId,
+                })
+                .then((res) => {
+                    console.log(res.data.data);
+                    this.picnicDates = res.data.data;
+                });
+        },
+        checkBreakfastOptions() {
+            let oldBookingId = null;
+            if (this.$store.state.editMode) {
+                console.log("in edit mode");
+                if (this.$store.state.editBooking) {
+                    oldBookingId = this.$store.state.editBooking.id;
+                }
+            }
+
+            this.$axios
+                .post("check-decoration-breakfast-booking", {
+                    dates: this.breakfastDates,
+                    oldBookingId: oldBookingId,
+                })
+                .then((res) => {
+                    console.log("Breakfast options");
+                    console.log(res.data.data);
+                    this.breakfastDateTimes = res.data.data;
+                });
+        },
     },
     mounted() {
         this.$store.dispatch("extras/getSpecialDecorations");
@@ -304,6 +369,22 @@ export default {
         if (this.dates.length > 0) {
             this.selectedDate = this.dates[0];
         }
+
+        if (this.dates.length > 0) {
+            this.breakfastDates = [...new Set(this.dates)];
+            if (this.breakfastDates.length > 1) {
+                this.breakfastDates.shift();
+            }
+            this.myBreakfastDate = this.breakfastDates[0];
+        }
+
+        if (this.dates.length > 0) {
+            this.picnicDates = [...new Set(this.dates)];
+            this.myPicnicDate = this.picnicDates[0];
+        }
+
+        this.checkPicnicOptions();
+        this.checkBreakfastOptions();
 
         this.selectedRoom = this.rooms[0].name;
 
@@ -326,19 +407,6 @@ export default {
         if (this.$store.state.extras.decorationBalloonsColor) {
             this.myBalloonsColor =
                 this.$store.state.extras.decorationBalloonsColor;
-        }
-
-        if (this.dates.length > 0) {
-            this.breakfastDates = [...new Set(this.dates)];
-            if (this.breakfastDates.length > 1) {
-                this.breakfastDates.shift();
-            }
-            this.myBreakfastDate = this.breakfastDates[0];
-        }
-
-        if (this.dates.length > 0) {
-            this.picnicDates = [...new Set(this.dates)];
-            this.myPicnicDate = this.picnicDates[0];
         }
         if (this.$store.state.extras.decorationBreakfastDate) {
             this.myBreakfastDate =
