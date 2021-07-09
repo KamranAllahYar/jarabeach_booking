@@ -48,7 +48,7 @@
 
             <div class="mt-6 font-semibold">At what time of the day?</div>
             <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
-                <label class="flex items-center" v-for="time in ['Morning', 'Afternoon']" :key="time">
+                <label class="flex items-center" v-for="time in timesAvailable" :key="time">
                     <input type="radio" :value="time" v-model="selectedTime" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                     <div>{{ time }}</div>
                 </label>
@@ -69,7 +69,7 @@ export default {
     data() {
         return {
             selectedDate: null,
-            selectedTime: "Morning",
+            selectedTime: "Afternoon",
             selectedNewmassage: null,
             availableMassages: {},
         };
@@ -90,15 +90,28 @@ export default {
         allClashes() {
             return this.$store.getters["extras/allClashes"];
         },
+        timesAvailable() {
+            if (this.selectedDate == this.dates[0]) {
+                return ["Afternoon"];
+            }
+            return ["Morning", "Afternoon"];
+        },
     },
     watch: {
-        // selectedDate(_, oldVal) {
-        //     if (oldVal != null) {
-        //         if (!this.$store.state.editMode) {
-        //             this.selectedNewmassage = null;
-        //         }
-        //     }
-        // },
+        selectedDate(_, oldVal) {
+            console.log(oldVal);
+            // if (oldVal != null) {
+            //     if (!this.$store.state.editMode) {
+            //         this.selectedNewmassage = null;
+            //     }
+            // }
+
+            if (this.timesAvailable) {
+                if (!this.timesAvailable.includes(this.selectedTime)) {
+                    return (this.selectedTime = this.timesAvailable[0]);
+                }
+            }
+        },
     },
     methods: {
         hasClashes(clashes, id) {
