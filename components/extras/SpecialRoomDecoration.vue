@@ -106,6 +106,7 @@
 
 <script>
 import parseISO from "date-fns/parseISO";
+import add from "date-fns/add";
 import format from "date-fns/format";
 
 export default {
@@ -388,6 +389,13 @@ export default {
 
         if (this.dates.length > 0) {
             this.breakfastDates = [...new Set(this.dates)];
+
+            const lastDate =
+                this.breakfastDates[this.breakfastDates.length - 1];
+            this.breakfastDates.push(
+                format(add(parseISO(lastDate), { days: 1 }), "yyyy-MM-dd")
+            );
+
             if (this.breakfastDates.length > 1) {
                 this.breakfastDates.shift();
             }
