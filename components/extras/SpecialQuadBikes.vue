@@ -119,12 +119,14 @@ export default {
                         const clashData = AC[key];
 
                         if (clashData.date == this.selectedDate) {
-                            const compClashes = clashData.clash.filter(
-                                (value) => clashes.includes(value)
-                            );
+                            if (clashData.clash) {
+                                const compClashes = clashData.clash.filter(
+                                    (value) => clashes.includes(value)
+                                );
 
-                            if (compClashes.length > 0) {
-                                hasClash = key;
+                                if (compClashes.length > 0) {
+                                    hasClash = key;
+                                }
                             }
                         }
                     }
@@ -212,7 +214,8 @@ export default {
             this.selectedQuadbike = this.$store.state.extras.selectedQuadbike;
         }
         if (this.$store.state.extras.selectedQuadbikeQty) {
-            this.selectedQuantity = this.$store.state.extras.selectedQuadbikeQty;
+            this.selectedQuantity =
+                this.$store.state.extras.selectedQuadbikeQty;
         }
         if (this.$store.state.extras.dateQuadbike) {
             this.selectedDate = this.$store.state.extras.dateQuadbike;

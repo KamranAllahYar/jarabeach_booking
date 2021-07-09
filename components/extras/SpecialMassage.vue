@@ -94,12 +94,14 @@ export default {
                         const clashData = AC[key];
 
                         if (clashData.date == this.selectedDate) {
-                            const compClashes = clashData.clash.filter(
-                                (value) => clashes.includes(value)
-                            );
+                            if (clashData.clash) {
+                                const compClashes = clashData.clash.filter(
+                                    (value) => clashes.includes(value)
+                                );
 
-                            if (compClashes.length > 0) {
-                                hasClash = key;
+                                if (compClashes.length > 0) {
+                                    hasClash = key;
+                                }
                             }
                         }
                     }

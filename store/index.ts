@@ -329,13 +329,13 @@ export const getters: GetterTree<RootState, RootState> = {
     return 0;
   },
   preTotal: (state: RootState, getters) => {
-    return getters.subTotal - getters.discount - getters.roomDiscount - getters.memberDiscount + getters.extraPeoplePrice;
+    return (+getters.subTotal) - (+getters.discount) - (+getters.roomDiscount) - (+getters.memberDiscount) + (+getters.extraPeoplePrice);
   },
   taxTotal: (state: RootState, getters) => {
-    return getters.preTotal * 0.05;
+    return (+getters.preTotal * 0.05).toFixed(2);
   },
   totalPrice: (state: RootState, getters) => {
-    return getters.preTotal + getters.taxTotal;
+    return ((+getters.preTotal) + (+getters.taxTotal)).toFixed(2);
   },
   differenceToPay: (state: RootState, getters) => {
     if (!state.editBooking) return 0;
