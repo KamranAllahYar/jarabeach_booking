@@ -52,10 +52,10 @@
                 <div>
                     <div class="mt-4 font-semibold">Select dates for domestic staff</div>
                     <div class="mt-2 font-light">
-                        <template v-if="dates.length < 1">
+                        <template v-if="myDates.length < 1">
                             No dates available
                         </template>
-                        <template v-for="date in dates">
+                        <template v-for="date in myDates">
                             <label class="flex items-center mt-4" :key="date">
                                 <input type="checkbox" :value="date" v-model="selectedDates" class="w-5 h-5 mr-3 rounded focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                                 <div>{{ showDate(date) }}</div>
@@ -118,11 +118,13 @@ export default {
                 type: ["nanny"],
             },
             availableStaffs: {},
+            myDates: [],
         };
     },
     computed: {
         dates() {
-            return this.$store.getters.bookingDates;
+            const dates = this.$store.getters.bookedRooms.map((r) => r.date);
+            return [...new Set(dates)];
         },
         availableStaffRooms() {
             const defaultData = {
@@ -271,8 +273,21 @@ export default {
                     console.log("Staff data");
                     console.log(res.data.data);
                     this.availableStaffs = res.data.data;
+                })
+                .finally(() => {
+                    const dates = this.$store.getters.bookedRooms.map(
+                        (r) => r.date
+                    );
+                    const ds = [...new Set(dates)];
+                    this.myDates = ds;
                 });
         },
+    },
+    updated() {
+        console.log("updated");
+        const dates = this.$store.getters.bookedRooms.map((r) => r.date);
+        const ds = [...new Set(dates)];
+        console.log(ds);
     },
     mounted() {
         this.checkOptions();
