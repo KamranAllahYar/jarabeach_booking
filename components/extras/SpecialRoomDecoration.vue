@@ -14,88 +14,179 @@
                 Helium Balloons or bespoke Special Decoration on request
             </p>
 
-            <div class="mt-6 font-semibold">What date would you like to have this?</div>
-            <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
+            <div class="p-4 mt-6 bg-gray-100 rounded-lg">
+                <div class="font-semibold">Room Decoration</div>
+                <div class="flex items-center mt-5 space-x-6 font-normal">
+                    <div class="w-48">
+                        What <b>date</b> would you like to have this?
+                    </div>
+
+                    <select v-model="selectedDate" class="flex-1 py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                        <option v-for="date in dates" :value="date" :key="date">{{showDate(date)}}</option>
+                    </select>
+                </div>
+                <!-- <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
                 <label class="flex items-center" v-for="date in dates" :key="date">
                     <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
                     <div>{{ showDate(date) }}</div>
                 </label>
-            </div>
+            </div> -->
 
-            <div class="mt-6 font-semibold">What room would you like to have this in?</div>
+                <div class="flex items-center mt-4 space-x-6 font-normal">
+                    <div class="w-48">
+                        What <b>room</b> would you like to have this in?
+                    </div>
+
+                    <select v-model="selectedRoom" class="flex-1 py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                        <option v-for="(room, i) in rooms" :key="i" :value="room.name">{{room.name}}</option>
+                    </select>
+                </div>
+
+                <!-- <div class="mt-6 font-semibold">What room would you like to have this in?</div>
             <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
                 <label class="flex items-center" v-for="(room, i) in rooms" :key="i">
                     <input type="radio" :value="room.name" v-model="selectedRoom" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
                     <div>{{ room.name }}</div>
                 </label>
+            </div> -->
+
+                <div class="mt-4 space-y-4">
+                    <!-- <div class="mt-6 font-semibold">Select Personalised Experience</div> -->
+                    <div v-for="deco in decorations" :key="deco.id">
+                        <template v-if="deco.id == 4 || deco.id == 5"></template>
+                        <template v-else>
+                            <label class="inline-flex items-center" :key="deco.id">
+                                <input type="checkbox" :value="deco" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
+                                <div class="inline-block">
+                                    {{ realDecoName(deco.name) }} -
+                                    <span class="font-bold uppercase" v-if="deco.price >0">{{ currency(deco.price) }}</span>
+                                    <span class="font-bold uppercase" v-else>FREE</span>
+                                </div>
+                            </label>
+
+                            <div class="md:ml-8" v-if="showNote(deco)">
+                                <input type="text" :key="deco.id+'ss'" placeholder="What to write. 20 characters max" maxlength="20"
+                                    v-model="myWelcomeNote"
+                                    class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
+                            </div>
+
+                            <div class="md:ml-8" v-if="showPetalsNote(deco)">
+                                <input type="text" :key="deco.id+'pt'" placeholder="What to write. 10 characters max" maxlength="10"
+                                    v-model="myPetalsNote"
+                                    class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
+                            </div>
+
+                            <div class="md:ml-8" v-if="showColorOptions(deco)">
+                                <select v-model="myBalloonsColor" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                                    <option value="">Select Color</option>
+                                    <option value="Blue">Blue</option>
+                                    <option value="Red">Red</option>
+                                    <option value="Pink">Pink</option>
+                                </select>
+                            </div>
+
+                            <div class="md:ml-8" v-if="showBreakfastOptions(deco)">
+                                <select v-model="myBreakfastDate" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                                    <option value="">Select Date</option>
+                                    <option :value="date" v-for="date in breakfastDates" :key="date">{{ showDate(date) }}</option>
+                                </select>
+                                <div class="grid items-center mt-3 font-light md:grid-cols-3 gap-y-2" v-if="breakfastAvailableTimes && breakfastAvailableTimes.length > 0">
+                                    <label class="flex items-center" v-for="(time, i) in breakfastAvailableTimes" :key="i">
+                                        <input type="radio" :value="time" v-model="myBreakfastTime" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
+                                        <div>{{ time }}</div>
+                                    </label>
+                                </div>
+                                <div class="mt-3 font-light" v-else>
+                                    <template v-if="breakfastLoading">Loading...</template>
+                                    <template v-else>
+                                        Not available for this date
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="md:ml-8" v-if="showPicnicOptions(deco)">
+                                <select v-if="picnicDates.length > 0" v-model="myPicnicDate" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                                    <option value="">Select Date</option>
+                                    <option :value="date" v-for="date in picnicDates" :key="date">{{ showDate(date) }}</option>
+                                </select>
+                                <div class="mt-3 font-light" v-else>
+                                    <template v-if="picnicLoading">Loading...</template>
+                                    <template v-else>
+                                        Not available during your visit
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
             </div>
 
-            <div class="space-y-4">
-                <div class="mt-6 font-semibold">Select Personalised Experience</div>
-                <div v-for="deco in decorations" :key="deco.id">
-                    <label class="inline-flex items-center" :key="deco.id">
-                        <input type="checkbox" :value="deco" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
-                        <div class="inline-block">
-                            {{ realDecoName(deco.name) }} -
-                            <span class="font-bold uppercase" v-if="deco.price >0">{{ currency(deco.price) }}</span>
-                            <span class="font-bold uppercase" v-else>FREE</span>
+            <div class="p-4 mt-6 bg-gray-100 rounded-lg">
+                <label class="font-semibold cursor-pointer">
+                    <input type="checkbox" :value="breakfastSelection" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
+                    {{ realDecoName(breakfastSelection.name) }} -
+                    <span class="font-bold uppercase" v-if="breakfastSelection.price >0">{{ currency(breakfastSelection.price) }}</span>
+                    <span class="font-bold uppercase" v-else>FREE</span>
+                </label>
+                <div v-if="showBreakfastOptions(breakfastSelection)">
+                    <div class="flex items-center mt-4 space-x-6 font-normal">
+                        <div class="w-48">
+                            What <b>date</b> would you like to have this?
                         </div>
-                    </label>
 
-                    <div class="md:ml-8" v-if="showNote(deco)">
-                        <input type="text" :key="deco.id+'ss'" placeholder="What to write. 20 characters max" maxlength="20"
-                            v-model="myWelcomeNote"
-                            class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
-                    </div>
-
-                    <div class="md:ml-8" v-if="showPetalsNote(deco)">
-                        <input type="text" :key="deco.id+'pt'" placeholder="What to write. 10 characters max" maxlength="10"
-                            v-model="myPetalsNote"
-                            class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
-                    </div>
-
-                    <div class="md:ml-8" v-if="showColorOptions(deco)">
-                        <select v-model="myBalloonsColor" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
-                            <option value="">Select Color</option>
-                            <option value="Blue">Blue</option>
-                            <option value="Red">Red</option>
-                            <option value="Pink">Pink</option>
-                        </select>
-                    </div>
-
-                    <div class="md:ml-8" v-if="showBreakfastOptions(deco)">
-                        <select v-model="myBreakfastDate" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                        <select v-model="myBreakfastDate" class="flex-1 py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
                             <option value="">Select Date</option>
                             <option :value="date" v-for="date in breakfastDates" :key="date">{{ showDate(date) }}</option>
                         </select>
-                        <div class="grid items-center mt-3 font-light md:grid-cols-3 gap-y-2" v-if="breakfastAvailableTimes && breakfastAvailableTimes.length > 0">
-                            <label class="flex items-center" v-for="(time, i) in breakfastAvailableTimes" :key="i">
-                                <input type="radio" :value="time" v-model="myBreakfastTime" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
-                                <div>{{ time }}</div>
-                            </label>
+                    </div>
+                    <div class="flex items-center mt-6 space-x-6 font-normal">
+                        <div class="w-48">
+                            What <b>time</b> would you like this for?
                         </div>
-                        <div class="mt-3 font-light" v-else>
+
+                        <template v-if="breakfastAvailableTimes && breakfastAvailableTimes.length > 0">
+                            <select v-model="myBreakfastTime" class="flex-1 py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                                <option :value="null">Select Time</option>
+                                <option :value="date" v-for="time in breakfastAvailableTimes" :key="time">{{ time }}</option>
+                            </select>
+                        </template>
+                        <div class="font-light" v-else>
                             <template v-if="breakfastLoading">Loading...</template>
                             <template v-else>
                                 Not available for this date
                             </template>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <div class="md:ml-8" v-if="showPicnicOptions(deco)">
-                        <select v-if="picnicDates.length > 0" v-model="myPicnicDate" :key="deco.id+'op'" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+            <div class="p-4 mt-6 bg-gray-100 rounded-lg">
+                <label class="font-semibold cursor-pointer">
+                    <input type="checkbox" :value="picnicSelection" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
+                    {{ realDecoName(picnicSelection.name) }} -
+                    <span class="font-bold uppercase" v-if="picnicSelection.price >0">{{ currency(picnicSelection.price) }}</span>
+                    <span class="font-bold uppercase" v-else>FREE</span>
+                </label>
+                <div class="flex items-center mt-4 space-x-6 font-normal" v-if="showPicnicOptions(picnicSelection)">
+                    <div class="w-48">
+                        What <b>date</b> would you like to have this?
+                    </div>
+
+                    <template v-if="picnicDates.length > 0">
+                        <select v-model="myPicnicDate" class="flex-1 py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
                             <option value="">Select Date</option>
                             <option :value="date" v-for="date in picnicDates" :key="date">{{ showDate(date) }}</option>
                         </select>
-                        <div class="mt-3 font-light" v-else>
-                            <template v-if="picnicLoading">Loading...</template>
-                            <template v-else>
-                                Not available during your visit
-                            </template>
-                        </div>
+                    </template>
+                    <div class="font-light" v-else>
+                        <template v-if="picnicLoading">Loading...</template>
+                        <template v-else>
+                            Not available during your visit
+                        </template>
                     </div>
                 </div>
             </div>
+
             <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">
                 <MainButton outline @click="prev()">Back</MainButton>
                 <MainButton @click="next()">Next</MainButton>
@@ -141,6 +232,12 @@ export default {
         },
     },
     computed: {
+        breakfastSelection() {
+            return this.decorations.find((d) => d.id == 4);
+        },
+        picnicSelection() {
+            return this.decorations.find((d) => d.id == 5);
+        },
         rooms() {
             const rooms = this.$store.getters.uniqueBookedRooms;
             let uniqueRooms = [];
