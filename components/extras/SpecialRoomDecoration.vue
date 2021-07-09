@@ -147,7 +147,7 @@
                         <template v-if="breakfastAvailableTimes && breakfastAvailableTimes.length > 0">
                             <select v-model="myBreakfastTime" class="flex-1 py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
                                 <option :value="null">Select Time</option>
-                                <option :value="date" v-for="time in breakfastAvailableTimes" :key="time">{{ time }}</option>
+                                <option :value="time" v-for="time in breakfastAvailableTimes" :key="time">{{ time }}</option>
                             </select>
                         </template>
                         <div class="font-light" v-else>
