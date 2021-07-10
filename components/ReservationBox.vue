@@ -245,7 +245,8 @@ export default {
         },
     },
     methods: {
-        formatAndString(arr) {
+        formatAndString(arrs) {
+            const arr = [...new Set(arrs)];
             if (arr.length == 1) return arr[0];
 
             arr.sort();
@@ -255,7 +256,8 @@ export default {
 
             return arr.join(", ") + " & " + last;
         },
-        formatAndStringCabin(arr) {
+        formatAndStringCabin(arrs) {
+            const arr = [...new Set(arrs)];
             console.log("array -----");
             console.log(arr);
             const index = arr.indexOf(6);
