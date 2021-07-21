@@ -38,7 +38,7 @@
             </div>
             <div class="flex justify-between px-3 my-3" v-if="rooms.length > 0">
                 <div>
-                    Room<span v-if="rooms.length > 1">s</span>
+                    Room<span v-if="(roomsDetailsStandard.length + roomsDetailsFamily.length) > 1">s</span>
                 </div>
                 <div>
                     <!-- <div class="text-xs text-right">{{ dateFromTo }}</div> -->
