@@ -9,9 +9,9 @@
                 A soothing massage at Jara Beach Resort – picture yourself lying in the shade of a coconut palm that sways gently in the breeze,
                 or shaded by Jara's exclusive Lookout, your cares being eased away by one of our expert masseuses.
             </p>
-            <p class="mt-2 font-light leading-relaxed text-gray-600">
-                Outdoor Massage (one masseuse): 2 Hours (minimum) <span class="font-bold"> = N30,000</span>
-            </p>
+            <!-- <p class="mt-2 font-light leading-relaxed text-gray-600">
+                Outdoor Massage (one masseuse): 2 Hours (minimum) <span class="font-bold"> = N10,000</span>
+            </p> -->
 
             <div class="mt-6 font-semibold">What date would you like to have this?</div>
             <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
@@ -22,7 +22,6 @@
             </div>
 
             <div>
-                <!-- <div class="mt-6 font-semibold">At what time?</div> -->
                 <div class="mt-6 font-semibold">What type of massage?</div>
                 <div class="flex items-center flex-1 mt-3 border rounded-md focus-within:ring">
                     <select v-model="selectedNewmassage" placeholder="Select the massage" class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
@@ -31,19 +30,6 @@
                         </option>
                     </select>
                 </div>
-
-                <!-- <div class="grid gap-3 mt-2 font-light md:grid-cols-1">
-                    <div v-for="massage in massages" :key="massage.id">
-                        <label class="flex items-center"
-                            :class="{'opacity-25' :!isAvailable(massage.id)}">
-                            <input type="radio" :value="massage.id" :disabled="!isAvailable(massage.id)" v-model="selectedNewmassage" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
-                            <div>{{ massage.name }} ({{ massage.duration }})</div>
-                        </label>
-                        <div v-if="hasClashes(massage.clash, massage.id)" class="ml-6 text-xs text-red-500" :key="massage.id+'error'">
-                            {{ hasClashes(massage.clash, massage.id) }}
-                        </div>
-                    </div>
-                </div> -->
             </div>
 
             <div class="mt-6 font-semibold">At what time of the day?</div>
