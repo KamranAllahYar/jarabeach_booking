@@ -339,7 +339,7 @@ export default {
             return null;
         },
         breakfastTime() {
-            if (this.isBreakfastSelected) {
+            if (this.isBreakfastSelected && this.myBreakfastTime) {
                 return this.myBreakfastTime;
             }
 

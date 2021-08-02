@@ -23,12 +23,15 @@ export default function ({ store, redirect, route }) {
   console.log(new Date());
   console.log(seconds);
 
-  if (seconds > 600 * 3) { // 30minutes
+  if (seconds > 60 * 30) { // 30minutes
     store.commit("RESET_STORE");
     store.commit("extras/RESET_STORE");
 
     if (route.path != "/") {
       redirect("/");
+      setTimeout(() => {
+        location.reload();
+      }, 500);
     }
   }
 

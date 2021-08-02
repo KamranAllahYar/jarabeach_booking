@@ -14,6 +14,7 @@ export default {
             this.$store.commit("CANCEL_EDIT");
             this.$store.commit("RESET_STORE");
             this.$store.commit("extras/RESET_STORE");
+            location.reload();
         },
     },
 };
