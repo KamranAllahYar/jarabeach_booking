@@ -558,7 +558,24 @@ export const actions: ActionTree<RootState, RootState> = {
         // return res.data
 
         if (!res.data.success) {
-          this.app.$toast.error(res.data.message);
+          let msg = res.data.message;
+
+          let dataError = res.data.data;
+          if (dataError) {
+            for (let key in dataError) {
+              if (dataError.hasOwnProperty(key)) {
+                console.log(key + " -> " + dataError[key]);
+
+                dataError[key].forEach((m: any) => {
+                  msg += "<br /><br />" + m;
+                });
+                // for (let m in dataError[key]) {
+                // }
+              }
+            }
+          }
+
+          this.app.$toast.error(msg);
           return false;
         }
 
