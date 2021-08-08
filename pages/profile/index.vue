@@ -69,7 +69,7 @@
                             </div>
                             <div class="px-3 py-4 border-b">
                                 <div>
-                                    <div class="mb-2 text-base font-bold">Upload Image [face] identification (i.e. passport, national ID, driver's license) - Max: 500kb</div>
+                                    <div class="mb-2 text-base font-bold">Upload Image [face] identification (i.e. passport, national ID, driver's license) - Max: 1mb</div>
 
                                     <template v-if="guest.identification && !hasFileUpload">
                                         <div v-if="isPdf(guest.identification)" class="my-3">
