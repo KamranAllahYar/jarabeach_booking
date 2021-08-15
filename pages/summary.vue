@@ -154,6 +154,12 @@ export default {
         shouldShowBookOnHold() {
             if (this.$store.state.editMode) return false;
 
+            const today = new Date();
+            const todayHrs = today.getHours();
+
+            console.log(todayHrs);
+            if(todayHrs >= 20 || todayHrs < 8) return false;
+
             return true;
         },
         shouldShowPaymentButton() {

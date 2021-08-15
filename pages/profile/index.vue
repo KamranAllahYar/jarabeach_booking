@@ -69,7 +69,7 @@
                             </div>
                             <div class="px-3 py-4 border-b">
                                 <div>
-                                    <div class="mb-2 text-base font-bold">Upload Image [face] identification (i.e. passport, national ID, driver's license) - Max: 1mb</div>
+                                    <div class="mb-2 text-base font-bold">Upload Image [face] identification (i.e. passport, national ID, driver's license) - Max: 1 MB</div>
 
                                     <template v-if="guest.identification && !hasFileUpload">
                                         <div v-if="isPdf(guest.identification)" class="my-3">
@@ -323,6 +323,15 @@ export default {
         handleFileUpload() {
             this.file = this.$refs.file.files[0];
             console.log(">>>> 1st element in files array >>>> ", this.file);
+            const kbSize = parseFloat(this.file.size / 1024).toFixed(2);
+            console.log(kbSize);
+
+            if (kbSize > 990) {
+                console.log("Too big");
+                this.$toast.error("You cannot upload files larger than 1 MB");
+                this.file = null;
+                this.$refs.file.value = "";
+            }
         },
 
         async confirmGuest() {
