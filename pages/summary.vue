@@ -158,7 +158,7 @@ export default {
             const todayHrs = today.getHours();
 
             console.log(todayHrs);
-            if(todayHrs >= 20 || todayHrs < 8) return false;
+            if (todayHrs >= 20 || todayHrs < 8) return false;
 
             return true;
         },
@@ -295,7 +295,7 @@ export default {
             console.log("Check for - " + this.code);
 
             this.$axios
-                .post(`/check-discount/${this.code}`)
+                .post(`/check-discount`, { code: this.code })
                 .then(({ data }) => {
                     console.log(data);
                     if (data.success) {
