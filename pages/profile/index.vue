@@ -288,9 +288,9 @@ export default {
                 this.guest.agreed_mailinglist
             );
 
-            for (var pair of guestFormData.entries()) {
-                console.log(pair[0] + ", " + pair[1]);
-            }
+            // for (var pair of guestFormData.entries()) {
+            //     console.log(pair[0] + ", " + pair[1]);
+            // }
 
             this.$store.commit("UPDATE_GUEST", {
                 guest: Object.assign({}, this.guest),
@@ -300,17 +300,24 @@ export default {
             if (this.showFullForm) {
                 console.log("go and save");
                 try {
-                    await this.saveGuest(guestFormData).then((res) => {
-                        console.log(res);
-                        if (res) {
-                            this.$store.commit("COMPLETE_PROFILE");
-                            this.$router.push({ path: "/profile/more" });
-                        }
-                    });
+                    await this.saveGuest(guestFormData);
+
+                    // .then((res) => {
+                    //     console.log("res");
+                    //     console.log(res);
+                    //     if (res) {
+                    // }
+                    // });
                 } catch (e) {
+                    console.log("Catch me here");
+                    console.log(e);
                     this.loading = false;
                     this.$toast.error(e.message ?? e);
+                    return;
                 }
+
+                this.$store.commit("COMPLETE_PROFILE");
+                this.$router.push({ path: "/profile/more" });
             } else {
                 this.$store.commit("COMPLETE_PROFILE");
                 this.$router.push({ path: "/profile/more" });
@@ -380,7 +387,7 @@ export default {
                 });
             }
 
-            console.log(res);
+            // console.log(res);
             this.loading = false;
             this.initialLoad = false;
         },
@@ -401,14 +408,14 @@ export default {
             this.loading = true;
             try {
                 const res = await this.$store.dispatch("saveGuest", formData);
+                this.loading = false;
+                return res;
             } catch (e) {
                 this.loading = false;
                 this.$toast.error("Something went wrong, please try again");
             }
 
             this.loading = false;
-
-            return res;
         },
 
         isValidEmail(email) {
