@@ -299,17 +299,24 @@ export default {
 
             if (this.showFullForm) {
                 console.log("go and save");
-                await this.saveGuest(guestFormData).then((res) => {
-                    console.log(res);
-                    if (res) {
-                        this.$store.commit("COMPLETE_PROFILE");
-                        this.$router.push({ path: "/profile/more" });
-                    }
-                });
+                try {
+                    await this.saveGuest(guestFormData).then((res) => {
+                        console.log(res);
+                        if (res) {
+                            this.$store.commit("COMPLETE_PROFILE");
+                            this.$router.push({ path: "/profile/more" });
+                        }
+                    });
+                } catch (e) {
+                    this.loading = false;
+                    this.$toast.error(e.message ?? e);
+                }
             } else {
                 this.$store.commit("COMPLETE_PROFILE");
                 this.$router.push({ path: "/profile/more" });
             }
+
+            this.loading = false;
         },
 
         gotoBack() {
@@ -392,7 +399,12 @@ export default {
             }
 
             this.loading = true;
-            const res = await this.$store.dispatch("saveGuest", formData);
+            try {
+                const res = await this.$store.dispatch("saveGuest", formData);
+            } catch (e) {
+                this.loading = false;
+                this.$toast.error("Something went wrong, please try again");
+            }
 
             this.loading = false;
 
