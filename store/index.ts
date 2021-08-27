@@ -603,7 +603,7 @@ export const actions: ActionTree<RootState, RootState> = {
         "method": "Paystack",
         "subtotal": getters.subTotal,
         "total": getters.totalPrice,
-        "previousTotal": getters.totalPrice,
+        "previousTotal": state.editBooking.payment.total,
         "differenceForUpdate": diff,
       };
     }
@@ -632,7 +632,7 @@ export const actions: ActionTree<RootState, RootState> = {
     }
   },
 
-  async createBooking({ state, rootState, rootGetters }, { trans_ref, method_ref, method }) {
+  async createBooking({ state, getters, rootState, rootGetters }, { trans_ref, method_ref, method }) {
     //@ts-ignore
     const extraState = rootState.extras;
     console.log(extraState, rootGetters);
@@ -725,6 +725,13 @@ export const actions: ActionTree<RootState, RootState> = {
 
     prices["Sub Total"] = rootGetters.subTotal;
     // prices["Total"] = rootGetters.total;
+
+    if (state.editMode) {
+      let diff = getters.differenceToPay;
+
+      prices["Previous Total"] = state.editBooking.payment.total;
+      prices["Difference Paid"] = diff;
+    }
 
     console.log(specialsToSend);
 
