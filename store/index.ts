@@ -730,7 +730,7 @@ export const actions: ActionTree<RootState, RootState> = {
       let diff = getters.differenceToPay;
 
       prices["Previous Total"] = state.editBooking.payment.total;
-      prices["Difference Paid"] = diff;
+      prices["Balance Paid"] = diff;
     }
 
     console.log(specialsToSend);
