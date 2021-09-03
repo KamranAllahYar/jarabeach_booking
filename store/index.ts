@@ -178,6 +178,8 @@ export const getters: GetterTree<RootState, RootState> = {
       price += smallExtra * smallPrice;
     }
 
+    price = price * +getters.totalNights;
+
     return price;
   },
   confirmEnoughRooms: (state: RootState, getters) => {
@@ -753,6 +755,12 @@ export const actions: ActionTree<RootState, RootState> = {
     if (state.guest.id) {
       dataToPost.guest_id = state.guest.id;
     }
+
+    if (dataToPost.guest_id) {
+      this.app.$toast.info("Please fill your profile information again");
+      return;
+    }
+
     if (state.discount) {
       dataToPost.discount = state.discount;
     }
