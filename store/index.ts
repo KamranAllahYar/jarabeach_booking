@@ -756,7 +756,7 @@ export const actions: ActionTree<RootState, RootState> = {
       dataToPost.guest_id = state.guest.id;
     }
 
-    if (dataToPost.guest_id) {
+    if (!dataToPost.guest_id) {
       this.app.$toast.info("Please fill your profile information again");
       return;
     }
