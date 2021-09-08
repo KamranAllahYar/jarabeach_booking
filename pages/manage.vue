@@ -130,7 +130,10 @@
                     </div>
                 </div>
 
-                <MainButton @click="loadOldBooking()">Update Booking</MainButton>
+                <!-- <pre>{{ fullBooking.payment}}</pre> -->
+
+                <button disabled class="w-full px-4 py-2 font-bold text-gray-500 border border-gray-400 rounded-lg cursor-not-allowed focus:ring-2 ring-offset-1 ring-gray-400 hover:border-gray-500 focus:outline-none" v-if="fullBooking.payment.status == 'pending'">UNPAID</button>
+                <MainButton v-else @click="loadOldBooking()">Update Booking</MainButton>
             </div>
         </div>
     </div>
