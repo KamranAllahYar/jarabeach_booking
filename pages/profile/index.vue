@@ -64,7 +64,7 @@
                             <div class="px-3 py-4 border-b">
                                 <div>
                                     <textarea type="text" v-model="guest.concerns"
-                                        class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" placeholder="State any dietary concerns (e.g Vegeterian)"></textarea>
+                                        class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" placeholder="State any dietary, or setup requirements (i.e. baby bathtub or children's cot)."></textarea>
                                 </div>
                             </div>
                             <div class="px-3 py-4 border-b">

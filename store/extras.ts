@@ -3,15 +3,15 @@ import { GetterTree, MutationTree, ActionTree } from 'vuex';
 
 export const state = () => ({
   specials: [
-    { type: 'lookout', name: 'Lookout Experience', available: true, range: '15,000' },
-    // { type: 'massage', name: 'Massage', available: false, range: '30,000' },
+    { type: 'roomDecoration', name: 'Personalised Experience', available: true, range: '0' },
     { type: 'newmassage', name: 'Massage', available: true, range: '10,000' },
-    { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
-    { type: 'photoshoot', name: 'Photoshoot', available: true, range: '20,000' },
+    { type: 'lookout', name: 'Lookout Experience', available: true, range: '15,000' },
     { type: 'drinks', name: 'Drinks', available: true, range: '15,000' },
     { type: 'cakes', name: 'Cake', available: true, range: '15,000' },
-    { type: 'roomDecoration', name: 'Personalised Experience', available: true, range: '0' },
+    { type: 'photoshoot', name: 'Photoshoot', available: true, range: '20,000' },
+    { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
     { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' }
+    // { type: 'massage', name: 'Massage', available: false, range: '30,000' },
   ] as { name: string, type: string, range: string, available: boolean }[],
   selected: [] as { name: string, type: string, range: string, available: boolean }[],
   selectedIndex: 0 as number,
