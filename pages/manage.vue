@@ -4,9 +4,9 @@
             Manage your booking
         </div>
 
-        <div class="flex justify-center mb-20 space-x-6">
-            <div class="w-1/3 max-w-md">
-                <form @submit.prevent="findBooking()" class="flex-shrink-0 block w-full px-6 py-6 mt-10 bg-white border rounded-lg shadow-lg">
+        <div class="flex flex-col justify-center mt-10 mb-20 md:space-x-6 md:flex-row">
+            <div class="order-last w-full max-w-md mt-10 md:mt-0 md:order-none md:w-1/3">
+                <form @submit.prevent="findBooking()" class="flex-shrink-0 block w-full px-6 py-6 bg-white border rounded-lg shadow-lg">
                     <div class="border rounded-lg">
                         <div class="p-4">
                             <div class="mb-4 font-semibold">Booking Reference</div>
@@ -41,7 +41,7 @@
                 </form>
             </div>
 
-            <div class="w-1/3" v-if="fullBooking">
+            <div class="w-full px-4 md:px-0 md:w-1/3" v-if="fullBooking">
                 <div class="mx-auto mt-6 mb-6 text-gray-800 border rounded-md border-brand-blue-300 bg-brand-blue-100">
                     <div class="px-3 py-3 text-xl font-bold border-b border-brand-blue-300">Your Booking</div>
 
