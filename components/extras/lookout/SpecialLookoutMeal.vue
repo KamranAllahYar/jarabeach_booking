@@ -5,8 +5,11 @@
                 <img src="@/assets/images/specials/lookout.png" alt="" class="object-cover object-center w-full h-full">
             </div>
             <div class="flex-1 ml-3">
-                <div class="text-xl font-semibold">Lookout Experience</div>
-                <div class="text-xs font-light text-gray-600">There are three dining package options to choose from across breakfast, lunch and dinner. Only 1 slot available for 2 people per meal. Must be booked in advance.</div>
+                <div class="text-xl font-semibold">Dinning Experiences</div>
+                <div class="text-xs font-light text-gray-600">
+                    There are three dining package options to choose from breakfast and lunch.
+                    Only 1 slot available for 2 people per meal. Must be booked in advance
+                </div>
             </div>
             <div class="items-center hidden ml-6 mr-3 space-x-1 text-gray-600 cursor-pointer md:flex" @click="$emit('close')">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -22,7 +25,7 @@
         <div class="flex flex-col justify-between w-full px-3 my-4 space-y-5 md:space-y-0 md:space-x-5 md:flex-row">
             <div class="w-full border-b md:w-1/3 md:border-b-0">
                 <div class="text-center">
-                    <div class="text-xl font-bold uppercase ">Breakfast</div>
+                    <div class="text-xl font-bold uppercase ">Lookout Breakfast</div>
                     <div class="text-xs font-light text-gray-700">(between 8:30 - 10:30am)</div>
                 </div>
                 <div class="px-3 my-5 space-y-6 md:border-r">
@@ -40,8 +43,8 @@
 
             <div class="w-full border-b md:w-1/3 md:border-b-0">
                 <div class="text-center">
-                    <div class="text-xl font-bold uppercase ">Lunch</div>
-                    <div class="text-xs font-light text-gray-700">(between 1:30 - 4:00pm)</div>
+                    <div class="text-xl font-bold uppercase ">Lookout Lunch</div>
+                    <div class="text-xs font-light text-gray-700">(between 1:30 - 3:30pm)</div>
                 </div>
                 <div class="px-2 my-5 space-y-6 md:border-r">
                     <div v-for="option in lunchOptions" :key="option.id">
@@ -58,7 +61,7 @@
 
             <div class="w-full md:w-1/3">
                 <div class="text-center">
-                    <div class="text-xl font-bold uppercase ">Dinner</div>
+                    <div class="text-xl font-bold uppercase ">Beachside Dinner</div>
                     <div class="text-xs font-light text-gray-700">(from 7pm. Candles inclusive)</div>
                 </div>
                 <div class="px-3 my-5 space-y-6">
