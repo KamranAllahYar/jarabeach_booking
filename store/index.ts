@@ -45,7 +45,7 @@ export const state = () => ({
   showExtra: false as boolean,
   specials: [
     "lookout", "massage", "newmassage", "quadbike",
-    "photoshoot", "drinks", "cakes", "roomDecoration",
+    "photoshoot", "drinks", "cakes", "roomDecoration", "unforgettableExperience",
     "domesticStaff"
   ] as any[],
 
@@ -296,6 +296,11 @@ export const getters: GetterTree<RootState, RootState> = {
       if (extra.type == "roomDecoration") {
         extraPrices += getters[
           "extras/decorationPrice"
+        ];
+      }
+      if (extra.type == "unforgettableExperience") {
+        extraPrices += getters[
+          "extras/experiencePrice"
         ];
       }
       if (extra.type == "domesticStaff") {
@@ -672,13 +677,27 @@ export const actions: ActionTree<RootState, RootState> = {
         welcomeNote: extraState.decorationWelcomeNote,
         petalsNote: extraState.decorationPetalsNote,
         balloonsColor: extraState.decorationBalloonsColor,
-        picnicDate: extraState.decorationPicnicDate,
-        breakfastDate: extraState.decorationBreakfastDate,
-        breakfastTime: extraState.decorationBreakfastTime,
+        // picnicDate: extraState.decorationPicnicDate,
+        // breakfastDate: extraState.decorationBreakfastDate,
+        // breakfastTime: extraState.decorationBreakfastTime,
         room: extraState.decorationRoom,
         options: extraState.selectedDecorations.map((sd: any) => sd.id),
       }
       prices['roomDecoration'] = rootGetters['extras/decorationPrice'];
+    }
+    if (allExtras.includes('unforgettableExperience')) {
+      specialsToSend['unforgettableExperience'] = {
+        // date: extraState.dateDecoration,
+        // welcomeNote: extraState.decorationWelcomeNote,
+        // petalsNote: extraState.decorationPetalsNote,
+        // balloonsColor: extraState.decorationBalloonsColor,
+        picnicDate: extraState.decorationPicnicDate,
+        breakfastDate: extraState.decorationBreakfastDate,
+        breakfastTime: extraState.decorationBreakfastTime,
+        // room: extraState.decorationRoom,
+        options: extraState.selectedExperiences.map((sd: any) => sd.id),
+      }
+      prices['unforgettableExperience'] = rootGetters['extras/experiencePrice'];
     }
     if (allExtras.includes('drinks')) {
       specialsToSend['drinks'] = {

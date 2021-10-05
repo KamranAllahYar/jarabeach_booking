@@ -5,7 +5,7 @@
         </div>
 
         <div class="w-full p-6 md:w-7/12">
-            <div class="font-semibold">Room Decoration</div>
+            <div class="font-semibold">Unforgettable Experience</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
                 There are a number of expected extras we offer for free, including romantic room decoration, or happy birthday messages, simple decorations, floating breakfast, sunset picnic etc.
 
@@ -14,7 +14,7 @@
                 Helium Balloons or bespoke Special Decoration on request
             </p>
 
-            <div class="p-4 mt-6 bg-gray-100 rounded-lg">
+            <!-- <div class="p-4 mt-6 bg-gray-100 rounded-lg">
                 <div class="font-semibold">Room Decoration</div>
                 <div class="flex items-center mt-5 space-x-6 font-normal">
                     <div class="w-48">
@@ -36,12 +36,13 @@
                     </select>
                 </div>
 
+
                 <div class="mt-4 space-y-4">
                     <div v-for="deco in decorations" :key="deco.id">
                         <template v-if="deco.id == 4 || deco.id == 5"></template>
                         <template v-else>
                             <label class="inline-flex items-center" :key="deco.id">
-                                <input type="checkbox" :value="deco" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
+                                <input type="checkbox" :value="deco" v-model="selectedExperiences" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
                                 <div class="inline-block">
                                     {{ realDecoName(deco.name) }} -
                                     <span class="font-bold uppercase" v-if="deco.price >0">{{ currency(deco.price) }}</span>
@@ -104,11 +105,11 @@
                         </template>
                     </div>
                 </div>
-            </div>
-<!--
+            </div> -->
+
             <div class="p-4 mt-6 bg-gray-100 rounded-lg">
                 <label class="font-semibold cursor-pointer">
-                    <input type="checkbox" :value="breakfastSelection" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
+                    <input type="checkbox" :value="breakfastSelection" v-model="selectedExperiences" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
                     {{ realDecoName(breakfastSelection.name) }} -
                     <span class="font-bold uppercase" v-if="breakfastSelection.price >0">{{ currency(breakfastSelection.price) }}</span>
                     <span class="font-bold uppercase" v-else>FREE</span>
@@ -147,7 +148,7 @@
 
             <div class="p-4 mt-6 bg-gray-100 rounded-lg">
                 <label class="font-semibold cursor-pointer">
-                    <input type="checkbox" :value="picnicSelection" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
+                    <input type="checkbox" :value="picnicSelection" v-model="selectedExperiences" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
                     {{ realDecoName(picnicSelection.name) }} -
                     <span class="font-bold uppercase" v-if="picnicSelection.price >0">{{ currency(picnicSelection.price) }}</span>
                     <span class="font-bold uppercase" v-else>FREE</span>
@@ -170,7 +171,7 @@
                         </template>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
             <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">
                 <MainButton outline @click="prev()">Back</MainButton>
@@ -190,7 +191,7 @@ export default {
         return {
             selectedRoom: null,
             selectedDate: null,
-            selectedDecorations: [],
+            selectedExperiences: [],
             myWelcomeNote: "",
             myPetalsNote: "",
             myBalloonsColor: "",
@@ -247,7 +248,7 @@ export default {
         },
         isWelcomeNoteSelected() {
             let has = false;
-            this.selectedDecorations.forEach((d) => {
+            this.selectedExperiences.forEach((d) => {
                 if (d.name.toLowerCase() == "welcome note") {
                     has = true;
                 }
@@ -257,7 +258,7 @@ export default {
         },
         isBalloonSelected() {
             let has = false;
-            this.selectedDecorations.forEach((d) => {
+            this.selectedExperiences.forEach((d) => {
                 if (d.name.toLowerCase() == "balloons") {
                     has = true;
                 }
@@ -267,7 +268,7 @@ export default {
         },
         isBreakfastSelected() {
             let has = false;
-            this.selectedDecorations.forEach((d) => {
+            this.selectedExperiences.forEach((d) => {
                 if (d.name.toLowerCase() == "breakfast") {
                     has = true;
                 }
@@ -277,7 +278,7 @@ export default {
         },
         isPicnicSelected() {
             let has = false;
-            this.selectedDecorations.forEach((d) => {
+            this.selectedExperiences.forEach((d) => {
                 if (d.name.toLowerCase() == "picnic") {
                     has = true;
                 }
@@ -287,7 +288,7 @@ export default {
         },
         isPetalsSelected() {
             let has = false;
-            this.selectedDecorations.forEach((d) => {
+            this.selectedExperiences.forEach((d) => {
                 if (d.name.toLowerCase() == "flower petals") {
                     has = true;
                 }
@@ -381,30 +382,30 @@ export default {
         },
         next() {
             console.log("NEXT");
-            this.$store.commit("extras/SET_SELECTED_DECORATION", {
-                note: this.welcomeNote,
-                decorations: this.selectedDecorations,
-                date: this.selectedDate,
-                petalsNote: this.petalsNote,
-                balloonsColor: this.balloonsColor,
+            this.$store.commit("extras/SET_SELECTED_EXPERIENCE", {
+                experiences: this.selectedExperiences,
+                // note: this.welcomeNote,
+                // date: this.selectedDate,
+                // petalsNote: this.petalsNote,
+                // balloonsColor: this.balloonsColor,
                 breakfastDate: this.breakfastDate,
                 breakfastTime: this.breakfastTime,
                 picnicDate: this.picnicDate,
-                room: this.selectedRoom,
+                // room: this.selectedRoom,
             });
             this.$emit("next");
         },
         prev() {
-            this.$store.commit("extras/SET_SELECTED_DECORATION", {
-                note: this.welcomeNote,
-                decorations: this.selectedDecorations,
-                date: this.selectedDate,
-                petalsNote: this.petalsNote,
-                balloonsColor: this.balloonsColor,
+            this.$store.commit("extras/SET_SELECTED_EXPERIENCE", {
+                experiences: this.selectedExperiences,
+                // note: this.welcomeNote,
+                // date: this.selectedDate,
+                // petalsNote: this.petalsNote,
+                // balloonsColor: this.balloonsColor,
                 breakfastDate: this.breakfastDate,
                 breakfastTime: this.breakfastTime,
                 picnicDate: this.picnicDate,
-                room: this.selectedRoom,
+                // room: this.selectedRoom,
             });
             this.$emit("prev");
         },
@@ -494,26 +495,26 @@ export default {
 
         this.selectedRoom = this.rooms[0].name;
 
-        if (this.$store.state.extras.selectedDecorations) {
-            this.selectedDecorations =
-                this.$store.state.extras.selectedDecorations.map((x) => x);
+        if (this.$store.state.extras.selectedExperiences) {
+            this.selectedExperiences =
+                this.$store.state.extras.selectedExperiences.map((x) => x);
         }
-        if (this.$store.state.extras.decorationRoom) {
-            this.selectedRoom = this.$store.state.extras.decorationRoom;
-        }
-        if (this.$store.state.extras.dateDecoration) {
-            this.selectedDate = this.$store.state.extras.dateDecoration;
-        }
-        if (this.$store.state.extras.decorationWelcomeNote) {
-            this.myWelcomeNote = this.$store.state.extras.decorationWelcomeNote;
-        }
-        if (this.$store.state.extras.decorationPetalsNote) {
-            this.myPetalsNote = this.$store.state.extras.decorationPetalsNote;
-        }
-        if (this.$store.state.extras.decorationBalloonsColor) {
-            this.myBalloonsColor =
-                this.$store.state.extras.decorationBalloonsColor;
-        }
+        // if (this.$store.state.extras.decorationRoom) {
+        //     this.selectedRoom = this.$store.state.extras.decorationRoom;
+        // }
+        // if (this.$store.state.extras.dateDecoration) {
+        //     this.selectedDate = this.$store.state.extras.dateDecoration;
+        // }
+        // if (this.$store.state.extras.decorationWelcomeNote) {
+        //     this.myWelcomeNote = this.$store.state.extras.decorationWelcomeNote;
+        // }
+        // if (this.$store.state.extras.decorationPetalsNote) {
+        //     this.myPetalsNote = this.$store.state.extras.decorationPetalsNote;
+        // }
+        // if (this.$store.state.extras.decorationBalloonsColor) {
+        //     this.myBalloonsColor =
+        //         this.$store.state.extras.decorationBalloonsColor;
+        // }
         if (this.$store.state.extras.decorationBreakfastDate) {
             this.myBreakfastDate =
                 this.$store.state.extras.decorationBreakfastDate;

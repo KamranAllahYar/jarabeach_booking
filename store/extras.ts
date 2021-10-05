@@ -3,7 +3,8 @@ import { GetterTree, MutationTree, ActionTree } from 'vuex';
 
 export const state = () => ({
   specials: [
-    { type: 'roomDecoration', name: 'Personalised Experience', available: true, range: '0' },
+    { type: 'unforgettableExperience', name: 'Unforgettable Experience', available: true, range: '0' },
+    { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
     { type: 'newmassage', name: 'Massage', available: true, range: '10,000' },
     { type: 'lookout', name: 'Dining Experience', available: true, range: '15,000' },
     { type: 'drinks', name: 'Drinks', available: true, range: '15,000' },
@@ -36,11 +37,13 @@ export const state = () => ({
 
   decorationOptions: [] as any[],
   selectedDecorations: [] as any[],
+  selectedExperiences: [] as any[],
   decorationWelcomeNote: "" as String,
   decorationPetalsNote: "" as String,
   decorationBalloonsColor: "" as String,
   decorationRoom: null as String | number | null,
   dateDecoration: null as String | null,
+  dateExperience: null as String | null,
   decorationPicnicDate: null as any,
   decorationBreakfastDate: null as any,
   decorationBreakfastTime: null as any,
@@ -142,6 +145,19 @@ export const getters: GetterTree<ExtraState, RootState> = {
     let price = 0;
     for (let i = 0; i < state.selectedDecorations.length; i++) {
       const deco = state.selectedDecorations[i];
+
+      if (deco) {
+        price += +deco.price;
+      }
+    }
+    return price;
+  },
+  experiencePrice: (state: ExtraState) => {
+    if (state.selectedExperiences.length <= 0) return 0;
+
+    let price = 0;
+    for (let i = 0; i < state.selectedExperiences.length; i++) {
+      const deco = state.selectedExperiences[i];
 
       if (deco) {
         price += +deco.price;
@@ -398,11 +414,25 @@ export const mutations: MutationTree<ExtraState> = {
     state.decorationPetalsNote = payload.petalsNote;
     state.decorationBalloonsColor = payload.balloonsColor;
 
+    // state.decorationPicnicDate = payload.picnicDate;
+    // state.decorationBreakfastDate = payload.breakfastDate;
+    // state.decorationBreakfastTime = payload.breakfastTime;
+
+    state.decorationRoom = payload.room;
+  },
+  SET_SELECTED_EXPERIENCE: (state, payload) => {
+    state.selectedExperiences = payload.experiences;
+    // state.dateDecoration = payload.date;
+    // state.decorationWelcomeNote = payload.note;
+
+    // state.decorationPetalsNote = payload.petalsNote;
+    // state.decorationBalloonsColor = payload.balloonsColor;
+
     state.decorationPicnicDate = payload.picnicDate;
     state.decorationBreakfastDate = payload.breakfastDate;
     state.decorationBreakfastTime = payload.breakfastTime;
 
-    state.decorationRoom = payload.room;
+    // state.decorationRoom = payload.room;
   },
 
   SET_SELECTED_STAFF: (state, payload) => {
@@ -462,6 +492,7 @@ export const mutations: MutationTree<ExtraState> = {
 
     state.decorationOptions = [] as any[];
     state.selectedDecorations = [] as any[];
+    state.selectedExperiences = [] as any[];
     state.dateDecoration = null;
     state.decorationWelcomeNote = "" as String;
     state.decorationPetalsNote = "" as String;
@@ -522,13 +553,35 @@ export const mutations: MutationTree<ExtraState> = {
       if (deco.note) state.decorationWelcomeNote = deco.note;
       if (deco.petals_note) state.decorationPetalsNote = deco.petals_note;
       if (deco.balloons_color) state.decorationBalloonsColor = deco.balloons_color;
-      if (deco.picnic_date) state.decorationPicnicDate = deco.picnic_date;
-      if (deco.breakfast_date) state.decorationBreakfastDate = deco.breakfast_date;
-      if (deco.breakfast_time) state.decorationBreakfastTime = deco.breakfast_time;
+      // if (deco.picnic_date) state.decorationPicnicDate = deco.picnic_date;
+      // if (deco.breakfast_date) state.decorationBreakfastDate = deco.breakfast_date;
+      // if (deco.breakfast_time) state.decorationBreakfastTime = deco.breakfast_time;
       if (deco.room) state.decorationRoom = deco.room;
 
       const option = state.decorationOptions.find((dOption) => dOption.id == deco.option_id);
       if (option) state.selectedDecorations.push(option);
+    });
+  },
+  TRANSFORM_EXPERIENCES: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldDecos = payload.decos;
+
+    state.selectedExperiences = [];
+    oldDecos.forEach((deco: any) => {
+      if (oldDates.includes(deco.date)) {
+        // state.dateDecoration = deco.date;
+      }
+
+      // if (deco.note) state.decorationWelcomeNote = deco.note;
+      // if (deco.petals_note) state.decorationPetalsNote = deco.petals_note;
+      // if (deco.balloons_color) state.decorationBalloonsColor = deco.balloons_color;
+      if (deco.picnic_date) state.decorationPicnicDate = deco.picnic_date;
+      if (deco.breakfast_date) state.decorationBreakfastDate = deco.breakfast_date;
+      if (deco.breakfast_time) state.decorationBreakfastTime = deco.breakfast_time;
+      // if (deco.room) state.decorationRoom = deco.room;
+
+      const option = state.decorationOptions.find((dOption) => dOption.id == deco.option_id);
+      if (option) state.selectedExperiences.push(option);
     });
   },
   TRANSFORM_DRINKS: (state, payload) => {
@@ -773,6 +826,13 @@ export const actions: ActionTree<ExtraState, RootState> = {
       if (s) {
         commit("ADD_SELECTED", s);
         commit("TRANSFORM_DECORATION", { decos: oldBooking.decorations, dates: newBookingDates });
+      };
+    }
+    if (oldBooking.experiences.length >= 1) {
+      const s = getSpecialObjFromStr(state.specials, 'unforgettableExperience');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_EXPERIENCES", { decos: oldBooking.experiences, dates: newBookingDates });
       };
     }
     if (oldBooking.domestic_staff) {
