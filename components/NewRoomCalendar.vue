@@ -45,8 +45,9 @@
             <div class="flex items-center text-gray-600 md:ml-10 md:w-auto">
                 <div class="flex-shrink-0 w-4 h-4 mr-2 rounded-sm md:mr-4 md:w-5 md:h-5 bg-cal-avail bg-opacity-20"></div> Available - numbers represent available rooms
             </div>
-            <div class="ml-auto text-sm">
-              Click date twice for single night
+            <div :class="hintSingleRoomSelect ? 'animate-bounce font-bold' : ''"
+                class="ml-auto text-sm transition-all">
+                Click date twice for single night
             </div>
 
         </div>
@@ -291,9 +292,24 @@ export default {
             notAllRooms: false,
 
             showRoomSelect: false,
+
+            hintSingleRoomSelect: false,
         };
     },
     watch: {
+        startDate(newVal, oldVal) {
+            if (newVal != null) {
+                this.hintSingleRoomSelect = true;
+                if (this.endDate != null) {
+                    this.hintSingleRoomSelect = false;
+                }
+            }
+        },
+        endDate(newVal){
+          if(newVal != null) {
+            this.hintSingleRoomSelect = false;
+          }
+        },
         windowWidth: {
             handler(newWidth, oldWidth) {
                 if (newWidth <= 768) {
