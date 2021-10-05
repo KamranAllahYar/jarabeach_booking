@@ -5,7 +5,7 @@
                 <img src="@/assets/images/specials/lookout.png" alt="" class="object-cover object-center w-full h-full">
             </div>
             <div class="w-full p-6 md:w-7/12">
-                <div class="font-semibold">The Lookout Experience</div>
+                <div class="font-semibold">Dining Experience</div>
                 <p class="mt-3 font-light leading-relaxed text-gray-600">
                     The Lookout provides an experience like no other in the city. Pre-booked exclusively,
                     the Lookout is only open for breakfast and lunch sessions daily.

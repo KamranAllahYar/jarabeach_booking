@@ -8,7 +8,9 @@
                 <div class="text-xl font-semibold">Dinning Experiences</div>
                 <div class="text-xs font-light text-gray-600">
                     There are three dining package options to choose from breakfast and lunch.
-                    Only 1 slot available for 2 people per meal. Must be booked in advance
+                    Only 1 slot available for 2 people per meal. Must be booked in advance.
+                    For more details visit the
+                    <a class="underline text-brand-blue" target="_blank" href="https://www.jarabeachresort.com/experiences">website</a>.
                 </div>
             </div>
             <div class="items-center hidden ml-6 mr-3 space-x-1 text-gray-600 cursor-pointer md:flex" @click="$emit('close')">

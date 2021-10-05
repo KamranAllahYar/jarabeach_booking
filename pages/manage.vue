@@ -123,7 +123,7 @@
                         </div>
                     </div>
                     <div class="flex items-center justify-between px-3 my-3" v-if="fullBooking.lookouts[0]">
-                        <div>Lookout Experience</div>
+                        <div>Dining Experience</div>
                         <div class="font-bold">
                             {{ formatDate(fullBooking.lookouts[0].date) }}
                         </div>
