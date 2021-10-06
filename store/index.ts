@@ -687,14 +687,10 @@ export const actions: ActionTree<RootState, RootState> = {
     }
     if (allExtras.includes('unforgettableExperience')) {
       specialsToSend['unforgettableExperience'] = {
-        // date: extraState.dateDecoration,
-        // welcomeNote: extraState.decorationWelcomeNote,
-        // petalsNote: extraState.decorationPetalsNote,
-        // balloonsColor: extraState.decorationBalloonsColor,
         picnicDate: extraState.decorationPicnicDate,
+        paintingDate: extraState.decorationPaintingDate,
         breakfastDate: extraState.decorationBreakfastDate,
         breakfastTime: extraState.decorationBreakfastTime,
-        // room: extraState.decorationRoom,
         options: extraState.selectedExperiences.map((sd: any) => sd.id),
       }
       prices['unforgettableExperience'] = rootGetters['extras/experiencePrice'];

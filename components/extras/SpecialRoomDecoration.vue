@@ -38,7 +38,7 @@
 
                 <div class="mt-4 space-y-4">
                     <div v-for="deco in decorations" :key="deco.id">
-                        <template v-if="deco.id == 4 || deco.id == 5"></template>
+                        <template v-if="deco.id == 4 || deco.id == 5 || deco.id == 6"></template>
                         <template v-else>
                             <label class="inline-flex items-center" :key="deco.id">
                                 <input type="checkbox" :value="deco" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">

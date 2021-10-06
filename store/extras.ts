@@ -3,7 +3,7 @@ import { GetterTree, MutationTree, ActionTree } from 'vuex';
 
 export const state = () => ({
   specials: [
-    { type: 'unforgettableExperience', name: 'Unforgettable Experience', available: true, range: '0' },
+    { type: 'unforgettableExperience', name: 'Unforgettable Experience', available: true, range: '5,000' },
     { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
     { type: 'newmassage', name: 'Massage', available: true, range: '10,000' },
     { type: 'lookout', name: 'Dining Experience', available: true, range: '15,000' },
@@ -45,6 +45,7 @@ export const state = () => ({
   dateDecoration: null as String | null,
   dateExperience: null as String | null,
   decorationPicnicDate: null as any,
+  decorationPaintingDate: null as any,
   decorationBreakfastDate: null as any,
   decorationBreakfastTime: null as any,
 
@@ -429,6 +430,7 @@ export const mutations: MutationTree<ExtraState> = {
     // state.decorationBalloonsColor = payload.balloonsColor;
 
     state.decorationPicnicDate = payload.picnicDate;
+    state.decorationPaintingDate = payload.paintingDate;
     state.decorationBreakfastDate = payload.breakfastDate;
     state.decorationBreakfastTime = payload.breakfastTime;
 
@@ -499,6 +501,7 @@ export const mutations: MutationTree<ExtraState> = {
     state.decorationBalloonsColor = "" as String;
     state.decorationRoom = null as String | number | null;
     state.decorationPicnicDate = null as any;
+    state.decorationPaintingDate = null as any;
     state.decorationBreakfastDate = null as any;
     state.decorationBreakfastTime = null as any;
 
@@ -576,6 +579,7 @@ export const mutations: MutationTree<ExtraState> = {
       // if (deco.petals_note) state.decorationPetalsNote = deco.petals_note;
       // if (deco.balloons_color) state.decorationBalloonsColor = deco.balloons_color;
       if (deco.picnic_date) state.decorationPicnicDate = deco.picnic_date;
+      if (deco.painting_date) state.decorationPaintingDate = deco.painting_date;
       if (deco.breakfast_date) state.decorationBreakfastDate = deco.breakfast_date;
       if (deco.breakfast_time) state.decorationBreakfastTime = deco.breakfast_time;
       // if (deco.room) state.decorationRoom = deco.room;
