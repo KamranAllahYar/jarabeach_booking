@@ -24,21 +24,31 @@
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
             </div>
-            <div v-else class="grid w-full grid-rows-5">
-                <div class="text-center" v-if="currentRooms && currentRooms.length <= 0">
-                    No Rooms on this day
+            <div class="w-full" v-else>
+                <div class="grid w-full grid-flow-col" :class="currentRooms.length <= 0 ? 'grid-rows-0 grid-cols-1' : notAllRooms && seRoom == 'family' ? 'grid-rows-4 grid-cols-2' : 'grid-rows-5 grid-cols-2'">
+                    <div class="text-center" v-if="currentRooms && currentRooms.length <= 0">
+                        No Rooms on this day
+                    </div>
+                    <div class="flex items-center py-2" v-for="room in currentRooms" :key="room.id"
+                        @click="selectRoom(room, currentDate)">
+                        <svg v-if="!isRoomSelected(room, currentDate)" viewBox="0 0 16 16" class="flex-shrink-0 inline-block w-6 h-6 mr-2 text-brand-blue" fill="none" stroke="currentColor">
+                            <path d="M8 14.703a6.75 6.75 0 100-13.5 6.75 6.75 0 000 13.5z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <svg v-else class="flex-shrink-0 inline-block w-6 h-6 mr-2 text-brand-blue" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-gray-700 whitespace-nowrap">
+                            {{ room.name }}
+                        </span>
+                    </div>
                 </div>
-                <div class="flex items-center py-2" v-for="room in currentRooms" :key="room.id"
-                    @click="selectRoom(room, currentDate)">
-                    <svg v-if="!isRoomSelected(room, currentDate)" viewBox="0 0 16 16" class="flex-shrink-0 inline-block w-6 h-6 mr-2 text-brand-blue" fill="none" stroke="currentColor">
-                        <path d="M8 14.703a6.75 6.75 0 100-13.5 6.75 6.75 0 000 13.5z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <svg v-else class="flex-shrink-0 inline-block w-6 h-6 mr-2 text-brand-blue" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="text-gray-700 whitespace-nowrap">
-                        {{ room.name }}
-                    </span>
+                <div class="py-2 text-xs text-left">
+                    <button class="flex items-center justify-end w-full pt-2 text-gray-800" @click="$emit('back')">
+                        <svg class="w-3 h-3 transform rotate-180" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        Back
+                    </button>
                 </div>
             </div>
         </div>
@@ -70,6 +80,7 @@ export default {
         endDate: String,
         seRoom: String,
         initialRooms: Array,
+        notAllRooms: Boolean,
     },
     watch: {
         initialRooms: function (newVal, oldVal) {
@@ -133,8 +144,8 @@ export default {
                 .post("/check-dates", {
                     start: this.startDate,
                     end: this.endDate,
-                    // type: this.notAllRooms ? this.seRoom : null,
-                    type: this.seRoom,
+                    type: this.notAllRooms ? this.seRoom : null,
+                    // type: this.seRoom,
                     booking_id: bookingId,
                 })
                 .then((res) => {

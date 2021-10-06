@@ -25,9 +25,6 @@
                 </div>
             </div>
             <div class="md:flex-1"></div>
-            <!-- <div class="flex-shrink-0 text-xs font-semibold border-b cursor-pointer md:text-base border-brand-blue-400 text-brand-blue-400" @click="openSlideshow()" id="roomSetup">
-                View Room Setup
-            </div> -->
             <a target="_blank" href="https://www.jarabeachresort.com/room-detail" class="flex-shrink-0 text-xs font-semibold border-b cursor-pointer md:text-base border-brand-blue-400 text-brand-blue-400" id="roomSetup">
                 View Room Setup
             </a>
@@ -106,13 +103,14 @@
 
                         <!-- POPOVER -->
                         <div v-if="isEnd(roomType, compDate.dateStr) && !smallScreen" @click.stop=""
-                            class="absolute bottom-0 right-0 z-50 text-sm transform translate-x-full translate-y-full bg-white border rounded-lg"
+                            class="absolute bottom-0 right-0 z-50 text-sm transform translate-x-full translate-y-full bg-white border rounded-lg cursor-auto"
                             style="--tw-translate-x: 0%; --tw-translate-y: -55px" :style="hoveredRooms.length > 5 ? 'width: 350px' : 'width: 185px'">
 
-                            <RoomSelect v-if="showRoomSelect"
-                                :startDate="startDate" :endDate="endDate" :seRoom="seRoom"
+                            <RoomSelect v-if="showRoomSelect && canSwap"
+                                :startDate="startDate" :endDate="endDate" :seRoom="seRoom" :notAllRooms="notAllRooms"
                                 :initialRooms="initialRooms"
-                                @selected="generateAndEmitBookedRoomsBetter($event)" />
+                                @selected="generateAndEmitBookedRoomsBetter($event)"
+                                @back="cancelIndividualRoomSelect()" />
 
                             <div class="py-2 pl-3 pr-4" v-else>
                                 <div v-if="loadingRoomOptions">
@@ -141,8 +139,18 @@
                                         No common rooms available for booking on these dates
                                     </div>
                                 </div>
-                                <div class="py-2 text-xs text-right">
-                                    <button @click="showRoomSelect = true">Select Indivual Rooms</button>
+                                <div class="py-2 text-xs text-left" v-if="canSwap">
+                                    <p>
+                                        We are able to welcome you on your chosen dates in the rooms above.
+                                        However, additional rooms may be available. Please proceed
+                                        if you are happy to change rooms during your visit
+                                    </p>
+                                    <button class="flex items-center justify-end w-full pt-2 text-gray-800" @click="showRoomSelect = true">
+                                        Select Indivual Rooms
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
                                 </div>
 
                             </div>
@@ -292,6 +300,7 @@ export default {
             notAllRooms: false,
 
             showRoomSelect: false,
+            canSwap: false,
 
             hintSingleRoomSelect: false,
         };
@@ -305,10 +314,10 @@ export default {
                 }
             }
         },
-        endDate(newVal){
-          if(newVal != null) {
-            this.hintSingleRoomSelect = false;
-          }
+        endDate(newVal) {
+            if (newVal != null) {
+                this.hintSingleRoomSelect = false;
+            }
         },
         windowWidth: {
             handler(newWidth, oldWidth) {
@@ -440,6 +449,11 @@ export default {
         },
     },
     methods: {
+        cancelIndividualRoomSelect() {
+            this.showRoomSelect = false;
+            this.roomIds = [];
+            this.generateAndEmitBookedRooms();
+        },
         openSlideshow() {
             this.$emit("viewsetup");
             this.index = 0;
@@ -480,23 +494,6 @@ export default {
             this.$emit("selected", bookedRooms);
         },
         generateAndEmitBookedRoomsBetter(bookedRooms) {
-            console.log("generated---");
-            console.log(bookedRooms);
-            // return;
-            // const dates = this.getDatesInbetween();
-
-            // let bookedRooms = [];
-
-            // this.roomIds.forEach((roomId) => {
-            //     dates.forEach((date) => {
-            //         bookedRooms.push({
-            //             room_id: roomId,
-            //             date: date,
-            //             isWeekend: isWeekend(parseISO(date)),
-            //         });
-            //     });
-            // });
-
             this.$emit("selected", bookedRooms);
         },
         isStart(roomType, dateStr) {
@@ -644,6 +641,7 @@ export default {
             }, 0);
         },
         async getRoomsAvailableForPeriod() {
+            this.canSwap = false;
             this.loadingRoomOptions = true;
             this.mobileSelectSheet = true;
             const date = this.startDate;
@@ -679,6 +677,8 @@ export default {
                 .then((res) => {
                     console.log(res.data.data);
                     const aRooms = res.data.data;
+
+                    this.canSwap = res.data.canSwap;
 
                     this.hoveredRooms = [];
                     aRooms.map((room) => {
