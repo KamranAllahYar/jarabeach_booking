@@ -5,7 +5,8 @@ export const state = () => ({
   specials: [
     { type: 'unforgettableExperience', name: 'Unforgettable Experience', available: true, range: '5,000' },
     { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
-    { type: 'newmassage', name: 'Massage', available: true, range: '10,000' },
+    // { type: 'newmassage', name: 'Massage', available: true, range: '10,000' },
+    { type: 'massages', name: 'Massages', available: true, range: '10,000' },
     { type: 'lookout', name: 'Dining Experience', available: true, range: '15,000' },
     { type: 'drinks', name: 'Drinks', available: true, range: '15,000' },
     { type: 'cakes', name: 'Cake', available: true, range: '15,000' },
@@ -25,7 +26,7 @@ export const state = () => ({
   selectedMassage: [] as any[],
   dateMassage: null as String | null,
 
-  newmassageOptions: [] as any[],
+  // newmassageOptions: [] as any[],
   selectedNewmassage: null as any,
   dateNewmassage: null as String | null,
   timeNewmassage: null as String | null,
@@ -59,6 +60,10 @@ export const state = () => ({
   drinkOptions: [] as any[],
   selectedDrinks: [] as any[],
   dateDrink: null as String | null,
+
+  newmassageOptions: [] as any[],
+  selectedMassages: [] as any[],
+  dateMassages: null as String | null,
 
   cakeOptions: [] as any[],
   // cakePrices: [] as any[],
@@ -114,6 +119,22 @@ export const getters: GetterTree<ExtraState, RootState> = {
 
       if (drink) {
         price += (+drink.price * +sDrink.qty);
+      }
+    }
+
+    return price;
+  },
+  massagesPrice: (state: ExtraState) => {
+    if (state.selectedMassages.length <= 0) return 0;
+    let price = 0;
+
+    for (let i = 0; i < state.selectedMassages.length; i++) {
+      const sMassage = state.selectedMassages[i];
+
+      const massage = state.newmassageOptions.find(dko => dko.id == sMassage.id);
+
+      if (massage) {
+        price += +massage.price;
       }
     }
 
@@ -365,9 +386,9 @@ export const mutations: MutationTree<ExtraState> = {
     }
   },
 
-  LOAD_NEWMASSAGE_OPTIONS: (state, newmassages) => {
-    state.newmassageOptions = newmassages
-  },
+  // LOAD_NEWMASSAGE_OPTIONS: (state, newmassages) => {
+  //   state.newmassageOptions = newmassages
+  // },
   SET_SELECTED_NEWMASSAGE: (state, payload) => {
     delete state.clashes['newmassage'];
 
@@ -450,6 +471,14 @@ export const mutations: MutationTree<ExtraState> = {
     state.dateDrink = payload.date
   },
 
+  LOAD_NEWMASSAGE_OPTIONS: (state, newmassages) => {
+    state.newmassageOptions = newmassages
+  },
+  SET_SELECTED_MASSAGES: (state, payload) => {
+    state.selectedMassages = payload.massages
+    state.dateMassage = payload.date
+  },
+
   LOAD_CAKE_OPTIONS: (state, cakes) => {
     state.cakeOptions = cakes
   },
@@ -482,7 +511,7 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedMassage = [] as any[];
     state.dateMassage = null as String | null;
 
-    state.newmassageOptions = [] as any[];
+    // state.newmassageOptions = [] as any[];
     state.selectedNewmassage = null as any;
     state.dateNewmassage = null as String | null;
     state.timeNewmassage = null as String | null;
@@ -515,7 +544,11 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedDrinks = [] as any[];
     state.dateDrink = null;
 
-    state.cakeOptions = [] as any[];
+    state.newmassageOptions = [] as any[],
+      state.selectedMassages = [] as any[],
+      state.dateMassages = null as String | null,
+
+      state.cakeOptions = [] as any[];
     state.cakeMessage = "" as any;
     state.selectedCakes = [] as any[];
     state.dateCake = null;
@@ -599,6 +632,19 @@ export const mutations: MutationTree<ExtraState> = {
       }
 
       state.selectedDrinks.push({ id: drink.option_id, qty: drink.quantity });
+    });
+  },
+  TRANSFORM_MASSAGES: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldMassages = payload.massages;
+
+    state.selectedMassages = [];
+    oldMassages.forEach((massage: any) => {
+      if (oldDates.includes(massage.date)) {
+        state.dateMassage = massage.date;
+        state.selectedMassages.push({ id: massage.option_id, date: massage.date, time: massage.time });
+      }
+
     });
   },
   TRANSFORM_PHOTOSHOOT: (state, payload) => {
@@ -816,6 +862,13 @@ export const actions: ActionTree<ExtraState, RootState> = {
       if (s) {
         commit("ADD_SELECTED", s);
         commit("TRANSFORM_DRINKS", { drinks: oldBooking.drinks, dates: newBookingDates });
+      };
+    }
+    if (oldBooking.massages.length >= 1) {
+      const s = getSpecialObjFromStr(state.specials, 'massages');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_MASSAGES", { massages: oldBooking.massages, dates: newBookingDates });
       };
     }
     if (oldBooking.photoshoot) {

@@ -288,6 +288,9 @@ export const getters: GetterTree<RootState, RootState> = {
       if (extra.type == "drinks") {
         extraPrices += getters["extras/drinksPrice"];
       }
+      if (extra.type == "massages") {
+        extraPrices += getters["extras/massagesPrice"];
+      }
       if (extra.type == "photoshoot") {
         extraPrices += getters[
           "extras/photoshootPrice"
@@ -701,6 +704,13 @@ export const actions: ActionTree<RootState, RootState> = {
         options: extraState.selectedDrinks,
       }
       prices['drinks'] = rootGetters['extras/drinksPrice'];
+    }
+    if (allExtras.includes('massages')) {
+      specialsToSend['massages'] = {
+        date: extraState.dateMassages,
+        options: extraState.selectedMassages,
+      }
+      prices['massages'] = rootGetters['extras/massagesPrice'];
     }
     if (allExtras.includes('domesticStaff')) {
       specialsToSend['domesticStaff'] = {

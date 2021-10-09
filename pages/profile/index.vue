@@ -399,10 +399,10 @@ export default {
             }
 
             if (this.guest.email != this.guest.email_confirm) {
-                this.$toast.show(
-                    "Please confirm that your email address is correct"
-                );
-                return;
+                // this.$toast.show(
+                //     "Please confirm that your email address is correct"
+                // );
+                throw new Error("Please confirm that your email address is correct");
             }
 
             this.loading = true;
@@ -413,6 +413,7 @@ export default {
             } catch (e) {
                 this.loading = false;
                 this.$toast.error("Something went wrong, please try again");
+                throw new Error("Something went wrong, please try again");
             }
 
             this.loading = false;
