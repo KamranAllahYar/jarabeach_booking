@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="min-width: 185px">
         <!-- {{ startDate }} - {{ endDate }} - {{ seRoom }} -->
         <!-- {{ initialRooms }} -->
         <div class="flex items-center justify-between p-2 bg-gray-100">
@@ -24,12 +24,12 @@
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
             </div>
-            <div class="w-full" v-else>
-                <div class="grid w-full grid-flow-col" :class="currentRooms.length <= 0 ? 'grid-rows-0 grid-cols-1' : notAllRooms && seRoom == 'family' ? 'grid-rows-4 grid-cols-2' : 'grid-rows-5 grid-cols-2'">
+            <div class="w-full" v-else :style="currentRooms && currentRooms.length > 5 ? 'width: 350px' : 'width: 185px'">
+                <div class="grid w-full grid-flow-col" :class="popoverGridPatternClass">
                     <div class="text-center" v-if="currentRooms && currentRooms.length <= 0">
                         No Rooms on this day
                     </div>
-                    <div class="flex items-center py-2" v-for="room in currentRooms" :key="room.id"
+                    <div class="flex items-center py-2 cursor-pointer" v-for="room in currentRooms" :key="room.id"
                         @click="selectRoom(room, currentDate)">
                         <svg v-if="!isRoomSelected(room, currentDate)" viewBox="0 0 16 16" class="flex-shrink-0 inline-block w-6 h-6 mr-2 text-brand-blue" fill="none" stroke="currentColor">
                             <path d="M8 14.703a6.75 6.75 0 100-13.5 6.75 6.75 0 000 13.5z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
@@ -100,6 +100,29 @@ export default {
         };
     },
     computed: {
+        popoverGridPatternClass() {
+            const totalRooms = this.currentRooms.length;
+            if (totalRooms <= 0) {
+                return "grid-rows-0 grid-cols-1";
+            }
+
+            if (this.notAllRooms) {
+                if (this.seRoom == "family") {
+                    return `grid-rows-${totalRooms} grid-cols-2`;
+                }
+                if (this.seRoom == "standard") {
+                    return `grid-rows-${totalRooms} grid-cols-2`;
+                }
+            }
+
+            if (totalRooms < 5) {
+                return `grid-rows-${totalRooms} grid-cols-2`;
+            }
+
+            return "grid-rows-5 grid-cols-2";
+
+            // "grid-rows-1 grid-rows-2 grid-rows-3 grid-rows-4 grid-rows-5"
+        },
         currentDate() {
             return this.dates[this.dateIndex];
         },

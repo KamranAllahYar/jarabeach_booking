@@ -104,7 +104,7 @@
                         <!-- POPOVER -->
                         <div v-if="isEnd(roomType, compDate.dateStr) && !smallScreen" @click.stop=""
                             class="absolute bottom-0 right-0 z-50 text-sm transform translate-x-full translate-y-full bg-white border rounded-lg cursor-auto"
-                            style="--tw-translate-x: 0%; --tw-translate-y: -55px" :style="hoveredRooms.length > 5 ? 'width: 350px' : 'width: 185px'">
+                            style="--tw-translate-x: 0%; --tw-translate-y: -55px">
 
                             <RoomSelect v-if="showRoomSelect && canSwap"
                                 :startDate="startDate" :endDate="endDate" :seRoom="seRoom" :notAllRooms="notAllRooms"
@@ -112,7 +112,7 @@
                                 @selected="generateAndEmitBookedRoomsBetter($event)"
                                 @back="cancelIndividualRoomSelect()" />
 
-                            <div class="py-2 pl-3 pr-4" v-else>
+                            <div class="py-2 pl-3 pr-4" v-else :style="hoveredRooms.length > 5 ? 'width: 350px' : 'width: 185px'">
                                 <div v-if="loadingRoomOptions">
                                     <svg class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

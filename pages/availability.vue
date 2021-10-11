@@ -51,11 +51,17 @@
 </template>
 
 <script>
+const groupBy = function (xs, key) {
+    return xs.reduce(function (rv, x) {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+    }, {});
+};
+
 export default {
     layout: "booking",
     data() {
         return {
-            noOfDays: 1,
             rooms: [],
             steps: [
                 {
@@ -80,6 +86,31 @@ export default {
         },
     },
     methods: {
+        isSameRoomsAcrossDates() {
+            const nights = Object.keys(groupBy(this.rooms, "date"));
+            const totalRooms = Object.keys(
+                groupBy(this.rooms, "room_id")
+            ).length;
+
+            let maxRoom = null;
+            for (let i = 0; i < nights.length; i++) {
+                const date = nights[i];
+
+                const totalRoomsForDate = this.rooms.filter(
+                    (r) => r.date == date
+                ).length;
+
+                if (maxRoom != null) {
+                    if (maxRoom != totalRoomsForDate) return false;
+                }
+
+                maxRoom = totalRoomsForDate;
+
+                console.log("total room for date: " + totalRoomsForDate);
+            }
+
+            return true;
+        },
         addRoom() {
             this.rooms.push({
                 booking_date: null,
@@ -98,6 +129,13 @@ export default {
                 this.$toast.error(
                     `You have not selected enough rooms to accommodate the number / type of guests in your booking request -
                     please click <a target='_blank' class='mx-2 font-bold text-yellow-100' href='https://www.jarabeachresort.com/room-detail'>here</a> for room information.`
+                );
+                return;
+            }
+
+            if (!this.isSameRoomsAcrossDates()) {
+                this.$toast.error(
+                    "Please select the same amount of rooms across each date"
                 );
                 return;
             }
@@ -142,7 +180,7 @@ export default {
         }
 
         setTimeout(() => {
-          this.$store.commit("TOGGLE_FULL_PAGE_LOADER", false);
+            this.$store.commit("TOGGLE_FULL_PAGE_LOADER", false);
         }, 2000);
     },
     created() {
