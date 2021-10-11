@@ -119,7 +119,7 @@
                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                     </svg>
                                 </div>
-                                <div class="grid grid-flow-col gap-x-4" :class="hoveredRooms.length <= 0 ? 'grid-rows-0 grid-cols-1' : notAllRooms && seRoom == 'family' ? 'grid-rows-4 grid-cols-2' : 'grid-rows-5 grid-cols-2'" v-else>
+                                <div class="grid grid-flow-col gap-x-4" :class="popoverGridPatternClass" v-else>
                                     <template v-for="h in hoveredRooms">
                                         <div v-if="h.available == true" :key="h.room.id" class="flex items-center py-2 cursor-pointer"
                                             @click="h.available == true ? addToBookedRoom(h.room, h.date) : ''">
@@ -139,7 +139,7 @@
                                         No common rooms available for booking on these dates
                                     </div>
                                 </div>
-                                <div class="py-2 text-xs text-left" v-if="canSwap">
+                                <div class="py-2 text-xs text-left" v-if="canSwap && shouldSwap">
                                     <p>
                                         We are able to welcome you on your chosen dates in the rooms above.
                                         However, additional rooms may be available. Please proceed
@@ -331,6 +331,33 @@ export default {
         },
     },
     computed: {
+        popoverGridPatternClass() {
+            const totalRooms = this.hoveredRooms.length;
+            if (totalRooms <= 0) {
+                return "grid-rows-0 grid-cols-1";
+            }
+
+            if (this.notAllRooms) {
+                if (this.seRoom == "family") {
+                    return `grid-rows-${totalRooms} grid-cols-2`;
+                }
+                if (this.seRoom == "standard") {
+                    return `grid-rows-${totalRooms} grid-cols-2`;
+                }
+            }
+
+            if (totalRooms < 5) {
+              return `grid-rows-${totalRooms} grid-cols-2`
+            }
+
+            return "grid-rows-5 grid-cols-2";
+
+            // "grid-rows-1 grid-rows-2 grid-rows-3 grid-rows-4 grid-rows-5"
+        },
+        shouldSwap() {
+            if (this.startDate == this.endDate) return false;
+            return true;
+        },
         startDateStr() {
             return format(this.today, "do MMM yyyy");
         },
