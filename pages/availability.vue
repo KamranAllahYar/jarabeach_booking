@@ -78,6 +78,12 @@ export default {
         enoughRooms() {
             return this.$store.getters.confirmEnoughRooms;
         },
+        totalPeople() {
+            return this.$store.getters.totalPeople;
+        },
+        totalRooms() {
+            return this.$store.getters.totalRooms;
+        },
     },
     methods: {
         addRoom() {
@@ -98,6 +104,13 @@ export default {
                 this.$toast.error(
                     `You have not selected enough rooms to accommodate the number / type of guests in your booking request -
                     please click <a target='_blank' class='mx-2 font-bold text-yellow-100' href='https://www.jarabeachresort.com/room-detail'>here</a> for room information.`
+                );
+                return;
+            }
+
+            if (this.totalRooms > this.totalPeople) {
+                this.$toast.error(
+                    "You have selected more rooms than number of guests expected. Please add more guests or select less rooms."
                 );
                 return;
             }
@@ -142,7 +155,7 @@ export default {
         }
 
         setTimeout(() => {
-          this.$store.commit("TOGGLE_FULL_PAGE_LOADER", false);
+            this.$store.commit("TOGGLE_FULL_PAGE_LOADER", false);
         }, 2000);
     },
     created() {
