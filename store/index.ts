@@ -348,7 +348,8 @@ export const getters: GetterTree<RootState, RootState> = {
     return ((+getters.preTotal) + (+getters.taxTotal)).toFixed(2);
   },
   previousTotalPaid: (state: RootState, getters) => {
-    return state.editBooking.payment.total + (Math.abs(state.editBooking.payment.discount) + Math.abs(state.editBooking.payment.voucher))
+    // return state.editBooking.payment.subtotal;
+    return state.editBooking.payment.total + (Math.abs(state.editBooking.payment.discount_amount) + Math.abs(state.editBooking.payment.voucher))
   },
   differenceToPay: (state: RootState, getters) => {
     if (!state.editBooking) return 0;
@@ -626,6 +627,7 @@ export const actions: ActionTree<RootState, RootState> = {
     if (discount) {
       if (discount.type == 'discount') {
         dataToPost['discount'] = discount.amount;
+        dataToPost['discount_amount'] = getters.discount;
       } else if (discount.type == 'voucher') {
         dataToPost['voucher'] = discount.amount;
       }
@@ -792,6 +794,7 @@ export const actions: ActionTree<RootState, RootState> = {
 
     if (state.discount) {
       dataToPost.discount = state.discount;
+      dataToPost.discount_amount = getters.discount;
     }
 
     if (state.editMode) {
