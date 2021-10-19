@@ -145,7 +145,7 @@
             </div>
             <div class="flex justify-between mt-8 text-xs">
                 <div>Previous Cost</div>
-                <div class="font-bold">{{ currency(editBooking.payment.total) }}</div>
+                <div class="font-bold">{{ currency(previousTotalPaid) }}</div>
             </div>
         </div>
     </div>
@@ -248,6 +248,9 @@ export default {
         },
         totalPrice() {
             return this.$store.getters.totalPrice;
+        },
+        previousTotalPaid() {
+            return this.$store.getters.previousTotalPaid;
         },
     },
     methods: {

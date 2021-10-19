@@ -215,7 +215,7 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return getters.smallPeople <= totalSmallMax;
   },
-  roomPrice: (state: RootState, getters) => {
+  oldRoomPrice: (state: RootState, getters) => {
     const roomPrices = getters.bookedRooms.reduce((price: number, room: any) => {
       if (room.type == 'family') {
         return price + room.price;
@@ -228,6 +228,33 @@ export const getters: GetterTree<RootState, RootState> = {
         }
       }
     }, 0);
+
+    return roomPrices;
+  },
+  roomPrice: (state: RootState, getters) => {
+    let totalPeople = getters.totalPeople;
+    let nowSingles = false;
+    let roomsLeft = [...getters.bookedRooms];
+    let roomPrices = 0;
+    for (let i = 0; i < getters.bookedRooms.length; i++) {
+      const nowRoom = getters.bookedRooms[i];
+
+      if (roomsLeft.length >= totalPeople) {
+        nowSingles = true;
+      } else {
+        nowSingles = false;
+      }
+
+      if (nowSingles) {
+        roomPrices += nowRoom.single_price;
+      } else {
+        roomPrices += nowRoom.price;
+      }
+
+      if (nowRoom.type == 'family') totalPeople -= 3;
+      if (nowRoom.type == 'standard') totalPeople -= 2;
+      roomsLeft.splice(i, 1);
+    }
 
     return roomPrices;
   },
@@ -347,9 +374,14 @@ export const getters: GetterTree<RootState, RootState> = {
   totalPrice: (state: RootState, getters) => {
     return ((+getters.preTotal) + (+getters.taxTotal)).toFixed(2);
   },
+  previousTotalPaid: (state: RootState, getters) => {
+    // return state.editBooking.payment.subtotal;
+    return state.editBooking.payment.total + (Math.abs(state.editBooking.payment.discount_amount) + Math.abs(state.editBooking.payment.voucher))
+  },
   differenceToPay: (state: RootState, getters) => {
     if (!state.editBooking) return 0;
-    let diff = getters.totalPrice - state.editBooking.payment.total;
+
+    let diff = getters.totalPrice - getters.previousTotalPaid;
 
     if (diff < 0) {
       diff = 0;
@@ -622,6 +654,7 @@ export const actions: ActionTree<RootState, RootState> = {
     if (discount) {
       if (discount.type == 'discount') {
         dataToPost['discount'] = discount.amount;
+        dataToPost['discount_amount'] = getters.discount;
       } else if (discount.type == 'voucher') {
         dataToPost['voucher'] = discount.amount;
       }
@@ -788,6 +821,7 @@ export const actions: ActionTree<RootState, RootState> = {
 
     if (state.discount) {
       dataToPost.discount = state.discount;
+      dataToPost.discount_amount = getters.discount;
     }
 
     if (state.editMode) {
@@ -814,7 +848,7 @@ export const actions: ActionTree<RootState, RootState> = {
         this.app.$toast.error(res.data.message);
       }
       return res.data.success;
-    } catch (err) {
+    } catch (err: any) {
       this.app.$toast.error(err);
       return false;
     }

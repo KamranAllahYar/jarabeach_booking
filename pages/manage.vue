@@ -130,10 +130,11 @@
                     </div>
                 </div>
 
-                <!-- <pre>{{ fullBooking.payment}}</pre> -->
-
                 <button disabled class="w-full px-4 py-2 font-bold text-gray-500 border border-gray-400 rounded-lg cursor-not-allowed focus:ring-2 ring-offset-1 ring-gray-400 hover:border-gray-500 focus:outline-none" v-if="fullBooking.payment.status == 'pending'">UNPAID</button>
+                <button disabled class="w-full px-4 py-2 font-bold text-gray-500 border border-gray-400 rounded-lg cursor-not-allowed focus:ring-2 ring-offset-1 ring-gray-400 hover:border-gray-500 focus:outline-none" v-else-if="!canUpdate">UPDATE NOT AVAILABLE</button>
                 <MainButton v-else @click="loadOldBooking()">Update Booking</MainButton>
+                <!-- {{ canUpdate }}
+                <pre>{{ fullBooking }}</pre> -->
             </div>
         </div>
     </div>
@@ -142,6 +143,7 @@
 <script>
 import format from "date-fns/format";
 import parseISO from "date-fns/parseISO";
+import differenceInHours from "date-fns/differenceInHours";
 
 var groupBy = function (xs, key) {
     return xs.reduce(function (rv, x) {
@@ -171,6 +173,42 @@ export default {
                     .length;
             }
             return 0;
+        },
+        totalRooms() {
+            if (this.fullBooking) {
+                return Object.keys(groupBy(this.fullBooking.rooms, "room_id"))
+                    .length;
+            }
+            return 0;
+        },
+        earliestDate() {
+            if (this.fullBooking) {
+                if (this.fullBooking.rooms.length > 0) {
+                    return this.fullBooking.dates[0];
+                }
+            }
+            return null;
+        },
+        canUpdate() {
+            if (!this.earliestDate) return false;
+
+            const hoursDiff = differenceInHours(
+                parseISO(this.earliestDate),
+                new Date()
+            );
+            const totalRooms = this.totalRooms;
+
+            if (totalRooms >= 5 && hoursDiff <= 169) {
+                return false;
+            } else if (totalRooms >= 3 && hoursDiff <= 96) {
+                return false;
+            } else if (totalRooms >= 2 && hoursDiff <= 72) {
+                return false;
+            } else if (hoursDiff <= 900) {
+                return false;
+            }
+
+            return true;
         },
     },
     methods: {
