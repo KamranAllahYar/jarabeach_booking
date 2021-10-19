@@ -84,6 +84,12 @@ export default {
         enoughRooms() {
             return this.$store.getters.confirmEnoughRooms;
         },
+        totalPeople() {
+            return this.$store.getters.totalPeople;
+        },
+        totalRooms() {
+            return this.$store.getters.totalRooms;
+        },
     },
     methods: {
         isSameRoomsAcrossDates() {
@@ -136,6 +142,12 @@ export default {
             if (!this.isSameRoomsAcrossDates()) {
                 this.$toast.error(
                     "Please select the same amount of rooms across each date"
+                );
+            }
+
+            if (this.totalRooms > this.totalPeople) {
+                this.$toast.error(
+                    "You have selected more rooms than number of guests expected. Please add more guests or select less rooms."
                 );
                 return;
             }

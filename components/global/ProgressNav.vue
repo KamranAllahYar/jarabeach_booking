@@ -1,7 +1,7 @@
 <template>
-    <nuxt-link :to="to" class="flex items-center justify-center h-16 w-44 prog" :class="[classesName, hoverClass]">
+    <div :to="to" class="flex items-center justify-center h-16 w-44 prog" :class="[classesName, hoverClass]">
         <slot></slot>
-    </nuxt-link>
+    </div>
 </template>
 
 <script>
