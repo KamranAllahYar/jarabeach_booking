@@ -45,7 +45,7 @@ export const state = () => ({
   showExtra: false as boolean,
   specials: [
     "lookout", "massage", "newmassage", "quadbike",
-    "photoshoot", "drinks", "cakes", "roomDecoration",
+    "photoshoot", "drinks", "cakes", "roomDecoration", "unforgettableExperience",
     "domesticStaff"
   ] as any[],
 
@@ -288,6 +288,9 @@ export const getters: GetterTree<RootState, RootState> = {
       if (extra.type == "drinks") {
         extraPrices += getters["extras/drinksPrice"];
       }
+      if (extra.type == "massages") {
+        extraPrices += getters["extras/massagesPrice"];
+      }
       if (extra.type == "photoshoot") {
         extraPrices += getters[
           "extras/photoshootPrice"
@@ -296,6 +299,11 @@ export const getters: GetterTree<RootState, RootState> = {
       if (extra.type == "roomDecoration") {
         extraPrices += getters[
           "extras/decorationPrice"
+        ];
+      }
+      if (extra.type == "unforgettableExperience") {
+        extraPrices += getters[
+          "extras/experiencePrice"
         ];
       }
       if (extra.type == "domesticStaff") {
@@ -325,7 +333,7 @@ export const getters: GetterTree<RootState, RootState> = {
       return discount.amount;
     } else if (discount.type == "discount") {
       const percent = discount.amount / 100;
-      return percent * getters.subTotal;
+      return percent * getters.roomPrice;
     }
 
     return 0;
@@ -339,9 +347,13 @@ export const getters: GetterTree<RootState, RootState> = {
   totalPrice: (state: RootState, getters) => {
     return ((+getters.preTotal) + (+getters.taxTotal)).toFixed(2);
   },
+  previousTotalPaid: (state: RootState, getters) => {
+    return state.editBooking.payment.total + (Math.abs(state.editBooking.payment.discount) + Math.abs(state.editBooking.payment.voucher))
+  },
   differenceToPay: (state: RootState, getters) => {
     if (!state.editBooking) return 0;
-    let diff = getters.totalPrice - state.editBooking.payment.total;
+
+    let diff = getters.totalPrice - getters.previousTotalPaid;
 
     if (diff < 0) {
       diff = 0;
@@ -672,13 +684,23 @@ export const actions: ActionTree<RootState, RootState> = {
         welcomeNote: extraState.decorationWelcomeNote,
         petalsNote: extraState.decorationPetalsNote,
         balloonsColor: extraState.decorationBalloonsColor,
-        picnicDate: extraState.decorationPicnicDate,
-        breakfastDate: extraState.decorationBreakfastDate,
-        breakfastTime: extraState.decorationBreakfastTime,
+        // picnicDate: extraState.decorationPicnicDate,
+        // breakfastDate: extraState.decorationBreakfastDate,
+        // breakfastTime: extraState.decorationBreakfastTime,
         room: extraState.decorationRoom,
         options: extraState.selectedDecorations.map((sd: any) => sd.id),
       }
       prices['roomDecoration'] = rootGetters['extras/decorationPrice'];
+    }
+    if (allExtras.includes('unforgettableExperience')) {
+      specialsToSend['unforgettableExperience'] = {
+        picnicDate: extraState.decorationPicnicDate,
+        paintingDate: extraState.decorationPaintingDate,
+        breakfastDate: extraState.decorationBreakfastDate,
+        breakfastTime: extraState.decorationBreakfastTime,
+        options: extraState.selectedExperiences.map((sd: any) => sd.id),
+      }
+      prices['unforgettableExperience'] = rootGetters['extras/experiencePrice'];
     }
     if (allExtras.includes('drinks')) {
       specialsToSend['drinks'] = {
@@ -686,6 +708,13 @@ export const actions: ActionTree<RootState, RootState> = {
         options: extraState.selectedDrinks,
       }
       prices['drinks'] = rootGetters['extras/drinksPrice'];
+    }
+    if (allExtras.includes('massages')) {
+      specialsToSend['massages'] = {
+        date: extraState.dateMassages,
+        options: extraState.selectedMassages,
+      }
+      prices['massages'] = rootGetters['extras/massagesPrice'];
     }
     if (allExtras.includes('domesticStaff')) {
       specialsToSend['domesticStaff'] = {
@@ -789,7 +818,7 @@ export const actions: ActionTree<RootState, RootState> = {
         this.app.$toast.error(res.data.message);
       }
       return res.data.success;
-    } catch (err) {
+    } catch (err: any) {
       this.app.$toast.error(err);
       return false;
     }
