@@ -5,7 +5,7 @@
         </div>
 
         <div class="w-full p-6 md:w-7/12">
-            <div class="font-semibold">Unforgettable Experience</div>
+            <div class="font-semibold">Unforgettable Experiences</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
                 There are a number of expected extras we offer for free, including romantic room decoration, or happy birthday messages, simple decorations, floating breakfast, sunset picnic etc.
 

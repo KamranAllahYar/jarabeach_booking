@@ -3,7 +3,7 @@ import { GetterTree, MutationTree, ActionTree } from 'vuex';
 
 export const state = () => ({
   specials: [
-    { type: 'unforgettableExperience', name: 'Unforgettable Experience', available: true, range: '5,000' },
+    { type: 'unforgettableExperience', name: 'Unforgettable Experiences', available: true, range: '5,000' },
     { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
     // { type: 'newmassage', name: 'Massage', available: true, range: '10,000' },
     { type: 'massages', name: 'Massages', available: true, range: '10,000' },

@@ -234,7 +234,11 @@ export const getters: GetterTree<RootState, RootState> = {
   roomPrice: (state: RootState, getters) => {
     let totalPeople = getters.totalPeople;
     let nowSingles = false;
-    let roomsLeft = [...getters.bookedRooms];
+
+    let roomsLeft = getters.uniqueRooms.map((room_id: any) => {
+      return getters.bookedRooms.find((room: any) => room.room_id == room_id);
+    });
+
     let roomPrices = 0;
     for (let i = 0; i < getters.bookedRooms.length; i++) {
       const nowRoom = getters.bookedRooms[i];
