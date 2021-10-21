@@ -7,7 +7,7 @@ export const state = () => ({
     { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
     // { type: 'newmassage', name: 'Massage', available: true, range: '10,000' },
     { type: 'massages', name: 'Massages', available: true, range: '10,000' },
-    { type: 'lookout', name: 'Dining Experience', available: true, range: '15,000' },
+    { type: 'lookout', name: 'Dining Experiences', available: true, range: '15,000' },
     { type: 'drinks', name: 'Drinks', available: true, range: '15,000' },
     { type: 'cakes', name: 'Cake', available: true, range: '15,000' },
     { type: 'photoshoot', name: 'Photoshoot', available: true, range: '20,000' },
