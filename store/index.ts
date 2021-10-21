@@ -215,7 +215,7 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return getters.smallPeople <= totalSmallMax;
   },
-  oldRoomPrice: (state: RootState, getters) => {
+  roomPrice: (state: RootState, getters) => {
     const roomPrices = getters.bookedRooms.reduce((price: number, room: any) => {
       if (room.type == 'family') {
         return price + room.price;
@@ -231,33 +231,37 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return roomPrices;
   },
-  roomPrice: (state: RootState, getters) => {
-    let totalPeople = getters.totalPeople;
-    let nowSingles = false;
-    let roomsLeft = [...getters.bookedRooms];
-    let roomPrices = 0;
-    for (let i = 0; i < getters.bookedRooms.length; i++) {
-      const nowRoom = getters.bookedRooms[i];
+  // roomPrice: (state: RootState, getters) => {
+  //   let totalPeople = getters.totalPeople;
+  //   let nowSingles = false;
 
-      if (roomsLeft.length >= totalPeople) {
-        nowSingles = true;
-      } else {
-        nowSingles = false;
-      }
+  //   let roomsLeft = getters.uniqueRooms.map((room_id: any) => {
+  //     return getters.bookedRooms.find((room: any) => room.room_id == room_id);
+  //   });
 
-      if (nowSingles) {
-        roomPrices += nowRoom.single_price;
-      } else {
-        roomPrices += nowRoom.price;
-      }
+  //   let roomPrices = 0;
+  //   for (let i = 0; i < getters.bookedRooms.length; i++) {
+  //     const nowRoom = getters.bookedRooms[i];
 
-      if (nowRoom.type == 'family') totalPeople -= 3;
-      if (nowRoom.type == 'standard') totalPeople -= 2;
-      roomsLeft.splice(i, 1);
-    }
+  //     if (roomsLeft.length >= totalPeople) {
+  //       nowSingles = true;
+  //     } else {
+  //       nowSingles = false;
+  //     }
 
-    return roomPrices;
-  },
+  //     if (nowSingles) {
+  //       roomPrices += nowRoom.single_price;
+  //     } else {
+  //       roomPrices += nowRoom.price;
+  //     }
+
+  //     if (nowRoom.type == 'family') totalPeople -= 3;
+  //     if (nowRoom.type == 'standard') totalPeople -= 2;
+  //     roomsLeft.splice(i, 1);
+  //   }
+
+  //   return roomPrices;
+  // },
   roomDiscountPercent: (state: RootState, getters) => {
     const roomGroup = groupBy(getters.bookedRooms, 'date');
 
