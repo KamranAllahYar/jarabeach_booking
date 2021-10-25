@@ -199,6 +199,7 @@ export default {
             const totalRooms = this.totalRooms;
 
             console.log(totalRooms);
+            console.log(hoursDiff);
 
             if (totalRooms >= 5 && hoursDiff <= 169) {
                 console.log("5 - 169");
