@@ -213,9 +213,10 @@ export default {
             } else if (totalRooms >= 1 && hoursDiff <= 48) {
                 console.log("1 - 48");
                 return false;
-            } else if (hoursDiff <= 900) {
-                return false;
             }
+            // else if (hoursDiff <= 900) {
+            //     return false;
+            // }
 
             return true;
         },
