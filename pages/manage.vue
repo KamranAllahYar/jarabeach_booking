@@ -194,7 +194,7 @@ export default {
 
             const hoursDiff = differenceInHours(
                 parseISO(this.earliestDate),
-                new Date()
+                new Date().setHours(13)
             );
             const totalRooms = this.totalRooms;
 
