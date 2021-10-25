@@ -99,7 +99,7 @@
                                     <i class="text-red-800">Option not available between 6pm-9am WAT</i>
                                 </div>
                             </div>
-                            <div class="flex-shrink-0 w-full md:w-4/12 ">
+                            <div class="flex-shrink-0 w-full md:w-4/12">
                                 <Paystack
                                     v-if="trans_ref != null"
                                     :amount="totalPrice"
