@@ -204,6 +204,8 @@ export default {
                 return false;
             } else if (totalRooms >= 2 && hoursDiff <= 72) {
                 return false;
+            } else if (totalRooms >= 1 && hoursDiff <= 48) {
+                return false;
             } else if (hoursDiff <= 900) {
                 return false;
             }
