@@ -149,7 +149,16 @@ export const getters: GetterTree<RootState, RootState> = {
     const noOfRooms = getters.totalRooms;
     if (noOfRooms == 0) return price;
 
-    const bigMax = 3 * noOfRooms;
+    // const bigMax = 3 * noOfRooms;
+    let bigMax = 0;
+    getters.uniqueRooms.map((roomid: any) => {
+      const r = state.roomsData.find(r => r.id == roomid);
+      if (r.type == 'standard') {
+        bigMax += 2;
+      } else if (r.type == 'family') {
+        bigMax += 3;
+      }
+    });
     let smallMax = 2 * noOfRooms;
 
     if (getters.bigPeople > bigMax) {
