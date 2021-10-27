@@ -109,7 +109,7 @@
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
                             </div>
-                            <div class="grid grid-flow-col gap-x-4" :class="hoveredRooms.length <= 0 ? 'grid-rows-0 grid-cols-1' : notAllRooms && seRoom == 'family' ? 'grid-rows-4 grid-cols-2' : 'grid-rows-5 grid-cols-2'" v-else>
+                            <div class="grid grid-flow-col gap-x-4" :class="popoverGridClass" v-else>
                                 <template v-for="h in hoveredRooms">
                                     <div v-if="h.available == true" :key="h.room.id" class="flex items-center py-2 cursor-pointer"
                                         @click="h.available == true ? addToBookedRoom(h.room, h.date) : ''">
@@ -288,6 +288,27 @@ export default {
         },
     },
     computed: {
+        popoverGridClass() {
+            if (this.hoveredRooms.length <= 0) {
+                return "grid-rows-0 grid-cols-1";
+            }
+
+            if (this.notAllRooms && this.seRoom == "family") {
+                return "grid-rows-4 grid-cols-2";
+            }
+
+            if (this.notAllRooms && this.seRoom == "villa") {
+                return "grid-rows-2 grid-cols-2";
+            }
+
+            // hoveredRooms.length <= 0
+            //     ? "grid-rows-0 grid-cols-1"
+            //     : notAllRooms && seRoom == "family"
+            //     ? "grid-rows-4 grid-cols-2"
+            //     : "grid-rows-5 grid-cols-2";
+
+            return "grid-rows-6 grid-cols-2";
+        },
         startDateStr() {
             return format(this.today, "do MMM yyyy");
         },
@@ -602,14 +623,14 @@ export default {
             if (this.seRoom == "standard") {
                 if (this.bigPeople <= 2) {
                     this.notAllRooms = true;
-                // } else if (this.smallPeople <= 1) {
-                //     this.notAllRooms = true;
                 }
             } else if (this.seRoom == "family") {
                 if (this.bigPeople <= 3) {
                     this.notAllRooms = true;
-                // } else if (this.smallPeople <= 2) {
-                //     this.notAllRooms = true;
+                }
+            } else if (this.seRoom == "villa") {
+                if (this.bigPeople <= 3) {
+                    this.notAllRooms = true;
                 }
             }
 

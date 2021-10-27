@@ -122,6 +122,10 @@ export const getters: GetterTree<RootState, RootState> = {
     const rooms = getters.bookedRooms.filter((room: any) => room.type == 'family').map((room: any) => room.room_id);
     return rooms.filter(onlyUnique);
   },
+  roomsDetailsVilla: (state: RootState, getters) => {
+    const rooms = getters.bookedRooms.filter((room: any) => room.type == 'villa').map((room: any) => room.room_id);
+    return rooms.filter(onlyUnique);
+  },
   uniqueRooms: (state: RootState, getters) => {
     const roomGroup = groupBy(getters.bookedRooms, 'room_id');
     return Object.keys(roomGroup);

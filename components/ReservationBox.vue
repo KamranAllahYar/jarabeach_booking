@@ -49,6 +49,11 @@
                             Family Cabin {{ formatAndStringCabin(roomsDetailsFamily) }}
                         </div>
                     </div>
+                    <div class="text-sm text-right" v-if="roomsDetailsVilla.length > 0">
+                        <div v-if="roomsDetailsVilla.length == 2">Sunrise 10 & Sunset 11</div>
+                        <div v-else-if="roomsDetailsVilla.includes(10)">Sunrise 10</div>
+                        <div v-else-if="roomsDetailsVilla.includes(11)">Sunset 11</div>
+                    </div>
                     <!-- <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
                         <div>{{ formatDate(room.date) }}</div>
                         <div class="text-xs text-gray-600">{{ room.name }}</div>
@@ -181,6 +186,9 @@ export default {
         },
         roomsDetailsFamily() {
             return this.$store.getters.roomsDetailsFamily;
+        },
+        roomsDetailsVilla(){
+          return this.$store.getters.roomsDetailsVilla;
         },
         editBooking() {
             return this.$store.state.editBooking;
