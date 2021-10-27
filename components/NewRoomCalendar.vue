@@ -688,10 +688,12 @@ export default {
             const firstRoom = this.initialRooms[0];
 
             if (firstRoom) {
-                if (firstRoom.room_id > 0 && firstRoom.room_id < 5) {
+                if (firstRoom.room_id > 0 && firstRoom.room_id <= 5) {
                     this.seRoom = "standard";
-                } else {
+                } else if (firstRoom.room_id > 5 && firstRoom.room_id <= 9) {
                     this.seRoom = "family";
+                } else {
+                    this.seRoom = "villa";
                 }
 
                 const allDates = this.initialRooms.map((r) => r.date);

@@ -206,8 +206,10 @@ export const getters: GetterTree<RootState, RootState> = {
 
     const standardBigMax = 2;
     const familyBigMax = 6;
+    const villaBigMax = 6;
     const standardSmallMax = 2;
     const familySmallMax = 2;
+    const villaSmallMax = 2;
 
     let totalBigMax = 0;
     let totalSmallMax = 0;
@@ -219,6 +221,9 @@ export const getters: GetterTree<RootState, RootState> = {
       } else if (type == 'family') {
         totalBigMax += familyBigMax;
         totalSmallMax += familySmallMax;
+      } else if (type == 'villa') {
+        totalBigMax += villaBigMax;
+        totalSmallMax += villaSmallMax;
       }
     });
 
