@@ -240,6 +240,8 @@ export const getters: GetterTree<RootState, RootState> = {
         } else {
           return price + room.price;
         }
+      } else if (room.type == 'villa') {
+        return price + room.price;
       }
     }, 0);
 
@@ -286,13 +288,11 @@ export const getters: GetterTree<RootState, RootState> = {
     myDates.forEach(date => {
       let shouldCount = true;
       noDiscountDates.some((noDate: string) => {
-        // console.log("----");
-        // console.log(parseISO(date));
-        // console.log(parseISO(noDate));
-        // console.log("Day -- " + isSameDay(parseISO(date), parseISO(noDate)));
-        // console.log("Month -- " + isSameMonth(parseISO(date), parseISO(noDate)));
-        // if ((isSameDay(parseISO(date), parseISO(noDate)) && isSameMonth(parseISO(date), parseISO(noDate)))) {
-        if ((isSameDay(parseISO(date), parseISO(noDate)) && isSameMonth(parseISO(date), parseISO(noDate)) && isSameYear(parseISO(date), parseISO(noDate)))) {
+        if (
+          (isSameDay(parseISO(date), parseISO(noDate)) &&
+            isSameMonth(parseISO(date), parseISO(noDate)) &&
+            isSameYear(parseISO(date), parseISO(noDate)))
+        ) {
           shouldCount = false;
           return true;
         }
@@ -394,6 +394,8 @@ export const getters: GetterTree<RootState, RootState> = {
   },
   previousTotalPaid: (state: RootState, getters) => {
     // return state.editBooking.payment.subtotal;
+    if (!state.editBooking) return 0;
+
     return state.editBooking.payment.total + (Math.abs(state.editBooking.payment.discount_amount) + Math.abs(state.editBooking.payment.voucher))
   },
   differenceToPay: (state: RootState, getters) => {
