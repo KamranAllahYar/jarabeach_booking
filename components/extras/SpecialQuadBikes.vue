@@ -31,10 +31,10 @@
                     <input type="radio" :value="1" v-model="selectedQuantity" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                     <div>One quad bike</div>
                 </label>
-                <label class="flex items-center">
+                <!-- <label class="flex items-center">
                     <input type="radio" :value="2" v-model="selectedQuantity" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400">
                     <div>Two quad bikes</div>
-                </label>
+                </label> -->
             </div>
 
             <div>
