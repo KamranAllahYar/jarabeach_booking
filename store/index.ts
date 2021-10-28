@@ -148,6 +148,7 @@ export const getters: GetterTree<RootState, RootState> = {
   extraPeoplePrice: (state: RootState, getters) => {
     let price = 0;
     const bigPrice = 50000;
+    const bigVillaPrice = 50000;
     const smallPrice = 35000;
 
     const noOfRooms = getters.totalRooms;
@@ -160,6 +161,8 @@ export const getters: GetterTree<RootState, RootState> = {
       if (r.type == 'standard') {
         bigMax += 2;
       } else if (r.type == 'family') {
+        bigMax += 3;
+      } else if (r.type == 'villa') {
         bigMax += 3;
       }
     });
@@ -234,55 +237,68 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return getters.smallPeople <= totalSmallMax;
   },
+  // roomPrice: (state: RootState, getters) => {
+  //   let prices = 0;
+
+  //   getters.bookedRooms.forEach((room: any) => {
+  //     if (room.type == 'family') {
+  //       prices += room.price;
+  //     }
+  //     else if (room.type == 'standard') {
+  //       if (getters.totalPeople == 1) {
+  //         prices += room.single_price;
+  //       } else {
+  //         prices += room.price;
+  //       }
+  //     } else if (room.type == 'villa') {
+  //       prices += room.price;
+  //     }
+  //   })
+
+  //   return prices;
+  // },
   roomPrice: (state: RootState, getters) => {
-    const roomPrices = getters.bookedRooms.reduce((price: number, room: any) => {
-      if (room.type == 'family') {
-        return price + room.price;
+    let totalPeople = getters.totalPeople;
+    let nowSingles = false;
+
+    let roomsLeft = getters.uniqueRooms.map((room_id: any) => {
+      return getters.bookedRooms.find((room: any) => room.room_id == room_id);
+    });
+
+    let roomPrices = 0;
+    for (let i = 0; i < getters.bookedRooms.length; i++) {
+      const nowRoom = getters.bookedRooms[i];
+
+      if (roomsLeft.length >= totalPeople) {
+        nowSingles = true;
+      } else {
+        nowSingles = false;
       }
-      else if (room.type == 'standard') {
-        if (getters.totalPeople == 1) {
-          return price + room.single_price;
-        } else {
-          return price + room.price;
-        }
-      } else if (room.type == 'villa') {
-        return price + room.price;
+
+      if (nowSingles) {
+        roomPrices += nowRoom.single_price;
+      } else {
+        roomPrices += nowRoom.price;
       }
-    }, 0);
+
+      if (nowRoom.type == 'villa') totalPeople -= 3;
+      if (nowRoom.type == 'family') totalPeople -= 3;
+      if (nowRoom.type == 'standard') totalPeople -= 2;
+      roomsLeft.splice(i, 1);
+    }
 
     return roomPrices;
   },
-  // roomPrice: (state: RootState, getters) => {
-  //   let totalPeople = getters.totalPeople;
-  //   let nowSingles = false;
+  roomVillaPrices: (state: RootState, getters) => {
+    let price = 0;
+    getters.bookedRooms.forEach((room: any) => {
+      if (room.type == 'villa') {
+        price += room.price;
+      }
+    });
 
-  //   let roomsLeft = getters.uniqueRooms.map((room_id: any) => {
-  //     return getters.bookedRooms.find((room: any) => room.room_id == room_id);
-  //   });
-
-  //   let roomPrices = 0;
-  //   for (let i = 0; i < getters.bookedRooms.length; i++) {
-  //     const nowRoom = getters.bookedRooms[i];
-
-  //     if (roomsLeft.length >= totalPeople) {
-  //       nowSingles = true;
-  //     } else {
-  //       nowSingles = false;
-  //     }
-
-  //     if (nowSingles) {
-  //       roomPrices += nowRoom.single_price;
-  //     } else {
-  //       roomPrices += nowRoom.price;
-  //     }
-
-  //     if (nowRoom.type == 'family') totalPeople -= 3;
-  //     if (nowRoom.type == 'standard') totalPeople -= 2;
-  //     roomsLeft.splice(i, 1);
-  //   }
-
-  //   return roomPrices;
-  // },
+    return price;
+  },
   roomDiscountPercent: (state: RootState, getters) => {
     const roomGroup = groupBy(getters.bookedRooms, 'date');
 
@@ -318,7 +334,8 @@ export const getters: GetterTree<RootState, RootState> = {
     return percent;
   },
   roomDiscount: (state: RootState, getters) => {
-    return getters.roomPrice * (getters.roomDiscountPercent / 100);
+    const roomPriceForDiscount = getters.roomPrice - getters.roomVillaPrices;
+    return roomPriceForDiscount * (getters.roomDiscountPercent / 100);
   },
   memberDiscount: (state: RootState, getters) => {
     if (state.guest.is_member) {
