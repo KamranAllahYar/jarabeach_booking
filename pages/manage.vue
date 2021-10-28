@@ -194,15 +194,21 @@ export default {
 
             const hoursDiff = differenceInHours(
                 parseISO(this.earliestDate),
-                new Date()
+                new Date().setHours(13)
             );
             const totalRooms = this.totalRooms;
 
+            console.log(totalRooms);
+            console.log(hoursDiff);
+
             if (totalRooms >= 5 && hoursDiff <= 169) {
+                console.log("5 - 169");
                 return false;
             } else if (totalRooms >= 3 && hoursDiff <= 96) {
+                console.log("3 - 96");
                 return false;
             } else if (totalRooms >= 2 && hoursDiff <= 72) {
+                console.log("2 - 72");
                 return false;
             } else if (totalRooms >= 1 && hoursDiff <= 48) {
                 return false;

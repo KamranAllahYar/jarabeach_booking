@@ -122,6 +122,10 @@ export const getters: GetterTree<RootState, RootState> = {
     const rooms = getters.bookedRooms.filter((room: any) => room.type == 'family').map((room: any) => room.room_id);
     return rooms.filter(onlyUnique);
   },
+  roomsDetailsVilla: (state: RootState, getters) => {
+    const rooms = getters.bookedRooms.filter((room: any) => room.type == 'villa').map((room: any) => room.room_id);
+    return rooms.filter(onlyUnique);
+  },
   uniqueRooms: (state: RootState, getters) => {
     const roomGroup = groupBy(getters.bookedRooms, 'room_id');
     return Object.keys(roomGroup);
@@ -144,6 +148,7 @@ export const getters: GetterTree<RootState, RootState> = {
   extraPeoplePrice: (state: RootState, getters) => {
     let price = 0;
     const bigPrice = 50000;
+    const bigVillaPrice = 100000;
     const smallPrice = 35000;
 
     const noOfRooms = getters.totalRooms;
@@ -157,8 +162,11 @@ export const getters: GetterTree<RootState, RootState> = {
         bigMax += 2;
       } else if (r.type == 'family') {
         bigMax += 3;
+      } else if (r.type == 'villa') {
+        bigMax += 3;
       }
     });
+
     let smallMax = 2 * noOfRooms;
 
     if (getters.bigPeople > bigMax) {
@@ -201,8 +209,10 @@ export const getters: GetterTree<RootState, RootState> = {
 
     const standardBigMax = 2;
     const familyBigMax = 6;
+    const villaBigMax = 6;
     const standardSmallMax = 2;
     const familySmallMax = 2;
+    const villaSmallMax = 2;
 
     let totalBigMax = 0;
     let totalSmallMax = 0;
@@ -214,6 +224,9 @@ export const getters: GetterTree<RootState, RootState> = {
       } else if (type == 'family') {
         totalBigMax += familyBigMax;
         totalSmallMax += familySmallMax;
+      } else if (type == 'villa') {
+        totalBigMax += villaBigMax;
+        totalSmallMax += villaSmallMax;
       }
     });
 
@@ -240,6 +253,30 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return roomPrices;
   },
+  // roomPrice: (state: RootState, getters) => {
+  //   let totalPeople = getters.totalPeople;
+  //   let nowSingles = false;
+
+  // roomPrice: (state: RootState, getters) => {
+  //   let prices = 0;
+
+  //   getters.bookedRooms.forEach((room: any) => {
+  //     if (room.type == 'family') {
+  //       prices += room.price;
+  //     }
+  //     else if (room.type == 'standard') {
+  //       if (getters.totalPeople == 1) {
+  //         prices += room.single_price;
+  //       } else {
+  //         prices += room.price;
+  //       }
+  //     } else if (room.type == 'villa') {
+  //       prices += room.price;
+  //     }
+  //   })
+
+  //   return prices;
+  // },
   roomPrice: (state: RootState, getters) => {
     let totalPeople = getters.totalPeople;
     let nowSingles = false;
@@ -264,12 +301,23 @@ export const getters: GetterTree<RootState, RootState> = {
         roomPrices += nowRoom.price;
       }
 
+      if (nowRoom.type == 'villa') totalPeople -= 3;
       if (nowRoom.type == 'family') totalPeople -= 3;
       if (nowRoom.type == 'standard') totalPeople -= 2;
       roomsLeft.splice(i, 1);
     }
 
     return roomPrices;
+  },
+  roomVillaPrices: (state: RootState, getters) => {
+    let price = 0;
+    getters.bookedRooms.forEach((room: any) => {
+      if (room.type == 'villa') {
+        price += room.price;
+      }
+    });
+
+    return price;
   },
   roomDiscountPercent: (state: RootState, getters) => {
     const roomGroup = groupBy(getters.bookedRooms, 'date');
@@ -281,13 +329,11 @@ export const getters: GetterTree<RootState, RootState> = {
     myDates.forEach(date => {
       let shouldCount = true;
       noDiscountDates.some((noDate: string) => {
-        // console.log("----");
-        // console.log(parseISO(date));
-        // console.log(parseISO(noDate));
-        // console.log("Day -- " + isSameDay(parseISO(date), parseISO(noDate)));
-        // console.log("Month -- " + isSameMonth(parseISO(date), parseISO(noDate)));
-        // if ((isSameDay(parseISO(date), parseISO(noDate)) && isSameMonth(parseISO(date), parseISO(noDate)))) {
-        if ((isSameDay(parseISO(date), parseISO(noDate)) && isSameMonth(parseISO(date), parseISO(noDate)) && isSameYear(parseISO(date), parseISO(noDate)))) {
+        if (
+          (isSameDay(parseISO(date), parseISO(noDate)) &&
+            isSameMonth(parseISO(date), parseISO(noDate)) &&
+            isSameYear(parseISO(date), parseISO(noDate)))
+        ) {
           shouldCount = false;
           return true;
         }
@@ -308,7 +354,8 @@ export const getters: GetterTree<RootState, RootState> = {
     return percent;
   },
   roomDiscount: (state: RootState, getters) => {
-    return getters.roomPrice * (getters.roomDiscountPercent / 100);
+    const roomPriceForDiscount = getters.roomPrice - getters.roomVillaPrices;
+    return roomPriceForDiscount * (getters.roomDiscountPercent / 100);
   },
   memberDiscount: (state: RootState, getters) => {
     if (state.guest.is_member) {
@@ -389,6 +436,8 @@ export const getters: GetterTree<RootState, RootState> = {
   },
   previousTotalPaid: (state: RootState, getters) => {
     // return state.editBooking.payment.subtotal;
+    if (!state.editBooking) return 0;
+
     return state.editBooking.payment.total + (Math.abs(state.editBooking.payment.discount_amount) + Math.abs(state.editBooking.payment.voucher))
   },
   differenceToPay: (state: RootState, getters) => {

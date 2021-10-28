@@ -203,6 +203,9 @@ export default {
         paystackkey() {
             return this.$config.PAYMENT_PUBLIC_KEY;
         },
+        subTotal() {
+            return this.$store.getters.subTotal;
+        },
     },
     methods: {
         holdDisclaimerToggle(v) {
@@ -301,7 +304,10 @@ export default {
             console.log("Check for - " + this.code);
 
             this.$axios
-                .post(`/check-discount`, { code: this.code })
+                .post(`/check-discount`, {
+                    code: this.code,
+                    total: this.subTotal,
+                })
                 .then(({ data }) => {
                     console.log(data);
                     if (data.success) {

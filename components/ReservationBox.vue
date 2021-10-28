@@ -23,7 +23,7 @@
                 <div>
                     Duration
                     <br />
-                    <div class="text-xs text-gray-700" v-if="roomDiscountPercent > 0">
+                    <div class="text-xs text-gray-700" v-if="roomDiscountPercent > 0 && roomDiscount > 0">
                         {{roomDiscountPercent}}% Discount
                     </div>
                 </div>
@@ -48,6 +48,11 @@
                         <div v-if="formatAndStringCabin(roomsDetailsFamily)">
                             Family Cabin {{ formatAndStringCabin(roomsDetailsFamily) }}
                         </div>
+                    </div>
+                    <div class="text-sm text-right" v-if="roomsDetailsVilla.length > 0">
+                        <div v-if="roomsDetailsVilla.length == 2">Sunrise 10 & Sunset 11</div>
+                        <div v-else-if="roomsDetailsVilla.includes(10)">Sunrise 10</div>
+                        <div v-else-if="roomsDetailsVilla.includes(11)">Sunset 11</div>
                     </div>
                     <!-- <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
                         <div>{{ formatDate(room.date) }}</div>
@@ -105,8 +110,11 @@
                 <div>Sub-total</div>
                 <div class="font-bold">{{ currency(subTotal) }}</div>
             </div>
-            <div class="flex justify-between px-3 my-3" v-if="roomDiscountPercent > 0">
-                <div>{{roomDiscountPercent}}% Room Discount</div>
+            <div class="flex justify-between px-3 my-3" v-if="roomDiscountPercent > 0 && roomDiscount > 0">
+                <div>
+                    {{roomDiscountPercent}}% Room Discount
+                    <small class="text-xs text-gray-700" v-if="roomVillaPrices > 0"><br />(exludes Villas)</small>
+                </div>
                 <div class="font-bold"> - {{ currency(roomDiscount) }}</div>
             </div>
             <div class="flex justify-between px-3 my-3" v-if="memberDiscount > 0">
@@ -188,6 +196,9 @@ export default {
         roomsDetailsFamily() {
             return this.$store.getters.roomsDetailsFamily;
         },
+        roomsDetailsVilla() {
+            return this.$store.getters.roomsDetailsVilla;
+        },
         editBooking() {
             return this.$store.state.editBooking;
         },
@@ -221,6 +232,9 @@ export default {
         },
         rooms() {
             return this.$store.getters.bookedRooms;
+        },
+        roomVillaPrices() {
+            return this.$store.getters.roomVillaPrices;
         },
         roomDiscountPercent() {
             return this.$store.getters.roomDiscountPercent;

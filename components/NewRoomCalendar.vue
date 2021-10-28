@@ -350,7 +350,7 @@ export default {
               return `grid-rows-${totalRooms} grid-cols-2`
             }
 
-            return "grid-rows-5 grid-cols-2";
+            return "grid-rows-6 grid-cols-2";
 
             // "grid-rows-1 grid-rows-2 grid-rows-3 grid-rows-4 grid-rows-5"
         },
@@ -683,14 +683,14 @@ export default {
             if (this.seRoom == "standard") {
                 if (this.bigPeople <= 2) {
                     this.notAllRooms = true;
-                    // } else if (this.smallPeople <= 1) {
-                    //     this.notAllRooms = true;
                 }
             } else if (this.seRoom == "family") {
                 if (this.bigPeople <= 3) {
                     this.notAllRooms = true;
-                    // } else if (this.smallPeople <= 2) {
-                    //     this.notAllRooms = true;
+                }
+            } else if (this.seRoom == "villa") {
+                if (this.bigPeople <= 3) {
+                    this.notAllRooms = true;
                 }
             }
 
@@ -751,10 +751,12 @@ export default {
             const firstRoom = this.initialRooms[0];
 
             if (firstRoom) {
-                if (firstRoom.room_id > 0 && firstRoom.room_id < 5) {
+                if (firstRoom.room_id > 0 && firstRoom.room_id <= 5) {
                     this.seRoom = "standard";
-                } else {
+                } else if (firstRoom.room_id > 5 && firstRoom.room_id <= 9) {
                     this.seRoom = "family";
+                } else {
+                    this.seRoom = "villa";
                 }
 
                 const allDates = this.initialRooms.map((r) => r.date);
