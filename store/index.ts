@@ -148,7 +148,7 @@ export const getters: GetterTree<RootState, RootState> = {
   extraPeoplePrice: (state: RootState, getters) => {
     let price = 0;
     const bigPrice = 50000;
-    const bigVillaPrice = 50000;
+    const bigVillaPrice = 100000;
     const smallPrice = 35000;
 
     const noOfRooms = getters.totalRooms;
