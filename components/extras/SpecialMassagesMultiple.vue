@@ -13,7 +13,7 @@
                 </p>
 
                 <div class="mt-3">
-                    <div v-if="selectedMassages.length < 2" class="flex flex-wrap items-center justify-between mt-0 space-y-4 divide-y md:space-y-3">
+                    <div v-if="showAddButton" class="flex flex-wrap items-center justify-between mt-0 space-y-4 divide-y md:space-y-3">
                         <div class="flex flex-col w-full py-3 md:flex-row md:items-center">
                             <div class="flex flex-col items-center w-full space-x-0 space-y-2 font-light md:space-y-4 md:items-start">
                                 <div class="w-full">
@@ -52,7 +52,7 @@
                         </div>
                     </div>
 
-                    <div @click="addNewMassage" v-if="selectedMassages.length < 2" class="flex items-center flex-shrink-0 h-10 mt-0 text-xs cursor-pointer w-44 text-brand-blue hover:text-brand-blue-300">
+                    <div @click="addNewMassage" v-if="showAddButton" class="flex items-center flex-shrink-0 h-10 mt-0 text-xs cursor-pointer w-44 text-brand-blue hover:text-brand-blue-300">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                         </svg>
@@ -109,6 +109,9 @@ export default {
         },
         massages() {
             return this.$store.getters["extras/allNewmassages"];
+        },
+        showAddButton() {
+            return this.selectedMassages.length < 24;
         },
     },
     methods: {
@@ -181,11 +184,11 @@ export default {
         }
 
         if (this.massages.length > 0 && this.selectedMassages.length <= 0) {
-            this.selectedMassages.push({
-                id: this.massages[0].id,
-                date: this.dates.length > 0 ? this.dates[0] : null,
-                time: "Afternoon",
-            });
+            // this.selectedMassages.push({
+            //     id: this.massages[0].id,
+            //     date: this.dates.length > 0 ? this.dates[0] : null,
+            //     time: "Afternoon",
+            // });
         }
 
         if (this.dates.length > 0) {
