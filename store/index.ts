@@ -204,12 +204,12 @@ export const getters: GetterTree<RootState, RootState> = {
       const r = state.roomsData.find(r => r.id == roomid);
       if (r.type == 'standard') {
         bigMax += 2;
-        smallMax += 2;
+        smallMax += 1;
       } else if (r.type == 'family') {
         bigMax += 3;
         smallMax += 2;
       } else if (r.type == 'villa') {
-        bigMax += 3;
+        bigMax += 2;
         smallMax += 2;
       }
     });
