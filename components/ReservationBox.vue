@@ -129,6 +129,11 @@
                 <div>Extra Guest(s)</div>
                 <div class="font-bold"> + {{ currency(extraPeoplePrice) }}</div>
             </div>
+            <!-- <div class="flex justify-between px-3 my-3">
+                <div>Extra Guest(s)</div>
+                <pre>{{extraPeople}}</pre>
+                <div class="font-bold"> + {{ currency(extraPeoplePrice) }}</div>
+            </div> -->
         </div>
 
         <div class="w-full px-3 py-3 border rounded-md border-brand-blue-300 bg-brand-blue-100">
@@ -256,6 +261,9 @@ export default {
         },
         extraPeoplePrice() {
             return this.$store.getters.extraPeoplePrice;
+        },
+        extraPeople() {
+            return this.$store.getters.extraPeople;
         },
         confirmEnoughRooms() {
             return this.$store.getters.confirmEnoughRooms;

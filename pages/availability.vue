@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="flex-shrink-0 w-full px-6 md:px-0 md:w-3/12">
-                <ReservationBox showDiscount hideExtraGuests />
+                <ReservationBox showDiscount :hideExtraGuests="false" />
             </div>
         </div>
 

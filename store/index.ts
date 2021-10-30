@@ -145,7 +145,92 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return [...new Set(dates)];
   },
+  extraPeopleRoomFit: (state: RootState, getters) => {
+    const allExtra = getters.extraPeople.total;
+
+    let onlyVilla = true;
+    getters.uniqueRooms.map((roomid: any) => {
+      const r = state.roomsData.find(r => r.id == roomid);
+      if (r.type == 'standard') {
+        onlyVilla = false;
+      } else if (r.type == 'family') {
+        onlyVilla = false;
+      }
+    });
+
+    if (onlyVilla) {
+      return {
+        standard: 0,
+        villa: allExtra,
+      }
+    }
+
+    return {
+      standard: allExtra,
+      villa: 0,
+    }
+  },
+  extraPeople: (state: RootState, getters) => {
+    let bigMax = 0;
+    let smallMax = 0;
+
+    getters.uniqueRooms.map((roomid: any) => {
+      const r = state.roomsData.find(r => r.id == roomid);
+      if (r.type == 'standard') {
+        bigMax += 2;
+        smallMax += 2;
+      } else if (r.type == 'family') {
+        bigMax += 3;
+        smallMax += 2;
+      } else if (r.type == 'villa') {
+        bigMax += 3;
+        smallMax += 2;
+      }
+    });
+
+    const totalBig = Math.max(getters.bigPeople - bigMax, 0);
+    const totalSmall = Math.max(getters.smallPeople - smallMax, 0);
+
+    return {
+      big: totalBig,
+      small: totalSmall,
+      total: totalBig + totalSmall,
+    }
+  },
   extraPeoplePrice: (state: RootState, getters) => {
+    let price = 0;
+    let smallPrice = 35000;
+    let bigPrice = 50000;
+    const bigVillaPrice = 100000;
+
+    const bigPeople = getters.extraPeople.big;
+    const smallPeople = getters.extraPeople.small;
+    const totalPeople = getters.extraPeople.total;
+
+
+    if (totalPeople <= 0) return 0;
+
+    const roomFit = getters.extraPeopleRoomFit;
+
+    if (roomFit.villa > 0) {
+      return bigVillaPrice * totalPeople * +getters.totalNights;
+    }
+
+    //If there are no teens
+    if (getters.noTeens <= 0) {
+      price += (bigPeople * bigPrice);
+      price += (smallPeople * smallPrice);
+    } else {
+      //If there are teens
+      const noOfTeens = getters.noTeens;
+
+      price += Math.max(bigPeople - noOfTeens, 0) * bigPrice;
+      price += (smallPeople + noOfTeens) * smallPrice;
+    }
+
+    return price * +getters.totalNights;
+  },
+  oldExtraPeoplePrice: (state: RootState, getters) => {
     let price = 0;
     const bigPrice = 50000;
     const bigVillaPrice = 100000;
