@@ -131,7 +131,7 @@
             </div>
             <!-- <div class="flex justify-between px-3 my-3">
                 <div>Extra Guest(s)</div>
-                <pre>{{extraPeople}}</pre>
+                <pre>{{extraPeople}} -- {{ hasVillaMix }}</pre>
                 <div class="font-bold"> + {{ currency(extraPeoplePrice) }}</div>
             </div> -->
         </div>
@@ -189,6 +189,9 @@ export default {
     //     };
     // },
     computed: {
+        hasVillaMix() {
+            return this.$store.getters.hasVillaMixed;
+        },
         dateFromTo() {
             return this.$store.getters.dateFromTo;
         },

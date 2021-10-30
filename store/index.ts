@@ -61,6 +61,8 @@ export const state = () => ({
   fullPageLoader: false as boolean,
 
   noDiscountDates: [] as string[],
+
+  customVillaExtras: [] as any[],
 })
 
 export type RootState = ReturnType<typeof state>
@@ -75,6 +77,7 @@ export const getters: GetterTree<RootState, RootState> = {
   smallPeople: (state: RootState, getters) => getters.noChildren - getters.noTeens,
   roomsData: (state: RootState) => state.roomsData,
   policies: (state: RootState) => state.policies,
+  customVillaExtras: (state: RootState) => state.customVillaExtras,
   bookedRooms: (state: RootState) => {
     const bRooms = [] as any[];
 
@@ -145,6 +148,26 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return [...new Set(dates)];
   },
+  hasVillaMixed: (state: RootState, getters) => {
+    let villa = 0;
+    let notVilla = 0;
+
+    for (let i = 0; i < getters.uniqueRooms.length; i++) {
+      const roomid = getters.uniqueRooms[i];
+      const r = state.roomsData.find(r => r.id == roomid);
+
+      if (r.type == 'standard' || r.type == 'family') {
+        notVilla++;
+      } else if (r.type == 'villa') {
+        villa++;
+      }
+    }
+
+    if (villa > 0 && notVilla > 0) {
+      return true;
+    }
+    return false;
+  },
   extraPeopleRoomFit: (state: RootState, getters) => {
     const allExtra = getters.extraPeople.total;
 
@@ -188,13 +211,31 @@ export const getters: GetterTree<RootState, RootState> = {
       }
     });
 
-    const totalBig = Math.max(getters.bigPeople - bigMax, 0);
+    const noTeens = getters.noTeens;
+
+    let totalBig = Math.max(getters.bigPeople - bigMax, 0);
     const totalSmall = Math.max(getters.smallPeople - smallMax, 0);
 
+    let totalTeen = 0;
+
+    // return {
+    //   big: totalBig,
+    //   teen: noTeens,
+    // }
+
+    if (totalBig >= noTeens) {
+      totalBig -= noTeens;
+      totalTeen = noTeens;
+    } else {
+      totalTeen = totalBig;
+      totalBig = 0;
+    }
+
     return {
-      big: totalBig,
+      big: Math.max(totalBig, 0),
+      teen: totalTeen,
       small: totalSmall,
-      total: totalBig + totalSmall,
+      total: totalBig + totalSmall + totalTeen,
     }
   },
   extraPeoplePrice: (state: RootState, getters) => {
@@ -204,6 +245,7 @@ export const getters: GetterTree<RootState, RootState> = {
     const bigVillaPrice = 100000;
 
     const bigPeople = getters.extraPeople.big;
+    const teenPeople = getters.extraPeople.teen;
     const smallPeople = getters.extraPeople.small;
     const totalPeople = getters.extraPeople.total;
 
@@ -212,21 +254,34 @@ export const getters: GetterTree<RootState, RootState> = {
 
     const roomFit = getters.extraPeopleRoomFit;
 
+    if (getters.hasVillaMixed) {
+      const customExtras = getters.customVillaExtras;
+      if (customExtras.length > 0) {
+        for (let i = 0; i < customExtras.length; i++) {
+          const extra = customExtras[i];
+
+          if (extra.room == 'villa') {
+            price += bigVillaPrice;
+          } else {
+            if (extra.type == 'teen') {
+              price += smallPrice;
+            } else {
+              price += bigPrice;
+            }
+          }
+        }
+
+        return price * +getters.totalNights;
+      }
+    }
+
     if (roomFit.villa > 0) {
       return bigVillaPrice * totalPeople * +getters.totalNights;
     }
 
-    //If there are no teens
-    if (getters.noTeens <= 0) {
-      price += (bigPeople * bigPrice);
-      price += (smallPeople * smallPrice);
-    } else {
-      //If there are teens
-      const noOfTeens = getters.noTeens;
-
-      price += Math.max(bigPeople - noOfTeens, 0) * bigPrice;
-      price += (smallPeople + noOfTeens) * smallPrice;
-    }
+    price += (bigPeople * bigPrice);
+    price += (teenPeople * smallPrice);
+    price += (smallPeople * smallPrice);
 
     return price * +getters.totalNights;
   },
@@ -546,6 +601,9 @@ export const getters: GetterTree<RootState, RootState> = {
 }
 
 export const mutations: MutationTree<RootState> = {
+  UPDATE_VILLA_EXTRAS: (state: RootState, extras) => {
+    state.customVillaExtras = extras;
+  },
   TOGGLE_FULL_PAGE_LOADER: (state: RootState, value) => {
     state.fullPageLoader = value
   },
@@ -704,6 +762,8 @@ export const mutations: MutationTree<RootState> = {
     state.editMode = false as boolean;
     state.editBooking = null as any;
     state.adminEditMode = false as boolean;
+
+    state.customVillaExtras = [] as any[];
   },
 }
 
