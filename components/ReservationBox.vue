@@ -313,7 +313,7 @@ export default {
             return arr.join(", ") + " & " + last;
         },
         formatDate(date) {
-            return format(parseISO(date), "do MMM Y");
+            return format(parseISO(date), "do MMM yyyy");
         },
         currency(num) {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

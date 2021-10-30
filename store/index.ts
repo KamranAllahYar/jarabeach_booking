@@ -112,9 +112,12 @@ export const getters: GetterTree<RootState, RootState> = {
     if (orderedDates.length == 0) return;
 
     if (orderedDates.length == 1) {
-      return format(parseISO(orderedDates[0]), "do MMM Y");
+      const startDate = parseISO(orderedDates[0]);
+      return format(startDate, "do MMM yyyy");
     } else {
-      return format(parseISO(orderedDates[0]), "do MMM Y") + " - " + format(parseISO(orderedDates[orderedDates.length - 1]), "do MMM Y");;
+      const beginDate = parseISO(orderedDates[0]);
+      const endDate = parseISO(orderedDates[orderedDates.length - 1]);
+      return format(beginDate, "do MMM yyyy") + " - " + format(endDate, "do MMM yyyy");
     }
   },
   roomsDetailsStandard: (state: RootState, getters) => {
