@@ -433,6 +433,7 @@ export default {
 
             this.roomIds.forEach((roomId) => {
                 dates.forEach((date) => {
+                  console.log(date);
                     bookedRooms.push({
                         room_id: roomId,
                         date: date,
