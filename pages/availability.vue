@@ -69,9 +69,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <select @change="addToExtraRooms($event.target.value, extraType, i)" class="w-full border border-gray-200 rounded-md outline-none focus:ring focus:outline-none"
+                            <select @change="addToExtraRooms($event.target.value, extraType, i)" class="w-full text-sm border border-gray-200 rounded-md outline-none focus:ring focus:outline-none"
                                 style="box-shadow: none">
-                                <option value="">--SELECT ROOM--</option>
+                                <option value="">Select Room</option>
                                 <option v-for="(room, ix) in uniqueRooms" :key="ix" :value="roomData[room.room_id].type">
                                     {{ roomData[room.room_id].name }}
                                 </option>
