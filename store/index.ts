@@ -237,11 +237,6 @@ export const getters: GetterTree<RootState, RootState> = {
 
     let totalTeen = 0;
 
-    // return {
-    //   big: totalBig,
-    //   teen: noTeens,
-    // }
-
     if (totalBig >= noTeens) {
       totalBig -= noTeens;
       totalTeen = noTeens;
@@ -270,52 +265,6 @@ export const getters: GetterTree<RootState, RootState> = {
     }
 
     return price;
-
-    // let price = 0;
-    // let smallPrice = 35000;
-    // let bigPrice = 50000;
-    // const bigVillaPrice = 100000;
-
-    // const bigPeople = getters.extraPeople.big;
-    // const teenPeople = getters.extraPeople.teen;
-    // const smallPeople = getters.extraPeople.small;
-    // const totalPeople = getters.extraPeople.total;
-
-
-    // if (totalPeople <= 0) return 0;
-
-    // const roomFit = getters.extraPeopleRoomFit;
-
-    // if (getters.hasVillaMixed) {
-    //   const customExtras = getters.customVillaExtras;
-    //   if (customExtras.length > 0) {
-    //     for (let i = 0; i < customExtras.length; i++) {
-    //       const extra = customExtras[i];
-
-    //       if (extra.room == 'villa') {
-    //         price += bigVillaPrice;
-    //       } else {
-    //         if (extra.type == 'teen') {
-    //           price += smallPrice;
-    //         } else {
-    //           price += bigPrice;
-    //         }
-    //       }
-    //     }
-
-    //     return price * +getters.totalNights;
-    //   }
-    // }
-
-    // if (roomFit.villa > 0) {
-    //   return bigVillaPrice * totalPeople * +getters.totalNights;
-    // }
-
-    // price += (bigPeople * bigPrice);
-    // price += (teenPeople * smallPrice);
-    // price += (smallPeople * smallPrice);
-
-    // return price * +getters.totalNights;
   },
   oldExtraPeoplePrice: (state: RootState, getters) => {
     let price = 0;
@@ -384,42 +333,6 @@ export const getters: GetterTree<RootState, RootState> = {
     }
 
     return true;
-    // const roomTypes = getters.uniqueRooms.map((roomid: any) => {
-    //   const r = state.roomsData.find(r => r.id == roomid);
-    //   if (r) {
-    //     return r.type;
-    //   }
-    // });
-
-    // const standardBigMax = 2;
-    // const familyBigMax = 6;
-    // const villaBigMax = 6;
-    // const standardSmallMax = 2;
-    // const familySmallMax = 2;
-    // const villaSmallMax = 2;
-
-    // let totalBigMax = 0;
-    // let totalSmallMax = 0;
-
-    // roomTypes.forEach((type: any) => {
-    //   if (type == 'standard') {
-    //     totalBigMax += standardBigMax;
-    //     totalSmallMax += standardSmallMax;
-    //   } else if (type == 'family') {
-    //     totalBigMax += familyBigMax;
-    //     totalSmallMax += familySmallMax;
-    //   } else if (type == 'villa') {
-    //     totalBigMax += villaBigMax;
-    //     totalSmallMax += villaSmallMax;
-    //   }
-    // });
-
-    // const bigDiff = totalBigMax - getters.bigPeople;
-    // if (bigDiff < 0) return false;
-
-    // totalSmallMax += bigDiff;
-
-    // return getters.smallPeople <= totalSmallMax;
   },
   oldRoomPrice: (state: RootState, getters) => {
     const roomPrices = getters.bookedRooms.reduce((price: number, room: any) => {
@@ -437,30 +350,6 @@ export const getters: GetterTree<RootState, RootState> = {
 
     return roomPrices;
   },
-  // roomPrice: (state: RootState, getters) => {
-  //   let totalPeople = getters.totalPeople;
-  //   let nowSingles = false;
-
-  // roomPrice: (state: RootState, getters) => {
-  //   let prices = 0;
-
-  //   getters.bookedRooms.forEach((room: any) => {
-  //     if (room.type == 'family') {
-  //       prices += room.price;
-  //     }
-  //     else if (room.type == 'standard') {
-  //       if (getters.totalPeople == 1) {
-  //         prices += room.single_price;
-  //       } else {
-  //         prices += room.price;
-  //       }
-  //     } else if (room.type == 'villa') {
-  //       prices += room.price;
-  //     }
-  //   })
-
-  //   return prices;
-  // },
   roomPrice: (state: RootState, getters) => {
     let price = 0;
 
@@ -474,37 +363,6 @@ export const getters: GetterTree<RootState, RootState> = {
     }
 
     return price;
-
-    // let totalPeople = getters.totalPeople;
-    // let nowSingles = false;
-
-    // let roomsLeft = getters.uniqueRooms.map((room_id: any) => {
-    //   return getters.bookedRooms.find((room: any) => room.room_id == room_id);
-    // });
-
-    // let roomPrices = 0;
-    // for (let i = 0; i < getters.bookedRooms.length; i++) {
-    //   const nowRoom = getters.bookedRooms[i];
-
-    //   if (roomsLeft.length >= totalPeople) {
-    //     nowSingles = true;
-    //   } else {
-    //     nowSingles = false;
-    //   }
-
-    //   if (nowSingles) {
-    //     roomPrices += nowRoom.single_price;
-    //   } else {
-    //     roomPrices += nowRoom.price;
-    //   }
-
-    //   if (nowRoom.type == 'villa') totalPeople -= 3;
-    //   if (nowRoom.type == 'family') totalPeople -= 3;
-    //   if (nowRoom.type == 'standard') totalPeople -= 2;
-    //   roomsLeft.splice(i, 1);
-    // }
-
-    // return roomPrices;
   },
   roomVillaPrices: (state: RootState, getters) => {
     let price = 0;
