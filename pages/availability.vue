@@ -26,6 +26,9 @@
 
               {{ hasVillaMix }}
             </pre> -->
+            <pre>
+              {{ individualDates }}
+            </pre>
             <div class="flex-shrink-0 w-full px-6 md:px-0 md:w-3/12">
                 <ReservationBox showDiscount :hideExtraGuests="false" />
             </div>
@@ -145,6 +148,9 @@ export default {
         };
     },
     computed: {
+        individualDates() {
+            return this.$store.getters.individualDates;
+        },
         uniqueRooms() {
             const allRooms = this.rooms;
 
@@ -288,6 +294,7 @@ export default {
                 this.$toast.error(
                     "Please select the same amount of rooms across each date"
                 );
+                return;
             }
 
             if (this.totalRooms > this.totalPeople) {
@@ -365,12 +372,8 @@ export default {
         }, 2000);
     },
     created() {
-        console.log("STORE_ROOMS");
         this.rooms = this.$store.state.rooms.slice(0);
 
-        console.log(this.rooms);
-        console.log("-------CREATED--------");
-        console.log(this.$store.getters.customVillaExtras);
         if (this.$store.getters.customVillaExtras.length > 0) {
             this.transformExtras();
         } else {

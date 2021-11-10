@@ -119,7 +119,7 @@ export default {
                 return `grid-rows-${totalRooms} grid-cols-2`;
             }
 
-            return "grid-rows-5 grid-cols-2";
+            return "grid-rows-6 grid-cols-2";
 
             // "grid-rows-1 grid-rows-2 grid-rows-3 grid-rows-4 grid-rows-5"
         },

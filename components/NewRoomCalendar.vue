@@ -106,13 +106,13 @@
                             class="absolute bottom-0 right-0 z-50 text-sm transform translate-x-full translate-y-full bg-white border rounded-lg cursor-auto"
                             style="--tw-translate-x: 0%; --tw-translate-y: -55px">
 
-                            <!-- <RoomSelect v-if="showRoomSelect && canSwap"
+                            <RoomSelect v-if="showRoomSelect && canSwap"
                                 :startDate="startDate" :endDate="endDate" :seRoom="seRoom" :notAllRooms="notAllRooms"
                                 :initialRooms="initialRooms"
                                 @selected="generateAndEmitBookedRoomsBetter($event)"
-                                @back="cancelIndividualRoomSelect()" /> -->
+                                @back="cancelIndividualRoomSelect()" />
 
-                            <div class="py-2 pl-3 pr-4" :style="hoveredRooms.length > 5 ? 'width: 350px' : 'width: 185px'">
+                            <div v-else class="py-2 pl-3 pr-4" :style="hoveredRooms.length > 5 ? 'width: 350px' : 'width: 185px'">
                                 <div v-if="loadingRoomOptions">
                                     <svg class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -139,7 +139,8 @@
                                         No common rooms available for booking on these dates
                                     </div>
                                 </div>
-                                <!-- <div class="py-2 text-xs text-left" v-if="canSwap && shouldSwap">
+
+                                <div class="py-2 text-xs text-left" v-if="canSwap && shouldSwap">
                                     <p>
                                         We are able to welcome you on your chosen dates in the rooms above.
                                         However, additional rooms may be available. Please proceed
@@ -151,7 +152,7 @@
                                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                                         </svg>
                                     </button>
-                                </div> -->
+                                </div>
 
                             </div>
                         </div>

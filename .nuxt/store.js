@@ -20,6 +20,7 @@ let store = {};
   store.modules = store.modules || {}
 
   resolveStoreModules(require('../store/extras.ts'), 'extras.ts')
+  resolveStoreModules(require('../store/functions.js'), 'functions.js')
 
   // If the environment supports hot reloading...
 
@@ -27,6 +28,7 @@ let store = {};
     // Whenever any Vuex module is updated...
     module.hot.accept([
       '../store/extras.ts',
+      '../store/functions.js',
       '../store/index.ts',
     ], () => {
       // Update `root.modules` with the latest definitions.
