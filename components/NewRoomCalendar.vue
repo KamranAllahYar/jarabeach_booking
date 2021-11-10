@@ -146,7 +146,7 @@
                                         However, additional rooms may be available. Please proceed
                                         if you are happy to change rooms during your visit
                                     </p>
-                                    <button class="flex items-center justify-end w-full pt-2 text-gray-800" @click="showRoomSelect = true">
+                                    <button class="flex items-center justify-end w-full pt-2 text-gray-800" @click="selectIndividualRooms()">
                                         Select Indivual Rooms
                                         <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
@@ -357,6 +357,9 @@ export default {
         },
         shouldSwap() {
             if (this.startDate == this.endDate) return false;
+
+            // if(this.hoveredRooms.length > 0) return false;
+
             return true;
         },
         startDateStr() {
@@ -477,8 +480,13 @@ export default {
         },
     },
     methods: {
+        selectIndividualRooms() {
+            this.showRoomSelect = true;
+            this.$store.commit("UPDATE_MULTI_ROOM", true);
+        },
         cancelIndividualRoomSelect() {
             this.showRoomSelect = false;
+            this.$store.commit("UPDATE_MULTI_ROOM", false);
             this.roomIds = [];
             this.generateAndEmitBookedRooms();
         },

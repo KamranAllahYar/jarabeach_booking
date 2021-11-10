@@ -65,6 +65,8 @@ export const state = () => ({
   noDiscountDates: [] as string[],
 
   customVillaExtras: [] as any[],
+
+  multiRoom: false as boolean,
 })
 
 export type RootState = ReturnType<typeof state>
@@ -80,6 +82,7 @@ export const getters: GetterTree<RootState, RootState> = {
   roomsData: (state: RootState) => state.roomsData,
   policies: (state: RootState) => state.policies,
   customVillaExtras: (state: RootState) => state.customVillaExtras,
+  multiRoom: (state: RootState) => state.multiRoom,
   bookedRooms: (state: RootState) => {
     const bRooms = [] as any[];
 
@@ -519,6 +522,9 @@ export const mutations: MutationTree<RootState> = {
   UPDATE_VILLA_EXTRAS: (state: RootState, extras) => {
     state.customVillaExtras = extras;
   },
+  UPDATE_MULTI_ROOM: (state: RootState, payload) => {
+    state.multiRoom = payload;
+  },
   TOGGLE_FULL_PAGE_LOADER: (state: RootState, value) => {
     state.fullPageLoader = value
   },
@@ -679,6 +685,8 @@ export const mutations: MutationTree<RootState> = {
     state.adminEditMode = false as boolean;
 
     state.customVillaExtras = [] as any[];
+
+    state.multiRoom = false as boolean;
   },
 }
 
@@ -930,6 +938,7 @@ export const actions: ActionTree<RootState, RootState> = {
       booked_rooms: state.rooms,
       prices: prices,
       admin_edit_mode: state.adminEditMode,
+      multi_room: state.multiRoom,
     }
 
     if (state.guest.id) {
