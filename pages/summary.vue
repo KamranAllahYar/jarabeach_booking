@@ -34,11 +34,17 @@
                                     <span v-else-if="extra.type == 'drinks'">
                                         {{ currency($store.getters['extras/drinksPrice']) }}
                                     </span>
+                                    <span v-else-if="extra.type == 'massages'">
+                                        {{ currency($store.getters['extras/massagesPrice']) }}
+                                    </span>
                                     <span v-else-if="extra.type == 'photoshoot'">
                                         {{ currency($store.getters['extras/photoshootPrice']) }}
                                     </span>
                                     <span v-else-if="extra.type == 'roomDecoration'">
                                         {{ currency($store.getters['extras/decorationPrice']) }}
+                                    </span>
+                                    <span v-else-if="extra.type == 'unforgettableExperience'">
+                                        {{ currency($store.getters['extras/experiencePrice']) }}
                                     </span>
                                     <span v-else-if="extra.type == 'domesticStaff'">
                                         {{ currency($store.getters['extras/staffPrice']) }}
@@ -93,7 +99,7 @@
                                     <i class="text-red-800">Option not available between 6pm-9am WAT</i>
                                 </div>
                             </div>
-                            <div class="flex-shrink-0 w-full md:w-4/12 ">
+                            <div class="flex-shrink-0 w-full md:w-4/12">
                                 <Paystack
                                     v-if="trans_ref != null"
                                     :amount="totalPrice"

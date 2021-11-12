@@ -23,7 +23,7 @@
                 <div>
                     Duration
                     <br />
-                    <div class="text-xs text-gray-700" v-if="roomDiscountPercent > 0">
+                    <div class="text-xs text-gray-700" v-if="roomDiscountPercent > 0 && roomDiscount > 0">
                         {{roomDiscountPercent}}% Discount
                     </div>
                 </div>
@@ -49,6 +49,11 @@
                             Family Cabin {{ formatAndStringCabin(roomsDetailsFamily) }}
                         </div>
                     </div>
+                    <div class="text-sm text-right" v-if="roomsDetailsVilla.length > 0">
+                        <div v-if="roomsDetailsVilla.length == 2">Sunrise 10 & Sunset 11</div>
+                        <div v-else-if="roomsDetailsVilla.includes(10)">Sunrise 10</div>
+                        <div v-else-if="roomsDetailsVilla.includes(11)">Sunset 11</div>
+                    </div>
                     <!-- <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
                         <div>{{ formatDate(room.date) }}</div>
                         <div class="text-xs text-gray-600">{{ room.name }}</div>
@@ -66,11 +71,17 @@
                     <span v-else-if="extra.type == 'drinks'">
                         {{ currency($store.getters['extras/drinksPrice']) }}
                     </span>
+                    <span v-else-if="extra.type == 'massages'">
+                        {{ currency($store.getters['extras/massagesPrice']) }}
+                    </span>
                     <span v-else-if="extra.type == 'photoshoot'">
                         {{ currency($store.getters['extras/photoshootPrice']) }}
                     </span>
                     <span v-else-if="extra.type == 'roomDecoration'">
                         {{ currency($store.getters['extras/decorationPrice']) }}
+                    </span>
+                    <span v-else-if="extra.type == 'unforgettableExperience'">
+                        {{ currency($store.getters['extras/experiencePrice']) }}
                     </span>
                     <span v-else-if="extra.type == 'domesticStaff'">
                         {{ currency($store.getters['extras/staffPrice']) }}
@@ -99,8 +110,11 @@
                 <div>Sub-total</div>
                 <div class="font-bold">{{ currency(subTotal) }}</div>
             </div>
-            <div class="flex justify-between px-3 my-3" v-if="roomDiscountPercent > 0">
-                <div>{{roomDiscountPercent}}% Room Discount</div>
+            <div class="flex justify-between px-3 my-3" v-if="roomDiscountPercent > 0 && roomDiscount > 0">
+                <div>
+                    {{roomDiscountPercent}}% Room Discount
+                    <small class="text-xs text-gray-700" v-if="roomVillaPrices > 0"><br />(exludes Villas)</small>
+                </div>
                 <div class="font-bold"> - {{ currency(roomDiscount) }}</div>
             </div>
             <div class="flex justify-between px-3 my-3" v-if="memberDiscount > 0">
@@ -115,6 +129,11 @@
                 <div>Extra Guest(s)</div>
                 <div class="font-bold"> + {{ currency(extraPeoplePrice) }}</div>
             </div>
+            <!-- <div class="flex justify-between px-3 my-3">
+                <div>Extra Guest(s)</div>
+                <pre>{{extraPeople}} -- {{ hasVillaMix }}</pre>
+                <div class="font-bold"> + {{ currency(extraPeoplePrice) }}</div>
+            </div> -->
         </div>
 
         <div class="w-full px-3 py-3 border rounded-md border-brand-blue-300 bg-brand-blue-100">
@@ -170,6 +189,9 @@ export default {
     //     };
     // },
     computed: {
+        hasVillaMix() {
+            return this.$store.getters.hasVillaMixed;
+        },
         dateFromTo() {
             return this.$store.getters.dateFromTo;
         },
@@ -181,6 +203,9 @@ export default {
         },
         roomsDetailsFamily() {
             return this.$store.getters.roomsDetailsFamily;
+        },
+        roomsDetailsVilla() {
+            return this.$store.getters.roomsDetailsVilla;
         },
         editBooking() {
             return this.$store.state.editBooking;
@@ -216,6 +241,9 @@ export default {
         rooms() {
             return this.$store.getters.bookedRooms;
         },
+        roomVillaPrices() {
+            return this.$store.getters.roomVillaPrices;
+        },
         roomDiscountPercent() {
             return this.$store.getters.roomDiscountPercent;
         },
@@ -236,6 +264,9 @@ export default {
         },
         extraPeoplePrice() {
             return this.$store.getters.extraPeoplePrice;
+        },
+        extraPeople() {
+            return this.$store.getters.extraPeople;
         },
         confirmEnoughRooms() {
             return this.$store.getters.confirmEnoughRooms;

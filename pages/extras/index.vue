@@ -16,7 +16,7 @@
                     Please select the ones you wish to add to your booking.
                 </h1>
 
-                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
                     <div v-for="(extra, i) in specials" :key="i"
                         class="w-full overflow-hidden transition-all transform bg-white border rounded-lg"
                         :class="!extra.available ? 'opacity-25' : 'cursor-pointer shadow-md hover:scale-105'"

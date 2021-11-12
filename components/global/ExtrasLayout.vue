@@ -12,9 +12,13 @@
 
         <SpecialDrinkCollection v-if="currentSpecial == 'drinks'" @next="gotoNext()" @prev="gotoPrev()" />
 
+        <SpecialMassagesMultiple v-if="currentSpecial == 'massages'" @next="gotoNext()" @prev="gotoPrev()"  />
+
         <SpecialCake v-else-if="currentSpecial == 'cakes'" @next="gotoNext()" @prev="gotoPrev()" />
 
         <SpecialRoomDecoration v-else-if="currentSpecial == 'roomDecoration'" @next="gotoNext()" @prev="gotoPrev()" />
+
+        <SpecialUnforgettableExperience v-else-if="currentSpecial == 'unforgettableExperience'" @next="gotoNext()" @prev="gotoPrev()" />
 
         <SpecialDomesticStaff v-else-if="currentSpecial == 'domesticStaff'" @next="gotoNext()" @prev="gotoPrev()" />
 

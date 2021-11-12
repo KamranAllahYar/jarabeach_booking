@@ -3,8 +3,10 @@ import { GetterTree, MutationTree, ActionTree } from 'vuex';
 
 export const state = () => ({
   specials: [
-    { type: 'roomDecoration', name: 'Personalised Experiences', available: true, range: '0' },
-    { type: 'newmassage', name: 'Massage', available: true, range: '10,000' },
+    { type: 'unforgettableExperience', name: 'Unforgettable Experiences', available: true, range: '5,000' },
+    { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
+    // { type: 'newmassage', name: 'Massage', available: true, range: '10,000' },
+    { type: 'massages', name: 'Massages', available: true, range: '10,000' },
     { type: 'lookout', name: 'Dining Experiences', available: true, range: '15,000' },
     { type: 'drinks', name: 'Drinks', available: true, range: '15,000' },
     { type: 'cakes', name: 'Cake', available: true, range: '15,000' },
@@ -24,7 +26,7 @@ export const state = () => ({
   selectedMassage: [] as any[],
   dateMassage: null as String | null,
 
-  newmassageOptions: [] as any[],
+  // newmassageOptions: [] as any[],
   selectedNewmassage: null as any,
   dateNewmassage: null as String | null,
   timeNewmassage: null as String | null,
@@ -36,12 +38,15 @@ export const state = () => ({
 
   decorationOptions: [] as any[],
   selectedDecorations: [] as any[],
+  selectedExperiences: [] as any[],
   decorationWelcomeNote: "" as String,
   decorationPetalsNote: "" as String,
   decorationBalloonsColor: "" as String,
   decorationRoom: null as String | number | null,
   dateDecoration: null as String | null,
+  dateExperience: null as String | null,
   decorationPicnicDate: null as any,
+  decorationPaintingDate: null as any,
   decorationBreakfastDate: null as any,
   decorationBreakfastTime: null as any,
 
@@ -55,6 +60,10 @@ export const state = () => ({
   drinkOptions: [] as any[],
   selectedDrinks: [] as any[],
   dateDrink: null as String | null,
+
+  newmassageOptions: [] as any[],
+  selectedMassages: [] as any[],
+  dateMassages: null as String | null,
 
   cakeOptions: [] as any[],
   // cakePrices: [] as any[],
@@ -115,6 +124,22 @@ export const getters: GetterTree<ExtraState, RootState> = {
 
     return price;
   },
+  massagesPrice: (state: ExtraState) => {
+    if (state.selectedMassages.length <= 0) return 0;
+    let price = 0;
+
+    for (let i = 0; i < state.selectedMassages.length; i++) {
+      const sMassage = state.selectedMassages[i];
+
+      const massage = state.newmassageOptions.find(dko => dko.id == sMassage.id);
+
+      if (massage) {
+        price += +massage.price;
+      }
+    }
+
+    return price;
+  },
   photoshootPrice: (state: ExtraState) => {
     if (state.selectedPhotoshoot > 0) {
       let photographerPrice = 20000;
@@ -142,6 +167,19 @@ export const getters: GetterTree<ExtraState, RootState> = {
     let price = 0;
     for (let i = 0; i < state.selectedDecorations.length; i++) {
       const deco = state.selectedDecorations[i];
+
+      if (deco) {
+        price += +deco.price;
+      }
+    }
+    return price;
+  },
+  experiencePrice: (state: ExtraState) => {
+    if (state.selectedExperiences.length <= 0) return 0;
+
+    let price = 0;
+    for (let i = 0; i < state.selectedExperiences.length; i++) {
+      const deco = state.selectedExperiences[i];
 
       if (deco) {
         price += +deco.price;
@@ -348,9 +386,9 @@ export const mutations: MutationTree<ExtraState> = {
     }
   },
 
-  LOAD_NEWMASSAGE_OPTIONS: (state, newmassages) => {
-    state.newmassageOptions = newmassages
-  },
+  // LOAD_NEWMASSAGE_OPTIONS: (state, newmassages) => {
+  //   state.newmassageOptions = newmassages
+  // },
   SET_SELECTED_NEWMASSAGE: (state, payload) => {
     delete state.clashes['newmassage'];
 
@@ -398,11 +436,26 @@ export const mutations: MutationTree<ExtraState> = {
     state.decorationPetalsNote = payload.petalsNote;
     state.decorationBalloonsColor = payload.balloonsColor;
 
+    // state.decorationPicnicDate = payload.picnicDate;
+    // state.decorationBreakfastDate = payload.breakfastDate;
+    // state.decorationBreakfastTime = payload.breakfastTime;
+
+    state.decorationRoom = payload.room;
+  },
+  SET_SELECTED_EXPERIENCE: (state, payload) => {
+    state.selectedExperiences = payload.experiences;
+    // state.dateDecoration = payload.date;
+    // state.decorationWelcomeNote = payload.note;
+
+    // state.decorationPetalsNote = payload.petalsNote;
+    // state.decorationBalloonsColor = payload.balloonsColor;
+
     state.decorationPicnicDate = payload.picnicDate;
+    state.decorationPaintingDate = payload.paintingDate;
     state.decorationBreakfastDate = payload.breakfastDate;
     state.decorationBreakfastTime = payload.breakfastTime;
 
-    state.decorationRoom = payload.room;
+    // state.decorationRoom = payload.room;
   },
 
   SET_SELECTED_STAFF: (state, payload) => {
@@ -416,6 +469,14 @@ export const mutations: MutationTree<ExtraState> = {
   SET_SELECTED_DRINKS: (state, payload) => {
     state.selectedDrinks = payload.drinks
     state.dateDrink = payload.date
+  },
+
+  LOAD_NEWMASSAGE_OPTIONS: (state, newmassages) => {
+    state.newmassageOptions = newmassages
+  },
+  SET_SELECTED_MASSAGES: (state, payload) => {
+    state.selectedMassages = payload.massages
+    state.dateMassage = payload.date
   },
 
   LOAD_CAKE_OPTIONS: (state, cakes) => {
@@ -450,7 +511,7 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedMassage = [] as any[];
     state.dateMassage = null as String | null;
 
-    state.newmassageOptions = [] as any[];
+    // state.newmassageOptions = [] as any[];
     state.selectedNewmassage = null as any;
     state.dateNewmassage = null as String | null;
     state.timeNewmassage = null as String | null;
@@ -462,12 +523,14 @@ export const mutations: MutationTree<ExtraState> = {
 
     state.decorationOptions = [] as any[];
     state.selectedDecorations = [] as any[];
+    state.selectedExperiences = [] as any[];
     state.dateDecoration = null;
     state.decorationWelcomeNote = "" as String;
     state.decorationPetalsNote = "" as String;
     state.decorationBalloonsColor = "" as String;
     state.decorationRoom = null as String | number | null;
     state.decorationPicnicDate = null as any;
+    state.decorationPaintingDate = null as any;
     state.decorationBreakfastDate = null as any;
     state.decorationBreakfastTime = null as any;
 
@@ -481,7 +544,11 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedDrinks = [] as any[];
     state.dateDrink = null;
 
-    state.cakeOptions = [] as any[];
+    state.newmassageOptions = [] as any[],
+      state.selectedMassages = [] as any[],
+      state.dateMassages = null as String | null,
+
+      state.cakeOptions = [] as any[];
     state.cakeMessage = "" as any;
     state.selectedCakes = [] as any[];
     state.dateCake = null;
@@ -522,13 +589,36 @@ export const mutations: MutationTree<ExtraState> = {
       if (deco.note) state.decorationWelcomeNote = deco.note;
       if (deco.petals_note) state.decorationPetalsNote = deco.petals_note;
       if (deco.balloons_color) state.decorationBalloonsColor = deco.balloons_color;
-      if (deco.picnic_date) state.decorationPicnicDate = deco.picnic_date;
-      if (deco.breakfast_date) state.decorationBreakfastDate = deco.breakfast_date;
-      if (deco.breakfast_time) state.decorationBreakfastTime = deco.breakfast_time;
+      // if (deco.picnic_date) state.decorationPicnicDate = deco.picnic_date;
+      // if (deco.breakfast_date) state.decorationBreakfastDate = deco.breakfast_date;
+      // if (deco.breakfast_time) state.decorationBreakfastTime = deco.breakfast_time;
       if (deco.room) state.decorationRoom = deco.room;
 
       const option = state.decorationOptions.find((dOption) => dOption.id == deco.option_id);
       if (option) state.selectedDecorations.push(option);
+    });
+  },
+  TRANSFORM_EXPERIENCES: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldDecos = payload.decos;
+
+    state.selectedExperiences = [];
+    oldDecos.forEach((deco: any) => {
+      if (oldDates.includes(deco.date)) {
+        // state.dateDecoration = deco.date;
+      }
+
+      // if (deco.note) state.decorationWelcomeNote = deco.note;
+      // if (deco.petals_note) state.decorationPetalsNote = deco.petals_note;
+      // if (deco.balloons_color) state.decorationBalloonsColor = deco.balloons_color;
+      if (deco.picnic_date) state.decorationPicnicDate = deco.picnic_date;
+      if (deco.painting_date) state.decorationPaintingDate = deco.painting_date;
+      if (deco.breakfast_date) state.decorationBreakfastDate = deco.breakfast_date;
+      if (deco.breakfast_time) state.decorationBreakfastTime = deco.breakfast_time;
+      // if (deco.room) state.decorationRoom = deco.room;
+
+      const option = state.decorationOptions.find((dOption) => dOption.id == deco.option_id);
+      if (option) state.selectedExperiences.push(option);
     });
   },
   TRANSFORM_DRINKS: (state, payload) => {
@@ -542,6 +632,19 @@ export const mutations: MutationTree<ExtraState> = {
       }
 
       state.selectedDrinks.push({ id: drink.option_id, qty: drink.quantity });
+    });
+  },
+  TRANSFORM_MASSAGES: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldMassages = payload.massages;
+
+    state.selectedMassages = [];
+    oldMassages.forEach((massage: any) => {
+      if (oldDates.includes(massage.date)) {
+        state.dateMassage = massage.date;
+        state.selectedMassages.push({ id: massage.option_id, date: massage.date, time: massage.time });
+      }
+
     });
   },
   TRANSFORM_PHOTOSHOOT: (state, payload) => {
@@ -761,6 +864,13 @@ export const actions: ActionTree<ExtraState, RootState> = {
         commit("TRANSFORM_DRINKS", { drinks: oldBooking.drinks, dates: newBookingDates });
       };
     }
+    if (oldBooking.massages.length >= 1) {
+      const s = getSpecialObjFromStr(state.specials, 'massages');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_MASSAGES", { massages: oldBooking.massages, dates: newBookingDates });
+      };
+    }
     if (oldBooking.photoshoot) {
       const s = getSpecialObjFromStr(state.specials, 'photoshoot');
       if (s) {
@@ -773,6 +883,13 @@ export const actions: ActionTree<ExtraState, RootState> = {
       if (s) {
         commit("ADD_SELECTED", s);
         commit("TRANSFORM_DECORATION", { decos: oldBooking.decorations, dates: newBookingDates });
+      };
+    }
+    if (oldBooking.experiences.length >= 1) {
+      const s = getSpecialObjFromStr(state.specials, 'unforgettableExperience');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_EXPERIENCES", { decos: oldBooking.experiences, dates: newBookingDates });
       };
     }
     if (oldBooking.domestic_staff) {

@@ -5,7 +5,7 @@
         </div>
 
         <div class="w-full p-6 md:w-7/12">
-            <div class="font-semibold">Personalised Experience</div>
+            <div class="font-semibold">Room Decoration</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
                 There are a number of expected extras we offer for free, including romantic room decoration, or happy birthday messages, simple decorations, floating breakfast, sunset picnic etc.
 
@@ -25,12 +25,6 @@
                         <option v-for="date in dates" :value="date" :key="date">{{showDate(date)}}</option>
                     </select>
                 </div>
-                <!-- <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
-                <label class="flex items-center" v-for="date in dates" :key="date">
-                    <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
-                    <div>{{ showDate(date) }}</div>
-                </label>
-            </div> -->
 
                 <div class="flex items-center mt-4 space-x-6 font-normal">
                     <div class="w-48">
@@ -42,18 +36,9 @@
                     </select>
                 </div>
 
-                <!-- <div class="mt-6 font-semibold">What room would you like to have this in?</div>
-            <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
-                <label class="flex items-center" v-for="(room, i) in rooms" :key="i">
-                    <input type="radio" :value="room.name" v-model="selectedRoom" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
-                    <div>{{ room.name }}</div>
-                </label>
-            </div> -->
-
                 <div class="mt-4 space-y-4">
-                    <!-- <div class="mt-6 font-semibold">Select Personalised Experience</div> -->
                     <div v-for="deco in decorations" :key="deco.id">
-                        <template v-if="deco.id == 4 || deco.id == 5"></template>
+                        <template v-if="deco.id == 4 || deco.id == 5 || deco.id == 6"></template>
                         <template v-else>
                             <label class="inline-flex items-center" :key="deco.id">
                                 <input type="checkbox" :value="deco" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
@@ -120,7 +105,7 @@
                     </div>
                 </div>
             </div>
-
+<!--
             <div class="p-4 mt-6 bg-gray-100 rounded-lg">
                 <label class="font-semibold cursor-pointer">
                     <input type="checkbox" :value="breakfastSelection" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
@@ -185,7 +170,7 @@
                         </template>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">
                 <MainButton outline @click="prev()">Back</MainButton>

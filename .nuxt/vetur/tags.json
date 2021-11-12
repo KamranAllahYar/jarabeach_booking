@@ -1,0 +1,86 @@
+{
+  "SpecialLookout": {
+    "description": "Auto imported from components/extras/lookout/SpecialLookout.vue"
+  },
+  "SpecialLookoutMeal": {
+    "description": "Auto imported from components/extras/lookout/SpecialLookoutMeal.vue"
+  },
+  "SpecialDomesticStaff": {
+    "description": "Auto imported from components/extras/domesticstaff/SpecialDomesticStaff.vue"
+  },
+  "SpecialDomesticStaffInfo": {
+    "description": "Auto imported from components/extras/domesticstaff/SpecialDomesticStaffInfo.vue"
+  },
+  "SpecialCake": {
+    "description": "Auto imported from components/extras/SpecialCake.vue"
+  },
+  "SpecialDrinkCollection": {
+    "description": "Auto imported from components/extras/SpecialDrinkCollection.vue"
+  },
+  "SpecialMassage": {
+    "description": "Auto imported from components/extras/SpecialMassage.vue"
+  },
+  "SpecialMassagesMultiple": {
+    "description": "Auto imported from components/extras/SpecialMassagesMultiple.vue"
+  },
+  "SpecialNewMassage": {
+    "description": "Auto imported from components/extras/SpecialNewMassage.vue"
+  },
+  "SpecialPhotoshoot": {
+    "description": "Auto imported from components/extras/SpecialPhotoshoot.vue"
+  },
+  "SpecialQuadBikes": {
+    "description": "Auto imported from components/extras/SpecialQuadBikes.vue"
+  },
+  "SpecialRoomDecoration": {
+    "description": "Auto imported from components/extras/SpecialRoomDecoration.vue"
+  },
+  "SpecialUnforgettableExperience": {
+    "description": "Auto imported from components/extras/SpecialUnforgettableExperience.vue"
+  },
+  "ExtrasLayout": {
+    "description": "Auto imported from components/global/ExtrasLayout.vue"
+  },
+  "Loading": {
+    "description": "Auto imported from components/global/Loading.vue"
+  },
+  "MainButton": {
+    "description": "Auto imported from components/global/MainButton.vue"
+  },
+  "Navbar": {
+    "description": "Auto imported from components/global/Navbar.vue"
+  },
+  "Notification": {
+    "description": "Auto imported from components/global/Notification.vue"
+  },
+  "ProgressNav": {
+    "description": "Auto imported from components/global/ProgressNav.vue"
+  },
+  "StartOverButton": {
+    "description": "Auto imported from components/global/StartOverButton.vue"
+  },
+  "TopProgressBar": {
+    "description": "Auto imported from components/global/TopProgressBar.vue"
+  },
+  "UpdateBookingBanner": {
+    "description": "Auto imported from components/global/UpdateBookingBanner.vue"
+  },
+  "Calendar": {
+    "description": "Auto imported from components/Calendar.vue"
+  },
+  "Logo": {
+    "description": "Auto imported from components/Logo.vue"
+  },
+  "NewRoomCalendar": {
+    "description": "Auto imported from components/NewRoomCalendar.vue"
+  },
+  "ReservationBox": {
+    "description": "Auto imported from components/ReservationBox.vue"
+  },
+  "RoomCalendar": {
+    "description": "Auto imported from components/RoomCalendar.vue"
+  },
+  "RoomSelect": {
+    "description": "Auto imported from components/RoomSelect.vue"
+  }
+}

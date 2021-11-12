@@ -25,9 +25,6 @@
                 </div>
             </div>
             <div class="md:flex-1"></div>
-            <!-- <div class="flex-shrink-0 text-xs font-semibold border-b cursor-pointer md:text-base border-brand-blue-400 text-brand-blue-400" @click="openSlideshow()" id="roomSetup">
-                View Room Setup
-            </div> -->
             <a target="_blank" href="https://www.jarabeachresort.com/room-detail" class="flex-shrink-0 text-xs font-semibold border-b cursor-pointer md:text-base border-brand-blue-400 text-brand-blue-400" id="roomSetup">
                 View Room Setup
             </a>
@@ -45,6 +42,11 @@
             <div class="flex items-center text-gray-600 md:ml-10 md:w-auto">
                 <div class="flex-shrink-0 w-4 h-4 mr-2 rounded-sm md:mr-4 md:w-5 md:h-5 bg-cal-avail bg-opacity-20"></div> Available - numbers represent available rooms
             </div>
+            <div :class="hintSingleRoomSelect ? 'animate-bounce font-bold' : ''"
+                class="ml-auto text-sm transition-all">
+                Click date twice for single night
+            </div>
+
         </div>
 
         <div class="flex w-full" v-for="(datesHalf, k) in calType30Days" :key="k">
@@ -101,33 +103,57 @@
 
                         <!-- POPOVER -->
                         <div v-if="isEnd(roomType, compDate.dateStr) && !smallScreen" @click.stop=""
-                            class="absolute bottom-0 right-0 z-50 py-2 pl-3 pr-4 text-sm transform translate-x-full translate-y-full bg-white border rounded-lg"
-                            style="--tw-translate-x: 0%; --tw-translate-y: -55px" :style="hoveredRooms.length > 5 ? 'width: 350px' : 'width: 185px'">
-                            <div v-if="loadingRoomOptions">
-                                <svg class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                            </div>
-                            <div class="grid grid-flow-col gap-x-4" :class="hoveredRooms.length <= 0 ? 'grid-rows-0 grid-cols-1' : notAllRooms && seRoom == 'family' ? 'grid-rows-4 grid-cols-2' : 'grid-rows-5 grid-cols-2'" v-else>
-                                <template v-for="h in hoveredRooms">
-                                    <div v-if="h.available == true" :key="h.room.id" class="flex items-center py-2 cursor-pointer"
-                                        @click="h.available == true ? addToBookedRoom(h.room, h.date) : ''">
-                                        <svg v-if="!isBooked(h.room.id, h.date)" viewBox="0 0 16 16" class="flex-shrink-0 inline-block w-6 h-6 mr-2 text-brand-blue" fill="none" stroke="currentColor">
-                                            <path d="M8 14.703a6.75 6.75 0 100-13.5 6.75 6.75 0 000 13.5z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                        <svg v-else class="flex-shrink-0 inline-block w-6 h-6 mr-2 text-brand-blue" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                        </svg>
+                            class="absolute bottom-0 right-0 z-50 text-sm transform translate-x-full translate-y-full bg-white border rounded-lg cursor-auto"
+                            style="--tw-translate-x: 0%; --tw-translate-y: -55px">
 
-                                        <span class="text-gray-700 whitespace-nowrap">
-                                            {{ h.room.name }}
-                                        </span>
-                                    </div>
-                                </template>
-                                <div class="px-1" v-if="hoveredRooms.length <= 0">
-                                    No common rooms available for booking on these dates
+                            <RoomSelect v-if="showRoomSelect && canSwap"
+                                :startDate="startDate" :endDate="endDate" :seRoom="seRoom" :notAllRooms="notAllRooms"
+                                :initialRooms="initialRooms"
+                                @selected="generateAndEmitBookedRoomsBetter($event)"
+                                @back="cancelIndividualRoomSelect()" />
+
+                            <div v-else class="py-2 pl-3 pr-4" :style="hoveredRooms.length > 5 ? 'width: 350px' : 'width: 185px'">
+                                <div v-if="loadingRoomOptions">
+                                    <svg class="w-5 h-5 mr-3 -ml-1 text-black animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
                                 </div>
+                                <div class="grid grid-flow-col gap-x-4" :class="popoverGridPatternClass" v-else>
+                                    <template v-for="h in hoveredRooms">
+                                        <div v-if="h.available == true" :key="h.room.id" class="flex items-center py-2 cursor-pointer"
+                                            @click="h.available == true ? addToBookedRoom(h.room, h.date) : ''">
+                                            <svg v-if="!isBooked(h.room.id, h.date)" viewBox="0 0 16 16" class="flex-shrink-0 inline-block w-6 h-6 mr-2 text-brand-blue" fill="none" stroke="currentColor">
+                                                <path d="M8 14.703a6.75 6.75 0 100-13.5 6.75 6.75 0 000 13.5z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                            <svg v-else class="flex-shrink-0 inline-block w-6 h-6 mr-2 text-brand-blue" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+
+                                            <span class="text-gray-700 whitespace-nowrap">
+                                                {{ h.room.name }}
+                                            </span>
+                                        </div>
+                                    </template>
+                                    <div class="px-1" v-if="hoveredRooms.length <= 0">
+                                        No common rooms available for booking on these dates
+                                    </div>
+                                </div>
+
+                                <div class="py-2 text-xs text-left" v-if="canSwap && shouldSwap">
+                                    <p>
+                                        We are able to welcome you on your chosen dates in the rooms above.
+                                        However, additional rooms may be available. Please proceed
+                                        if you are happy to change rooms during your visit
+                                    </p>
+                                    <button class="flex items-center justify-end w-full pt-2 text-gray-800" @click="selectIndividualRooms()">
+                                        Select Indivual Rooms
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                         <!-- POPOVER END -->
@@ -273,9 +299,27 @@ export default {
             ],
 
             notAllRooms: false,
+
+            showRoomSelect: false,
+            canSwap: false,
+
+            hintSingleRoomSelect: false,
         };
     },
     watch: {
+        startDate(newVal, oldVal) {
+            if (newVal != null) {
+                this.hintSingleRoomSelect = true;
+                if (this.endDate != null) {
+                    this.hintSingleRoomSelect = false;
+                }
+            }
+        },
+        endDate(newVal) {
+            if (newVal != null) {
+                this.hintSingleRoomSelect = false;
+            }
+        },
         windowWidth: {
             handler(newWidth, oldWidth) {
                 if (newWidth <= 768) {
@@ -288,6 +332,36 @@ export default {
         },
     },
     computed: {
+        popoverGridPatternClass() {
+            const totalRooms = this.hoveredRooms.length;
+            if (totalRooms <= 0) {
+                return "grid-rows-0 grid-cols-1";
+            }
+
+            if (this.notAllRooms) {
+                if (this.seRoom == "family") {
+                    return `grid-rows-${totalRooms} grid-cols-2`;
+                }
+                if (this.seRoom == "standard") {
+                    return `grid-rows-${totalRooms} grid-cols-2`;
+                }
+            }
+
+            if (totalRooms < 5) {
+                return `grid-rows-${totalRooms} grid-cols-2`;
+            }
+
+            return "grid-rows-6 grid-cols-2";
+
+            // "grid-rows-1 grid-rows-2 grid-rows-3 grid-rows-4 grid-rows-5"
+        },
+        shouldSwap() {
+            if (this.startDate == this.endDate) return false;
+
+            // if(this.hoveredRooms.length > 0) return false;
+
+            return true;
+        },
         startDateStr() {
             return format(this.today, "do MMM yyyy");
         },
@@ -406,6 +480,16 @@ export default {
         },
     },
     methods: {
+        selectIndividualRooms() {
+            this.showRoomSelect = true;
+            this.$store.commit("UPDATE_MULTI_ROOM", true);
+        },
+        cancelIndividualRoomSelect() {
+            this.showRoomSelect = false;
+            this.$store.commit("UPDATE_MULTI_ROOM", false);
+            this.roomIds = [];
+            this.generateAndEmitBookedRooms();
+        },
         openSlideshow() {
             this.$emit("viewsetup");
             this.index = 0;
@@ -442,6 +526,11 @@ export default {
                 });
             });
 
+            console.log("Basic---");
+            console.log(bookedRooms);
+            this.$emit("selected", bookedRooms);
+        },
+        generateAndEmitBookedRoomsBetter(bookedRooms) {
             this.$emit("selected", bookedRooms);
         },
         isStart(roomType, dateStr) {
@@ -589,6 +678,7 @@ export default {
             }, 0);
         },
         async getRoomsAvailableForPeriod() {
+            this.canSwap = false;
             this.loadingRoomOptions = true;
             this.mobileSelectSheet = true;
             const date = this.startDate;
@@ -603,14 +693,14 @@ export default {
             if (this.seRoom == "standard") {
                 if (this.bigPeople <= 2) {
                     this.notAllRooms = true;
-                // } else if (this.smallPeople <= 1) {
-                //     this.notAllRooms = true;
                 }
             } else if (this.seRoom == "family") {
                 if (this.bigPeople <= 3) {
                     this.notAllRooms = true;
-                // } else if (this.smallPeople <= 2) {
-                //     this.notAllRooms = true;
+                }
+            } else if (this.seRoom == "villa") {
+                if (this.bigPeople <= 3) {
+                    this.notAllRooms = true;
                 }
             }
 
@@ -624,6 +714,8 @@ export default {
                 .then((res) => {
                     console.log(res.data.data);
                     const aRooms = res.data.data;
+
+                    this.canSwap = res.data.canSwap;
 
                     this.hoveredRooms = [];
                     aRooms.map((room) => {
@@ -651,6 +743,7 @@ export default {
                 new Date(this.endDate)
             ).map((v) => v.toISOString().slice(0, 10));
 
+            console.log("This is the date list");
             console.log(dateList);
 
             return dateList;
@@ -668,10 +761,12 @@ export default {
             const firstRoom = this.initialRooms[0];
 
             if (firstRoom) {
-                if (firstRoom.room_id > 0 && firstRoom.room_id < 5) {
+                if (firstRoom.room_id > 0 && firstRoom.room_id <= 5) {
                     this.seRoom = "standard";
-                } else {
+                } else if (firstRoom.room_id > 5 && firstRoom.room_id <= 9) {
                     this.seRoom = "family";
+                } else {
+                    this.seRoom = "villa";
                 }
 
                 const allDates = this.initialRooms.map((r) => r.date);
