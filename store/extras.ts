@@ -142,7 +142,7 @@ export const getters: GetterTree<ExtraState, RootState> = {
   },
   photoshootPrice: (state: ExtraState) => {
     let photographerPrice = 20000;
-    let assistantPrice = 15000;
+    let assistantPrice = 10000;
 
     if (state.photoshootPrices) {
       let p = state.photoshootPrices.find(_p => _p.name.toLowerCase() == "photographer");
