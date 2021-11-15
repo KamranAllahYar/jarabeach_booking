@@ -141,25 +141,25 @@ export const getters: GetterTree<ExtraState, RootState> = {
     return price;
   },
   photoshootPrice: (state: ExtraState) => {
-    if (state.selectedPhotoshoot > 0) {
-      let photographerPrice = 20000;
-      let assistantPrice = 15000;
+    let photographerPrice = 20000;
+    let assistantPrice = 15000;
 
-      if (state.photoshootPrices) {
-        let p = state.photoshootPrices.find(_p => _p.name.toLowerCase() == "photographer");
-        if (p) {
-          photographerPrice = +p.price;
-        }
-        let a = state.photoshootPrices.find(_a => _a.name.toLowerCase() == "assistant");
-        if (a) {
-          assistantPrice = +a.price;
-        }
+    if (state.photoshootPrices) {
+      let p = state.photoshootPrices.find(_p => _p.name.toLowerCase() == "photographer");
+      if (p) {
+        photographerPrice = +p.price;
       }
+      let a = state.photoshootPrices.find(_a => _a.name.toLowerCase() == "assistant");
+      if (a) {
+        assistantPrice = +a.price;
+      }
+    }
 
+    if (state.selectedPhotoshoot > 0) {
       return photographerPrice + (+state.selectedPhotoshoot * assistantPrice)
     }
 
-    return 50000;
+    return photographerPrice;
   },
   decorationPrice: (state: ExtraState) => {
     if (state.selectedDecorations.length <= 0) return 0;
