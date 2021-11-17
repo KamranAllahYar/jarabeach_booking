@@ -10,6 +10,7 @@ You can directly use them in pages and other components without the need to impo
 - `<SpecialLookoutMeal>` | `<special-lookout-meal>` (components/extras/lookout/SpecialLookoutMeal.vue)
 - `<SpecialDomesticStaff>` | `<special-domestic-staff>` (components/extras/domesticstaff/SpecialDomesticStaff.vue)
 - `<SpecialDomesticStaffInfo>` | `<special-domestic-staff-info>` (components/extras/domesticstaff/SpecialDomesticStaffInfo.vue)
+- `<SpecialBikes>` | `<special-bikes>` (components/extras/SpecialBikes.vue)
 - `<SpecialCake>` | `<special-cake>` (components/extras/SpecialCake.vue)
 - `<SpecialDrinkCollection>` | `<special-drink-collection>` (components/extras/SpecialDrinkCollection.vue)
 - `<SpecialMassage>` | `<special-massage>` (components/extras/SpecialMassage.vue)

@@ -2,6 +2,7 @@ export { default as SpecialLookout } from '../../components/extras/lookout/Speci
 export { default as SpecialLookoutMeal } from '../../components/extras/lookout/SpecialLookoutMeal.vue'
 export { default as SpecialDomesticStaff } from '../../components/extras/domesticstaff/SpecialDomesticStaff.vue'
 export { default as SpecialDomesticStaffInfo } from '../../components/extras/domesticstaff/SpecialDomesticStaffInfo.vue'
+export { default as SpecialBikes } from '../../components/extras/SpecialBikes.vue'
 export { default as SpecialCake } from '../../components/extras/SpecialCake.vue'
 export { default as SpecialDrinkCollection } from '../../components/extras/SpecialDrinkCollection.vue'
 export { default as SpecialMassage } from '../../components/extras/SpecialMassage.vue'
@@ -31,6 +32,7 @@ export const LazySpecialLookout = import('../../components/extras/lookout/Specia
 export const LazySpecialLookoutMeal = import('../../components/extras/lookout/SpecialLookoutMeal.vue' /* webpackChunkName: "components/special-lookout-meal" */).then(c => wrapFunctional(c.default || c))
 export const LazySpecialDomesticStaff = import('../../components/extras/domesticstaff/SpecialDomesticStaff.vue' /* webpackChunkName: "components/special-domestic-staff" */).then(c => wrapFunctional(c.default || c))
 export const LazySpecialDomesticStaffInfo = import('../../components/extras/domesticstaff/SpecialDomesticStaffInfo.vue' /* webpackChunkName: "components/special-domestic-staff-info" */).then(c => wrapFunctional(c.default || c))
+export const LazySpecialBikes = import('../../components/extras/SpecialBikes.vue' /* webpackChunkName: "components/special-bikes" */).then(c => wrapFunctional(c.default || c))
 export const LazySpecialCake = import('../../components/extras/SpecialCake.vue' /* webpackChunkName: "components/special-cake" */).then(c => wrapFunctional(c.default || c))
 export const LazySpecialDrinkCollection = import('../../components/extras/SpecialDrinkCollection.vue' /* webpackChunkName: "components/special-drink-collection" */).then(c => wrapFunctional(c.default || c))
 export const LazySpecialMassage = import('../../components/extras/SpecialMassage.vue' /* webpackChunkName: "components/special-massage" */).then(c => wrapFunctional(c.default || c))
