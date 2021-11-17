@@ -6,10 +6,18 @@
         <div class="w-full p-6 md:w-7/12">
             <div class="font-semibold">Quad Bikes</div>
             <p class="mt-3 font-light leading-relaxed text-gray-600">
-                Jara is proud to offer quad bike hire - available via a local partner (signed waiver and
-                pre-booking required). Half and full day hire is available, to ride on the beachfront or at
-                the back of the property on the sandy road. Quad bikes are ideal for small-average size
-                guest riders.
+                “Gunner”, Jara’s 196cc Go-Kart, available for Guest Rental
+                <br />
+                <br />
+                Equipped with a powerful four-stroke engine and a heavy-duty frame with durable all-terrain tyres.
+                This rugged 196cc go-kart has a load capacity of 125kg and a top speed of 23mph. Strap yourself and a
+                friend in with the safety harnesses and head out for an exciting ride through Jara’s neighborhood.
+                <br />
+                <br />
+                Suitable for Adult drivers [only] and passengers (under 18yrs with signed guardian).
+                Limited to the back road, sand driving only (not the beach).
+                No reverse so big turning circle required.
+                A riding waiver / terms of usage must be signed, prior to riding.
             </p>
             <div class="mt-6 font-semibold">What date would you like to have this?</div>
 
