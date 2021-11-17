@@ -41,7 +41,7 @@
                                         stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <select v-model="sDrink.id" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
-                                    <option v-for="drink in drinks" :value="drink.id" :key="drink.id">{{drink.name}}</option>
+                                    <option v-for="drink in drinks" :value="drink.id" :key="drink.id">{{drink.name}} - {{currency(drink.price)}}</option>
                                 </select>
                             </div>
                             <div class="flex items-center flex-1 pl-2 border rounded-md focus-within:ring">
@@ -118,6 +118,9 @@ export default {
         },
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
+        },
+        currency(num) {
+            return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
     },
     mounted() {
