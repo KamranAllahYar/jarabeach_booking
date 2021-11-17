@@ -11,7 +11,8 @@ export const state = () => ({
     { type: 'drinks', name: 'Drinks', available: true, range: '20,000' },
     { type: 'cakes', name: 'Cake', available: true, range: '15,000' },
     { type: 'photoshoot', name: 'Photoshoot', available: true, range: '20,000' },
-    { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
+    // { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
+    { type: 'bikes', name: 'Go-Kart', available: true, range: '15,000' },
     { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' }
     // { type: 'massage', name: 'Massage', available: false, range: '30,000' },
   ] as { name: string, type: string, range: string, available: boolean }[],
@@ -25,6 +26,10 @@ export const state = () => ({
   massageOptions: [] as any[],
   selectedMassage: [] as any[],
   dateMassage: null as String | null,
+
+  bikeOptions: [] as any[],
+  selectedBikes: [] as any[],
+  dateBike: null as String | null,
 
   // newmassageOptions: [] as any[],
   selectedNewmassage: null as any,
@@ -89,6 +94,7 @@ export const getters: GetterTree<ExtraState, RootState> = {
   allLookouts: (state: ExtraState) => state.lookoutOptions,
   allMassages: (state: ExtraState) => state.massageOptions,
   allNewmassages: (state: ExtraState) => state.newmassageOptions,
+  allBikes: (state: ExtraState) => state.bikeOptions,
   allQuadbikes: (state: ExtraState) => state.quadbikeOptions,
   allClashes: (state: ExtraState) => state.clashes,
 
@@ -135,6 +141,22 @@ export const getters: GetterTree<ExtraState, RootState> = {
 
       if (massage) {
         price += +massage.price;
+      }
+    }
+
+    return price;
+  },
+  bikesPrice: (state: ExtraState) => {
+    if (state.selectedBikes.length <= 0) return 0;
+    let price = 0;
+
+    for (let i = 0; i < state.selectedBikes.length; i++) {
+      const sBike = state.selectedBikes[i];
+
+      const bike = state.bikeOptions.find(b => b.id == sBike.id);
+
+      if (bike) {
+        price += +bike.price;
       }
     }
 
@@ -479,6 +501,14 @@ export const mutations: MutationTree<ExtraState> = {
     state.dateMassage = payload.date
   },
 
+  LOAD_BIKE_OPTIONS: (state, bikes) => {
+    state.bikeOptions = bikes
+  },
+  SET_SELECTED_BIKES: (state, payload) => {
+    state.selectedBikes = payload.bikes
+    state.dateBike = payload.date
+  },
+
   LOAD_CAKE_OPTIONS: (state, cakes) => {
     state.cakeOptions = cakes
   },
@@ -515,6 +545,10 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedNewmassage = null as any;
     state.dateNewmassage = null as String | null;
     state.timeNewmassage = null as String | null;
+
+    state.bikeOptions = [] as any[];
+    state.selectedBikes = [] as any[];
+    state.dateBike = null as String | null;
 
     state.quadbikeOptions = [] as any[];
     state.selectedQuadbike = [] as any[];
@@ -647,6 +681,19 @@ export const mutations: MutationTree<ExtraState> = {
 
     });
   },
+  TRANSFORM_BIKESS: (state, payload) => {
+    const oldDates = payload.dates;
+    const oldBikes = payload.bikes;
+
+    state.selectedBikes = [];
+    oldBikes.forEach((bike: any) => {
+      if (oldDates.includes(bike.date)) {
+        state.dateBike = bike.date;
+        state.selectedBikes.push({ id: bike.option_id, date: bike.date });
+      }
+
+    });
+  },
   TRANSFORM_PHOTOSHOOT: (state, payload) => {
     const oldDates = payload.dates;
     const oldPhotoshoot = payload.photoshoot;
@@ -775,6 +822,14 @@ export const actions: ActionTree<ExtraState, RootState> = {
     });
   },
 
+  getSpecialBikes({ commit }) {
+    this.$axios.get("/bike-options").then((res) => {
+      console.log("Bikes")
+      console.log(res.data.data);
+      commit("LOAD_BIKE_OPTIONS", res.data.data);
+    });
+  },
+
   getSpecialNewmassages({ commit }) {
     this.$axios.get("/newmassage-options").then((res) => {
       console.log("NewMassages")
@@ -869,6 +924,13 @@ export const actions: ActionTree<ExtraState, RootState> = {
       if (s) {
         commit("ADD_SELECTED", s);
         commit("TRANSFORM_MASSAGES", { massages: oldBooking.massages, dates: newBookingDates });
+      };
+    }
+    if (oldBooking.bikes.length >= 1) {
+      const s = getSpecialObjFromStr(state.specials, 'bikes');
+      if (s) {
+        commit("ADD_SELECTED", s);
+        commit("TRANSFORM_BIKES", { bikes: oldBooking.bikes, dates: newBookingDates });
       };
     }
     if (oldBooking.photoshoot) {

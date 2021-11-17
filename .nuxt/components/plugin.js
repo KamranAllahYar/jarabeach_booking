@@ -6,6 +6,7 @@ const components = {
   SpecialLookoutMeal: () => import('../../components/extras/lookout/SpecialLookoutMeal.vue' /* webpackChunkName: "components/special-lookout-meal" */).then(c => wrapFunctional(c.default || c)),
   SpecialDomesticStaff: () => import('../../components/extras/domesticstaff/SpecialDomesticStaff.vue' /* webpackChunkName: "components/special-domestic-staff" */).then(c => wrapFunctional(c.default || c)),
   SpecialDomesticStaffInfo: () => import('../../components/extras/domesticstaff/SpecialDomesticStaffInfo.vue' /* webpackChunkName: "components/special-domestic-staff-info" */).then(c => wrapFunctional(c.default || c)),
+  SpecialBikes: () => import('../../components/extras/SpecialBikes.vue' /* webpackChunkName: "components/special-bikes" */).then(c => wrapFunctional(c.default || c)),
   SpecialCake: () => import('../../components/extras/SpecialCake.vue' /* webpackChunkName: "components/special-cake" */).then(c => wrapFunctional(c.default || c)),
   SpecialDrinkCollection: () => import('../../components/extras/SpecialDrinkCollection.vue' /* webpackChunkName: "components/special-drink-collection" */).then(c => wrapFunctional(c.default || c)),
   SpecialMassage: () => import('../../components/extras/SpecialMassage.vue' /* webpackChunkName: "components/special-massage" */).then(c => wrapFunctional(c.default || c)),

@@ -8,6 +8,8 @@
 
         <SpecialQuadBikes v-else-if="currentSpecial == 'quadbike' || currentSpecial == 'quadbikes'" @next="gotoNext()" @prev="gotoPrev()" />
 
+        <SpecialBikes v-else-if="currentSpecial == 'bikes'" @next="gotoNext()" @prev="gotoPrev()" />
+
         <SpecialPhotoshoot v-if="currentSpecial == 'photoshoot'" @next="gotoNext()" @prev="gotoPrev()" />
 
         <SpecialDrinkCollection v-if="currentSpecial == 'drinks'" @next="gotoNext()" @prev="gotoPrev()" />

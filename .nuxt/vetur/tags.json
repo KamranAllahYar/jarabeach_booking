@@ -11,6 +11,9 @@
   "SpecialDomesticStaffInfo": {
     "description": "Auto imported from components/extras/domesticstaff/SpecialDomesticStaffInfo.vue"
   },
+  "SpecialBikes": {
+    "description": "Auto imported from components/extras/SpecialBikes.vue"
+  },
   "SpecialCake": {
     "description": "Auto imported from components/extras/SpecialCake.vue"
   },

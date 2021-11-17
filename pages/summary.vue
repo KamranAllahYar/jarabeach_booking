@@ -37,6 +37,9 @@
                                     <span v-else-if="extra.type == 'massages'">
                                         {{ currency($store.getters['extras/massagesPrice']) }}
                                     </span>
+                                    <span v-else-if="extra.type == 'bikes'">
+                                        {{ currency($store.getters['extras/bikesPrice']) }}
+                                    </span>
                                     <span v-else-if="extra.type == 'photoshoot'">
                                         {{ currency($store.getters['extras/photoshootPrice']) }}
                                     </span>
@@ -62,7 +65,8 @@
                                         {{ currency($store.getters['extras/lookoutPrice']) }}
                                     </span>
                                     <span v-else>
-                                        {{ currency(0) }}
+                                        <!-- {{ currency(0) }} -->
+                                        --
                                     </span>
                                     <div class="text-xs font-light text-right text-red-500 cursor-pointer hover:underline" @click="removeExtra(extra)">Remove</div>
                                 </div>
