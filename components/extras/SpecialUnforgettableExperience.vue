@@ -141,6 +141,7 @@ export default {
             paintingDates: [],
             paintingLoading: false,
             // breakfastTimes: ["9am", "9:30am", "10am"],
+            noDates: [],
         };
     },
     watch: {
@@ -183,8 +184,13 @@ export default {
         decorations() {
             return this.$store.getters["extras/allDecorations"];
         },
-        dates() {
+        bookingDates() {
             return this.$store.getters.bookingDates;
+        },
+        dates() {
+            return this.bookingDates.filter((date) => {
+                return !this.noDates.includes(date);
+            });
         },
         isWelcomeNoteSelected() {
             let has = false;
@@ -450,13 +456,20 @@ export default {
                     this.breakfastLoading = false;
                 });
         },
-    },
-    mounted() {
-        this.$store.dispatch("extras/getSpecialDecorations");
+        async getNoExperienceDates() {
+            await this.$axios
+                .get("/extra-no-dates?extra=experience")
+                .then((res) => {
+                    const noDates = res.data.data;
 
-        if (this.dates.length > 0) {
-            this.selectedDate = this.dates[0];
-        }
+                    this.noDates = noDates;
+
+                    console.log(noDates);
+                });
+        },
+    },
+    async created() {
+        await this.getNoExperienceDates();
 
         if (this.dates.length > 0) {
             this.breakfastDates = [...new Set(this.dates)];
@@ -473,6 +486,17 @@ export default {
             this.myBreakfastDate = this.breakfastDates[0];
         }
 
+        this.checkPicnicOptions();
+        this.checkPaintingOptions();
+        this.checkBreakfastOptions();
+    },
+    mounted() {
+        this.$store.dispatch("extras/getSpecialDecorations");
+
+        if (this.dates.length > 0) {
+            this.selectedDate = this.dates[0];
+        }
+
         if (this.dates.length > 0) {
             this.picnicDates = [...new Set(this.dates)];
             this.myPicnicDate = this.picnicDates[0];
@@ -480,10 +504,6 @@ export default {
             this.paintingDates = [...new Set(this.dates)];
             this.myPaintingDate = this.paintingDates[0];
         }
-
-        this.checkPicnicOptions();
-        this.checkPaintingOptions();
-        this.checkBreakfastOptions();
 
         this.selectedRoom = this.rooms[0].name;
 

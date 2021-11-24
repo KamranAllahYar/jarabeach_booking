@@ -109,11 +109,17 @@ export default {
             selectedDate: null,
             selectedBikes: [],
             newBike: {},
+            noDates: [],
         };
     },
     computed: {
-        dates() {
+        bookingDates() {
             return this.$store.getters.bookingDates;
+        },
+        dates() {
+            return this.bookingDates.filter((date) => {
+                return !this.noDates.includes(date);
+            });
         },
         bikes() {
             return this.$store.getters["extras/allBikes"];
@@ -174,8 +180,18 @@ export default {
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
+        getNoBikesDates() {
+            this.$axios.get("/extra-no-dates?extra=bikes").then((res) => {
+                const noDates = res.data.data;
+
+                this.noDates = noDates;
+
+                console.log(noDates);
+            });
+        },
     },
     created() {
+        this.getNoBikesDates();
         this.newBike = {
             id: this.bikes[0].id,
             date: this.dates[0],
@@ -185,8 +201,9 @@ export default {
         this.$store.dispatch("extras/getSpecialDrinks");
 
         if (this.$store.state.extras.selectedBikes) {
-            this.selectedBikes =
-                this.$store.state.extras.selectedBikes.map((x) => x);
+            this.selectedBikes = this.$store.state.extras.selectedBikes.map(
+                (x) => x
+            );
         }
 
         if (this.bikes.length > 0 && this.selectedBikes.length <= 0) {

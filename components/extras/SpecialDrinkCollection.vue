@@ -78,11 +78,17 @@ export default {
         return {
             selectedDate: null,
             selectedDrinks: [],
+            noDates: [],
         };
     },
     computed: {
-        dates() {
+        bookingDates() {
             return this.$store.getters.bookingDates;
+        },
+        dates() {
+            return this.bookingDates.filter((date) => {
+                return !this.noDates.includes(date);
+            });
         },
         drinks() {
             return this.$store.getters["extras/allDrinks"];
@@ -122,6 +128,20 @@ export default {
         currency(num) {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
+        async getNoDrinksDates() {
+            await this.$axios
+                .get("/extra-no-dates?extra=drinks")
+                .then((res) => {
+                    const noDates = res.data.data;
+
+                    this.noDates = noDates;
+
+                    console.log(noDates);
+                });
+        },
+    },
+    async created() {
+        await this.getNoDrinksDates();
     },
     mounted() {
         this.$store.dispatch("extras/getSpecialDrinks");

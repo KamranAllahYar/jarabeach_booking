@@ -66,11 +66,17 @@ export default {
         return {
             selectedDate: null,
             noOfArtists: 0,
+            noDates: [],
         };
     },
     computed: {
-        dates() {
+        bookingDates() {
             return this.$store.getters.bookingDates;
+        },
+        dates() {
+            return this.bookingDates.filter((date) => {
+                return !this.noDates.includes(date);
+            });
         },
         price() {
             let photographerPrice = 50000;
@@ -107,6 +113,20 @@ export default {
         currency(num) {
             return "₦" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
+        async getNoPhotoshootDates() {
+            await this.$axios
+                .get("/extra-no-dates?extra=photoshoot")
+                .then((res) => {
+                    const noDates = res.data.data;
+
+                    this.noDates = noDates;
+
+                    console.log(noDates);
+                });
+        },
+    },
+    async created() {
+        await this.getNoPhotoshootDates();
     },
     mounted() {
         if (this.dates.length > 0) {

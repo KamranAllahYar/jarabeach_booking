@@ -119,12 +119,18 @@ export default {
             },
             availableStaffs: {},
             myDates: [],
+            noDates: [],
         };
     },
     computed: {
-        dates() {
+        bookingDates() {
             const dates = this.$store.getters.bookedRooms.map((r) => r.date);
             return [...new Set(dates)];
+        },
+        dates() {
+            return this.bookingDates.filter((date) => {
+                return !this.noDates.includes(date);
+            });
         },
         availableStaffRooms() {
             const defaultData = {
@@ -279,9 +285,24 @@ export default {
                         (r) => r.date
                     );
                     const ds = [...new Set(dates)];
-                    this.myDates = ds;
+                    this.myDates = ds.filter((date) => {
+                        return !this.noDates.includes(date);
+                    });
                 });
         },
+        async getNoStaffDates() {
+            await this.$axios.get("/extra-no-dates?extra=staff").then((res) => {
+                const noDates = res.data.data;
+
+                this.noDates = noDates;
+
+                console.log(noDates);
+            });
+        },
+    },
+    async created() {
+        await this.getNoStaffDates();
+        this.checkOptions();
     },
     updated() {
         console.log("updated");
@@ -290,7 +311,6 @@ export default {
         console.log(ds);
     },
     mounted() {
-        this.checkOptions();
         if (this.$store.state.extras.selectedStaff.type.length > 0) {
             this.selectedStaff = Object.assign(
                 {},
