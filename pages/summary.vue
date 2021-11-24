@@ -74,13 +74,17 @@
                         <form @submit.prevent="checkDiscount()" class="flex justify-between p-2">
                             <input class="w-full ml-2 bg-transparent outline-none" v-model="code" placeholder="Enter Discount code" />
                             <div class="w-40 ml-3">
-                                <MainButton :loading="loadingCode" type="submit" class="text-white rounded-md focus:outline-none focus:ring bg-brand-blue-400">Apply</MainButton>
+                                <button :loading="loadingCode" type="submit"
+                                    class="w-full px-4 py-2 font-bold border rounded-lg focus:ring-2 ring-offset-1 bg-brand-blue-100 ring-brand-blue-300 border-brand-blue-300 hover:border-brand-blue-400 focus:outline-none">
+                                    Apply
+                                </button>
+                                <!-- <MainButton :loading="loadingCode" type="submit" class="text-white rounded-md focus:outline-none focus:ring bg-brand-blue-100">Apply</MainButton> -->
                             </div>
                         </form>
                     </div>
 
                     <div class="flex flex-col items-center w-full my-6 space-y-2 md:space-y-0 md:flex-row md:space-x-2">
-                        <MainButton class="w-3/12" outline @click="gotoBack()">Back</MainButton>
+                        <MainButton class="md:w-3/12" outline @click="gotoBack()">Back</MainButton>
                         <template v-if="shouldShowPaymentButton">
                             <div class="relative flex-shrink-0 w-full md:w-5/12" v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimerToggle(true)" @mouseleave="holdDisclaimerToggle(false)">
                                 <MainButton :loading="loading" @click.native="bookOnHoldBooking()">
@@ -99,7 +103,7 @@
                                     <i class="text-red-800">Option not available between 6pm-9am WAT</i>
                                 </div>
                             </div>
-                            <div class="flex-shrink-0 w-full md:w-4/12">
+                            <div class="flex-shrink-0 w-full md:w-5/12">
                                 <Paystack
                                     v-if="trans_ref != null"
                                     :amount="totalPrice"
@@ -109,12 +113,12 @@
                                     :callback="completeBooking"
                                     :close="closePayment"
                                     :embed="false">
-                                    <MainButton :loading="loading">
+                                    <MainButton class="md:px-2" :loading="loading">
                                         <div class="flex justify-center">
                                             <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                                             </svg>
-                                            Book | Paystack
+                                            Book | Pay With Paystack
                                         </div>
                                     </MainButton>
                                 </Paystack>
