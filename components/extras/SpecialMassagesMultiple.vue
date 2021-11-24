@@ -30,7 +30,7 @@
                                         <div class="flex-1">
                                             <div class="flex items-center flex-1 border rounded-md focus-within:ring">
                                                 <select placeholder="Date" v-model="newMassage.date" class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
-                                                    <option>Date</option>
+                                                    <option :value="null">Date</option>
                                                     <option v-for="date in dates" :value="date" :key="date">
                                                         {{ showDate(date) }}
                                                     </option>
@@ -101,11 +101,19 @@ export default {
             selectedDate: null,
             selectedMassages: [],
             newMassage: {},
+            noDates: [],
         };
     },
     computed: {
-        dates() {
+        bookingDates() {
             return this.$store.getters.bookingDates;
+        },
+        dates() {
+            console.log(this.bookingDates);
+
+            return this.bookingDates.filter((date) => {
+                return !this.noDates.includes(date);
+            });
         },
         massages() {
             return this.$store.getters["extras/allNewmassages"];
@@ -141,6 +149,15 @@ export default {
             this.$emit("prev");
         },
         addNewMassage() {
+            if (!this.newMassage.date) {
+                this.$toast.show("Please select a date");
+                return;
+            }
+            if (this.noDates.includes(this.newMassage.date)) {
+                this.$toast.show("This date is not available");
+                return;
+            }
+
             const massage = Object.assign({}, this.newMassage);
             this.selectedMassages.unshift(massage);
 
@@ -167,8 +184,18 @@ export default {
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
+        getNoMassageDates() {
+            this.$axios.get("/extra-no-dates?extra=massages").then((res) => {
+                const noDates = res.data.data;
+
+                this.noDates = noDates;
+
+                console.log(noDates);
+            });
+        },
     },
     created() {
+        this.getNoMassageDates();
         this.newMassage = {
             id: this.massages[0].id,
             date: this.dates[0],
