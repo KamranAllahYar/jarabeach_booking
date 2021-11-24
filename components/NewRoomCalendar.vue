@@ -160,9 +160,20 @@
 
                         <!-- MOBILE POPOVER -->
                         <template v-if="isEnd(roomType, compDate.dateStr) && showMobileSelect">
+
                             <div class="fixed inset-0 z-40 flex items-end w-screen h-screen bg-black bg-opacity-5" @click.stop>
                                 <div class="flex-1"></div>
-                                <div class="w-full px-4 pt-6 pb-12 bg-white " @click.stop>
+                                <div class="w-full pt-3 pb-12 bg-white" @click.stop v-if="showRoomSelect && canSwap">
+                                    <div class="flex justify-end px-4 pb-3">
+                                        <button @click="mobileSelectSheet = false">Done</button>
+                                    </div>
+                                    <RoomSelect
+                                        :startDate="startDate" :endDate="endDate" :seRoom="seRoom" :notAllRooms="notAllRooms"
+                                        :initialRooms="initialRooms"
+                                        @selected="generateAndEmitBookedRoomsBetter($event)"
+                                        @back="cancelIndividualRoomSelect()" />
+                                </div>
+                                <div class="w-full px-4 pt-6 pb-12 bg-white" @click.stop v-else>
                                     <div class="flex justify-end">
                                         <button @click="mobileSelectSheet = false">Done</button>
                                     </div>
@@ -191,6 +202,20 @@
                                         <div class="px-1" v-if="hoveredRooms.length <= 0">
                                             No rooms available for booking on this date
                                         </div>
+                                    </div>
+
+                                    <div class="py-2 text-xs text-left" v-if="canSwap && shouldSwap">
+                                        <p>
+                                            We are able to welcome you on your chosen dates in the rooms above.
+                                            However, additional rooms may be available. Please proceed
+                                            if you are happy to change rooms during your visit
+                                        </p>
+                                        <button class="flex items-center justify-end w-full pt-2 text-gray-800" @click="selectIndividualRooms()">
+                                            Select Indivual Rooms
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -358,7 +383,11 @@ export default {
         shouldSwap() {
             if (this.startDate == this.endDate) return false;
 
-            // if(this.hoveredRooms.length > 0) return false;
+            if (this.bigPeople >= 3) {
+                if (this.hoveredRooms.length > 1) return false;
+            } else {
+                if (this.hoveredRooms.length > 0) return false;
+            }
 
             return true;
         },
@@ -517,7 +546,6 @@ export default {
 
             this.roomIds.forEach((roomId) => {
                 dates.forEach((date) => {
-                  console.log(date);
                     bookedRooms.push({
                         room_id: roomId,
                         date: date,
@@ -526,8 +554,6 @@ export default {
                 });
             });
 
-            console.log("Basic---");
-            console.log(bookedRooms);
             this.$emit("selected", bookedRooms);
         },
         generateAndEmitBookedRoomsBetter(bookedRooms) {

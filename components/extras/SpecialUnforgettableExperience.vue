@@ -22,23 +22,23 @@
                     <span class="font-bold uppercase" v-else>FREE</span>
                 </label>
                 <div v-if="showBreakfastOptions(breakfastSelection)">
-                    <div class="flex items-center mt-4 space-x-6 font-normal">
-                        <div class="w-48">
+                    <div class="flex flex-col items-center mt-4 space-y-2 font-normal md:space-y-0 md:space-x-6 md:flex-row">
+                        <div class="w-full md:w-48">
                             What <b>date</b> would you like to have this?
                         </div>
 
-                        <select v-model="myBreakfastDate" class="flex-1 py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                        <select v-model="myBreakfastDate" class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
                             <option value="">Select Date</option>
                             <option :value="date" v-for="date in breakfastDates" :key="date">{{ showDate(date) }}</option>
                         </select>
                     </div>
-                    <div class="flex items-center mt-6 space-x-6 font-normal">
-                        <div class="w-48">
+                    <div class="flex flex-col items-center mt-6 space-y-2 font-normal md:mt-4 md:space-y-0 md:space-x-6 md:flex-row">
+                        <div class="w-full md:w-48">
                             What <b>time</b> would you like this for?
                         </div>
 
                         <template v-if="breakfastAvailableTimes && breakfastAvailableTimes.length > 0">
-                            <select v-model="myBreakfastTime" class="flex-1 py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                            <select v-model="myBreakfastTime" class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
                                 <option :value="null">Select Time</option>
                                 <option :value="time" v-for="time in breakfastAvailableTimes" :key="time">{{ time }}</option>
                             </select>
@@ -60,13 +60,13 @@
                     <span class="font-bold uppercase" v-if="picnicSelection.price >0">{{ currency(picnicSelection.price) }}</span>
                     <span class="font-bold uppercase" v-else>FREE</span>
                 </label>
-                <div class="flex items-center mt-4 space-x-6 font-normal" v-if="showPicnicOptions(picnicSelection)">
-                    <div class="w-48">
+                <div class="flex flex-col items-center mt-4 space-y-2 font-normal md:space-y-0 md:space-x-6 md:flex-row" v-if="showPicnicOptions(picnicSelection)">
+                    <div class="w-full md:w-48">
                         What <b>date</b> would you like to have this?
                     </div>
 
                     <template v-if="picnicDates.length > 0">
-                        <select v-model="myPicnicDate" class="flex-1 py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                        <select v-model="myPicnicDate" class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
                             <option value="">Select Date</option>
                             <option :value="date" v-for="date in picnicDates" :key="date">{{ showDate(date) }}</option>
                         </select>
@@ -87,13 +87,13 @@
                     <span class="font-bold uppercase" v-if="paintingSelection.price >0">{{ currency(paintingSelection.price) }}</span>
                     <span class="font-bold uppercase" v-else>FREE</span>
                 </label>
-                <div class="flex items-center mt-4 space-x-6 font-normal" v-if="showPaintingOptions(paintingSelection)">
-                    <div class="w-48">
+                <div class="flex flex-col items-center mt-4 space-y-2 font-normal md:space-y-0 md:space-x-6 md:flex-row" v-if="showPaintingOptions(paintingSelection)">
+                    <div class="w-full md:w-48">
                         What <b>date</b> would you like to have this?
                     </div>
 
                     <template v-if="paintingDates.length > 0">
-                        <select v-model="myPaintingDate" class="flex-1 py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+                        <select v-model="myPaintingDate" class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
                             <option value="">Select Date</option>
                             <option :value="date" v-for="date in paintingDates" :key="date">{{ showDate(date) }}</option>
                         </select>
@@ -328,7 +328,9 @@ export default {
             return deco.name.toLowerCase() == "picnic" && this.isPicnicSelected;
         },
         showPaintingOptions(deco) {
-            return deco.name.toLowerCase() == "painting" && this.isPaintingSelected;
+            return (
+                deco.name.toLowerCase() == "painting" && this.isPaintingSelected
+            );
         },
         showColorOptions(deco) {
             return (
@@ -517,7 +519,8 @@ export default {
             this.myPicnicDate = this.$store.state.extras.decorationPicnicDate;
         }
         if (this.$store.state.extras.decorationPaintingDate) {
-            this.myPaintingDate = this.$store.state.extras.decorationPaintingDate;
+            this.myPaintingDate =
+                this.$store.state.extras.decorationPaintingDate;
         }
     },
 };
