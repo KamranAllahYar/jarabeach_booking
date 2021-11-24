@@ -109,8 +109,6 @@ export default {
             return this.$store.getters.bookingDates;
         },
         dates() {
-            console.log(this.bookingDates);
-
             return this.bookingDates.filter((date) => {
                 return !this.noDates.includes(date);
             });

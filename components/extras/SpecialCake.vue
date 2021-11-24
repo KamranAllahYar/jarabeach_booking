@@ -145,6 +145,7 @@ export default {
             selectedDate: null,
             selectedCakes: [],
             cakeMessage: "",
+            noDates: [],
             // cake: {
             //     type: "",
             //     layers: 0,
@@ -172,8 +173,13 @@ export default {
     //     },
     // },
     computed: {
-        dates() {
+        bookingDates() {
             return this.$store.getters.bookingDates;
+        },
+        dates() {
+            return this.bookingDates.filter((date) => {
+                return !this.noDates.includes(date);
+            });
         },
         cakeOptions() {
             return this.cakes.filter(
@@ -244,6 +250,18 @@ export default {
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
+        async getNoCakesDates() {
+            await this.$axios.get("/extra-no-dates?extra=cake").then((res) => {
+                const noDates = res.data.data;
+
+                this.noDates = noDates;
+
+                console.log(noDates);
+            });
+        },
+    },
+    async created() {
+        await this.getNoCakesDates();
     },
     mounted() {
         this.$store.dispatch("extras/getSpecialCakes");

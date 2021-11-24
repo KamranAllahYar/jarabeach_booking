@@ -105,7 +105,7 @@
                     </div>
                 </div>
             </div>
-<!--
+            <!--
             <div class="p-4 mt-6 bg-gray-100 rounded-lg">
                 <label class="font-semibold cursor-pointer">
                     <input type="checkbox" :value="breakfastSelection" v-model="selectedDecorations" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400">
@@ -203,6 +203,7 @@ export default {
             breakfastLoading: false,
             picnicLoading: false,
             // breakfastTimes: ["9am", "9:30am", "10am"],
+            noDates: [],
         };
     },
     watch: {
@@ -242,8 +243,13 @@ export default {
         decorations() {
             return this.$store.getters["extras/allDecorations"];
         },
-        dates() {
+        bookingDates() {
             return this.$store.getters.bookingDates;
+        },
+        dates() {
+            return this.bookingDates.filter((date) => {
+                return !this.noDates.includes(date);
+            });
         },
         isWelcomeNoteSelected() {
             let has = false;
@@ -461,6 +467,21 @@ export default {
                     this.breakfastLoading = false;
                 });
         },
+
+        async getNoDecorationDates() {
+            await this.$axios
+                .get("/extra-no-dates?extra=decoration")
+                .then((res) => {
+                    const noDates = res.data.data;
+
+                    this.noDates = noDates;
+
+                    console.log(noDates);
+                });
+        },
+    },
+    async created() {
+        await this.getNoDecorationDates();
     },
     mounted() {
         this.$store.dispatch("extras/getSpecialDecorations");
@@ -488,9 +509,6 @@ export default {
             this.picnicDates = [...new Set(this.dates)];
             this.myPicnicDate = this.picnicDates[0];
         }
-
-        this.checkPicnicOptions();
-        this.checkBreakfastOptions();
 
         this.selectedRoom = this.rooms[0].name;
 

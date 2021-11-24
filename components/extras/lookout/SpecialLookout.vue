@@ -53,6 +53,7 @@ export default {
             selectedDate: null,
             selectedPackages: [],
             availablePackages: null,
+            noDates: [],
         };
     },
     computed: {
@@ -65,8 +66,13 @@ export default {
         options() {
             return this.$store.getters["extras/allLookouts"];
         },
-        dates() {
+        bookingDates() {
             return this.$store.getters.bookingDates;
+        },
+        dates() {
+            return this.bookingDates.filter((date) => {
+                return !this.noDates.includes(date);
+            });
         },
         isFirstDay() {
             if (this.selectedDate == null) return false;
@@ -134,6 +140,18 @@ export default {
                     this.availablePackages = res.data.data;
                 });
         },
+        async getNoLookoutDates() {
+            await this.$axios.get("/extra-no-dates?extra=lookout").then((res) => {
+                const noDates = res.data.data;
+
+                this.noDates = noDates;
+
+                console.log(noDates);
+            });
+        },
+    },
+    async created() {
+        await this.getNoLookoutDates();
     },
     mounted() {
         this.$store.dispatch("extras/getLookoutOptions");
@@ -144,9 +162,8 @@ export default {
         }
 
         if (this.$store.state.extras.selectedLookouts) {
-            this.selectedPackages = this.$store.state.extras.selectedLookouts.map(
-                (x) => x
-            );
+            this.selectedPackages =
+                this.$store.state.extras.selectedLookouts.map((x) => x);
         }
         if (this.$store.state.extras.dateLookout) {
             this.selectedDate = this.$store.state.extras.dateLookout;
