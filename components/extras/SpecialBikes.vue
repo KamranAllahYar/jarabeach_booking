@@ -26,7 +26,7 @@
                         <div class="flex flex-col w-full py-3 md:flex-row md:items-center">
                             <div class="flex flex-col items-center w-full space-x-0 space-y-2 font-light md:space-y-4 md:items-start">
                                 <div class="w-full">
-                                    <div class="pb-1 text-sm font-bold">Select what type of massage</div>
+                                    <div class="pb-1 text-sm font-bold">Please select a package</div>
                                     <div class="flex items-center flex-1 w-full border rounded-md focus-within:ring">
                                         <select v-model="newBike.id" class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
                                             <option v-for="massage in bikes" :value="massage.id" :key="massage.id">{{massage.name}} ({{ massage.duration }})</option>
@@ -34,7 +34,7 @@
                                     </div>
                                 </div>
                                 <div class="w-full">
-                                    <div class="pb-1 text-sm font-bold">What date would you like this?</div>
+                                    <div class="pb-1 text-sm font-bold">On what date would you like this service?</div>
                                     <div class="flex w-full space-x-3">
                                         <div class="flex-1">
                                             <div class="flex items-center flex-1 border rounded-md focus-within:ring">
