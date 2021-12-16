@@ -198,7 +198,7 @@ export default {
         };
     },
     mounted() {
-        this.$store.dispatch("extras/getSpecialDrinks");
+        this.$store.dispatch("extras/getSpecialBikes");
 
         if (this.$store.state.extras.selectedBikes) {
             this.selectedBikes = this.$store.state.extras.selectedBikes.map(
