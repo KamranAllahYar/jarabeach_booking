@@ -80,7 +80,7 @@
                                 <path d="M8 1.55a1.5 1.5 0 01.596 2.876 1.5 1.5 0 01-2.01-.876M9.323 11.334a2 2 0 01-2.646 0M11.5 7.333a1 1 0 01-2 0M6.5 7.333a1 1 0 01-2 0" stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
 
-                            <select placeholder="Select" v-model="child.age" class="w-full border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
+                            <select placeholder="Select" required v-model="child.age" class="w-full border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
                                 <option value="">Select</option>
                                 <option value="0 - 2">0 - 2</option>
                                 <option value="3 - 5">3 - 5</option>
@@ -149,6 +149,19 @@ export default {
                     { duration: 5000 }
                 );
                 return;
+            }
+
+            if (this.noOfChildren > 0) {
+                console.log(this.childrenAges);
+                for (let ix = 0; ix < this.childrenAges.length; ix++) {
+                    if (this.childrenAges[ix].age == "") {
+                        this.$toast.info(
+                            "Please let us know the age of each child",
+                            { duration: 5000 }
+                        );
+                        return;
+                    }
+                }
             }
             this.updateStores();
             this.$store.commit("COMPLETE_GUEST");
