@@ -750,13 +750,15 @@ export const actions: ActionTree<RootState, RootState> = {
             }
           }
 
-          this.app.$toast.error(msg);
-          return false;
+          // this.app.$toast.error(msg);
+          throw msg;
         }
 
         commit("UPDATE_GUEST", { guest: res.data.data });
         this.app.$toast.success(res.data.message);
         return true;
+      }).catch(err => {
+        throw err;
       })
   },
 
