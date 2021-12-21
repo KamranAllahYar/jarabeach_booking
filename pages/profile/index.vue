@@ -301,13 +301,6 @@ export default {
                 console.log("go and save");
                 try {
                     await this.saveGuest(guestFormData);
-
-                    // .then((res) => {
-                    //     console.log("res");
-                    //     console.log(res);
-                    //     if (res) {
-                    // }
-                    // });
                 } catch (e) {
                     console.log("Catch me here");
                     console.log(e);
@@ -411,9 +404,11 @@ export default {
                 this.loading = false;
                 return res;
             } catch (e) {
+              console.log(e);
                 this.loading = false;
-                this.$toast.error("Something went wrong, please try again");
-                throw new Error("Something went wrong, please try again");
+                // this.$toast.error("Something went wrong, please try again");
+                // this.$toast.error(e);
+                throw new Error(e);
             }
 
             this.loading = false;
