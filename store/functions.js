@@ -93,9 +93,14 @@ const calcRoomLimit = function (getters, rooms) {
     return r.type;
   });
 
+  // const standardTotalMax = 4;
+  // const familyTotalMax = 6;
+  // const villaTotalMax = 6;
+
   const standardBigMax = 2;
-  const familyBigMax = 4;
+  const familyBigMax = 5;
   const villaBigMax = 4;
+
   const standardSmallMax = 2;
   const familySmallMax = 2;
   const villaSmallMax = 2;
