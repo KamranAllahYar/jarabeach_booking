@@ -40,11 +40,11 @@
                             <div class="grid px-3 py-4 space-y-3 border-b md:space-y-0 md:space-x-3 md:grid-cols-2">
                                 <div>
                                     <div class="text-base font-bold">First Name</div>
-                                    <input required type="text" v-model="guest.first_name" class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" style="box-shadow: none" />
+                                    <input required type="text" name="first_name" v-model="guest.first_name" class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" style="box-shadow: none" />
                                 </div>
                                 <div>
                                     <div class="text-base font-bold">Last Name</div>
-                                    <input required type="text" v-model="guest.last_name" class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" style="box-shadow: none" />
+                                    <input required type="text" name="last_name" v-model="guest.last_name" class="w-full px-2 border-transparent rounded-md bg-brand-blue-100" style="box-shadow: none" />
                                 </div>
                             </div>
                             <div class="grid px-3 py-4 space-y-3 border-b md:grid-cols-2 md:space-y-0 md:space-x-3">

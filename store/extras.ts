@@ -926,12 +926,14 @@ export const actions: ActionTree<ExtraState, RootState> = {
         commit("TRANSFORM_MASSAGES", { massages: oldBooking.massages, dates: newBookingDates });
       };
     }
-    if (oldBooking.bikes.length >= 1) {
-      const s = getSpecialObjFromStr(state.specials, 'bikes');
-      if (s) {
-        commit("ADD_SELECTED", s);
-        commit("TRANSFORM_BIKES", { bikes: oldBooking.bikes, dates: newBookingDates });
-      };
+    if (oldBooking.bikes) {
+      if (oldBooking.bikes.length >= 1) {
+        const s = getSpecialObjFromStr(state.specials, 'bikes');
+        if (s) {
+          commit("ADD_SELECTED", s);
+          commit("TRANSFORM_BIKES", { bikes: oldBooking.bikes, dates: newBookingDates });
+        };
+      }
     }
     if (oldBooking.photoshoot) {
       const s = getSpecialObjFromStr(state.specials, 'photoshoot');
