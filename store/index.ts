@@ -513,7 +513,7 @@ export const getters: GetterTree<RootState, RootState> = {
     if (state.editBooking.previous_change) {
       if (state.adminEditMode == true) {
       } else {
-        diff = diff + 25000;
+        diff = diff + 28125;
       }
     }
 
