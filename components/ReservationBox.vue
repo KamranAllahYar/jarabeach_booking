@@ -152,8 +152,8 @@
 
         <div v-if="$store.state.editMode" class="w-full px-3 py-3 border rounded-md border-brand-blue-300 bg-brand-blue-100">
             <div v-if="$store.state.editBooking.previous_change" class="flex justify-between">
-                <div class="text-xs">Booking Transfer Charge</div>
-                <div class="text-xs font-bold">{{ currency(25000) }}</div>
+                <div class="text-xs">Booking Transfer Charge (12.5% VAT and Consumption tax included)</div>
+                <div class="text-xs font-bold">{{ currency(28125) }}</div>
             </div>
             <div class="flex justify-between">
                 <div class="text-xl">Difference to Pay</div>
