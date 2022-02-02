@@ -52,6 +52,7 @@ export const state = () => ({
   dateExperience: null as String | null,
   decorationPicnicDate: null as any,
   decorationPaintingDate: null as any,
+  decorationPaintingQty: 1 as any,
   decorationBreakfastDate: null as any,
   decorationBreakfastTime: null as any,
 
@@ -204,7 +205,11 @@ export const getters: GetterTree<ExtraState, RootState> = {
       const deco = state.selectedExperiences[i];
 
       if (deco) {
-        price += +deco.price;
+        if(deco.name.toLowerCase() == "painting"){
+          price += +deco.price * +state.decorationPaintingQty;
+        }else{
+          price += +deco.price;
+        }
       }
     }
     return price;
@@ -474,6 +479,7 @@ export const mutations: MutationTree<ExtraState> = {
 
     state.decorationPicnicDate = payload.picnicDate;
     state.decorationPaintingDate = payload.paintingDate;
+    state.decorationPaintingQty = payload.paintingQty;
     state.decorationBreakfastDate = payload.breakfastDate;
     state.decorationBreakfastTime = payload.breakfastTime;
 
@@ -565,6 +571,7 @@ export const mutations: MutationTree<ExtraState> = {
     state.decorationRoom = null as String | number | null;
     state.decorationPicnicDate = null as any;
     state.decorationPaintingDate = null as any;
+    state.decorationPaintingQty = null as any;
     state.decorationBreakfastDate = null as any;
     state.decorationBreakfastTime = null as any;
 
@@ -647,6 +654,7 @@ export const mutations: MutationTree<ExtraState> = {
       // if (deco.balloons_color) state.decorationBalloonsColor = deco.balloons_color;
       if (deco.picnic_date) state.decorationPicnicDate = deco.picnic_date;
       if (deco.painting_date) state.decorationPaintingDate = deco.painting_date;
+      if (deco.painting_qty) state.decorationPaintingQty = deco.painting_qty;
       if (deco.breakfast_date) state.decorationBreakfastDate = deco.breakfast_date;
       if (deco.breakfast_time) state.decorationBreakfastTime = deco.breakfast_time;
       // if (deco.room) state.decorationRoom = deco.room;

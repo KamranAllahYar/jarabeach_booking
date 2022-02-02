@@ -860,6 +860,7 @@ export const actions: ActionTree<RootState, RootState> = {
       specialsToSend['unforgettableExperience'] = {
         picnicDate: extraState.decorationPicnicDate,
         paintingDate: extraState.decorationPaintingDate,
+        paintingQty: extraState.decorationPaintingQty,
         breakfastDate: extraState.decorationBreakfastDate,
         breakfastTime: extraState.decorationBreakfastTime,
         options: extraState.selectedExperiences.map((sd: any) => sd.id),
