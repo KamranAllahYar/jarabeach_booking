@@ -14,7 +14,7 @@
       </p>
 
       <div class="p-4 mt-6 bg-gray-100 rounded-lg">
-        <label class="font-semibold cursor-pointer">
+        <label class="font-semibold cursor-pointer" v-if="breakfastSelection">
           <input type="checkbox" :value="breakfastSelection" v-model="selectedExperiences" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400" />
           {{ realDecoName(breakfastSelection.name) }} -
           <span class="font-bold uppercase" v-if="breakfastSelection.price > 0">{{ currency(breakfastSelection.price) }}</span>
@@ -102,6 +102,20 @@
             <template v-else>Not available during your visit</template>
           </div>
         </div>
+        <div class="flex flex-col items-center mt-4 space-y-2 font-normal md:space-y-0 md:space-x-6 md:flex-row" v-if="showPaintingOptions(paintingSelection)">
+          <div class="w-full md:w-48">How many people are you expecting?</div>
+
+          <template v-if="paintingDates.length > 0">
+            <select v-model="myPaintingQty" class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+              <option value>Select</option>
+              <option :value="num" v-for="num in totalGuests" :key="num">{{ num }}</option>
+            </select>
+          </template>
+          <div class="font-light" v-else>
+            <template v-if="paintingLoading">Loading...</template>
+            <template v-else>Not available during your visit</template>
+          </div>
+        </div>
       </div>
 
       <div class="flex w-full mx-auto mt-8 space-x-2 md:w-2/3">
@@ -128,6 +142,7 @@ export default {
       myBalloonsColor: "",
       myPicnicDate: "",
       myPaintingDate: "",
+      myPaintingQty: 1,
       myBreakfastDate: "",
       myBreakfastTime: null,
       breakfastDates: [],
@@ -153,6 +168,9 @@ export default {
     },
   },
   computed: {
+    totalGuests() {
+      return this.$store.getters.totalPeople;
+    },
     breakfastSelection() {
       return this.decorations.find((d) => d.id == 4);
     },
@@ -298,6 +316,13 @@ export default {
 
       return null;
     },
+    paintingQty() {
+      if (this.isPaintingSelected) {
+        return this.myPaintingQty;
+      }
+
+      return null;
+    },
     breakfastAvailableTimes() {
       if (this.myBreakfastDate) {
         return this.breakfastDateTimes[this.myBreakfastDate];
@@ -358,6 +383,7 @@ export default {
         breakfastTime: this.breakfastTime,
         picnicDate: this.picnicDate,
         paintingDate: this.paintingDate,
+        paintingQty: this.paintingQty,
         // room: this.selectedRoom,
       });
       this.$emit("next");
@@ -373,6 +399,7 @@ export default {
         breakfastTime: this.breakfastTime,
         picnicDate: this.picnicDate,
         paintingDate: this.paintingDate,
+        paintingQty: this.paintingQty,
         // room: this.selectedRoom,
       });
       this.$emit("prev");
@@ -538,6 +565,10 @@ export default {
     if (this.$store.state.extras.decorationPaintingDate) {
       this.myPaintingDate =
         this.$store.state.extras.decorationPaintingDate;
+    }
+    if (this.$store.state.extras.decorationPaintingQty) {
+      this.myPaintingQty =
+        this.$store.state.extras.decorationPaintingQty;
     }
   },
 };

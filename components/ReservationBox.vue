@@ -6,8 +6,7 @@
       <div class="flex justify-between px-3 my-3">
         <div>Guests</div>
         <div>
-          {{ adultNo }} Adult
-          <span v-if="adultNo > 1">s</span>
+          {{ adultNo }} Adult<span v-if="adultNo > 1">s</span>
         </div>
       </div>
       <div class="flex justify-between px-3 my-3" v-if="childNo > 0">
