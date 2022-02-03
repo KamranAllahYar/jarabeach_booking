@@ -33,10 +33,10 @@
                                     </svg>
                                 </div>
                                 <div class="flex-1">
-                                    <input type="text" v-model="guest.first_name" placeholder="First Name" class="w-full px-0 border-0" style="box-shadow: none" />
+                                    <input type="text" v-model="guest.first_name" name="first_name" placeholder="First Name" class="w-full px-0 border-0" style="box-shadow: none" />
                                 </div>
                                 <div class="flex-1">
-                                    <input type="text" v-model="guest.last_name" placeholder="Last Name" class="w-full px-0 border-0" style="box-shadow: none" />
+                                    <input type="text" v-model="guest.last_name" name="last_name" placeholder="Last Name" class="w-full px-0 border-0" style="box-shadow: none" />
                                 </div>
                             </div>
                         </div>

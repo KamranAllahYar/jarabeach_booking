@@ -19,6 +19,7 @@ let store = {};
   // Enforce store modules
   store.modules = store.modules || {}
 
+  resolveStoreModules(require('../store/create_bookings.ts'), 'create_bookings.ts')
   resolveStoreModules(require('../store/extras.ts'), 'extras.ts')
   resolveStoreModules(require('../store/functions.js'), 'functions.js')
 
@@ -27,6 +28,7 @@ let store = {};
   if (process.client && module.hot) {
     // Whenever any Vuex module is updated...
     module.hot.accept([
+      '../store/create_bookings.ts',
       '../store/extras.ts',
       '../store/functions.js',
       '../store/index.ts',

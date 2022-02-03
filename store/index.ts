@@ -8,6 +8,7 @@ import isSameYear from 'date-fns/isSameYear';
 import Bugsnag from '@bugsnag/js'
 
 import { calcExtraPeoplePrice, calcRoomLimit, calcRoomPrice } from "./functions.js";
+import getDataToSend from './create_bookings';
 
 var groupBy = function (xs: any, key: any) {
   return xs.reduce(function (rv: any, x: any) {
@@ -762,7 +763,7 @@ export const actions: ActionTree<RootState, RootState> = {
       })
   },
 
-  async createTransaction({ state, getters }) {
+  async createTransaction({ state, getters, rootState, rootGetters }) {
     console.log(getters);
     let dataToPost = {} as any;
     if (!state.editMode) {
@@ -795,7 +796,16 @@ export const actions: ActionTree<RootState, RootState> = {
       }
     }
 
+    console.log("Create transaction Data to Post:");
+
+    const { dataToPost: bookingDataToPost, specialsToSend } = getDataToSend({ state, getters, rootState, rootGetters });
+
+
+    dataToPost['booking_data'] = bookingDataToPost;
+    dataToPost['specials_data'] = specialsToSend;
+
     console.log(dataToPost);
+
     try {
       const res = await this.$axios.post("transactions", dataToPost);
       console.log(res.data);
