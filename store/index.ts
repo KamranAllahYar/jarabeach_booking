@@ -473,10 +473,12 @@ export const getters: GetterTree<RootState, RootState> = {
 		return 0;
 	},
 	preTotal: (state: RootState, getters) => {
-		return +getters.subTotal - +getters.discount - +getters.roomDiscount - +getters.memberDiscount + +getters.extraPeoplePrice;
+		const preTotal = +getters.subTotal - +getters.discount - +getters.roomDiscount - +getters.memberDiscount + +getters.extraPeoplePrice;
+		if (preTotal < 0) return 0;
+
+		return preTotal;
 	},
 	taxTotal: (state: RootState, getters) => {
-		if (getters.preTotal <= 0) return 0;
 		return (+getters.preTotal * 0.125).toFixed(2);
 	},
 	totalPrice: (state: RootState, getters) => {

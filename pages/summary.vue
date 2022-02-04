@@ -48,35 +48,47 @@
           <div class="flex flex-col items-center w-full my-6 space-y-2 md:space-y-0 md:flex-row md:space-x-2">
             <MainButton class="md:w-3/12" outline @click="gotoBack()">Back</MainButton>
             <template v-if="shouldShowPaymentButton">
-              <div class="relative flex-shrink-0 w-full md:w-5/12" v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimerToggle(true)" @mouseleave="holdDisclaimerToggle(false)">
-                <MainButton :loading="loading" @click.native="bookOnHoldBooking()">
-                  <div class="flex justify-center">
-                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                    </svg>
-                    Hold | Bank Transfer
-                  </div>
-                </MainButton>
-                <div v-if="holdDisclaimer" class="absolute p-2 mx-auto text-xs bg-white border-2 rounded border-brand-blue-300" style="top: -120px">
-                  Booking will only be held for
-                  <b>30 mins</b>. You must send a proof of payment to
-                  <b>bookings@jarabeachresort.com</b> within that time or the hold on the
-                  booking will be cancelled.
-                  <br />
-                  <i class="text-red-800">Option not available between 6pm-9am WAT</i>
-                </div>
-              </div>
-              <div class="flex-shrink-0 w-full md:w-5/12">
-                <Paystack v-if="trans_ref != null" :amount="totalPrice" :email="guestEmail" :paystackkey="paystackkey" :reference="trans_ref" :callback="completeBooking" :close="closePayment" :embed="false">
-                  <MainButton class="md:px-2" :loading="loading">
+              <template v-if="totalPrice > 0">
+                <div class="relative flex-shrink-0 w-full md:w-5/12" v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimerToggle(true)" @mouseleave="holdDisclaimerToggle(false)">
+                  <MainButton :loading="loading" @click.native="bookOnHoldBooking()">
                     <div class="flex justify-center">
                       <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                       </svg>
-                      Book | Pay With Paystack
+                      Hold | Bank Transfer
                     </div>
                   </MainButton>
-                </Paystack>
+                  <div v-if="holdDisclaimer" class="absolute p-2 mx-auto text-xs bg-white border-2 rounded border-brand-blue-300" style="top: -120px">
+                    Booking will only be held for
+                    <b>30 mins</b>. You must send a proof of payment to
+                    <b>bookings@jarabeachresort.com</b> within that time or the hold on the
+                    booking will be cancelled.
+                    <br />
+                    <i class="text-red-800">Option not available between 6pm-9am WAT</i>
+                  </div>
+                </div>
+                <div class="flex-shrink-0 w-full md:w-5/12">
+                  <Paystack v-if="trans_ref != null" :amount="totalPrice" :email="guestEmail" :paystackkey="paystackkey" :reference="trans_ref" :callback="completeBooking" :close="closePayment" :embed="false">
+                    <MainButton class="md:px-2" :loading="loading">
+                      <div class="flex justify-center">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                        </svg>
+                        Book | Pay With Paystack
+                      </div>
+                    </MainButton>
+                  </Paystack>
+                </div>
+              </template>
+              <div v-if="totalPrice <= 0">
+                <MainButton :loading="loading" @click.native="completeFreeBooking()">
+                  <div class="flex justify-center">
+                    <!-- <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                    </svg> -->
+                    Complete Booking
+                  </div>
+                </MainButton>
               </div>
             </template>
             <template v-else>
@@ -254,6 +266,22 @@ export default {
         }
       } else {
         this.$toasted.error(res.message);
+      }
+      this.loading = false;
+    },
+    async completeFreeBooking() {
+      const res = await this.$store.dispatch("createBooking", {
+        trans_ref: this.trans_ref,
+        method_ref: "ZeroBalance",
+        method: "ZeroBalance",
+      });
+
+      console.log(res);
+      if (res) {
+        console.log(res);
+        this.$router.push("/done");
+        this.$store.commit("RESET_STORE");
+        this.$store.commit("extras/RESET_STORE");
       }
       this.loading = false;
     },
