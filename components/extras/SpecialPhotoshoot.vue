@@ -4,7 +4,7 @@
       <img src="@/assets/images/specials/photoshoot.png" alt class="object-cover object-center w-full h-full" />
     </div>
     <div class="flex flex-col w-full p-6 md:w-7/12">
-      <div class="font-semibold">Photoshoot</div>
+      <div class="font-semibold">Photoshoot (third-party photographer access)</div>
       <p class="mt-3 font-light leading-relaxed text-gray-600">
         Jara has an abundance of beautiful areas perfect for personal photoshoots - whether pre-wedding,
         anniversary or birthday. You are welcome to bring an external photographer to Jara
