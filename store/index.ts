@@ -457,7 +457,7 @@ export const getters: GetterTree<RootState, RootState> = {
 			}
 		});
 
-		return extraPrices + roomPrices;
+		return extraPrices + roomPrices + +getters.extraPeoplePrice;
 	},
 	discount: (state: RootState, getters) => {
 		const discount = state.discount;
@@ -473,7 +473,7 @@ export const getters: GetterTree<RootState, RootState> = {
 		return 0;
 	},
 	preTotal: (state: RootState, getters) => {
-		const preTotal = +getters.subTotal - +getters.discount - +getters.roomDiscount - +getters.memberDiscount + +getters.extraPeoplePrice;
+		const preTotal = +getters.subTotal - +getters.discount - +getters.roomDiscount - +getters.memberDiscount ;
 		if (preTotal < 0) return 0;
 
 		return preTotal;
