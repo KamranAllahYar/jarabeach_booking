@@ -39,6 +39,8 @@ $ yarn prod
 # Restarts the service that runs the Nuxt application on the url (booking.jarabeachresort.com)
 $ pm2 restart booking.jarabeachresort.com
 
+---------------------
+
 # (OPTIONAL - ) If for any reason the server was restarted, run this command the first time only
 $ pm2 start npm --name "booking.jarabeachresort.com" --watch -- start
 ```
