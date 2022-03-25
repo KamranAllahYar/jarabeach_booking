@@ -27,8 +27,8 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 # Resets the git repo and cleans any server changes
 $ git reset --hard && git clean -df
 
-# Pulls from the origin main branch
-$ git pull origin main
+# Pulls from the origin staging branch
+$ git pull origin staging
 
 # installs any new package that may be included
 $ yarn install
