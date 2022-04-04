@@ -268,9 +268,9 @@ export const getters: GetterTree<RootState, RootState> = {
 	},
 	oldExtraPeoplePrice: (state: RootState, getters) => {
 		let price = 0;
-		const bigPrice = 50000;
+		const bigPrice = 60000;
 		const bigVillaPrice = 100000;
-		const smallPrice = 35000;
+		const smallPrice = 42000;
 
 		const noOfRooms = getters.totalRooms;
 		if (noOfRooms == 0) return price;
