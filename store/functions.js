@@ -41,8 +41,8 @@ const calcExtraPeople = function (rooms, getters) {
 
 const calcExtraPeoplePrice = function (getters, rooms) {
   let price = 0;
-  let smallPrice = 35000;
-  let bigPrice = 50000;
+  let smallPrice = 42000;
+  let bigPrice = 60000;
   const bigVillaPrice = 100000;
 
   const extraPeople = calcExtraPeople(rooms, getters);
