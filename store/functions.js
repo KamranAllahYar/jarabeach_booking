@@ -47,9 +47,9 @@ const calcExtraPeoplePrice = function (getters, rooms) {
 
   const extraPeople = calcExtraPeople(rooms, getters);
 
-  const bigPeople = extraPeople.big;
+  const bigPeople = 42000;
   const teenPeople = extraPeople.teen;
-  const smallPeople = extraPeople.small;
+  const smallPeople = 60000;
   const totalPeople = extraPeople.total;
 
   if (totalPeople <= 0) return 0;
