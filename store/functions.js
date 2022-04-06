@@ -46,10 +46,10 @@ const calcExtraPeoplePrice = function (getters, rooms) {
   const bigVillaPrice = 100000;
 
   const extraPeople = calcExtraPeople(rooms, getters);
-
-  const bigPeople = 42000;
+  
+  const bigPeople = extraPeople.big;
   const teenPeople = extraPeople.teen;
-  const smallPeople = 60000;
+  const smallPeople = extraPeople.small;
   const totalPeople = extraPeople.total;
 
   if (totalPeople <= 0) return 0;
