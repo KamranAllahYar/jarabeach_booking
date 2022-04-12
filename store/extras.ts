@@ -3,7 +3,7 @@ import { GetterTree, MutationTree, ActionTree } from 'vuex';
 
 export const state = () => ({
   specials: [
-    { type: 'unforgettableExperience', name: 'Unforgettable Experiences', available: true, range: '5,000' },
+    { type: 'unforgettableExperience', name: 'Unforgettable Experiences', available: true, range: '10,000' },
     { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
     // { type: 'newmassage', name: 'Massage', available: true, range: '10,000' },
     { type: 'massages', name: 'Massages', available: true, range: '10,000' },
@@ -12,7 +12,7 @@ export const state = () => ({
     { type: 'cakes', name: 'Cake', available: true, range: '15,000' },
     { type: 'photoshoot', name: 'Photoshoot (third-party photographer access)', available: true, range: '20,000' },
     // { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
-    { type: 'bikes', name: 'Go-Kart', available: true, range: '15,000' },
+    { type: 'bikes', name: 'Go-Kart and Horse Riding', available: true, range: '15,000' },
     { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' }
     // { type: 'massage', name: 'Massage', available: false, range: '30,000' },
   ] as { name: string, type: string, range: string, available: boolean }[],
@@ -75,6 +75,7 @@ export const state = () => ({
   // cakePrices: [] as any[],
   selectedCakes: [] as any,
   cakeMessage: "" as any,
+  cakeGender: "" as any,
   dateCake: null as String | null,
 
   photoshootPrices: [] as any[],
@@ -522,6 +523,7 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedCakes = payload.cakes;
     state.dateCake = payload.date;
     state.cakeMessage = payload.message;
+    state.cakeGender = payload.gender;
   },
 
   SET_SELECTED_PHOTOSHOOT: (state, payload) => {
@@ -586,11 +588,12 @@ export const mutations: MutationTree<ExtraState> = {
     state.dateDrink = null;
 
     state.newmassageOptions = [] as any[],
-      state.selectedMassages = [] as any[],
-      state.dateMassages = null as String | null,
+    state.selectedMassages = [] as any[],
+    state.dateMassages = null as String | null,
 
-      state.cakeOptions = [] as any[];
+    state.cakeOptions = [] as any[];
     state.cakeMessage = "" as any;
+    state.cakeGender = "" as any;
     state.selectedCakes = [] as any[];
     state.dateCake = null;
 
@@ -612,6 +615,10 @@ export const mutations: MutationTree<ExtraState> = {
 
       if (cake.message) {
         state.cakeMessage = cake.message;
+      }
+
+      if (cake.gender) {
+        state.cakeGender = cake.gender;
       }
 
       state.selectedCakes.push({ id: cake.option_id, qty: cake.quantity });
