@@ -397,7 +397,7 @@ export const getters: GetterTree<RootState, RootState> = {
 
 		const myDates = Object.keys(roomGroup);
 		const noDiscountDates = getters.noDiscountDates;
-		let t = 0;
+		let tNights = 0;
 
 		myDates.forEach(date => {
 			let shouldCount = true;
@@ -408,13 +408,13 @@ export const getters: GetterTree<RootState, RootState> = {
 				}
 			});
 
-			if (shouldCount) t++;
+			if (shouldCount) tNights++;
 		});
 
-		console.log('Total nights: ' + t);
+		console.log('Total nights: ' + tNights);
 
 		// const totalNights = getters.totalNights;
-		const totalNights = t;
+		const totalNights = tNights;
 		let percent = 0;
 		if (totalNights == 2) percent = 5;
 		else if (totalNights == 3) percent = 10;
@@ -423,7 +423,7 @@ export const getters: GetterTree<RootState, RootState> = {
 		return percent;
 	},
 	roomDiscount: (state: RootState, getters) => {
-		const roomPriceForDiscount = getters.roomPrice - getters.roomVillaPrices;
+		const roomPriceForDiscount = getters.roomPrice - getters.roomVillaPrices - getters.roomLoftPrices;
 		return roomPriceForDiscount * (getters.roomDiscountPercent / 100);
 	},
 	memberDiscount: (state: RootState, getters) => {

@@ -102,7 +102,9 @@
 			<div class="flex justify-between px-3 my-3" v-if="roomDiscountPercent > 0 && roomDiscount > 0">
 				<div>
 					{{ roomDiscountPercent }}% Room Discount
-					<small class="text-xs text-gray-700" v-if="roomVillaPrices > 0"> <br />(exludes Villas) </small>
+					<small class="text-xs text-gray-700" v-if="roomVillaPrices > 0 &&roomLoftPrices > 0 "> <br />(exludes Villas as The Loft) </small>
+					<small class="text-xs text-gray-700" v-else-if="roomVillaPrices > 0"> <br />(exludes Villas) </small>
+					<small class="text-xs text-gray-700" v-else-if="roomLoftPrices > 0"> <br />(exludes The Loft) </small>
 				</div>
 				<div class="font-bold">- {{ currency(roomDiscount) }}</div>
 			</div>
