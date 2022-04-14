@@ -841,6 +841,7 @@ export const actions: ActionTree<RootState, RootState> = {
 			'Room Discount': '-' + rootGetters.roomDiscount,
 			'100Club Member Discount': '-' + rootGetters.memberDiscount,
 			'Extra People Cost': '+' + rootGetters.extraPeoplePrice,
+      taxTotal: rootGetters.taxTotal,
 		} as any;
 
 		if (allExtras.includes('cakes')) {
