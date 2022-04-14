@@ -148,6 +148,10 @@ export const getters: GetterTree<RootState, RootState> = {
 		const rooms = getters.bookedRooms.filter((room: any) => room.type == 'villa').map((room: any) => room.room_id);
 		return rooms.filter(onlyUnique);
 	},
+	roomsDetailsLoft: (state: RootState, getters) => {
+		const rooms = getters.bookedRooms.filter((room: any) => room.type == 'loft').map((room: any) => room.room_id);
+		return rooms.filter(onlyUnique);
+	},
 	uniqueRooms: (state: RootState, getters) => {
 		const roomGroup = groupBy(getters.bookedRooms, 'room_id');
 		return Object.keys(roomGroup);
@@ -193,9 +197,11 @@ export const getters: GetterTree<RootState, RootState> = {
 		let onlyVilla = true;
 		getters.uniqueRooms.map((roomid: any) => {
 			const r = state.roomsData.find(r => r.id == roomid);
-			if (r.type == 'standard') {
+			if (r.type == 'standard' ) {
 				onlyVilla = false;
 			} else if (r.type == 'family') {
+				onlyVilla = false;
+			} else if (r.type == 'loft') {
 				onlyVilla = false;
 			}
 		});
@@ -226,6 +232,9 @@ export const getters: GetterTree<RootState, RootState> = {
 				smallMax += 2;
 			} else if (r.type == 'villa') {
 				bigMax += 2;
+				smallMax += 2;
+			} else if (r.type == 'loft') {
+				bigMax += 3;
 				smallMax += 2;
 			}
 		});
@@ -367,6 +376,16 @@ export const getters: GetterTree<RootState, RootState> = {
 		let price = 0;
 		getters.bookedRooms.forEach((room: any) => {
 			if (room.type == 'villa') {
+				price += room.price;
+			}
+		});
+
+		return price;
+	},
+	roomLoftPrices: (state: RootState, getters) => {
+		let price = 0;
+		getters.bookedRooms.forEach((room: any) => {
+			if (room.type == 'loft') {
 				price += room.price;
 			}
 		});
