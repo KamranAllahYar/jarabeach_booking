@@ -728,6 +728,10 @@ export default {
                 if (this.bigPeople <= 3) {
                     this.notAllRooms = true;
                 }
+            } else if (this.seRoom == "loft") {
+                if (this.bigPeople <= 3) {
+                    this.notAllRooms = true;
+                }
             }
 
             return await this.$axios
@@ -789,10 +793,12 @@ export default {
             if (firstRoom) {
                 if (firstRoom.room_id > 0 && firstRoom.room_id <= 5) {
                     this.seRoom = "standard";
-                } else if (firstRoom.room_id > 5 && firstRoom.room_id <= 9) {
+                } else if (firstRoom.room_id >= 6 && firstRoom.room_id <= 9) {
                     this.seRoom = "family";
-                } else {
+                } else if (firstRoom.room_id >= 10 && firstRoom.room_id <= 11) {
                     this.seRoom = "villa";
+                } else {
+                    this.seRoom = "loft";
                 }
 
                 const allDates = this.initialRooms.map((r) => r.date);

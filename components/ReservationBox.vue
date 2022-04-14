@@ -50,6 +50,9 @@
 						<div v-else-if="roomsDetailsVilla.includes(10)">Sunrise 10</div>
 						<div v-else-if="roomsDetailsVilla.includes(11)">Sunset 11</div>
 					</div>
+					<div class="text-sm text-right" v-if="roomsDetailsLoft.length > 0">
+						<div v-if="roomsDetailsLoft.includes(12)">The Loft</div>
+					</div>
 					<!-- <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
                         <div>{{ formatDate(room.date) }}</div>
                         <div class="text-xs text-gray-600">{{ room.name }}</div>
@@ -244,6 +247,9 @@ export default {
 		roomsDetailsVilla() {
 			return this.$store.getters.roomsDetailsVilla;
 		},
+		roomsDetailsLoft() {
+			return this.$store.getters.roomsDetailsLoft;
+		},
 		editBooking() {
 			return this.$store.state.editBooking;
 		},
@@ -278,6 +284,9 @@ export default {
 		},
 		roomVillaPrices() {
 			return this.$store.getters.roomVillaPrices;
+		},
+		roomLoftPrices() {
+			return this.$store.getters.roomLoftPrices;
 		},
 		roomDiscountPercent() {
 			return this.$store.getters.roomDiscountPercent;

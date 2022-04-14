@@ -13,6 +13,9 @@ const calcExtraPeople = function (rooms, getters) {
     } else if (r.type == 'villa') {
       bigMax += 2;
       smallMax += 2;
+    }else if (r.type == 'loft') {
+      bigMax += 3;
+      smallMax += 2;
     }
   });
 
@@ -44,9 +47,11 @@ const calcExtraPeoplePrice = function (getters, rooms) {
   let smallPrice = 42000;
   let bigPrice = 60000;
   const bigVillaPrice = 100000;
+  const bigLoftPrice = 60000;
+  const smallLoftPrice = 42000;
 
   const extraPeople = calcExtraPeople(rooms, getters);
-  
+
   const bigPeople = extraPeople.big;
   const teenPeople = extraPeople.teen;
   const smallPeople = extraPeople.small;
@@ -64,6 +69,12 @@ const calcExtraPeoplePrice = function (getters, rooms) {
 
         if (extra.room == 'villa') {
           price += bigVillaPrice;
+        } else if(extra.room == 'loft'){
+          if (extra.type == 'teen') {
+            price += smallLoftPrice;
+          } else {
+            price += bigLoftPrice;
+          }
         } else {
           if (extra.type == 'teen') {
             price += smallPrice;
@@ -100,10 +111,12 @@ const calcRoomLimit = function (getters, rooms) {
   const standardBigMax = 2;
   const familyBigMax = 5;
   const villaBigMax = 4;
+  const loftBigMax = 5;
 
   const standardSmallMax = 2;
   const familySmallMax = 2;
   const villaSmallMax = 2;
+  const loftSmallMax = 2;
 
   let totalBigMax = 0;
   let totalSmallMax = 0;
@@ -118,6 +131,9 @@ const calcRoomLimit = function (getters, rooms) {
     } else if (type == 'villa') {
       totalBigMax += villaBigMax;
       totalSmallMax += villaSmallMax;
+    } else if (type == 'loft') {
+      totalBigMax += loftBigMax;
+      totalSmallMax += loftSmallMax;
     }
   });
 
@@ -153,6 +169,7 @@ const calcRoomPrice = function (getters, rooms) {
       roomPrices += nowRoom.price;
     }
 
+    if (nowRoom.type == 'loft') totalPeople -= 3;
     if (nowRoom.type == 'villa') totalPeople -= 3;
     if (nowRoom.type == 'family') totalPeople -= 3;
     if (nowRoom.type == 'standard') totalPeople -= 2;
