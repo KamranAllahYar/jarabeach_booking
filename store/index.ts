@@ -849,6 +849,7 @@ export const actions: ActionTree<RootState, RootState> = {
 				date: extraState.dateCake,
 				options: extraState.selectedCakes,
 				message: extraState.cakeMessage,
+				gender: extraState.cakeGender,
 			};
 			prices['cakes'] = rootGetters['extras/cakesPrice'];
 		}
