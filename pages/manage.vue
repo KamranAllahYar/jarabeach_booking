@@ -164,6 +164,9 @@ export default {
         };
     },
     computed: {
+        adminEditMode(){
+            return this.$store.state.adminEditMode ?? false;
+        },
         rooms() {
             return this.$store.getters.roomsData;
         },
@@ -200,6 +203,10 @@ export default {
 
             console.log(totalRooms);
             console.log(hoursDiff);
+
+            if(this.adminEditMode){
+                return true;
+            }
 
             if (totalRooms >= 5 && hoursDiff <= 169) {
                 console.log("5 - 169");

@@ -224,9 +224,6 @@ export const getters: GetterTree<ExtraState, RootState> = {
     let lunchPrice = 4000;
     let dinnerPrice = 5000;
 
-    console.log('staff prices');
-    console.log(state.staffPrices);
-
     if (state.staffPrices) {
       let d = state.staffPrices.find(_d => _d.name.toLowerCase() == "driver");
       if (d) {
@@ -340,7 +337,6 @@ export const mutations: MutationTree<ExtraState> = {
     state.selected = payload
   },
   REMOVE_EXTRA: (state, extra) => {
-    console.log(extra);
     if (state.clashes[extra]) {
       delete state.clashes[extra];
     }
@@ -351,7 +347,6 @@ export const mutations: MutationTree<ExtraState> = {
     }
   },
   ADD_SELECTED: (state, sp) => {
-    console.log("ADDING A SELECTED ------- " + sp);
     state.selected.push(sp);
   },
   REMOVE_SELECTED: (state, sp) => {
@@ -377,9 +372,6 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedLookouts = payload.lookouts;
     state.dateLookout = payload.date;
 
-    console.log("lookout clashes");
-    console.log(payload.lookouts);
-
     let allClashes = [] as any[];
     payload.lookouts.forEach((package_id: number) => {
       const option = state.lookoutOptions.find(lo => lo.id == package_id);
@@ -389,7 +381,6 @@ export const mutations: MutationTree<ExtraState> = {
     });
 
     allClashes = [...new Set(allClashes)];
-    console.log(allClashes);
     state.clashes['lookout'] = {
       date: payload.date,
       clash: allClashes,
@@ -440,9 +431,6 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedQuadbike = payload.quadbike;
     state.selectedQuadbikeQty = payload.quantity || 1;
     state.dateQuadbike = payload.date;
-
-    console.log("Quad bike");
-    console.log(payload.quadbike);
 
     const option = state.quadbikeOptions.find(qo => qo.id == payload.quadbike);
     if (option) {
@@ -722,8 +710,6 @@ export const mutations: MutationTree<ExtraState> = {
     const oldDates = payload.dates;
     const oldStaff = payload.staff;
 
-    console.log(oldStaff)
-
     state.dateStaff = [];
     oldStaff.dates.forEach((oldDate: string) => {
       if (oldDates.includes(oldDate)) {
@@ -738,8 +724,6 @@ export const mutations: MutationTree<ExtraState> = {
     const oldDates = payload.dates;
     const oldQuadbike = payload.quadbike;
 
-    console.log(oldQuadbike)
-
     if (oldDates.includes(oldQuadbike.date)) {
       state.dateQuadbike = oldQuadbike.date;
       state.selectedQuadbike = oldQuadbike.option_id;
@@ -750,8 +734,6 @@ export const mutations: MutationTree<ExtraState> = {
     const oldDates = payload.dates;
     const oldMassage = payload.massage;
 
-    console.log(oldMassage)
-
     if (oldDates.includes(oldMassage.date)) {
       state.dateMassage = oldMassage.date;
       state.selectedMassage = oldMassage.slot_id;
@@ -760,8 +742,6 @@ export const mutations: MutationTree<ExtraState> = {
   TRANSFORM_NEWMASSAGE: (state, payload) => {
     const oldDates = payload.dates;
     const oldNewmassage = payload.newmassage;
-
-    console.log(oldNewmassage)
 
     if (oldDates.includes(oldNewmassage.date)) {
       state.dateNewmassage = oldNewmassage.date;
@@ -777,14 +757,11 @@ export const mutations: MutationTree<ExtraState> = {
     let packages: any[] = [];
     oldLookout.forEach((lookout: any) => {
       if (oldDates.includes(lookout.date)) {
-        console.log("----------");
-        console.log(lookout);
         state.dateLookout = lookout.date;
         packages.push(lookout.package_id);
       }
     });
     state.selectedLookouts = packages;
-    console.log(state.selectedLookouts);
   },
 }
 
@@ -799,80 +776,60 @@ export const actions: ActionTree<ExtraState, RootState> = {
     }
 
     this.$axios.post("/extras", { dates, oldBookingId: oldBookingId }).then((res) => {
-      console.log("EXTRASSS")
-      console.log(res.data);
       commit("LOAD_EXTRAS", res.data);
     });
   },
 
   getSpecialDrinks({ commit }) {
     this.$axios.get("/drink-options").then((res) => {
-      console.log("Drinks")
-      console.log(res.data.data);
       commit("LOAD_DRINK_OPTIONS", res.data.data);
     });
   },
 
   getSpecialCakes({ commit }) {
     this.$axios.get("/cake-options").then((res) => {
-      console.log("Cakes")
-      console.log(res.data.data);
       commit("LOAD_CAKE_OPTIONS", res.data.data);
     });
   },
 
   getSpecialDecorations({ commit }) {
     this.$axios.get("/decoration-options").then((res) => {
-      console.log("Decorations")
-      console.log(res.data.data);
       commit("LOAD_DECORATION_OPTIONS", res.data.data);
     });
   },
 
   getSpecialMassages({ commit }) {
     this.$axios.get("/massage-options").then((res) => {
-      console.log("Massages")
-      console.log(res.data.data);
       commit("LOAD_MASSAGE_OPTIONS", res.data.data);
     });
   },
 
   getSpecialBikes({ commit }) {
     this.$axios.get("/bike-options").then((res) => {
-      console.log("Bikes")
-      console.log(res.data.data);
       commit("LOAD_BIKE_OPTIONS", res.data.data);
     });
   },
 
   getSpecialNewmassages({ commit }) {
     this.$axios.get("/newmassage-options").then((res) => {
-      console.log("NewMassages")
-      console.log(res.data.data);
       commit("LOAD_NEWMASSAGE_OPTIONS", res.data.data);
     });
   },
 
   getLookoutOptions({ commit }) {
     this.$axios.get("/lookout-options").then((res) => {
-      console.log("Lookout options")
-      console.log(res.data.data);
       commit("LOAD_LOOKOUT_OPTIONS", res.data.data);
     });
   },
 
   getQuadbikeOptions({ commit }) {
     this.$axios.get("/quadbike-options").then((res) => {
-      console.log("Quadbike options")
-      console.log(res.data.data);
       commit("LOAD_QUADBIKE_OPTIONS", res.data.data);
     });
   },
 
   getMostPrices({ commit }) {
     this.$axios.get("/prices/most").then((res) => {
-      console.log("Most prices")
-      console.log(res.data.data);
       commit("SET_MOST_PRICES", res.data.data);
     });
   },

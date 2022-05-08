@@ -18,11 +18,6 @@ export default function ({ store, redirect, route }) {
     lastUpdate,
   )
 
-  console.log("Update expiry");
-  console.log(lastUpdate);
-  console.log(new Date());
-  console.log(seconds);
-
   if (seconds > 60 * 60) { // 60minutes
     store.commit("RESET_STORE");
     store.commit("extras/RESET_STORE");

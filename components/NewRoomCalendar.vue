@@ -446,7 +446,6 @@ export default {
         },
         fullDays() {
             let num = this.daysInMonth;
-            console.log(this.daysInMonth);
 
             const nums = [];
             for (let n = 1; n <= num; n++) {
@@ -456,7 +455,6 @@ export default {
         },
         firstHalfDays() {
             let num = Math.ceil(this.daysInMonth / 2);
-            console.log(this.daysInMonth);
 
             const nums = [];
             for (let n = 1; n <= num; n++) {
@@ -466,8 +464,6 @@ export default {
         },
         secondHalfDays() {
             const num = this.daysInMonth - this.firstHalfDays.length + 1;
-
-            console.log(num + 1);
 
             const nums = [];
             for (let n = num + 1; n <= this.daysInMonth; n++) {
@@ -668,7 +664,7 @@ export default {
         },
         prevMonth() {
             const diff = differenceInDays(this.today, new Date());
-            console.log(diff);
+
             if (diff <= 0) {
                 this.$toast.info("You cannot book in the past");
                 return;
@@ -742,7 +738,6 @@ export default {
                     booking_id: bookingId,
                 })
                 .then((res) => {
-                    console.log(res.data.data);
                     const aRooms = res.data.data;
 
                     this.canSwap = res.data.canSwap;
@@ -772,9 +767,6 @@ export default {
                 new Date(this.startDate),
                 new Date(this.endDate)
             ).map((v) => v.toISOString().slice(0, 10));
-
-            console.log("This is the date list");
-            console.log(dateList);
 
             return dateList;
         },
@@ -808,14 +800,11 @@ export default {
 
                 this.startDate = allDates[0];
                 this.endDate = allDates[allDates.length - 1];
-                console.log("This is start date: " + this.startDate);
-                console.log("This is end date: " + this.endDate);
+
                 this.getRoomsAvailableForPeriod().then(() => {
                     this.roomIds = this.initialRooms.map((v) => v.room_id);
                     this.roomIds = [...new Set(this.roomIds)];
                 });
-
-                console.log(allDates);
             }
         }
 

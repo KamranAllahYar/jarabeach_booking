@@ -338,15 +338,11 @@ export default {
 		},
 		formatAndStringCabin(arrs) {
 			const arr = [...new Set(arrs)];
-			console.log('array -----');
-			console.log(arr);
+
 			const index = arr.indexOf(6);
 			if (index > -1) {
 				arr.splice(index, 1);
-				console.log('splicing--');
 			}
-			console.log(index);
-			console.log(arr);
 
 			if (arr.length == 0) return false;
 			if (arr.length == 1) return arr[0];

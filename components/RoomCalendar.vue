@@ -285,7 +285,6 @@ export default {
         },
         fullDays() {
             let num = this.daysInMonth;
-            console.log(this.daysInMonth);
 
             const nums = [];
             for (let n = 1; n <= num; n++) {
@@ -295,7 +294,6 @@ export default {
         },
         firstHalfDays() {
             let num = Math.ceil(this.daysInMonth / 2);
-            console.log(this.daysInMonth);
 
             const nums = [];
             for (let n = 1; n <= num; n++) {
@@ -305,8 +303,6 @@ export default {
         },
         secondHalfDays() {
             const num = this.daysInMonth - this.firstHalfDays.length + 1;
-
-            console.log(num + 1);
 
             const nums = [];
             for (let n = num + 1; n <= this.daysInMonth; n++) {
@@ -426,8 +422,6 @@ export default {
                 isAfter(parseISO(this.getDateStr(date)), parseISO(startStr)) &&
                 isBefore(parseISO(this.getDateStr(date)), parseISO(endStr))
             );
-
-            console.log(startStr, endStr);
         },
         selectRoom(roomType, date) {
             if (this.roomsAvailable(roomType, date) <= 0) return;
@@ -576,7 +570,6 @@ export default {
                     booking_id: bookingId,
                 })
                 .then((res) => {
-                    console.log(res.data.data);
                     const aRooms = res.data.data;
 
                     this.hoveredRooms = [];
