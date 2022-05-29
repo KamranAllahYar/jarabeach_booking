@@ -7,10 +7,8 @@
 			<div class="flex-1 px-6 pb-4 md:overflow-y-auto" id="con_scroll">
 				<div class="font-semibold">Massages</div>
 				<p class="mt-3 font-light leading-relaxed text-gray-600">
-					Jara’s in-house masseuse provides a range of relaxing treatments. With indoor and outdoor options available -
-          the Lookout on the beachfront provides a cool and gentle ocean breeze,
-					allowing your cares to be eased away. The indoor Spa located on the first floor of
-          the central block provides a more private, indoor alternative, great for the rainy season.
+					Jara’s in-house masseuse provides a range of relaxing treatments. With indoor and outdoor options available - the Lookout on the beachfront provides a cool and gentle ocean breeze,
+					allowing your cares to be eased away. The indoor Spa located on the first floor of the central block provides a more private, indoor alternative, great for the rainy season.
 					<!-- A soothing massage at Jara Beach Resort – picture yourself lying in the shade
           of a coconut palm that sways gently in the breeze,
           or shaded by Jara's exclusive Lookout, your cares being eased away by one of our expert masseuses.-->
@@ -214,11 +212,16 @@ export default {
 		}
 
 		if (this.massages.length > 0 && this.selectedMassages.length <= 0) {
-			this.selectedMassages.push({
-				id: this.massages[0].id,
-				date: this.dates.length > 0 ? this.dates[0] : null,
-				time: 'Afternoon',
-			});
+			let firstDate = this.dates.length > 0 ? this.dates[0] : null;
+			if (firstDate) {
+				if (!this.noDates.includes(firstDate)) {
+					this.selectedMassages.push({
+						id: this.massages[0].id,
+						date: firstDate,
+						time: 'Afternoon',
+					});
+				}
+			}
 		}
 
 		if (this.dates.length > 0) {
