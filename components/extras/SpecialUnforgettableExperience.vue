@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full md:flex-row">
     <div class="relative w-full md:w-6/12 h-60 md:h-auto">
-      <img src="@/assets/images/specials/unforgettableExperience.png" alt class="object-cover object-center w-full h-full" />
+      <img src="@/assets/images/specials/unforgettableExperience.jpeg" alt class="object-cover object-center w-full h-full" />
     </div>
 
     <div class="w-full p-6 md:w-7/12">

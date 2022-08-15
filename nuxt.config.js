@@ -50,7 +50,7 @@ export default {
     '@nuxtjs/toast',
   ],
   axios: {
-    baseURL: process.env.API_URL || "https://jarabeach-admin.reftek.app/api"
+    baseURL: process.env.API_URL || "http://localhost:8000/api/",
   },
   build: {},
   toast: {

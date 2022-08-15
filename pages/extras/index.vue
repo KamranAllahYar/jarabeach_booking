@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="relative w-full h-48 overflow-hidden">
-                            <img :src="require(`@/assets/images/thumbnails/${extra.type}.png`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
+                            <img :src="require(`@/assets/images/thumbnails/${extra.type}.${extra.type === 'unforgettableExperience' ? 'jpeg' : 'png'}`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
                             <div class="absolute bottom-0 z-20 px-5 pb-3 font-semibold text-white">From N{{ extra.range }}</div>
                             <div class="relative z-10 h-full bg-black bg-opacity-25"></div>
                         </div>
