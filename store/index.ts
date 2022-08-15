@@ -809,6 +809,11 @@ export const actions: ActionTree<RootState, RootState> = {
 
 		dataToPost['booking_data'] = bookingDataToPost;
 		dataToPost['specials_data'] = specialsToSend;
+		const bookingFrom = localStorage.getItem('bookingFrom');
+		if(bookingFrom){
+			console.log('I got a booking from', bookingFrom);
+			dataToPost['booking_from'] = bookingFrom;
+		}
 
 		console.log(dataToPost);
 
@@ -826,7 +831,7 @@ export const actions: ActionTree<RootState, RootState> = {
 		}
 	},
 
-	async createBooking({ state, getters, rootState, rootGetters }, { trans_ref, method_ref, method }) {
+	async createBooking({ state, getters, rootState, rootGetters }, { trans_ref, method_ref, method, booking_from }) {
 		//@ts-ignore
 		const extraState = rootState.extras;
 		console.log(extraState, rootGetters);
@@ -967,6 +972,7 @@ export const actions: ActionTree<RootState, RootState> = {
 				method_ref: method_ref,
 				method: method,
 			},
+			booking_from,
 			booked_rooms: state.rooms,
 			prices: prices,
 			admin_edit_mode: state.adminEditMode,
