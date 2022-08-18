@@ -188,13 +188,13 @@ export default {
 			childrenAges: [],
 		};
 	},
-	asyncData({ route }) {
-		if (route.query.type) {
-			localStorage.setItem("bookingFrom", route.query.type);
-		} else {
-			localStorage.removeItem("bookingFrom");
-		}
-	},
+	// asyncData({ route }) {
+	// 	if (route.query.type) {
+	// 		localStorage.setItem("bookingFrom", route.query.type);
+	// 	} else {
+	// 		localStorage.removeItem("bookingFrom");
+	// 	}
+	// },
 	watch: {
 		noOfChildren(v) {
 			if (this.childrenAges.length == v) return;

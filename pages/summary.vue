@@ -274,12 +274,12 @@ export default {
 			console.log(paystack_res);
 
 			if (paystack_res.status == 'success') {
-				const bookingFrom = localStorage.getItem('bookingFrom');
+				// const bookingFrom = localStorage.getItem('bookingFrom');
 				const res = await this.$store.dispatch('createBooking', {
 					trans_ref: this.trans_ref,
 					method_ref: paystack_res.transaction,
 					method: 'Paystack',
-					booking_from: bookingFrom
+					// booking_from: bookingFrom
 				});
 				console.log(res);
 				if (res) {

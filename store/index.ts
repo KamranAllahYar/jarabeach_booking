@@ -809,11 +809,11 @@ export const actions: ActionTree<RootState, RootState> = {
 
 		dataToPost['booking_data'] = bookingDataToPost;
 		dataToPost['specials_data'] = specialsToSend;
-		const bookingFrom = localStorage.getItem('bookingFrom');
-		if(bookingFrom){
-			console.log('I got a booking from', bookingFrom);
-			dataToPost['booking_from'] = bookingFrom;
-		}
+		// const bookingFrom = localStorage.getItem('bookingFrom');
+		// if(bookingFrom){
+		// 	console.log('I got a booking from', bookingFrom);
+		// 	dataToPost['booking_from'] = bookingFrom;
+		// }
 
 		console.log(dataToPost);
 
@@ -972,7 +972,7 @@ export const actions: ActionTree<RootState, RootState> = {
 				method_ref: method_ref,
 				method: method,
 			},
-			booking_from,
+			// booking_from,
 			booked_rooms: state.rooms,
 			prices: prices,
 			admin_edit_mode: state.adminEditMode,
