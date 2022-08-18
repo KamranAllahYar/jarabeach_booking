@@ -831,7 +831,7 @@ export const actions: ActionTree<RootState, RootState> = {
 		}
 	},
 
-	async createBooking({ state, getters, rootState, rootGetters }, { trans_ref, method_ref, method, booking_from }) {
+	async createBooking({ state, getters, rootState, rootGetters }, { trans_ref, method_ref, method }) {
 		//@ts-ignore
 		const extraState = rootState.extras;
 		console.log(extraState, rootGetters);
