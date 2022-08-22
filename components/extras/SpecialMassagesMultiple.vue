@@ -1,7 +1,7 @@
 <template>
 	<div class="flex flex-col w-full md:flex-row md:h-640">
 		<div class="relative w-full md:h-auto md:w-6/12 h-60">
-			<img src="@/assets/images/specials/massages.png" alt class="object-cover object-center w-full h-full" />
+			<img src="@/assets/images/specials/massages.jpeg" alt class="object-cover object-center w-full h-full" />
 		</div>
 		<div class="flex flex-col w-full h-full py-6 md:w-7/12">
 			<div class="flex-1 px-6 pb-4 md:overflow-y-auto" id="con_scroll">
