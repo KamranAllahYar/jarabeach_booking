@@ -74,6 +74,8 @@ export const getters: GetterTree<RootState, RootState> = {
 	noChildren: (state: RootState) => state.child_no,
 	noDiscountDates: (state: RootState) => state.noDiscountDates,
 	noTeens: (state: RootState) => state.other_guests.filter(child => child.type == 'teen').length,
+	noChild: (state: RootState) => state.other_guests.filter(child => child.type == 'child').length,
+	noSmallPeopleWithoutChild: (state: RootState, getters) => getters.noChildren - (getters.noTeens + getters.noChild),
 	bigPeople: (state: RootState, getters) => getters.noAdults + getters.noTeens,
 	smallPeople: (state: RootState, getters) => getters.noChildren - getters.noTeens,
 	roomsData: (state: RootState) => state.roomsData,
