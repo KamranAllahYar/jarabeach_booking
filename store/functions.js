@@ -126,7 +126,7 @@ const calcRoomLimit = function (getters, rooms) {
   let isStandardAndChildIsAvailable = false;
   roomTypes.forEach((type) => {
     if (type == 'standard') {
-      if(getters.noChild > 0 && rooms.length === 1) {
+      if(getters.bigPeople === 2 && getters.noChild > 0 && rooms.length === 1) {
         isStandardAndChildIsAvailable = true;
       }
       totalBigMax += standardBigMax;
