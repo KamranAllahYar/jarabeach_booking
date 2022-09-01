@@ -165,7 +165,7 @@ export const getters: GetterTree<ExtraState, RootState> = {
     return price;
   },
   photoshootPrice: (state: ExtraState) => {
-    let photographerPrice = 20000;
+    let photographerPrice = 100000;
     let assistantPrice = 10000;
 
     if (state.photoshootPrices) {
