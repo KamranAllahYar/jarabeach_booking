@@ -10,7 +10,7 @@ export const state = () => ({
     { type: 'lookout', name: 'Dining Experiences', available: true, range: '15,000' },
     { type: 'drinks', name: 'Drinks', available: true, range: '20,000' },
     { type: 'cakes', name: 'Cake', available: true, range: '15,000' },
-    { type: 'photoshoot', name: 'Photoshoot (third-party photographer access)', available: true, range: '20,000' },
+    { type: 'photoshoot', name: 'Photoshoot (third-party photographer access)', available: true, range: '100,000' },
     // { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
     { type: 'bikes', name: 'Go-Kart and Horse Riding', available: true, range: '15,000' },
     { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' }

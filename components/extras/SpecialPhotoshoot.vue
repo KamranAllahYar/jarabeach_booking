@@ -8,7 +8,7 @@
       <p class="mt-3 font-light leading-relaxed text-gray-600">
         Jara has an abundance of beautiful areas perfect for personal photoshoots - whether pre-wedding,
         anniversary or birthday. You are welcome to bring an external photographer to Jara
-        Beach Resort for two hours and receive a soft drink - for ₦20,000. Access for assistants/
+        Beach Resort for two hours and receive a soft drink - for ₦100,000. Access for assistants/
         make-up artists is charged ₦10,000 each thereafter, as shown here:
         <a
           target="_blank"

@@ -74,6 +74,7 @@ export default {
     },
     methods: {
         fileExtension(type){
+            console.log(this.specials);
             if(type !== 'unforgettableExperience' && type !== 'massages') return 'png'
             return 'jpeg'
         },
