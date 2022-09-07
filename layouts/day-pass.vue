@@ -8,6 +8,8 @@
                 <img src="~/assets/logo_big.jpg" class="w-32 mx-auto md:w-40" />
             </div>
 
+            <DayPassTopProgressBar />
+
             <div class="relative z-20 pt-10 pb-6 mx-auto max-w-7xl">
                 <Nuxt keep-alive />
             </div>
@@ -30,8 +32,12 @@
 </template>
 
 <script>
+import DayPassTopProgressBar from "@/components/global/DayPassTopProgressBar";
 export default {
     middleware: ["clear"],
+    components: {
+        DayPassTopProgressBar,
+    },
     created() {
         console.log("Initial loadings");
         this.$store.dispatch("loadRooms");
