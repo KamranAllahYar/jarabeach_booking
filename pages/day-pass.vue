@@ -1,7 +1,7 @@
 <template>
 	<div class="mx-auto md:w-1/2 lg:w-1/3">
 		<div class="mb-4 text-lg font-bold text-center">Please select the number of guests you want to book for</div>
-		<select name="adult" id="adult" v-model="noOfAdult" class="border rounded-md outline-none focus:outline-none" style="box-shadow: none">
+		<select name="guest" id="guest" v-model="noOfGuests" class="border rounded-md outline-none focus:outline-none" style="box-shadow: none">
 			<option value="0">Guests</option>
 			<option v-for="num in 42" :value="num" :key="num">
 				{{ num }}
@@ -32,6 +32,10 @@
 			<!-- <MainButton outline>Back</MainButton> -->
 			<MainButton @click="gotoNext()">Next</MainButton>
 		</div>
+		<div class="flex justify-center max-w-lg px-6 py-6 mx-auto">
+			<!-- <button class="mx-auto mt-5 font-semibold text-center cursor-pointer text-brand-blue" @click="$router.push({path: '/manage'})">Manage Booking</button> -->
+			<MainButton @click="$router.push({ path: '/manage' })" outline class="mx-auto">Manage Booking</MainButton>
+		</div>
 	</div>
 </template>
 
@@ -40,7 +44,7 @@ export default {
 	layout: 'day-pass',
 	data() {
 		return {
-			noOfAdult: 0,
+			noOfGuests: 0,
 			firstName: '',
 			lastName: '',
 			email: '',
@@ -49,7 +53,7 @@ export default {
 	},
 	computed: {
 		canGoToNext() {
-			return this.noOfAdult > 0 && this.firstName.length > 0 && this.lastName.length > 0 && this.email.length > 0 && this.phone.length > 0 && this.isEmailValid && typeof(this.phone) !== 'number';
+			return this.noOfGuests > 0 && this.firstName.length > 0 && this.lastName.length > 0 && this.email.length > 0 && this.phone.length > 0 && this.isEmailValid && typeof(this.phone) !== 'number';
 		},
 		isEmailValid() {
 			return String(this.email)
@@ -60,8 +64,8 @@ export default {
 	methods: {
 		gotoNext() {
 			this.$toast.clear();
-			if (this.noOfAdult < 1) {
-				this.$toast.info('Please let us know how many adults will be coming', { duration: 5000 });
+			if (this.noOfGuests < 1) {
+				this.$toast.info('Please let us know how many guests will be coming', { duration: 5000 });
 				return;
 			}
 			if (this.firstName.length < 1) {
@@ -89,18 +93,29 @@ export default {
 				return;
 			}
 
-			// this.updateStores();
-			// this.$store.commit('COMPLETE_GUEST');
-			this.$router.push({ path: '/day-pass-options' });
+			this.updateStores();
+			this.$store.commit('day_pass/COMPLETE_GUEST')
+			this.$router.push({ path: '/day-pass-availability' });
 		},
 		updateStores() {
-			this.$store.commit('UPDATE_GROUP', {
-				groupType: 'group',
-				adult_no: this.noOfAdult,
-				child_no: this.noOfChildren,
-				children_ages: this.childrenAges,
+			this.$store.commit('day_pass/UPDATE_GUESTS', {
+				guests_no: this.noOfGuests,
+				guest_first_name: this.firstName,
+				guest_last_name: this.lastName,
+				guest_email: this.email,
+				guest_phone: this.phone
 			});
 		},
+		updateFromStore() {
+			this.noOfGuests = this.$store.state.day_pass.guests_no;
+			this.firstName = this.$store.state.day_pass.guest_first_name;
+			this.lastName = this.$store.state.day_pass.guest_last_name;
+			this.email = this.$store.state.day_pass.guest_email;
+			this.phone = this.$store.state.day_pass.guest_phone;
+		},
 	},
+	mounted(){
+		this.updateFromStore();
+	}
 };
 </script>

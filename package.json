@@ -23,6 +23,7 @@
     "nuxt-property-decorator": "^2.8.8",
     "postcss": "^7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "v-calendar": "^2.4.1",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.6",
     "vue-cool-lightbox": "^2.7.0",
