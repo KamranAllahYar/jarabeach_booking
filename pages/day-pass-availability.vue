@@ -26,6 +26,9 @@ export default {
 			date: null,
 		};
 	},
+	mounted(){
+		this.updateFromStore()
+	},
 	watch: {
 		option_type(newValue){
 			this.date = null;

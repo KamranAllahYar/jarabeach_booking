@@ -6,7 +6,7 @@
 				<div class="flex items-center justify-between px-6 py-4 space-x-8">
 					<div class="flex flex-col items-start">
 						<div>{{ option.name }}</div>
-						<div>{{ currency(option.weekend_price) }}</div>
+						<div>{{ currency(optionPrice(option)) }}</div>
 					</div>
 					<div class="flex h-10 item-center">
 						<div class="flex items-center h-full px-4 font-semibold border cursor-pointer text-md" @click="decreaseQuantity(option)">-</div>
@@ -41,9 +41,16 @@ export default {
 		canGoToNext() {
 			const isAtLeastOneOptionSelected = this.selectedDayPassOptions.filter(option => option.quantity > 0).length;
 			return isAtLeastOneOptionSelected;
+		},
+		selectedOptionType(){
+			return this.$store.state.day_pass.option_type;
 		}
 	},
 	methods: {
+		optionPrice(option){
+			if(this.selectedOptionType === 'weekend') return option.weekend_price;
+			return option.weekday_price;
+		},
 		goToNext() {
 			if(!this.canGoToNext) return;
 			this.$store.commit('day_pass/COMPLETE_OPTIONS');
