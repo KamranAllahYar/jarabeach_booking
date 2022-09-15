@@ -85,5 +85,11 @@ export default {
 			}];
 		},
 	},
+	middleware({ store, redirect, $toast }) {
+		if (!store.state.day_pass.guests_done) {
+			// $toast.info("Please accept all policies first");
+			redirect('/day-pass');
+		}
+	},
 };
 </script>

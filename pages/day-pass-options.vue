@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<!-- <div>{{selectedDayPassOptions}}</div> -->
 		<div class="max-w-4xl mx-auto text-center border divide-y">
 			<div v-for="option in selectedDayPassOptions" :key="option.id" class="mx-auto">
 				<div class="flex items-center justify-between px-6 py-4 space-x-8">
@@ -72,6 +71,12 @@ export default {
 			return { ...option, quantity: 0 };
 		});
 		this.selectedDayPassOptions = newDayPassOptions;
+	},
+	middleware({ store, redirect, $toast }) {
+		if (!store.state.day_pass.availability_done) {
+			// $toast.info("Please accept all policies first");
+			redirect('/day-pass-availability');
+		}
 	},
 };
 </script>

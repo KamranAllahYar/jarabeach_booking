@@ -529,7 +529,7 @@ export default {
       this.myPaintingDate = this.paintingDates[0];
     }
 
-    this.selectedRoom = this.rooms[0].name;
+    // this.selectedRoom = this.rooms[0].name;
 
     if (this.$store.state.extras.selectedExperiences) {
       this.selectedExperiences =
