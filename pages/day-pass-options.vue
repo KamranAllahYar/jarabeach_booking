@@ -41,17 +41,18 @@ export default {
 			const isAtLeastOneOptionSelected = this.selectedDayPassOptions.filter(option => option.quantity > 0).length;
 			return isAtLeastOneOptionSelected;
 		},
-		selectedOptionType(){
+		selectedOptionType() {
 			return this.$store.state.day_pass.option_type;
-		}
+		},
 	},
 	methods: {
-		optionPrice(option){
-			if(this.selectedOptionType === 'weekend') return option.weekend_price;
+		optionPrice(option) {
+			if (this.selectedOptionType === 'weekend') return option.weekend_price;
 			return option.weekday_price;
 		},
 		goToNext() {
-			if(!this.canGoToNext) return;
+			if (!this.canGoToNext) return;
+			this.updateStores();
 			this.$store.commit('day_pass/COMPLETE_OPTIONS');
 			this.$router.push({ path: '/day-pass-extras' });
 		},
@@ -65,8 +66,18 @@ export default {
 			if (option.quantity === 0) return;
 			option.quantity--;
 		},
+		updateStores() {
+			this.$store.commit('day_pass/UPDATE_SELECTED_OPTIONS', this.selectedDayPassOptions);
+		},
+		updateFromStore() {
+			this.selectedDayPassOptions = this.$store.state.day_pass.selected_options;
+		},
 	},
 	mounted() {
+		if (this.$store.state.day_pass.selected_options.length) {
+			this.updateFromStore();
+			return;
+		}
 		const newDayPassOptions = this.dayPassOptions.map(option => {
 			return { ...option, quantity: 0 };
 		});

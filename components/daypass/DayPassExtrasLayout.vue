@@ -1,6 +1,5 @@
 <template>
     <div class="relative">
-        <div>Hello</div>
         <SpecialLookout v-if="currentSpecial == 'lookout'" @next="gotoNext()" @prev="gotoPrev()" />
 
         <SpecialMassage v-else-if="currentSpecial == 'massage'" @next="gotoNext()" @prev="gotoPrev()" />
@@ -30,12 +29,30 @@
 </template>
 
 <script>
+import SpecialMassage from '@/components/daypass/extras/SpecialMassage.vue'
+import SpecialBikes from '@/components/daypass/extras/SpecialBikes.vue'
+import SpecialQuadBikes from '@/components/daypass/extras/SpecialQuadBikes.vue'
+import SpecialPhotoshoot from '@/components/daypass/extras/SpecialPhotoshoot.vue'
+import SpecialMassagesMultiple from '@/components/daypass/extras/SpecialMassagesMultiple.vue'
+import SpecialDrinkCollection from '@/components/daypass/extras/SpecialDrinkCollection.vue'
+import SpecialCake from '@/components/daypass/extras/SpecialCake.vue'
+import SpecialUnforgettableExperience from '@/components/daypass/extras/SpecialUnforgettableExperience.vue'
 export default {
     props: {
         currentSpecial: {
             default: "lookout",
             type: String,
         },
+    },
+    components:{
+        SpecialMassage,
+        SpecialBikes,
+        SpecialQuadBikes,
+        SpecialPhotoshoot,
+        SpecialMassagesMultiple,
+        SpecialDrinkCollection,
+        SpecialCake,
+        SpecialUnforgettableExperience
     },
     computed: {
         selected() {

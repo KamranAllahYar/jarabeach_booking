@@ -7,24 +7,6 @@
 				<div class="px-6 pt-6 text-gray-700 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
 					<div class="border rounded-md">
 						<div class="flex flex-col divide-y">
-							<!-- <div class="flex items-center justify-between px-3 py-4" v-for="(room, i) in rooms" :key="i">
-                                <div class="text-base">
-                                    <div>{{room.date}}</div>
-                                    <div class="text-sm">{{room.name}}</div>
-                                </div>
-                                <div class="text-lg font-bold text-right">
-                                    <div>{{ currency(room.price) }}</div>
-                                    <div class="text-xs font-light text-red-500 cursor-pointer hover:underline" @click="removeRoom(room)">Remove</div>
-                                </div>
-              </div>-->
-							<div class="flex items-center justify-between px-3 py-4">
-								<div class="text-base">
-									<div>Stay ({{ totalNights }} Nights - {{ totalRooms }} Rooms)</div>
-								</div>
-								<div class="text-lg font-bold text-right">
-									<div>{{ currency(roomsPrice) }}</div>
-								</div>
-							</div>
 							<div class="flex items-center justify-between px-3 py-4" v-for="extra in specialPrices" :key="extra.id">
 								<div>{{ extra.name }}</div>
 								<div class="text-lg font-bold">
@@ -119,11 +101,11 @@
 				</div>
 
 				<div class="flex items-center w-full my-6 space-x-2">
-					<StartOverButton class="w-full"></StartOverButton>
+					<StartOverButton class="w-full" isDayPassBooking></StartOverButton>
 				</div>
 			</div>
 			<div class="flex-shrink-0 w-full px-6 md:px-0 md:w-3/12">
-				<ReservationBox showDiscount :showGuests="true" />
+				<DayPassReservationBox showDiscount />
 			</div>
 		</div>
 	</div>
@@ -131,11 +113,13 @@
 
 <script>
 import Paystack from 'vue-paystack';
+import DayPassReservationBox from '@/components/daypass/DayPassReservationBox.vue';
 
 export default {
 	layout: 'day-pass',
 	components: {
 		Paystack,
+		DayPassReservationBox
 	},
 	data() {
 		return {
@@ -220,18 +204,6 @@ export default {
 			}
 
 			return true;
-		},
-		totalNights() {
-			return this.$store.getters.totalNights;
-		},
-		totalRooms() {
-			return this.$store.getters.totalRooms;
-		},
-		rooms() {
-			return this.$store.getters.bookedRooms;
-		},
-		roomsPrice() {
-			return this.rooms.reduce((price, room) => price + room.price, 0);
 		},
 		specials() {
 			return this.$store.getters['extras/allSelected'];
@@ -351,7 +323,7 @@ export default {
 			return '₦' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 		},
 		gotoBack() {
-			this.$router.push('/policies');
+			this.$router.push('/day-pass-extras');
 		},
 		removeRoom(room) {
 			console.log(room);

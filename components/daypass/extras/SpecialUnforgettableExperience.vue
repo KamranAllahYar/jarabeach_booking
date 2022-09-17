@@ -180,22 +180,22 @@ export default {
     paintingSelection() {
       return this.decorations.find((d) => d.id == 6);
     },
-    rooms() {
-      const rooms = this.$store.getters.uniqueBookedRooms;
-      let uniqueRooms = [];
+    // rooms() {
+    //   const rooms = this.$store.getters.uniqueBookedRooms;
+    //   let uniqueRooms = [];
 
-      rooms.forEach((r) => {
-        const itsThere = uniqueRooms.some(
-          (i) => i.room_id == r.room_id
-        );
+    //   rooms.forEach((r) => {
+    //     const itsThere = uniqueRooms.some(
+    //       (i) => i.room_id == r.room_id
+    //     );
 
-        if (!itsThere) {
-          uniqueRooms.push(r);
-        }
-      });
+    //     if (!itsThere) {
+    //       uniqueRooms.push(r);
+    //     }
+    //   });
 
-      return uniqueRooms;
-    },
+    //   return uniqueRooms;
+    // },
     decorations() {
       return this.$store.getters["extras/allDecorations"];
     },
@@ -529,7 +529,7 @@ export default {
       this.myPaintingDate = this.paintingDates[0];
     }
 
-    this.selectedRoom = this.rooms[0].name;
+    // this.selectedRoom = this.rooms[0].name;
 
     if (this.$store.state.extras.selectedExperiences) {
       this.selectedExperiences =
