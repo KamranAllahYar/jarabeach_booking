@@ -8,7 +8,7 @@
 				<div class="font-semibold">Go-Kart and Horse Riding</div>
 				<p class="mt-2 font-light leading-relaxed text-gray-600">
           <div class="mt-2 text-gray-600">
-					“Gunnar”, Jara’s 196cc Go-Kart, available for Guest Rental
+				“Gunnar”, Jara’s 196cc Go-Kart, available for Guest Rental
           </div>
 
           <div class="mt-2 text-gray-600">
