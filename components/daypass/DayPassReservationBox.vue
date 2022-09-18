@@ -5,7 +5,7 @@
 				Your Reservation
 			</div>
 			<div class="py-6">
-				<div class="flex justify-between px-3 my-3 item-center" v-for="selectedOption in selectedOptions" :key="selectedOption.id">
+				<div class="flex justify-between px-3 mt-3 item-center" v-for="selectedOption in selectedOptions" :key="selectedOption.id">
 					<div class="w-2/3 text-left truncate">{{selectedOption.name}}</div>
 					<div>{{currency(optionPrice(selectedOption))}}</div>
 				</div>
