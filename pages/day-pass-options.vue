@@ -1,19 +1,22 @@
 <template>
 	<div>
-		<div class="max-w-4xl mx-auto text-center border divide-y">
-			<div v-for="option in selectedDayPassOptions" :key="option.id" class="mx-auto">
-				<div class="flex items-center justify-between px-6 py-4 space-x-8">
-					<div class="flex flex-col items-start">
-						<div>{{ option.name }}</div>
-						<div>{{ currency(optionPrice(option)) }}</div>
-					</div>
-					<div class="flex h-10 item-center">
-						<div class="flex items-center h-full px-4 font-semibold border cursor-pointer text-md" @click="decreaseQuantity(option)">-</div>
-						<input type="text" class="w-12 h-full" v-model="option.quantity" />
-						<div class="flex items-center h-full px-4 font-semibold border cursor-pointer text-md" @click="increaseQuantity(option)">+</div>
+		<div class="flex max-w-6xl mx-auto space-x-6 text-center">
+			<div class="flex-1 border divide-y">
+				<div v-for="option in selectedDayPassOptions" :key="option.id" class="mx-auto">
+					<div class="flex items-center justify-between px-6 py-4 space-x-8">
+						<div class="flex flex-col items-start">
+							<div>{{ option.name }}</div>
+							<div>{{ currency(optionPrice(option)) }}</div>
+						</div>
+						<div class="flex h-10 item-center"> 
+							<div class="flex items-center h-full px-4 font-semibold border cursor-pointer text-md" @click="decreaseQuantity(option)">-</div>
+							<input type="text" class="w-12 h-full" v-model="option.quantity" />
+							<div class="flex items-center h-full px-4 font-semibold border cursor-pointer text-md" @click="increaseQuantity(option)">+</div>
+						</div>
 					</div>
 				</div>
 			</div>
+			<ReservationBox showDiscount/>
 		</div>
 		<div class="w-32 mx-auto mt-6 space-x-3" v-if="canGoToNext">
 			<!-- <MainButton outline>Back</MainButton> -->
@@ -26,8 +29,10 @@
 </template>
 
 <script>
+import ReservationBox from '@/components/daypass/DayPassReservationBox.vue'
 export default {
 	layout: 'day-pass',
+	components: {ReservationBox},
 	data() {
 		return {
 			selectedDayPassOptions: [],
@@ -44,6 +49,9 @@ export default {
 		selectedOptionType() {
 			return this.$store.state.day_pass.option_type;
 		},
+		guestsNumber() {
+			return this.$store.getters['day_pass/noGuests'];
+		},
 	},
 	methods: {
 		optionPrice(option) {
@@ -51,7 +59,17 @@ export default {
 			return option.weekday_price;
 		},
 		goToNext() {
-			if (!this.canGoToNext) return;
+			// if (!this.canGoToNext) return;
+			let optionQuantitySelected = 0;
+			this.selectedDayPassOptions.forEach(option => optionQuantitySelected += option.quantity)
+			if(optionQuantitySelected < this.guestsNumber){
+				this.$toast.info('Quantity selected is less than guests selected!')
+				return;
+			}
+			if(optionQuantitySelected > this.guestsNumber){
+				this.$toast.info('Quantity selected is more than guests selected!')
+				return;
+			}
 			this.updateStores();
 			this.$store.commit('day_pass/COMPLETE_OPTIONS');
 			this.$router.push({ path: '/day-pass-extras' });
@@ -81,6 +99,7 @@ export default {
 		const newDayPassOptions = this.dayPassOptions.map(option => {
 			return { ...option, quantity: 0 };
 		});
+		this.selectedOptionType = this.$store.state.day_pass.option_type;
 		this.selectedDayPassOptions = newDayPassOptions;
 	},
 	middleware({ store, redirect, $toast }) {

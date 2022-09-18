@@ -53,10 +53,17 @@ export const getters: GetterTree<RootState, RootState> = {
 
 	getSpecials: (state: RootState) => state.specials,
 	getBooking: (state: RootState) => state.booking,
-	bookingDates: (state: RootState, getters) => {
-		const dates = getters.bookedRooms.map((r: any) => r.date);
-
-		return [...new Set(dates)];
+	bookingDate: (state: RootState) => {
+		return state.booking_date;
+	},
+	selectedOptions: (state: RootState) => {
+		return state.selected_options;
+	},
+	optionType: (state: RootState) => {
+		return state.option_type;
+	},
+	bookingEmail: (state: RootState) => {
+		return state.guest_email;
 	},
 	discount: (state: RootState, getters) => {
 		const discount = state.discount;
@@ -71,8 +78,65 @@ export const getters: GetterTree<RootState, RootState> = {
 
 		return 0;
 	},
+	optionPrices: (state: RootState, getters) => {
+		let price = 0;
+		let optionsWithQuantity = state.selected_options.filter((option: any) => option.quantity > 0)
+		optionsWithQuantity.forEach((option: any) => {
+			if(getters.optionType === 'weekend'){
+				price += +option.weekend_price * option.quantity;
+			}
+			if(getters.optionType === 'weekday'){
+				price += +option.weekday_price * option.quantity;
+			}
+		})
+		return price
+	},
+	subTotal: (state: RootState, getters, basic, rootGetters) => {
+		const optionPrices = getters.optionPrices;
+		let extraPrices = 0;
+		rootGetters['extras/allSelected'].forEach((extra: any) => {
+			if (extra.type == 'cakes') {
+				extraPrices += rootGetters['extras/cakesPrice'];
+			}
+			if (extra.type == 'drinks') {
+				extraPrices += rootGetters['extras/drinksPrice'];
+			}
+			if (extra.type == 'massages') {
+				extraPrices += rootGetters['extras/massagesPrice'];
+			}
+			if (extra.type == 'bikes') {
+				extraPrices += rootGetters['extras/bikesPrice'];
+			}
+			if (extra.type == 'photoshoot') {
+				extraPrices += rootGetters['extras/photoshootPrice'];
+			}
+			if (extra.type == 'roomDecoration') {
+				extraPrices += rootGetters['extras/decorationPrice'];
+			}
+			if (extra.type == 'unforgettableExperience') {
+				extraPrices += rootGetters['extras/experiencePrice'];
+			}
+			if (extra.type == 'domesticStaff') {
+				extraPrices += rootGetters['extras/staffPrice'];
+			}
+			if (extra.type == 'massage') {
+				extraPrices += rootGetters['extras/massagePrice'];
+			}
+			if (extra.type == 'newmassage') {
+				extraPrices += rootGetters['extras/newmassagePrice'];
+			}
+			if (extra.type == 'quadbike') {
+				extraPrices += rootGetters['extras/quadbikePrice'];
+			}
+			if (extra.type == 'lookout') {
+				extraPrices += rootGetters['extras/lookoutPrice'];
+			}
+		});
+
+		return extraPrices + optionPrices;
+	},
 	preTotal: (state: RootState, getters) => {
-		const preTotal = +getters.subTotal - +getters.discount - +getters.roomDiscount - +getters.memberDiscount;
+		const preTotal = +getters.subTotal - +getters.discount
 		if (preTotal < 0) return 0;
 
 		return preTotal;

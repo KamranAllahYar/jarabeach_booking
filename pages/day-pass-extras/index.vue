@@ -78,8 +78,8 @@ export default {
 		selected() {
 			return this.$store.getters['extras/allSelected'];
 		},
-		dates() {
-			return this.$store.getters.bookedRooms.map(room => room.date);
+		bookingDate() {
+			return this.$store.getters['day_pass/bookingDate'];
 		},
 	},
 	methods: {
@@ -119,7 +119,7 @@ export default {
 		},
 	},
 	mounted() {
-		this.$store.dispatch('extras/updateSpecials', this.dates);
+		this.$store.dispatch('extras/updateSpecials', [this.bookingDate]);
 		this.$store.dispatch('extras/getSpecialDrinks');
 		this.$store.dispatch('extras/getSpecialCakes');
 		this.$store.dispatch('extras/getSpecialDecorations');
@@ -129,6 +129,10 @@ export default {
 		this.$store.dispatch('extras/getSpecialNewmassages');
 		this.$store.dispatch('extras/getQuadbikeOptions');
 		this.$store.dispatch('extras/getMostPrices');
+		if(this.$store.state.extras.extras_booking !== 'day-pass'){
+			this.$store.commit("extras/RESET_STORE");
+			this.$store.commit('extras/UPDATE_EXTRAS_BOOKING_TYPE', 'day-pass')
+		}
 	},
 	middleware({ store, redirect, $toast }) {
 		if (!store.state.day_pass.options_done) {

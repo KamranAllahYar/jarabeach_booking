@@ -17,10 +17,13 @@
 
 <script>
 import DayPassExtrasLayout from '~/components/daypass/DayPassExtrasLayout.vue' 
+import ReservationBox from '@/components/daypass/DayPassReservationBox.vue'
+
 export default {
 	layout: 'day-pass',
 	components: {
-		DayPassExtrasLayout
+		DayPassExtrasLayout,
+		ReservationBox
 	},
 	data() {
 		return {

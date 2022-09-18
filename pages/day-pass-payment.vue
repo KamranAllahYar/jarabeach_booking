@@ -215,7 +215,7 @@ export default {
 			return this.$store.getters['totalPrice'] * 100;
 		},
 		guestEmail() {
-			return this.$store.state.guest.email;
+			return this.$store.getters['day_pass/bookingEmail'];
 		},
 		paystackkey() {
 			return this.$config.PAYMENT_PUBLIC_KEY;

@@ -38,14 +38,14 @@
 													style="box-shadow: none"
 												>
 													<option :value="null">Date</option>
-													<option v-for="date in dates" :value="date" :key="date">{{ showDate(date) }}</option>
+													<option  :value="bookingDate" >{{ showDate(bookingDate) }}</option>
 												</select>
 											</div>
 										</div>
 										<div class="flex items-center flex-shrink-0 border rounded-md focus-within:ring">
 											<select placeholder="Time" v-model="newMassage.time" class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
 												<option>Time</option>
-												<option v-for="time in getTimeOptions(newMassage.date)" :value="time" :key="time">{{ time }}</option>
+												<option v-for="time in getTimeOptions" :value="time" :key="time">{{ time }}</option>
 											</select>
 										</div>
 									</div>
@@ -109,19 +109,22 @@ export default {
 		};
 	},
 	computed: {
-		bookingDates() {
-			return this.$store.getters.bookingDates;
+		bookingDate() {
+			return this.$store.getters['day_pass/bookingDate'];
 		},
-		dates() {
-			return this.bookingDates.filter(date => {
-				return !this.noDates.includes(date);
-			});
-		},
+		// dates() {
+		// 	return this.bookingDates.filter(date => {
+		// 		return !this.noDates.includes(date);
+		// 	});
+		// },
 		massages() {
 			return this.$store.getters['extras/allNewmassages'];
 		},
 		showAddButton() {
 			return this.selectedMassages.length < 24;
+		},
+		getTimeOptions() {
+			return ['Morning', 'Afternoon'];
 		},
 	},
 	methods: {
@@ -130,23 +133,17 @@ export default {
 
 			return `${massage.name} (${massage.duration})`;
 		},
-		getTimeOptions(date) {
-			if (date == this.dates[0]) {
-				return ['Afternoon'];
-			}
-			return ['Morning', 'Afternoon'];
-		},
 		next() {
 			this.$store.commit('extras/SET_SELECTED_MASSAGES', {
 				massages: this.selectedMassages,
-				date: this.dates[0],
+				date: this.bookingDate,
 			});
 			this.$emit('next');
 		},
 		prev() {
 			this.$store.commit('extras/SET_SELECTED_MASSAGES', {
 				massages: this.selectedMassages,
-				date: this.dates[0],
+				date: this.bookingDate,
 			});
 			this.$emit('prev');
 		},
@@ -171,14 +168,14 @@ export default {
 		addMassage() {
 			this.selectedMassages.unshift({
 				id: this.massages[0].id,
-				date: this.dates[0],
+				date: this.bookingDate,
 				time: 'Afternoon',
 			});
 			this.$nextTick(() => {
 				var container = this.$el.querySelector('#con_scroll');
 				container.scrollTop = container.scrollHeight;
 			});
-			console.log(this.dates[0]);
+			// console.log(this.dates[0]);
 		},
 		removeMassage(ix) {
 			this.selectedMassages.splice(ix, 1);
@@ -200,7 +197,7 @@ export default {
 		this.getNoMassageDates();
 		this.newMassage = {
 			id: this.massages[0].id,
-			date: this.dates[0],
+			date: this.bookingDate,
 			time: 'Afternoon',
 		};
 	},
@@ -212,7 +209,7 @@ export default {
 		}
 
 		if (this.massages.length > 0 && this.selectedMassages.length <= 0) {
-			let firstDate = this.dates.length > 0 ? this.dates[0] : null;
+			let firstDate = this.bookingDate;
 			if (firstDate) {
 				if (!this.noDates.includes(firstDate)) {
 					this.selectedMassages.push({
@@ -224,9 +221,7 @@ export default {
 			}
 		}
 
-		if (this.dates.length > 0) {
-			this.selectedDate = this.dates[0];
-		}
+		this.selectedDate = this.bookingDate
 
 		if (this.$store.state.extras.dateDrink) {
 			this.selectedDate = this.$store.state.extras.dateDrink;

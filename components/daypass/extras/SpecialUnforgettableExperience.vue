@@ -13,7 +13,7 @@
         <br />Helium Balloons or bespoke Special Decoration on request-->
       </p>
 
-      <div class="p-4 mt-6 bg-gray-100 rounded-lg">
+      <!-- <div class="p-4 mt-6 bg-gray-100 rounded-lg">
         <label class="font-semibold cursor-pointer" v-if="breakfastSelection">
           <input type="checkbox" :value="breakfastSelection" v-model="selectedExperiences" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400" />
           {{ realDecoName(breakfastSelection.name) }} -
@@ -50,7 +50,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="p-4 mt-6 bg-gray-100 rounded-lg">
         <label class="font-semibold cursor-pointer">
@@ -169,7 +169,7 @@ export default {
   },
   computed: {
     totalGuests() {
-      return this.$store.getters.totalPeople;
+      return this.$store.getters['day_pass/noGuests'];
     },
     breakfastSelection() {
       return this.decorations.find((d) => d.id == 4);
@@ -199,14 +199,14 @@ export default {
     decorations() {
       return this.$store.getters["extras/allDecorations"];
     },
-    bookingDates() {
-      return this.$store.getters.bookingDates;
-    },
-    dates() {
-      return this.bookingDates.filter((date) => {
-        return !this.noDates.includes(date);
-      });
-    },
+    bookingDate() {
+			return this.$store.getters['day_pass/bookingDate'];
+		},
+    // dates() {
+    //   return this.bookingDates.filter((date) => {
+    //     return !this.noDates.includes(date);
+    //   });
+    // },
     isWelcomeNoteSelected() {
       let has = false;
       this.selectedExperiences.forEach((d) => {
@@ -422,7 +422,7 @@ export default {
 
       this.$axios
         .post("check-decoration-picnic-booking", {
-          dates: this.dates,
+          dates: [this.bookingDate],
           oldBookingId: oldBookingId,
         })
         .then((res) => {
@@ -445,7 +445,7 @@ export default {
 
       this.$axios
         .post("check-decoration-painting-booking", {
-          dates: this.dates,
+          dates: [this.bookingDate],
           oldBookingId: oldBookingId,
         })
         .then((res) => {
@@ -495,8 +495,7 @@ export default {
   async created() {
     await this.getNoExperienceDates();
 
-    if (this.dates.length > 0) {
-      this.breakfastDates = [...new Set(this.dates)];
+      this.breakfastDates = [this.bookingDate];
 
       const lastDate =
         this.breakfastDates[this.breakfastDates.length - 1];
@@ -508,7 +507,6 @@ export default {
         this.breakfastDates.shift();
       }
       this.myBreakfastDate = this.breakfastDates[0];
-    }
 
     this.checkPicnicOptions();
     this.checkPaintingOptions();
@@ -517,17 +515,13 @@ export default {
   mounted() {
     this.$store.dispatch("extras/getSpecialDecorations");
 
-    if (this.dates.length > 0) {
-      this.selectedDate = this.dates[0];
-    }
+      this.selectedDate = this.bookingDate;
 
-    if (this.dates.length > 0) {
-      this.picnicDates = [...new Set(this.dates)];
+      this.picnicDates = [this.bookingDate];
       this.myPicnicDate = this.picnicDates[0];
 
-      this.paintingDates = [...new Set(this.dates)];
+      this.paintingDates = [this.bookingDate];
       this.myPaintingDate = this.paintingDates[0];
-    }
 
     // this.selectedRoom = this.rooms[0].name;
 

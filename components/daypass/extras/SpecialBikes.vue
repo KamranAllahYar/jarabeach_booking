@@ -46,7 +46,7 @@
 											<div class="flex items-center flex-1 border rounded-md focus-within:ring">
 												<select placeholder="Date" v-model="newBike.date" class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
 													<option>Date</option>
-													<option v-for="date in dates" :value="date" :key="date">{{ showDate(date) }}</option>
+													<option :value="bookingDate" >{{ showDate(bookingDate) }}</option>
 												</select>
 											</div>
 										</div>
@@ -116,20 +116,19 @@ export default {
 		};
 	},
 	computed: {
-		bookingDates() {
-			return this.$store.getters.bookingDates;
+		bookingDate() {
+			return this.$store.getters['day_pass/bookingDate'];
 		},
-		dates() {
-			return this.bookingDates.filter(date => {
-				return !this.noDates.includes(date);
-			});
-		},
+		
 		bikes() {
 			return this.$store.getters['extras/allBikes'];
 		},
 		showAddButton() {
 			return this.selectedBikes.length < 24;
 		},
+		isBikeAvailableForSelectedDate(){
+			return !this.noDates.includes(this.bookingDate);
+		}
 	},
 	methods: {
 		massageName(massageId) {
@@ -146,14 +145,14 @@ export default {
 		next() {
 			this.$store.commit('extras/SET_SELECTED_BIKES', {
 				bikes: this.selectedBikes,
-				date: this.dates[0],
+				date: this.bookingDate,
 			});
 			this.$emit('next');
 		},
 		prev() {
 			this.$store.commit('extras/SET_SELECTED_BIKES', {
 				bikes: this.selectedBikes,
-				date: this.dates[0],
+				date: this.bookingDate,
 			});
 			this.$emit('prev');
 		},
@@ -169,13 +168,13 @@ export default {
 		addMassage() {
 			this.selectedBikes.unshift({
 				id: this.bikes[0].id,
-				date: this.dates[0],
+				date: this.bookingDate,
 			});
 			this.$nextTick(() => {
 				var container = this.$el.querySelector('#con_scroll');
 				container.scrollTop = container.scrollHeight;
 			});
-			console.log(this.dates[0]);
+			console.log(this.bookingDate);
 		},
 		removeMassage(ix) {
 			this.selectedBikes.splice(ix, 1);
@@ -197,7 +196,7 @@ export default {
 		this.getNoBikesDates();
 		this.newBike = {
 			id: this.bikes[0].id,
-			date: this.dates[0],
+			date: this.bookingDate,
 		};
 	},
 	mounted() {
@@ -208,16 +207,14 @@ export default {
 		}
 
 		if (this.bikes.length > 0 && this.selectedBikes.length <= 0) {
-			// this.selectedBikes.push({
-			//     id: this.bikes[0].id,
-			//     date: this.dates.length > 0 ? this.dates[0] : null,
-			//     time: "Afternoon",
-			// });
+			this.selectedBikes.push({
+			    id: this.bikes[0].id,
+			    date: this.bookingDate,
+			    time: "Afternoon",
+			});
 		}
 
-		if (this.dates.length > 0) {
-			this.selectedDate = this.dates[0];
-		}
+		this.selectedDate = this.bookingDate;
 
 		if (this.$store.state.extras.dateDrink) {
 			this.selectedDate = this.$store.state.extras.dateDrink;

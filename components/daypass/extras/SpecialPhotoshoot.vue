@@ -33,9 +33,9 @@
       <div class="mt-6 font-semibold">What date would you like to have this?</div>
 
       <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
-        <label class="flex items-center" v-for="date in dates" :key="date">
-          <input type="radio" :value="date" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400" />
-          <div>{{ showDate(date) }}</div>
+        <label class="flex items-center">
+          <input type="radio" :value="bookingDate" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400 border-brand-blue-400" />
+          <div>{{ showDate(bookingDate) }}</div>
         </label>
       </div>
 
@@ -82,14 +82,14 @@ export default {
     };
   },
   computed: {
-    bookingDates() {
-      return this.$store.getters.bookingDates;
-    },
-    dates() {
-      return this.bookingDates.filter((date) => {
-        return !this.noDates.includes(date);
-      });
-    },
+    bookingDate() {
+			return this.$store.getters['day_pass/bookingDate'];
+		},
+    // dates() {
+    //   return this.bookingDates.filter((date) => {
+    //     return !this.noDates.includes(date);
+    //   });
+    // },
     price() {
       let photographerPrice = 50000;
 
@@ -141,9 +141,7 @@ export default {
     await this.getNoPhotoshootDates();
   },
   mounted() {
-    if (this.dates.length > 0) {
-      this.selectedDate = this.dates[0];
-    }
+      this.selectedDate = this.bookingDate;
 
     if (this.$store.state.extras.selectedPhotoshoot) {
       this.noOfArtists = this.$store.state.extras.selectedPhotoshoot;

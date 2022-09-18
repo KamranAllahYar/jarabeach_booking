@@ -121,6 +121,11 @@ export default {
         this.$store.dispatch("extras/getSpecialNewmassages");
         this.$store.dispatch("extras/getQuadbikeOptions");
         this.$store.dispatch("extras/getMostPrices");
+        if(this.$store.state.extras.extras_booking !== 'guests'){
+			this.$store.commit("extras/RESET_STORE");
+			this.$store.commit('extras/UPDATE_EXTRAS_BOOKING_TYPE', 'guests')
+
+		}
     },
     middleware({ store, redirect, $toast }) {
         if (!store.state.availability_done) {

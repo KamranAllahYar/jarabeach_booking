@@ -4,6 +4,12 @@
 			<div class="px-3 py-3 text-xl font-bold border-b border-brand-blue-300">
 				Your Reservation
 			</div>
+			<div class="py-6">
+				<div class="flex justify-between px-3 my-3 item-center" v-for="selectedOption in selectedOptions" :key="selectedOption.id">
+					<div class="w-2/3 text-left truncate">{{selectedOption.name}}</div>
+					<div>{{currency(optionPrice(selectedOption))}}</div>
+				</div>
+			</div>
 			<template v-for="extra in specialPrices">
 				<div class="flex items-center justify-between px-3 my-3" :key="extra.id">
 					<div>{{ extra.name }}</div>
@@ -161,34 +167,37 @@ export default {
 			return this.$store.getters['extras/allSelected'];
 		},
 		memberDiscount() {
-			return this.$store.getters.memberDiscount;
+			return this.$store.getters['day_pass/memberDiscount'];
 		},
 		taxTotal() {
-			return this.$store.getters.taxTotal;
+			return this.$store.getters['day_pass/taxTotal'];
 		},
 		subTotal() {
-			return this.$store.getters.subTotal;
+			return this.$store.getters['day_pass/subTotal'];
 		},
 		discount() {
-			return this.$store.getters.discount;
-		},
-		extraPeoplePrice() {
-			return this.$store.getters.extraPeoplePrice;
-		},
-		extraPeople() {
-			return this.$store.getters.extraPeople;
-		},
-		confirmEnoughRooms() {
-			return this.$store.getters.confirmEnoughRooms;
+			return this.$store.getters['day_pass/discount'];
 		},
 		totalPrice() {
-			return this.$store.getters.totalPrice;
+			return this.$store.getters['day_pass/totalPrice'];
 		},
 		previousTotalPaid() {
-			return this.$store.getters.previousTotalPaid;
+			return this.$store.getters['day_pass/previousTotalPaid'];
+		},
+		selectedOptions() {
+			let selectedOptions = this.$store.getters['day_pass/selectedOptions'];
+			let filteredSelectedOptions = selectedOptions.filter(option => option.quantity > 0);
+			return filteredSelectedOptions;
+		},
+		optionType() {
+			return this.$store.getters['day_pass/optionType'];
 		},
 	},
 	methods: {
+		optionPrice(option){
+			if(this.optionType === 'weekend') return option.weekend_price * option.quantity;
+			return option.weekday_price * option.quantity
+		},
 		formatAndString(arrs) {
 			const arr = [...new Set(arrs)];
 			if (arr.length == 1) return arr[0];
