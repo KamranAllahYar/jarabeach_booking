@@ -15,8 +15,8 @@ export const state = () => ({
 	guest_last_name: '' as string,
 	guest_email: '' as string,
 	guest_phone: '' as string,
-    booking_date: null,
-    option_type: null,
+	booking_date: null,
+	option_type: null,
 	day_pass_options: [] as any,
 	selected_options: [] as any,
 
@@ -80,16 +80,16 @@ export const getters: GetterTree<RootState, RootState> = {
 	},
 	optionPrices: (state: RootState, getters) => {
 		let price = 0;
-		let optionsWithQuantity = state.selected_options.filter((option: any) => option.quantity > 0)
+		let optionsWithQuantity = state.selected_options.filter((option: any) => option.quantity > 0);
 		optionsWithQuantity.forEach((option: any) => {
-			if(getters.optionType === 'weekend'){
+			if (getters.optionType === 'weekend') {
 				price += +option.weekend_price * option.quantity;
 			}
-			if(getters.optionType === 'weekday'){
+			if (getters.optionType === 'weekday') {
 				price += +option.weekday_price * option.quantity;
 			}
-		})
-		return price
+		});
+		return price;
 	},
 	subTotal: (state: RootState, getters, basic, rootGetters) => {
 		const optionPrices = getters.optionPrices;
@@ -136,7 +136,7 @@ export const getters: GetterTree<RootState, RootState> = {
 		return extraPrices + optionPrices;
 	},
 	preTotal: (state: RootState, getters) => {
-		const preTotal = +getters.subTotal - +getters.discount
+		const preTotal = +getters.subTotal - +getters.discount;
 		if (preTotal < 0) return 0;
 
 		return preTotal;
@@ -263,15 +263,22 @@ export const mutations: MutationTree<RootState> = {
 		state.options_done = false;
 		state.guests_done = false;
 		state.extras_done = false;
-        state.guests_no = 0;
-        state.booking_date = null;
-        state.option_type = null;
+		state.guests_no = 0;
+		state.booking_date = null;
+		state.option_type = null;
 		state.guest_first_name = '' as string;
 		state.guest_last_name = '' as string;
 		state.guest_email = '' as string;
 		state.guest_phone = '' as string;
-		state.selected_options = [];
-		state.editMode = false as boolean;
+		(state.booking_date = null),
+			(state.option_type = null),
+			(state.day_pass_options = [] as any),
+			(state.selected_options = [] as any),
+			(state.guests_done = false as boolean),
+			(state.availability_done = false as boolean),
+			(state.options_done = false as boolean),
+			(state.extras_done = false as boolean),
+			(state.editMode = false as boolean);
 		state.editBooking = null as any;
 		state.adminEditMode = false as boolean;
 	},
@@ -301,41 +308,38 @@ export const actions: ActionTree<RootState, RootState> = {
 	async createTransaction({ state, getters, rootState, rootGetters }) {
 		console.log(getters);
 		let dataToPost = {} as any;
-		if (!state.editMode) {
-			dataToPost = {
-				method: 'Paystack',
-				subtotal: getters.subTotal,
-				taxTotal: getters.taxTotal,
-				total: getters.totalPrice,
-			};
-		} else {
-			console.log(state.editBooking.previous_change);
-			let diff = getters.differenceToPay;
+		dataToPost = {
+			method: 'Paystack',
+			subtotal: getters.subTotal,
+			taxTotal: getters.taxTotal,
+			total: getters.totalPrice,
+		};
 
-			dataToPost = {
-				method: 'Paystack',
-				subtotal: getters.subTotal,
-				total: getters.totalPrice,
-				previousTotal: state.editBooking.payment.total,
-				differenceForUpdate: diff,
-			};
-		}
-
-		const discount = state.discount;
-		if (discount) {
-			if (discount.type == 'discount') {
-				dataToPost['discount'] = discount.amount;
-				dataToPost['discount_amount'] = getters.discount;
-			} else if (discount.type == 'voucher') {
-				dataToPost['voucher'] = discount.amount;
-			}
-		}
+		// const discount = state.discount;
+		// if (discount) {
+		// 	if (discount.type == 'discount') {
+		// 		dataToPost['discount'] = discount.amount;
+		// 		dataToPost['discount_amount'] = getters.discount;
+		// 	} else if (discount.type == 'voucher') {
+		// 		dataToPost['voucher'] = discount.amount;
+		// 	}
+		// }
 
 		console.log('Create transaction Data to Post:');
 
 		const { dataToPost: bookingDataToPost, specialsToSend } = getDataToSend({ state, getters, rootState, rootGetters });
+		dataToPost['booking_data'] = {
+			guest_first_name: state.guest_first_name,
+			guest_last_name: state.guest_last_name,
+			guest_email: state.guest_email,
+			guest_phone: state.guest_phone,
+			guests_no: state.guests_no,
+			booking_date: state.booking_date,
+			option_type: state.option_type,
+			selected_options: state.selected_options,
+		};
 
-		dataToPost['booking_data'] = bookingDataToPost;
+		// dataToPost['booking_data'] = bookingDataToPost;
 		dataToPost['specials_data'] = specialsToSend;
 		const bookingFrom = localStorage.getItem('bookingFrom');
 		if (bookingFrom) {
@@ -362,7 +366,7 @@ export const actions: ActionTree<RootState, RootState> = {
 	async createBooking({ state, getters, rootState, rootGetters }, { trans_ref, method_ref, method, booking_from }) {
 		//@ts-ignore
 		const extraState = rootState.extras;
-		console.log(extraState, rootGetters);
+		// console.log(extraState, rootGetters);
 
 		const allExtras = (rootGetters['extras/allSelected'] as any[]).map(s => s.type);
 		let specialsToSend = {
@@ -370,12 +374,9 @@ export const actions: ActionTree<RootState, RootState> = {
 		} as any;
 
 		let prices = {
-			Rooms: rootGetters.roomPrice,
-			'Room Discount': '-' + rootGetters.roomDiscount,
-			'100Club Member Discount': '-' + rootGetters.memberDiscount,
-			'Extra People Cost': '+' + rootGetters.extraPeoplePrice,
-			taxTotal: rootGetters.taxTotal,
-			tax: rootGetters.taxTotal,
+			optionsPrices: getters.optionPrices,
+			taxTotal: getters.taxTotal,
+			tax: getters.taxTotal,
 		} as any;
 
 		if (allExtras.includes('cakes')) {
@@ -393,20 +394,6 @@ export const actions: ActionTree<RootState, RootState> = {
 				quantity: extraState.selectedPhotoshoot,
 			};
 			prices['photoshoot'] = rootGetters['extras/photoshootPrice'];
-		}
-		if (allExtras.includes('roomDecoration')) {
-			specialsToSend['roomDecoration'] = {
-				date: extraState.dateDecoration,
-				welcomeNote: extraState.decorationWelcomeNote,
-				petalsNote: extraState.decorationPetalsNote,
-				balloonsColor: extraState.decorationBalloonsColor,
-				// picnicDate: extraState.decorationPicnicDate,
-				// breakfastDate: extraState.decorationBreakfastDate,
-				// breakfastTime: extraState.decorationBreakfastTime,
-				room: extraState.decorationRoom,
-				options: extraState.selectedDecorations.map((sd: any) => sd.id),
-			};
-			prices['roomDecoration'] = rootGetters['extras/decorationPrice'];
 		}
 		if (allExtras.includes('unforgettableExperience')) {
 			specialsToSend['unforgettableExperience'] = {
@@ -440,13 +427,6 @@ export const actions: ActionTree<RootState, RootState> = {
 			};
 			prices['bikes'] = rootGetters['extras/bikesPrice'];
 		}
-		if (allExtras.includes('domesticStaff')) {
-			specialsToSend['domesticStaff'] = {
-				dates: extraState.dateStaff,
-				info: extraState.selectedStaff,
-			};
-			prices['domesticStaff'] = rootGetters['extras/staffPrice'];
-		}
 		if (allExtras.includes('quadbike')) {
 			specialsToSend['quadbike'] = {
 				date: extraState.dateQuadbike,
@@ -478,50 +458,52 @@ export const actions: ActionTree<RootState, RootState> = {
 			prices['lookout'] = rootGetters['extras/lookoutPrice'];
 		}
 
-		prices['Sub Total'] = rootGetters.subTotal;
+		prices['Sub Total'] = getters.subTotal;
 		// prices["Total"] = rootGetters.total;
 
-		if (state.editMode) {
-			let diff = getters.differenceToPay;
+		// if (state.editMode) {
+		// 	let diff = getters.differenceToPay;
 
-			prices['Previous Total'] = state.editBooking.payment.total;
-			prices['Balance Paid'] = diff;
-		}
+		// 	prices['Previous Total'] = state.editBooking.payment.total;
+		// 	prices['Balance Paid'] = diff;
+		// }
 
 		console.log(specialsToSend);
 
 		let dataToPost: any = {
 			booking: {
-				extra_info: 'ex',
+				guest_first_name: state.guest_first_name,
+				guest_last_name: state.guest_last_name,
+				guest_email: state.guest_email,
+				guest_phone: state.guest_phone,
+				guests_no: state.guests_no,
+				booking_date: state.booking_date,
+				option_type: state.option_type,
+				selected_options: state.selected_options,
+				prices: prices,
 				trans_ref: trans_ref,
-				method_ref: method_ref,
 				method: method,
+				method_ref: method_ref,
 			},
 			booking_from,
-			prices: prices,
-			admin_edit_mode: state.adminEditMode,
+			// admin_edit_mode: state.adminEditMode,
 		};
-
-		if (!dataToPost.guest_id) {
-			this.app.$toast.info('Please fill your profile information again');
-			return;
-		}
 
 		if (state.discount) {
 			dataToPost.discount = state.discount;
 			dataToPost.discount_amount = getters.discount;
 		}
 
-		if (state.editMode) {
-			dataToPost.oldBookingId = state.editBooking.id;
-		}
+		// if (state.editMode) {
+		// 	dataToPost.oldBookingId = state.editBooking.id;
+		// }
 
 		console.log(dataToPost);
 
 		console.log(prices);
 
 		try {
-			const res = await this.$axios.post('bookings', dataToPost);
+			const res = await this.$axios.post('day-pass-booking', dataToPost);
 			console.log(res.data);
 
 			if (res.data.success) {

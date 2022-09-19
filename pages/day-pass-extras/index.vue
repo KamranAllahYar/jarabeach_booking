@@ -99,6 +99,7 @@ export default {
 			this.$router.push({ path: '/day-pass-extras/' + name.type });
 		},
 		skip() {
+			this.$store.commit("day_pass/COMPLETE_EXTRAS");
 			this.$router.push({ path: '/day-pass-payment' });
 		},
 		isSelectedSpecial(sp) {

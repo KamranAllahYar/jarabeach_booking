@@ -5,7 +5,7 @@
 		<div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-6 md:flex-row">
 			<div class="w-full md:w-6/12">
 				<div class="px-6 pt-6 text-gray-700 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
-					<div class="border rounded-md">
+					<div class="border rounded-md" v-if="specialPrices.length">
 						<div class="flex flex-col divide-y">
 							<div class="flex items-center justify-between px-3 py-4" v-for="extra in specialPrices" :key="extra.id">
 								<div>{{ extra.name }}</div>
@@ -16,8 +16,7 @@
 							</div>
 						</div>
 					</div>
-
-					<div v-if="!$store.state.editMode || $store.state.adminEditMode" class="mt-6 mb-12 border border-gray-100 rounded-md bg-gray-50 ring-gray-200 focus-within:ring ring-offset-2">
+					<!-- <div v-if="!$store.state.editMode || $store.state.adminEditMode" class="mt-6 mb-12 border border-gray-100 rounded-md bg-gray-50 ring-gray-200 focus-within:ring ring-offset-2">
 						<form @submit.prevent="checkDiscount()" class="flex justify-between p-2">
 							<input class="w-full ml-2 bg-transparent outline-none" v-model="code" placeholder="Enter Discount code" />
 							<div class="w-40 ml-3">
@@ -28,17 +27,25 @@
 								>
 									Apply
 								</button>
-								<!-- <MainButton :loading="loadingCode" type="submit" class="text-white rounded-md focus:outline-none focus:ring bg-brand-blue-100">Apply</MainButton> -->
 							</div>
 						</form>
-					</div>
+					</div> -->
 
 					<div class="flex flex-col items-center w-full my-6 space-y-2 md:space-y-0 md:flex-row md:space-x-2">
 						<MainButton class="md:w-3/12" outline @click="gotoBack()">Back</MainButton>
-						<template v-if="shouldShowPaymentButton">
-							<template v-if="totalPrice > 0">
-								<div class="relative flex-shrink-0 w-full md:w-5/12" v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimerToggle(true)" @mouseleave="holdDisclaimerToggle(false)">
-									<MainButton :loading="loading" @click.native="bookOnHoldBooking()">
+						<template v-if="totalPrice > 0">
+							<div class="flex-shrink-0 w-full md:w-5/12">
+								<Paystack
+									v-if="trans_ref != null"
+									:amount="totalPrice"
+									:email="guestEmail"
+									:paystackkey="paystackkey"
+									:reference="trans_ref"
+									:callback="createTransaction"
+									:close="closePayment"
+									:embed="false"
+								>
+									<MainButton class="md:px-2" :loading="loading">
 										<div class="flex justify-center">
 											<svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
 												<path
@@ -47,55 +54,11 @@
 													clip-rule="evenodd"
 												/>
 											</svg>
-											Hold | Bank Transfer
+											Book | Pay With Paystack
 										</div>
 									</MainButton>
-									<div v-if="holdDisclaimer" class="absolute p-2 mx-auto text-xs bg-white border-2 rounded border-brand-blue-300" style="top: -120px">
-										Booking will only be held for
-										<b>30 mins</b>. You must send a proof of payment to <b>bookings@jarabeachresort.com</b> within that time or the hold on the booking will be cancelled.
-										<br />
-										<i class="text-red-800">Option not available between 6pm-9am WAT</i>
-									</div>
-								</div>
-								<div class="flex-shrink-0 w-full md:w-5/12">
-									<Paystack
-										v-if="trans_ref != null"
-										:amount="totalPrice"
-										:email="guestEmail"
-										:paystackkey="paystackkey"
-										:reference="trans_ref"
-										:callback="completeBooking"
-										:close="closePayment"
-										:embed="false"
-									>
-										<MainButton class="md:px-2" :loading="loading">
-											<div class="flex justify-center">
-												<svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-													<path
-														fill-rule="evenodd"
-														d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
-														clip-rule="evenodd"
-													/>
-												</svg>
-												Book | Pay With Paystack
-											</div>
-										</MainButton>
-									</Paystack>
-								</div>
-							</template>
-							<div v-if="totalPrice <= 0">
-								<MainButton :loading="loading" @click.native="completeFreeBooking()">
-									<div class="flex justify-center">
-										<!-- <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                    </svg> -->
-										Complete Booking
-									</div>
-								</MainButton>
+								</Paystack>
 							</div>
-						</template>
-						<template v-else>
-							<MainButton :loading="loading" @click="updateBooking()">Update Booking</MainButton>
 						</template>
 					</div>
 				</div>
@@ -119,7 +82,7 @@ export default {
 	layout: 'day-pass',
 	components: {
 		Paystack,
-		DayPassReservationBox
+		DayPassReservationBox,
 	},
 	data() {
 		return {
@@ -132,87 +95,63 @@ export default {
 	},
 	computed: {
 		specialPrices() {
-			return this.specials
-				.map(special => {
-					let price = 0;
-					switch (special.type) {
-						case 'cakes':
-							price = this.$store.getters['extras/cakesPrice'];
-							break;
-						case 'drinks':
-							price = this.$store.getters['extras/drinksPrice'];
-							break;
-						case 'massages':
-							price = this.$store.getters['extras/massagesPrice'];
-							break;
-						case 'bikes':
-							price = this.$store.getters['extras/bikesPrice'];
-							break;
-						case 'photoshoot':
-							price = this.$store.getters['extras/photoshootPrice'];
-							break;
-						case 'roomDecoration':
-							price = this.$store.getters['extras/decorationPrice'];
-							break;
-						case 'unforgettableExperience':
-							price = this.$store.getters['extras/experiencePrice'];
-							break;
-						case 'domesticStaff':
-							price = this.$store.getters['extras/staffPrice'];
-							break;
-						case 'massage':
-							price = this.$store.getters['extras/massagePrice'];
-							break;
-						case 'newmassage':
-							price = this.$store.getters['extras/newmassagePrice'];
-							break;
-						case 'quadbike':
-							price = this.$store.getters['extras/quadbikePrice'];
-							break;
-						case 'lookout':
-							price = this.$store.getters['extras/lookoutPrice'];
-							break;
-						default:
-							price = 0;
-							break;
-					}
+			return this.specials.map(special => {
+				let price = 0;
+				switch (special.type) {
+					case 'cakes':
+						price = this.$store.getters['extras/cakesPrice'];
+						break;
+					case 'drinks':
+						price = this.$store.getters['extras/drinksPrice'];
+						break;
+					case 'massages':
+						price = this.$store.getters['extras/massagesPrice'];
+						break;
+					case 'bikes':
+						price = this.$store.getters['extras/bikesPrice'];
+						break;
+					case 'photoshoot':
+						price = this.$store.getters['extras/photoshootPrice'];
+						break;
+					case 'roomDecoration':
+						price = this.$store.getters['extras/decorationPrice'];
+						break;
+					case 'unforgettableExperience':
+						price = this.$store.getters['extras/experiencePrice'];
+						break;
+					case 'domesticStaff':
+						price = this.$store.getters['extras/staffPrice'];
+						break;
+					case 'massage':
+						price = this.$store.getters['extras/massagePrice'];
+						break;
+					case 'newmassage':
+						price = this.$store.getters['extras/newmassagePrice'];
+						break;
+					case 'quadbike':
+						price = this.$store.getters['extras/quadbikePrice'];
+						break;
+					case 'lookout':
+						price = this.$store.getters['extras/lookoutPrice'];
+						break;
+					default:
+						price = 0;
+						break;
+				}
 
-					return {
-						id: special.id,
-						name: special.name,
-						type: special.type,
-						price: price,
-					};
-				})
-				.filter(sp => sp.type == 'roomDecoration' || sp.price > 0);
-		},
-		shouldShowBookOnHold() {
-			if (this.$store.state.editMode) return false;
-
-			const today = new Date();
-			const todayHrs = today.getHours();
-
-			console.log(todayHrs);
-			if (todayHrs >= 20 || todayHrs < 8) return false;
-
-			return true;
-		},
-		shouldShowPaymentButton() {
-			if (!this.$store.state.editMode) return true;
-			if (this.$store.state.editMode) {
-				if (this.totalPrice <= 0) return false;
-			}
-
-			return true;
+				return {
+					id: special.id,
+					name: special.name,
+					type: special.type,
+					price: price,
+				};
+			});
 		},
 		specials() {
 			return this.$store.getters['extras/allSelected'];
 		},
 		totalPrice() {
-			if (this.$store.state.editMode) {
-				return this.$store.getters['differenceToPay'] * 100;
-			}
-			return this.$store.getters['totalPrice'] * 100;
+			return this.$store.getters['day_pass/totalPrice'] * 100;
 		},
 		guestEmail() {
 			return this.$store.getters['day_pass/bookingEmail'];
@@ -221,22 +160,24 @@ export default {
 			return this.$config.PAYMENT_PUBLIC_KEY;
 		},
 		subTotal() {
-			return this.$store.getters.subTotal;
+			return this.$store.getters['day_pass/subTotal'];
+		},
+	},
+	watch: {
+		trans_ref(newValue) {
+			console.log(newValue);
 		},
 	},
 	methods: {
-		holdDisclaimerToggle(v) {
-			this.holdDisclaimer = v;
-		},
 		removeExtra(extra) {
 			console.log(extra);
 			const ex = extra.type;
 			this.$store.commit('extras/REMOVE_EXTRA', ex);
-			this.createTransaction();
+			// this.createTransaction();
 		},
-		async createTransaction() {
+		async createTransaction(paystack_res) {
 			this.loading = true;
-			const trans_ref = await this.$store.dispatch('createTransaction');
+			const trans_ref = await this.$store.dispatch('day_pass/createTransaction');
 			console.log(trans_ref);
 
 			this.trans_ref = trans_ref;
@@ -247,11 +188,11 @@ export default {
 
 			if (paystack_res.status == 'success') {
 				const bookingFrom = localStorage.getItem('bookingFrom');
-				const res = await this.$store.dispatch('createBooking', {
+				const res = await this.$store.dispatch('day_pass/createBooking', {
 					trans_ref: this.trans_ref,
 					method_ref: paystack_res.transaction,
 					method: 'Paystack',
-					booking_from: bookingFrom
+					booking_from: bookingFrom,
 				});
 				console.log(res);
 				if (res) {
@@ -262,60 +203,6 @@ export default {
 				}
 			} else {
 				this.$toasted.error(res.message);
-			}
-			this.loading = false;
-		},
-		async completeFreeBooking() {
-			const res = await this.$store.dispatch('createBooking', {
-				trans_ref: this.trans_ref,
-				method_ref: 'ZeroBalance',
-				method: 'ZeroBalance',
-			});
-
-			console.log(res);
-			if (res) {
-				console.log(res);
-				this.$router.push('/done');
-				this.$store.commit('RESET_STORE');
-				this.$store.commit('extras/RESET_STORE');
-			}
-			this.loading = false;
-		},
-		async updateBooking() {
-			if (this.loading) return;
-
-			this.loading = true;
-			const res = await this.$store.dispatch('createBooking', {
-				trans_ref: this.trans_ref,
-				method_ref: 'update booking',
-				method: 'Update',
-			});
-
-			if (res) {
-				console.log(res);
-				this.$router.push('/done');
-				this.$store.commit('RESET_STORE');
-				this.$store.commit('extras/RESET_STORE');
-			}
-			this.loading = false;
-		},
-		async bookOnHoldBooking() {
-			console.log('Clickling book on hold');
-
-			if (this.loading) return;
-
-			this.loading = true;
-			const res = await this.$store.dispatch('createBooking', {
-				trans_ref: this.trans_ref,
-				method_ref: 'offline booking',
-				method: 'Offline',
-			});
-			console.log(res);
-			if (res) {
-				console.log(res);
-				this.$router.push('/done_hold');
-				this.$store.commit('RESET_STORE');
-				this.$store.commit('extras/RESET_STORE');
 			}
 			this.loading = false;
 		},
@@ -352,7 +239,7 @@ export default {
 						const discount = Object.assign({}, data.data);
 						console.log(discount);
 						this.$store.commit('UPDATE_DISCOUNT', discount);
-						this.createTransaction();
+						// this.createTransaction();
 					} else {
 						this.$toasted.error(data.message);
 					}
@@ -366,7 +253,7 @@ export default {
 		closePayment() {
 			console.log('You closed payment');
 			this.$toast.error('Payment was not completed');
-			this.createTransaction();
+			// this.createTransaction();
 		},
 	},
 	mounted() {
@@ -377,7 +264,7 @@ export default {
 			// $toast.info("Please accept all policies first");
 			redirect('/day-pass-extras');
 		}
-		store.commit('UPDATE_DISCOUNT', null);
+		// store.commit('UPDATE_DISCOUNT', null);
 	},
 };
 </script>
