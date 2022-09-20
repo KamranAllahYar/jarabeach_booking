@@ -72,7 +72,7 @@ export default {
 			}
 			this.updateStores();
 			this.$store.commit('day_pass/COMPLETE_OPTIONS');
-			this.$router.push({ path: '/day-pass-extras' });
+			this.$router.push({ path: '/day-pass-payment' });
 		},
 		currency(num) {
 			return '₦' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');

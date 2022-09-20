@@ -981,7 +981,7 @@ export const actions: ActionTree<RootState, RootState> = {
 			multi_room: state.multiRoom,
 		};
 
-		if (state.guest.id) {
+		if (state.guest?.id) {
 			dataToPost.guest_id = state.guest.id;
 		}
 

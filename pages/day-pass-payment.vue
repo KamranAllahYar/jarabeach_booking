@@ -260,7 +260,7 @@ export default {
 		this.createTransaction();
 	},
 	middleware({ store, redirect, $toast }) {
-		if (!store.state.day_pass.extras_done) {
+		if (!store.state.day_pass.options_done) {
 			// $toast.info("Please accept all policies first");
 			redirect('/day-pass-extras');
 		}
