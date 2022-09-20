@@ -41,7 +41,7 @@
 									:email="guestEmail"
 									:paystackkey="paystackkey"
 									:reference="trans_ref"
-									:callback="createTransaction"
+									:callback="completeBooking"
 									:close="closePayment"
 									:embed="false"
 								>
@@ -175,7 +175,7 @@ export default {
 			this.$store.commit('extras/REMOVE_EXTRA', ex);
 			// this.createTransaction();
 		},
-		async createTransaction(paystack_res) {
+		async createTransaction() {
 			this.loading = true;
 			const trans_ref = await this.$store.dispatch('day_pass/createTransaction');
 			console.log(trans_ref);

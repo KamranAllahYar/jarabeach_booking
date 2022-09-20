@@ -31,7 +31,9 @@ export default {
 	},
 	watch: {
 		option_type(newValue){
-			this.date = null;
+			if(newValue !== this.$store.state.day_pass.option_type){
+				this.date = null;
+			}
 		}
 	},
 	methods: {
