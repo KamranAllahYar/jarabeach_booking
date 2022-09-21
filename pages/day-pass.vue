@@ -1,5 +1,5 @@
 <template>
-	<div class="mx-auto md:w-1/2 lg:w-1/3">
+	<div class="px-4 mx-auto md:w-1/2 lg:w-1/3 md:px-0">
 		<div class="mb-4 text-lg font-bold text-center">Please select the number of guests you want to book for</div>
 		<select name="guest" id="guest" v-model="noOfGuests" class="border rounded-md outline-none focus:outline-none" style="box-shadow: none">
 			<option value="0">Guests</option>
@@ -9,14 +9,14 @@
 		</select>
 		<div class="mt-6 mb-4 text-lg font-bold">Who is making this booking?</div>
 		<div class="space-y-6 ">
-			<div class="items-center justify-between md:flex">
+			<div class="space-y-6 md:items-center md:space-x-4 md:justify-between md:flex md:space-y-0">
 				<div>
 					<label for="firstName" class="mb-1 font-semibold">First Name</label>
-					<input type="text" id="firstName" class="block rounded" v-model="firstName"/>
+					<input type="text" id="firstName" class="block w-full rounded" v-model="firstName"/>
 				</div>
 				<div>
 					<label for="lastName" class="mb-1 font-semibold">Last Name</label>
-					<input type="text" id="lastName" class="block rounded" v-model="lastName"/>
+					<input type="text" id="lastName" class="block w-full rounded" v-model="lastName"/>
 				</div>
 			</div>
 			<div>
@@ -28,8 +28,7 @@
 				<input type="text" max-length="11" id="phone" class="block w-full rounded" v-model="phone"/>
 			</div>
 		</div>
-		<div class="w-32 mt-6 space-x-3" v-if="canGoToNext">
-			<!-- <MainButton outline>Back</MainButton> -->
+		<div class="flex justify-end w-32 mt-6 space-x-3 md:justify-start" v-if="canGoToNext">
 			<MainButton @click="gotoNext()">Next</MainButton>
 		</div>
 		<div class="flex justify-center max-w-lg px-6 py-6 mx-auto">

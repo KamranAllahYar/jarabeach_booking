@@ -198,7 +198,7 @@ export default {
 				if (res) {
 					console.log(res);
 					this.$router.push('/done');
-					this.$store.commit('RESET_STORE');
+					this.$store.commit('day_pass/RESET_STORE');
 					this.$store.commit('extras/RESET_STORE');
 				}
 			} else {
@@ -210,7 +210,7 @@ export default {
 			return '₦' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 		},
 		gotoBack() {
-			this.$router.push('/day-pass-extras');
+			this.$router.push('/day-pass-options');
 		},
 		removeRoom(room) {
 			console.log(room);

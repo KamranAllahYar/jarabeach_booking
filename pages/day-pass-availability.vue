@@ -1,5 +1,5 @@
 <template>
-	<div class="max-w-4xl mx-auto">
+	<div class="max-w-4xl px-4 mx-auto md:px-0">
 		<div class="text-lg font-bold">Are you booking on a weekday or weekend?</div>
 		<select name="option_type" id="option_type" v-model="option_type" class="block mt-4 border rounded-md outline-none focus:outline-none" style="box-shadow: none">
 			<option value="weekend">Weekend</option>
