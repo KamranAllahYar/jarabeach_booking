@@ -2,6 +2,7 @@ import { RootState } from './index';
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
 
 export const state = () => ({
+  extras_booking: 'guests',
   specials: [
     { type: 'unforgettableExperience', name: 'Unforgettable Experiences', available: true, range: '10,000' },
     { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
@@ -332,6 +333,9 @@ function getSpecialObjFromStr(specials: any[], specialStr: String): any {
 export const mutations: MutationTree<ExtraState> = {
   LOAD_EXTRAS: (state, payload) => {
     state.specials = payload
+  },
+  UPDATE_EXTRAS_BOOKING_TYPE: (state, payload) => {
+    state.extras_booking = payload
   },
   LOAD_SELECTED: (state, payload) => {
     state.selected = payload
