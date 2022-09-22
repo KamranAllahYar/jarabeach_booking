@@ -4,6 +4,9 @@
 
 		<div class="flex flex-col justify-center space-y-6 md:space-y-0 md:space-x-6 md:flex-row">
 			<div class="w-full md:w-6/12">
+				<div class="px-4 mb-6">
+					<img src="@/assets/payment_page_banner.jpeg">
+				</div>
 				<div class="px-6 pt-6 text-gray-700 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
 					<div class="border rounded-md" v-if="specialPrices.length">
 						<div class="flex flex-col divide-y">
@@ -262,7 +265,7 @@ export default {
 	middleware({ store, redirect, $toast }) {
 		if (!store.state.day_pass.options_done) {
 			// $toast.info("Please accept all policies first");
-			redirect('/day-pass-extras');
+			redirect('/day-pass-options');
 		}
 		// store.commit('UPDATE_DISCOUNT', null);
 	},
