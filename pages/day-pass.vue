@@ -1,6 +1,6 @@
 <template>
 	<div class="px-4 mx-auto md:w-1/2 lg:w-1/3 md:px-0">
-		<div class="mb-4 text-lg font-bold text-center">Please select the number of guests you want to book for</div>
+		<div class="mb-4 text-lg font-bold text-center">Please select the number of guests you want to book for (infants and toddlers included)</div>
 		<select name="guest" id="guest" v-model="noOfGuests" class="border rounded-md outline-none focus:outline-none" style="box-shadow: none">
 			<option value="0">Guests</option>
 			<option v-for="num in 42" :value="num" :key="num">

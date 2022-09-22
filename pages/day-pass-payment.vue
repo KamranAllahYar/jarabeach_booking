@@ -7,6 +7,9 @@
 				<div class="px-4 mb-6">
 					<img src="@/assets/payment_page_banner.jpeg">
 				</div>
+				<div class="my-4">
+					✓ Agree with the Booking Terms and Conditions (<a class="text-blue-500" target="_blank" href="https://www.jarabeachresort.com/terms">https://www.jarabeachresort.com/terms</a>) and Proceed to payment
+				</div>
 				<div class="px-6 pt-6 text-gray-700 bg-white border-t border-b md:border md:rounded-lg md:shadow-lg">
 					<div class="border rounded-md" v-if="specialPrices.length">
 						<div class="flex flex-col divide-y">
@@ -33,7 +36,9 @@
 							</div>
 						</form>
 					</div> -->
-
+					<div class="flex-shrink-0 w-full md:hidden md:px-0 md:w-3/12">
+						<DayPassReservationBox showDiscount />
+					</div>
 					<div class="flex flex-col items-center w-full my-6 space-y-2 md:space-y-0 md:flex-row md:space-x-2">
 						<MainButton class="md:w-3/12" outline @click="gotoBack()">Back</MainButton>
 						<template v-if="totalPrice > 0">
@@ -70,7 +75,7 @@
 					<StartOverButton class="w-full" isDayPassBooking></StartOverButton>
 				</div>
 			</div>
-			<div class="flex-shrink-0 w-full px-6 md:px-0 md:w-3/12">
+			<div class="flex-shrink-0 hidden w-full px-6 md:px-0 md:w-3/12 md:block">
 				<DayPassReservationBox showDiscount />
 			</div>
 		</div>

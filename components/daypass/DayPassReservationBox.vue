@@ -5,6 +5,10 @@
 				Your Reservation
 			</div>
 			<div class="py-6">
+				<div class="flex items-center justify-between px-3">
+					<div>Booking Date</div>
+					<div>{{showDate(bookingDate)}}</div>
+				</div>
 				<div class="flex justify-between px-3 mt-3 item-center" v-for="selectedOption in selectedOptions" :key="selectedOption.id">
 					<div class="w-2/3 text-left truncate">{{selectedOption.name}}</div>
 					<div>{{currency(optionPrice(selectedOption))}}</div>
@@ -160,8 +164,11 @@ export default {
 		editBooking() {
 			return this.$store.state.editBooking;
 		},
-		differenceToPay() {
+		differenceToPay() { 
 			return this.$store.getters.differenceToPay;
+		},
+		bookingDate() {
+			return this.$store.getters['day_pass/bookingDate'];
 		},
 		specials() {
 			return this.$store.getters['extras/allSelected'];
@@ -198,6 +205,9 @@ export default {
 			if(this.optionType === 'weekend') return option.weekend_price * option.quantity;
 			return option.weekday_price * option.quantity
 		},
+		showDate(date) {
+            return format(parseISO(date), "iii, MMM. do yyyy");
+        },
 		formatAndString(arrs) {
 			const arr = [...new Set(arrs)];
 			if (arr.length == 1) return arr[0];
