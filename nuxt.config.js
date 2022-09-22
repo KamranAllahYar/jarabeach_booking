@@ -26,6 +26,7 @@ export default {
   plugins: [
     "@/plugins/popover.js",
     "@/plugins/vue-tour.js",
+    "@/plugins/v-calendar.js",
     { src: '@/plugins/vuex-persist', ssr: false },
     { src: '@/plugins/bugsnag', ssr: false }
   ],
