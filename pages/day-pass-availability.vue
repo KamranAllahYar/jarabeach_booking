@@ -1,6 +1,6 @@
 <template>
 	<div class="max-w-4xl px-4 mx-auto md:px-0">
-		<div class="text-lg font-bold">Are you booking on a weekday or weekend?</div>
+		<div class="text-lg font-bold">Are you booking on a weekday (MON-THUR) or weekend (FRI-SUN)?</div>
 		<select name="option_type" id="option_type" v-model="option_type" class="block mt-4 border rounded-md outline-none focus:outline-none" style="box-shadow: none">
 			<option value="weekend">Weekend</option>
 			<option value="weekday">Weekday</option>
@@ -18,6 +18,7 @@
 	</div>
 </template>
 <script>
+import isBefore from "date-fns/isBefore";
 export default {
 	layout: 'day-pass',
 	data() {
@@ -38,6 +39,10 @@ export default {
 	},
 	methods: {
 		onDayClick(day) {
+			if(isBefore(new Date(day.id), new Date())){
+				this.$toast.info('You cant select a day in the past!', { duration: 5000 });
+				return;
+			}
 			const dayOfTheWeek = new Date(day.id).getDay();
 			console.log(dayOfTheWeek);
 			if (this.option_type === 'weekday' && (dayOfTheWeek > 4 || dayOfTheWeek === 0)) {
@@ -53,6 +58,10 @@ export default {
 		goToNext() {
 			if (this.date === null) {
 				this.$toast.info('Please select a date', { duration: 5000 });
+				return;
+			}
+			if(isBefore(new Date(this.date), new Date())){
+				this.$toast.info('You cant select a day in the past!', { duration: 5000 });
 				return;
 			}
 			if (this.canGoToNext) {
