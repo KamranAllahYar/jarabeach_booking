@@ -19,6 +19,7 @@
     "@tailwindcss/forms": "^0.2.1",
     "autoprefixer": "^9",
     "core-js": "^3.6.5",
+    "moment": "^2.29.4",
     "nuxt": "^2.14.12",
     "nuxt-property-decorator": "^2.8.8",
     "postcss": "^7",

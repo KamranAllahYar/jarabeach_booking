@@ -6,6 +6,8 @@ import isSameDay from 'date-fns/isSameDay';
 import isSameMonth from 'date-fns/isSameMonth';
 import isSameYear from 'date-fns/isSameYear';
 import Bugsnag from '@bugsnag/js';
+import moment from 'moment';
+
 
 import getDataToSend from './create_bookings';
 
@@ -78,14 +80,21 @@ export const getters: GetterTree<RootState, RootState> = {
 
 		return 0;
 	},
-	optionPrices: (state: RootState, getters) => {
+	optionPrices: (state: RootState, getters, basic, rootGetters) => {
 		let price = 0;
 		let optionsWithQuantity = state.selected_options.filter((option: any) => option.quantity > 0);
+		const isDateAvailable = rootGetters.noDiscountDates.filter((d: any) => {
+			return moment(getters.bookingDate).format('DD/MM/YYYY') === moment(d).format('DD/MM/YYYY');
+		});
+		
 		optionsWithQuantity.forEach((option: any) => {
-			if (getters.optionType === 'weekend') {
+			if(isDateAvailable.length){
+				price += +option.seasonal_price * option.quantity;
+			}
+			if (getters.optionType === 'weekend' && !isDateAvailable.length) {
 				price += +option.weekend_price * option.quantity;
 			}
-			if (getters.optionType === 'weekday') {
+			if (getters.optionType === 'weekday' && !isDateAvailable.length) {
 				price += +option.weekday_price * option.quantity;
 			}
 		});
@@ -292,7 +301,6 @@ export const actions: ActionTree<RootState, RootState> = {
 	},
 	getDayPassOptions({ commit }) {
 		this.$axios.get('/day-pass-options').then(res => {
-			console.log(res.data.data);
 			commit('SET_DAY_PASS_OPTIONS', res.data.data);
 		});
 	},

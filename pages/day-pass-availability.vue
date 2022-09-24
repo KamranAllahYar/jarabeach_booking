@@ -18,7 +18,7 @@
 	</div>
 </template>
 <script>
-import isBefore from "date-fns/isBefore";
+import isBefore from 'date-fns/isBefore';
 export default {
 	layout: 'day-pass',
 	data() {
@@ -27,19 +27,25 @@ export default {
 			date: null,
 		};
 	},
-	mounted(){
-		this.updateFromStore()
+	mounted() {
+		this.updateFromStore();
 	},
 	watch: {
-		option_type(newValue){
-			if(newValue !== this.$store.state.day_pass.option_type){
+		option_type(newValue) {
+			if (newValue !== this.$store.state.day_pass.option_type) {
 				this.date = null;
 			}
-		}
+		},
 	},
 	methods: {
 		onDayClick(day) {
-			if(isBefore(new Date(day.id), new Date())){
+			let daySelected = new Date(day.id).toISOString();
+			daySelected = daySelected.split('T')[0];
+
+			let today = new Date().toISOString();
+			today = today.split('T')[0];
+
+			if (isBefore(new Date(daySelected), new Date(today))) {
 				this.$toast.info('You cant select a day in the past!', { duration: 5000 });
 				return;
 			}
@@ -60,7 +66,12 @@ export default {
 				this.$toast.info('Please select a date', { duration: 5000 });
 				return;
 			}
-			if(isBefore(new Date(this.date), new Date())){
+			let daySelected = new Date(this.date).toISOString();
+			daySelected = daySelected.split('T')[0];
+
+			let today = new Date().toISOString();
+			today = today.split('T')[0];
+			if (isBefore(new Date(daySelected), new Date(today))) {
 				this.$toast.info('You cant select a day in the past!', { duration: 5000 });
 				return;
 			}
@@ -90,10 +101,12 @@ export default {
 			return (this.option_type === 'weekday' || this.option_type === 'weekend') && this.date !== null;
 		},
 		attributes() {
-			return [{
-				highlight: true,
-				dates: this.date,
-			}];
+			return [
+				{
+					highlight: true,
+					dates: this.date,
+				},
+			];
 		},
 	},
 	middleware({ store, redirect, $toast }) {

@@ -6,7 +6,7 @@
 			</div>
 			<div class="py-6">
 				<div class="flex items-center justify-between px-3">
-					<div>Booking Date</div>
+					<div>Visiting Date</div>
 					<div>{{showDate(bookingDate)}}</div>
 				</div>
 				<div class="flex justify-between px-3 mt-3 item-center" v-for="selectedOption in selectedOptions" :key="selectedOption.id">
@@ -92,6 +92,8 @@
 <script>
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
+import { mapGetters } from 'vuex';
+import moment from 'moment';
 
 export default {
 	props: {
@@ -106,6 +108,16 @@ export default {
 	//     };
 	// },
 	computed: {
+		...mapGetters({
+			noDiscountDates: 'noDiscountDates',
+		}),
+		isDateSeasonalDate() {
+			const isDateAvailable = this.noDiscountDates.filter(d => {
+				return moment(this.bookingDate).format('DD/MM/YYYY') === moment(d).format('DD/MM/YYYY');
+			});
+
+			return isDateAvailable.length;
+		},
 		specialPrices() {
 			return this.specials
 				.map(special => {
@@ -202,6 +214,7 @@ export default {
 	},
 	methods: {
 		optionPrice(option){
+			if(this.isDateSeasonalDate) return option.seasonal_price;
 			if(this.optionType === 'weekend') return option.weekend_price * option.quantity;
 			return option.weekday_price * option.quantity
 		},

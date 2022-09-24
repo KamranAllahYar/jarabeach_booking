@@ -1,14 +1,16 @@
 <template>
 	<div>
 		<div class="max-w-6xl px-4 mx-auto space-y-4 text-center md:space-y-0 md:flex md:px-0 md:space-x-6">
+			<!-- <div>{{dayPassOptions}}</div> -->
 			<div class="flex-1 border divide-y">
 				<div v-for="option in selectedDayPassOptions" :key="option.id" class="mx-auto">
 					<div class="flex items-center justify-between px-6 py-4 space-x-8">
 						<div class="flex flex-col items-start">
 							<div>{{ option.name }}</div>
 							<div>{{ currency(optionPrice(option)) }}</div>
+							<!-- <div>{{option.quantity}}</div> -->
 						</div>
-						<div class="flex h-10 item-center"> 
+						<div class="flex h-10 item-center">
 							<div class="flex items-center h-full px-4 font-semibold border cursor-pointer text-md" @click="decreaseQuantity(option)">-</div>
 							<input type="text" class="w-12 h-full" v-model="option.quantity" />
 							<div class="flex items-center h-full px-4 font-semibold border cursor-pointer text-md" @click="increaseQuantity(option)">+</div>
@@ -16,7 +18,7 @@
 					</div>
 				</div>
 			</div>
-			<ReservationBox showDiscount/>
+			<ReservationBox showDiscount />
 		</div>
 		<div class="w-32 mx-auto mt-6 space-x-3" v-if="canGoToNext">
 			<!-- <MainButton outline>Back</MainButton> -->
@@ -29,16 +31,33 @@
 </template>
 
 <script>
-import ReservationBox from '@/components/daypass/DayPassReservationBox.vue'
+import ReservationBox from '@/components/daypass/DayPassReservationBox.vue';
+import { mapGetters } from 'vuex';
+import moment from 'moment';
+
 export default {
 	layout: 'day-pass',
-	components: {ReservationBox},
+
+	components: { ReservationBox },
 	data() {
 		return {
 			selectedDayPassOptions: [],
 		};
 	},
 	computed: {
+		...mapGetters({
+			noDiscountDates: 'noDiscountDates',
+		}),
+		isDateSeasonalDate() {
+			const isDateAvailable = this.noDiscountDates.filter(d => {
+				return moment(this.bookingDate).format('DD/MM/YYYY') === moment(d).format('DD/MM/YYYY');
+			});
+
+			return isDateAvailable.length;
+		},
+		bookingDate() {
+			return this.$store.getters['day_pass/bookingDate'];
+		},
 		dayPassOptions() {
 			return this.$store.state.day_pass.day_pass_options;
 		},
@@ -55,19 +74,20 @@ export default {
 	},
 	methods: {
 		optionPrice(option) {
+			if(this.isDateSeasonalDate) return option.seasonal_price;
 			if (this.selectedOptionType === 'weekend') return option.weekend_price;
 			return option.weekday_price;
 		},
 		goToNext() {
 			// if (!this.canGoToNext) return;
 			let optionQuantitySelected = 0;
-			this.selectedDayPassOptions.forEach(option => optionQuantitySelected += option.quantity)
-			if(optionQuantitySelected < this.guestsNumber){
-				this.$toast.info('Quantity selected is less than guests selected!')
+			this.selectedDayPassOptions.forEach(option => (optionQuantitySelected += option.quantity));
+			if (optionQuantitySelected < this.guestsNumber) {
+				this.$toast.info('Quantity selected is less than guests selected!');
 				return;
 			}
-			if(optionQuantitySelected > this.guestsNumber){
-				this.$toast.info('Quantity selected is more than guests selected!')
+			if (optionQuantitySelected > this.guestsNumber) {
+				this.$toast.info('Quantity selected is more than guests selected!');
 				return;
 			}
 			this.updateStores();
@@ -75,7 +95,8 @@ export default {
 			this.$router.push({ path: '/day-pass-payment' });
 		},
 		currency(num) {
-			return '₦' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			console.log(num);
+			return '₦' + num?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 		},
 		increaseQuantity(option) {
 			option.quantity++;
@@ -97,8 +118,11 @@ export default {
 			return;
 		}
 		const newDayPassOptions = this.dayPassOptions.map(option => {
-			return { ...option, quantity: 0 };
+			console.log(option);
+			return { ...option, seasonal_price: option.seasonal_price, quantity: 0 };
 		});
+
+		// console.log(this.dayPassOptions);
 		this.selectedOptionType = this.$store.state.day_pass.option_type;
 		this.selectedDayPassOptions = newDayPassOptions;
 	},

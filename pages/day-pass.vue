@@ -3,7 +3,7 @@
 		<div class="mb-4 text-lg font-bold text-center">Please select the number of guests you want to book for (infants and toddlers included)</div>
 		<select name="guest" id="guest" v-model="noOfGuests" class="border rounded-md outline-none focus:outline-none" style="box-shadow: none">
 			<option value="0">Guests</option>
-			<option v-for="num in 42" :value="num" :key="num">
+			<option v-for="num in 50" :value="num" :key="num">
 				{{ num }}
 			</option>
 		</select>
@@ -114,6 +114,10 @@ export default {
 	},
 	mounted(){
 		this.updateFromStore();
+		if(this.$store.state.extras.extras_booking !== 'day-pass'){
+			this.$store.commit("extras/RESET_STORE");
+			this.$store.commit('extras/UPDATE_EXTRAS_BOOKING_TYPE', 'day-pass')
+		}
 	}
 };
 </script>
