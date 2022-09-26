@@ -1,11 +1,11 @@
 <template>
 	<div class="max-w-4xl px-4 mx-auto md:px-0">
-		<div class="items-center justify-between space-y-2 md:flex md:space-y-0">
+		<div class="items-center justify-between mb-4 space-y-2 md:flex md:space-y-0">
 			<div class="font-bold text-md md:text-lg">Are you booking on a weekday (MON-THUR), weekend (FRI-SUN) or Seasonal?</div>
 			<div>More about seasonal <a href="https://www.jarabeachresort.com/day-pass" class="font-bold" target="_blank">here</a></div>
 		</div>
-		<div class="flex flex-col items-start justify-between mt-2 md:mt-0 md:items-center md:flex-row">
-			<div class="mt-4 mb-2 font-semibold">Select your option</div>
+		<div class="flex flex-col items-start justify-between md:mt-0 md:items-center md:flex-row">
+			<div class="mb-2 font-semibold md:hidden">Select your option</div>
 			<select name="option_type" id="option_type" v-model="option_type" class="order-last block border rounded-md outline-none md:order-first focus:outline-none" style="box-shadow: none">
 				<option value="weekend">Weekend</option>
 				<option value="weekday">Weekday</option>
