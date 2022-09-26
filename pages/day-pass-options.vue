@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="max-w-6xl px-4 mx-auto space-y-4 text-center md:space-y-0 md:flex md:px-0 md:space-x-6">
-			<!-- <div>{{dayPassOptions}}</div> -->
+			<!-- <div>{{isDateSeasonalDate}}</div> -->
 			<div class="flex-1 border divide-y">
 				<div v-for="option in selectedDayPassOptions" :key="option.id" class="mx-auto">
 					<div class="flex items-center justify-between px-6 py-4 space-x-8">
