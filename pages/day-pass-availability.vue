@@ -85,7 +85,7 @@ export default {
 					isSeasonalDate = true;
 				}
 			})
-			if(!isSeasonalDate){
+			if(this.option_type === 'seasonal' && !isSeasonalDate){
 				this.$toast.error('That is not a seasonal date, please see seasonal dates in the dropdown!', { duration: 5000 });
 				return;
 			}
