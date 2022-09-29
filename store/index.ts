@@ -724,7 +724,6 @@ export const actions: ActionTree<RootState, RootState> = {
 			commit('UPDATE_NO_DISCOUNT_DATES', res.data.data);
 		});
 	},
-
 	async confirmGuest({}, email: string) {
 		return await this.$axios.post('confirm/guest', { email }).then(res => {
 			console.log(res);

@@ -79,6 +79,16 @@ export default {
 				this.$toast.info('You cant select a day in the past!', { duration: 5000 });
 				return;
 			}
+			let isBookingDateBlocked = false;
+			this.noDayPassBookingDates.forEach(d => {
+				if(moment(d).format('DD/MM/YYYY') === moment(day.id).format('DD/MM/YYYY')){
+					isBookingDateBlocked = true;
+				}
+			})
+			if(isBookingDateBlocked) {
+				this.$toast.error('Im sorry the day selected has been fully occupied!', { duration: 5000 });
+				return;
+			}
 			const dayOfTheWeek = new Date(day.id).getDay();
 			console.log(dayOfTheWeek);
 			if (this.option_type === 'weekday' && (dayOfTheWeek > 4 || dayOfTheWeek === 0)) {
@@ -136,6 +146,7 @@ export default {
 	computed: {
 		...mapGetters({
 			noDiscountDates: 'noDiscountDates',
+			noDayPassBookingDates: 'day_pass/getNoDayPassBookingDates',
 		}),
 		sortedNoDiscountDays(){
 			return this.noDiscountDates.sort((a, b) => a - b)

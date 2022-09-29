@@ -41,6 +41,7 @@ export default {
 		// this.$store.dispatch("loadRooms");
 		// this.$store.dispatch("loadPolicies");
 		this.$store.dispatch('loadNoDiscountDates');
+		this.$store.dispatch('day_pass/loadNoDayPassBookingDates');
 		this.$store.dispatch('day_pass/getDayPassOptions');
 
 		this.$store.dispatch('extras/getSpecialDrinks');

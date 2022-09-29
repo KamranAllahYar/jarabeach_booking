@@ -45,6 +45,7 @@ export const state = () => ({
 	fullPageLoader: false as boolean,
 
 	noDiscountDates: [] as string[],
+	noDayPassBookingDates: [] as string[],
 });
 
 export type RootState = ReturnType<typeof state>;
@@ -52,6 +53,7 @@ export type RootState = ReturnType<typeof state>;
 export const getters: GetterTree<RootState, RootState> = {
 	noGuests: (state: RootState) => state.guests_no,
 	noDiscountDates: (state: RootState) => state.noDiscountDates,
+	getNoDayPassBookingDates: (state: RootState) => state.noDayPassBookingDates,
 
 	getSpecials: (state: RootState) => state.specials,
 	getBooking: (state: RootState) => state.booking,
@@ -265,6 +267,10 @@ export const mutations: MutationTree<RootState> = {
 	UPDATE_NO_DISCOUNT_DATES: (state, dates: string[]) => {
 		state.noDiscountDates = dates;
 	},
+	UPDATE_NO_DAY_PASS_BOOKING_DATES: (state, dates: string[]) => {
+		state.noDayPassBookingDates = dates;
+		console.log(state.noDayPassBookingDates)
+	},
 
 	RESET_STORE: state => {
 		state.discount = null as any;
@@ -297,6 +303,12 @@ export const actions: ActionTree<RootState, RootState> = {
 		this.$axios.get('/no-discount-dates').then(res => {
 			// console.log(res.data.data);
 			commit('UPDATE_NO_DISCOUNT_DATES', res.data.data);
+		});
+	},
+	loadNoDayPassBookingDates({ commit }) {
+		this.$axios.get('/no-day-pass-booking-dates').then(res => {
+			commit('UPDATE_NO_DAY_PASS_BOOKING_DATES', res.data.data);
+			// console.log(res.data.data);
 		});
 	},
 	getDayPassOptions({ commit }) {
