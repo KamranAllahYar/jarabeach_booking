@@ -86,7 +86,7 @@ export default {
 				}
 			})
 			if(isBookingDateBlocked) {
-				this.$toast.error('Im sorry the day selected has been fully occupied!', { duration: 5000 });
+				this.$toast.error('There are no Day Pass tickets available on this date. Apologies for any inconvenience caused.', { duration: 5000 });
 				return;
 			}
 			const dayOfTheWeek = new Date(day.id).getDay();
