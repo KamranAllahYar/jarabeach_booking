@@ -137,6 +137,10 @@ export default {
 			return ['Morning', 'Afternoon'];
 		},
 		next() {
+			if(!this.selectedMassages.length){
+				this.$toast.error('You have not selected any massage option, remember to press the add button!')
+				return;
+			}
 			this.$store.commit('extras/SET_SELECTED_MASSAGES', {
 				massages: this.selectedMassages,
 				date: this.dates[0],
@@ -198,11 +202,11 @@ export default {
 	},
 	created() {
 		this.getNoMassageDates();
-		this.newMassage = {
-			id: this.massages[0].id,
-			date: this.dates[0],
-			time: 'Afternoon',
-		};
+		// this.newMassage = {
+		// 	id: this.massages[0].id,
+		// 	date: this.dates[0],
+		// 	time: 'Afternoon',
+		// };
 	},
 	mounted() {
 		this.$store.dispatch('extras/getSpecialDrinks');
@@ -211,18 +215,18 @@ export default {
 			this.selectedMassages = this.$store.state.extras.selectedMassages.map(x => x);
 		}
 
-		if (this.massages.length > 0 && this.selectedMassages.length <= 0) {
-			let firstDate = this.dates.length > 0 ? this.dates[0] : null;
-			if (firstDate) {
-				if (!this.noDates.includes(firstDate)) {
-					this.selectedMassages.push({
-						id: this.massages[0].id,
-						date: firstDate,
-						time: 'Afternoon',
-					});
-				}
-			}
-		}
+		// if (this.massages.length > 0 && this.selectedMassages.length <= 0) {
+		// 	let firstDate = this.dates.length > 0 ? this.dates[0] : null;
+		// 	if (firstDate) {
+		// 		if (!this.noDates.includes(firstDate)) {
+		// 			this.selectedMassages.push({
+		// 				id: this.massages[0].id,
+		// 				date: firstDate,
+		// 				time: 'Afternoon',
+		// 			});
+		// 		}
+		// 	}
+		// }
 
 		if (this.dates.length > 0) {
 			this.selectedDate = this.dates[0];
