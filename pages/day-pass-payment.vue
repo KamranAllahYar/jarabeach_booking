@@ -218,7 +218,7 @@ export default {
 			return '₦' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 		},
 		gotoBack() {
-			this.$router.push('/day-pass-options');
+			this.$router.push('/day-pass-extras');
 		},
 		removeRoom(room) {
 			console.log(room);

@@ -387,10 +387,10 @@ export const actions: ActionTree<RootState, RootState> = {
 		const extraState = rootState.extras;
 		// console.log(extraState, rootGetters);
 
-		// const allExtras = (rootGetters['extras/allSelected'] as any[]).map(s => s.type);
-		// let specialsToSend = {
-		// 	extras: allExtras,
-		// } as any;
+		const allExtras = (rootGetters['extras/allSelected'] as any[]).map(s => s.type);
+		let specialsToSend = {
+			extras: allExtras,
+		} as any;
 
 		let prices = {
 			optionsPrices: getters.optionPrices,
@@ -398,84 +398,87 @@ export const actions: ActionTree<RootState, RootState> = {
 			tax: getters.taxTotal,
 		} as any;
 
-		// if (allExtras.includes('cakes')) {
-		// 	specialsToSend['cakes'] = {
-		// 		date: extraState.dateCake,
-		// 		options: extraState.selectedCakes,
-		// 		message: extraState.cakeMessage,
-		// 		gender: extraState.cakeGender,
-		// 	};
-		// 	prices['cakes'] = rootGetters['extras/cakesPrice'];
-		// }
-		// if (allExtras.includes('photoshoot')) {
-		// 	specialsToSend['photoshoot'] = {
-		// 		date: extraState.datePhotoshoot,
-		// 		quantity: extraState.selectedPhotoshoot,
-		// 	};
-		// 	prices['photoshoot'] = rootGetters['extras/photoshootPrice'];
-		// }
-		// if (allExtras.includes('unforgettableExperience')) {
-		// 	specialsToSend['unforgettableExperience'] = {
-		// 		picnicDate: extraState.decorationPicnicDate,
-		// 		paintingDate: extraState.decorationPaintingDate,
-		// 		paintingQty: extraState.decorationPaintingQty,
-		// 		breakfastDate: extraState.decorationBreakfastDate,
-		// 		breakfastTime: extraState.decorationBreakfastTime,
-		// 		options: extraState.selectedExperiences.map((sd: any) => sd.id),
-		// 	};
-		// 	prices['unforgettableExperience'] = rootGetters['extras/experiencePrice'];
-		// }
-		// if (allExtras.includes('drinks')) {
-		// 	specialsToSend['drinks'] = {
-		// 		date: extraState.dateDrink,
-		// 		options: extraState.selectedDrinks,
-		// 	};
-		// 	prices['drinks'] = rootGetters['extras/drinksPrice'];
-		// }
-		// if (allExtras.includes('massages')) {
-		// 	specialsToSend['massages'] = {
-		// 		date: extraState.dateMassages,
-		// 		options: extraState.selectedMassages,
-		// 	};
-		// 	prices['massages'] = rootGetters['extras/massagesPrice'];
-		// }
-		// if (allExtras.includes('bikes')) {
-		// 	specialsToSend['bikes'] = {
-		// 		date: extraState.dateBikes,
-		// 		options: extraState.selectedBikes,
-		// 	};
-		// 	prices['bikes'] = rootGetters['extras/bikesPrice'];
-		// }
-		// if (allExtras.includes('quadbike')) {
-		// 	specialsToSend['quadbike'] = {
-		// 		date: extraState.dateQuadbike,
-		// 		options: extraState.selectedQuadbike,
-		// 		quantity: extraState.selectedQuadbikeQty,
-		// 	};
-		// 	prices['quadbike'] = rootGetters['extras/quadbikePrice'];
-		// }
-		// if (allExtras.includes('massage')) {
-		// 	specialsToSend['massage'] = {
-		// 		date: extraState.dateMassage,
-		// 		options: extraState.selectedMassage,
-		// 	};
-		// 	prices['massage'] = rootGetters['extras/massagePrice'];
-		// }
-		// if (allExtras.includes('newmassage')) {
-		// 	specialsToSend['newmassage'] = {
-		// 		date: extraState.dateNewmassage,
-		// 		options: extraState.selectedNewmassage,
-		// 		time: extraState.timeNewmassage,
-		// 	};
-		// 	prices['newmassage'] = rootGetters['extras/newmassagePrice'];
-		// }
-		// if (allExtras.includes('lookout')) {
-		// 	specialsToSend['lookout'] = {
-		// 		date: extraState.dateLookout,
-		// 		packages: extraState.selectedLookouts,
-		// 	};
-		// 	prices['lookout'] = rootGetters['extras/lookoutPrice'];
-		// }
+		if (allExtras.includes('cakes')) {
+			specialsToSend['cakes'] = {
+				date: extraState.dateCake,
+				options: extraState.selectedCakes,
+				message: extraState.cakeMessage,
+				gender: extraState.cakeGender,
+			};
+			prices['cakes'] = rootGetters['extras/cakesPrice'];
+		}
+		if (allExtras.includes('photoshoot')) {
+			specialsToSend['photoshoot'] = {
+				date: extraState.datePhotoshoot,
+				quantity: extraState.selectedPhotoshoot,
+			};
+			prices['photoshoot'] = rootGetters['extras/photoshootPrice'];
+		}
+		if (allExtras.includes('unforgettableExperience')) {
+			specialsToSend['unforgettableExperience'] = {
+				picnicDate: extraState.decorationPicnicDate,
+				paintingDate: extraState.decorationPaintingDate,
+				paintingQty: extraState.decorationPaintingQty,
+				breakfastDate: extraState.decorationBreakfastDate,
+				breakfastTime: extraState.decorationBreakfastTime,
+				options: extraState.selectedExperiences.map((sd: any) => sd.id),
+			};
+			prices['unforgettableExperience'] = rootGetters['extras/experiencePrice'];
+		}
+		if (allExtras.includes('drinks')) {
+			specialsToSend['drinks'] = {
+				date: extraState.dateDrink,
+				options: extraState.selectedDrinks,
+			};
+			prices['drinks'] = rootGetters['extras/drinksPrice'];
+		}
+		if (allExtras.includes('massages')) {
+			specialsToSend['massages'] = {
+				date: extraState.dateMassages,
+				options: extraState.selectedMassages,
+			};
+			prices['massages'] = rootGetters['extras/massagesPrice'];
+		}
+		if (allExtras.includes('bikes')) {
+			specialsToSend['bikes'] = {
+				date: extraState.dateBikes,
+				options: extraState.selectedBikes,
+			};
+			prices['bikes'] = rootGetters['extras/bikesPrice'];
+		}
+		if (allExtras.includes('quadbike')) {
+			specialsToSend['quadbike'] = {
+				date: extraState.dateQuadbike,
+				options: extraState.selectedQuadbike,
+				quantity: extraState.selectedQuadbikeQty,
+			};
+			prices['quadbike'] = rootGetters['extras/quadbikePrice'];
+		}
+		if (allExtras.includes('massage')) {
+			specialsToSend['massage'] = {
+				date: extraState.dateMassage,
+				options: extraState.selectedMassage,
+			};
+			prices['massage'] = rootGetters['extras/massagePrice'];
+		}
+		if (allExtras.includes('newmassage')) {
+			specialsToSend['newmassage'] = {
+				date: extraState.dateNewmassage,
+				options: extraState.selectedNewmassage,
+				time: extraState.timeNewmassage,
+			};
+			prices['newmassage'] = rootGetters['extras/newmassagePrice'];
+		}
+		if (allExtras.includes('lookout')) {
+			specialsToSend['lookout'] = {
+				date: extraState.dateLookout,
+				packages: extraState.selectedLookouts,
+			};
+			prices['lookout'] = rootGetters['extras/lookoutPrice'];
+		}
+
+		console.log(specialsToSend);
+		return;
 
 		prices['Sub Total'] = getters.subTotal;
 		// prices["Total"] = rootGetters.total;
@@ -529,7 +532,7 @@ export const actions: ActionTree<RootState, RootState> = {
 			if (res.data.success) {
 				const newBooking = res.data.data.booking;
 				console.log(newBooking);
-				// const sRes = await this.$axios.post(`/book-specials/${newBooking.id}`, specialsToSend);
+				const sRes = await this.$axios.post(`/book-specials/${newBooking.id}`, specialsToSend);
 				this.app.$toast.success(res.data.message);
 				state.done_data.booking = newBooking;
 			} else {
