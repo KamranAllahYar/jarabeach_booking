@@ -52,7 +52,7 @@
         </div>
       </div> -->
 
-      <div class="p-4 mt-6 bg-gray-100 rounded-lg">
+      <!-- <div class="p-4 mt-6 bg-gray-100 rounded-lg">
         <label class="font-semibold cursor-pointer">
           <input type="checkbox" :value="picnicSelection" v-model="selectedExperiences" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400" />
           {{ realDecoName(picnicSelection.name) }} -
@@ -76,7 +76,7 @@
             <template v-else>Not available during your visit</template>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="p-4 mt-6 bg-gray-100 rounded-lg">
         <label class="font-semibold cursor-pointer">

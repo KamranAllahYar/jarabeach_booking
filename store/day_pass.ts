@@ -477,9 +477,6 @@ export const actions: ActionTree<RootState, RootState> = {
 			prices['lookout'] = rootGetters['extras/lookoutPrice'];
 		}
 
-		console.log(specialsToSend);
-		return;
-
 		prices['Sub Total'] = getters.subTotal;
 		// prices["Total"] = rootGetters.total;
 
@@ -532,7 +529,7 @@ export const actions: ActionTree<RootState, RootState> = {
 			if (res.data.success) {
 				const newBooking = res.data.data.booking;
 				console.log(newBooking);
-				const sRes = await this.$axios.post(`/book-specials/${newBooking.id}`, specialsToSend);
+				const sRes = await this.$axios.post(`/day-pass-book-specials/${newBooking.id}`, specialsToSend);
 				this.app.$toast.success(res.data.message);
 				state.done_data.booking = newBooking;
 			} else {
