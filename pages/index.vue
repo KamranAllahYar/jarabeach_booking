@@ -19,9 +19,13 @@ export default class Index extends Vue {
         this.$toast.show("Hello world");
     }
 
-    // mounted() {
-    //     this.$router.push("/guests");
-    // }
+    mounted() {
+        if(this.$route.query.type === 'day_pass'){
+            this.$router.push("/day-pass");
+            return;
+        }
+        this.$router.push("/guests");
+    }
 
     // middleware({ redirect }: any) {
     //     redirect("/guests");
