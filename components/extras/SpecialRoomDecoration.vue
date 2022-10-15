@@ -60,7 +60,7 @@
               </div>
 
               <div class="md:ml-8" v-if="showPetalsNote(deco)">
-                <input type="text" :key="deco.id + 'pt'" placeholder="What to write. 10 characters max" maxlength="10" v-model="myPetalsNote" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
+                <input type="text" :key="deco.id + 'pt'" placeholder="What to write. 6 characters max" maxlength="6" v-model="myPetalsNote" class="w-full py-1 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4" />
               </div>
 
               <div class="md:ml-8" v-if="showColorOptions(deco)">
