@@ -92,7 +92,7 @@ export default {
 			}
 			this.updateStores();
 			this.$store.commit('day_pass/COMPLETE_OPTIONS');
-			this.$router.push({ path: '/day-pass-payment' });
+			this.$router.push({ path: '/day-pass-extras' });
 		},
 		currency(num) {
 			console.log(num);

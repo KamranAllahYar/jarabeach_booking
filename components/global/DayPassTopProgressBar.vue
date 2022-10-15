@@ -9,11 +9,11 @@
         <ProgressNav to="/day-pass-options" :done="$store.state.day_pass.options_done">
             3. <span class="hidden md:inline-block"> Options</span>
         </ProgressNav>
-        <!-- <ProgressNav to="/day-pass-extras" :done="$store.state.day_pass.extras_done">
+        <ProgressNav to="/day-pass-extras" :done="$store.state.day_pass.extras_done">
             4. <span class="hidden md:inline-block"> Extras</span>
-        </ProgressNav> -->
+        </ProgressNav>
         <ProgressNav last to="/day-pass-summary">
-            4. <span class="hidden md:inline-block"> Payment</span>
+            5. <span class="hidden md:inline-block"> Payment</span>
         </ProgressNav>
     </div>
 </template>
