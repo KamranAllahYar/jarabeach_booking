@@ -7,6 +7,7 @@
 					<div class="flex items-center justify-between px-6 py-4 space-x-8">
 						<div class="flex flex-col items-start">
 							<div>{{ option.name }}</div>
+							<div v-if="option.description" class="my-2 text-sm text-left">{{option.description}}</div>
 							<div>{{ currency(optionPrice(option)) }}</div>
 							<!-- <div>{{option.quantity}}</div> -->
 						</div>
