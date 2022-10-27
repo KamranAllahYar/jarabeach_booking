@@ -14,7 +14,8 @@ export const state = () => ({
     { type: 'photoshoot', name: 'Photoshoot (third-party photographer access)', available: true, range: '100,000' },
     // { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
     { type: 'bikes', name: 'Go-Kart and Horse Riding', available: true, range: '15,000' },
-    { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' }
+    // { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' },
+    { type: 'dayPass', name: 'Day Pass', available: true, range: '30,000' }
     // { type: 'massage', name: 'Massage', available: false, range: '30,000' },
   ] as { name: string, type: string, range: string, available: boolean }[],
   selected: [] as { name: string, type: string, range: string, available: boolean }[],
@@ -65,8 +66,11 @@ export const state = () => ({
   dateStaff: [] as String[] | null,
 
   drinkOptions: [] as any[],
+  dayPassOptions: [] as any[],
   selectedDrinks: [] as any[],
+  selectedDayPassOptions: [] as any[],
   dateDrink: null as String | null,
+  dayPassDate: null as String | null,
 
   newmassageOptions: [] as any[],
   selectedMassages: [] as any[],
@@ -92,6 +96,7 @@ export const getters: GetterTree<ExtraState, RootState> = {
   allSpecials: (state: ExtraState) => state.specials,
   allSelected: (state: ExtraState) => state.selected,
   allDrinks: (state: ExtraState) => state.drinkOptions,
+  allDayPass: (state: ExtraState) => state.dayPassOptions,
   allCakes: (state: ExtraState) => state.cakeOptions,
   allDecorations: (state: ExtraState) => state.decorationOptions,
   allLookouts: (state: ExtraState) => state.lookoutOptions,
@@ -492,6 +497,11 @@ export const mutations: MutationTree<ExtraState> = {
     state.dateDrink = payload.date
   },
 
+  SET_SELECTED_DAY_PASS: (state, payload) => {
+    state.selectedDayPassOptions = payload.daypass
+    state.dayPassDate = payload.date
+  },
+
   LOAD_NEWMASSAGE_OPTIONS: (state, newmassages) => {
     state.newmassageOptions = newmassages
   },
@@ -576,6 +586,7 @@ export const mutations: MutationTree<ExtraState> = {
     state.dateStaff = [];
 
     state.drinkOptions = [] as any[];
+    state.dayPassOptions = [] as any[];
     state.selectedDrinks = [] as any[];
     state.dateDrink = null;
 
@@ -753,6 +764,9 @@ export const mutations: MutationTree<ExtraState> = {
       state.selectedNewmassage = oldNewmassage.option_id;
     }
   },
+  LOAD_DAY_PASS_OPTIONS: (state, options) => {
+		state.dayPassOptions = options;
+	},
   TRANSFORM_LOOKOUTS: (state, payload) => {
     const oldDates = payload.dates;
     const oldLookout = payload.lookouts;
@@ -789,6 +803,12 @@ export const actions: ActionTree<ExtraState, RootState> = {
       commit("LOAD_DRINK_OPTIONS", res.data.data);
     });
   },
+
+  getDayPassOptions({ commit }) {
+		this.$axios.get('/day-pass-options').then(res => {
+			commit('LOAD_DAY_PASS_OPTIONS', res.data.data);
+		});
+	},
 
   getSpecialCakes({ commit }) {
     this.$axios.get("/cake-options").then((res) => {

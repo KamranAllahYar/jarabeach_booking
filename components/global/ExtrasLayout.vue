@@ -24,6 +24,8 @@
 
         <SpecialDomesticStaff v-else-if="currentSpecial == 'domesticStaff'" @next="gotoNext()" @prev="gotoPrev()" />
 
+        <SpecialDayPass v-else-if="currentSpecial == 'dayPass'" @next="gotoNext()" @prev="gotoPrev()" />
+
         <button @click="removeExtra()" class="absolute px-2 py-1 text-sm text-red-500 capitalize transition-colors rounded-sm top-2 right-2 hover:bg-red-500 hover:text-white">remove extra</button>
     </div>
 </template>
