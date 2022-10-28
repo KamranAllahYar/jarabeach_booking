@@ -61,7 +61,6 @@
           </div>-->
 				</div>
 			</div>
-			<div>{{specialPrices}}</div>
 			<pre></pre>
 			<template v-for="extra in specialPrices">
 				<div class="flex items-center justify-between px-3 my-3" :key="extra.id">
