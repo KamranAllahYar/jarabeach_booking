@@ -85,7 +85,7 @@ export default {
     },
     watch: {
         selectedDate(_, oldVal) {
-            console.log(oldVal);
+            //console.log(oldVal);
             // if (oldVal != null) {
             //     if (!this.$store.state.editMode) {
             //         this.selectedNewmassage = null;
@@ -142,14 +142,13 @@ export default {
             // }
 
             // if (this.currentAvailableMassages) {
-            //     // console.log(this.currentAvailableMassages);
+            //     // //console.log(this.currentAvailableMassages);
             //     return this.currentAvailableMassages.includes(slot_id);
             // }
 
             // return false;
         },
         next() {
-            console.log("NEXT");
             this.$store.commit("extras/SET_SELECTED_NEWMASSAGE", {
                 newmassage: this.selectedNewmassage,
                 date: this.selectedDate,
@@ -171,7 +170,6 @@ export default {
         checkOptions() {
             let oldBookingId = null;
             if (this.$store.state.editMode) {
-                console.log("in edit mode");
                 if (this.$store.state.editBooking) {
                     oldBookingId = this.$store.state.editBooking.id;
                 }
@@ -183,7 +181,6 @@ export default {
                     oldBookingId: oldBookingId,
                 })
                 .then((res) => {
-                    console.log(res.data.data);
                     this.availableMassages = res.data.data;
                 });
         },

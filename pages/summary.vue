@@ -208,7 +208,7 @@ export default {
 			const today = new Date();
 			const todayHrs = today.getHours();
 
-			console.log(todayHrs);
+			//console.log(todayHrs);
 			if (todayHrs >= 20 || todayHrs < 8) return false;
 
 			return true;
@@ -257,7 +257,7 @@ export default {
 			this.holdDisclaimer = v;
 		},
 		removeExtra(extra) {
-			console.log(extra);
+			//console.log(extra);
 			const ex = extra.type;
 			this.$store.commit('extras/REMOVE_EXTRA', ex);
 			this.createTransaction();
@@ -265,13 +265,13 @@ export default {
 		async createTransaction() {
 			this.loading = true;
 			const trans_ref = await this.$store.dispatch('createTransaction');
-			console.log(trans_ref);
+			//console.log(trans_ref);
 
 			this.trans_ref = trans_ref;
 			this.loading = false;
 		},
 		async completeBooking(paystack_res) {
-			console.log(paystack_res);
+			//console.log(paystack_res);
 
 			if (paystack_res.status == 'success') {
 				const bookingFrom = localStorage.getItem('bookingFrom');
@@ -281,9 +281,9 @@ export default {
 					method: 'Paystack',
 					booking_from: bookingFrom
 				});
-				console.log(res);
+				//console.log(res);
 				if (res) {
-					console.log(res);
+					//console.log(res);
 					this.$router.push('/done');
 					this.$store.commit('RESET_STORE');
 					this.$store.commit('extras/RESET_STORE');
@@ -300,9 +300,9 @@ export default {
 				method: 'ZeroBalance',
 			});
 
-			console.log(res);
+			//console.log(res);
 			if (res) {
-				console.log(res);
+				//console.log(res);
 				this.$router.push('/done');
 				this.$store.commit('RESET_STORE');
 				this.$store.commit('extras/RESET_STORE');
@@ -320,7 +320,7 @@ export default {
 			});
 
 			if (res) {
-				console.log(res);
+				//console.log(res);
 				this.$router.push('/done');
 				this.$store.commit('RESET_STORE');
 				this.$store.commit('extras/RESET_STORE');
@@ -328,7 +328,7 @@ export default {
 			this.loading = false;
 		},
 		async bookOnHoldBooking() {
-			console.log('Clickling book on hold');
+			//console.log('Clickling book on hold');
 
 			if (this.loading) return;
 
@@ -338,9 +338,9 @@ export default {
 				method_ref: 'offline booking',
 				method: 'Offline',
 			});
-			console.log(res);
+			//console.log(res);
 			if (res) {
-				console.log(res);
+				//console.log(res);
 				this.$router.push('/done_hold');
 				this.$store.commit('RESET_STORE');
 				this.$store.commit('extras/RESET_STORE');
@@ -354,7 +354,7 @@ export default {
 			this.$router.push('/policies');
 		},
 		removeRoom(room) {
-			console.log(room);
+			//console.log(room);
 			this.$store.commit('REMOVE_ROOM', room);
 		},
 		async checkDiscount() {
@@ -364,7 +364,7 @@ export default {
 				return;
 			}
 			this.loadingCode = true;
-			console.log('Check for - ' + this.code);
+			//console.log('Check for - ' + this.code);
 
 			this.$axios
 				.post(`/check-discount`, {
@@ -373,26 +373,26 @@ export default {
 					date: this.rooms[0].date,
 				})
 				.then(({ data }) => {
-					console.log(data);
+					//console.log(data);
 					if (data.success) {
 						this.$toasted.success(data.message);
 
 						const discount = Object.assign({}, data.data);
-						console.log(discount);
+						//console.log(discount);
 						this.$store.commit('UPDATE_DISCOUNT', discount);
 						this.createTransaction();
 					} else {
 						this.$toasted.error(data.message);
 					}
 
-					console.log(data);
+					//console.log(data);
 				})
 				.finally(() => {
 					this.loadingCode = false;
 				});
 		},
 		closePayment() {
-			console.log('You closed payment');
+			//console.log('You closed payment');
 			this.$toast.error('Payment was not completed');
 			this.createTransaction();
 		},

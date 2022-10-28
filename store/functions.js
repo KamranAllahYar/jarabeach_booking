@@ -100,7 +100,7 @@ const calcExtraPeoplePrice = function (getters, rooms) {
 }
 
 const calcRoomLimit = function (getters, rooms) {
-  console.log('ROoms', rooms)
+  //console.log('ROoms', rooms)
   const roomTypes = rooms.map(r => {
     return r.type;
   });
@@ -151,7 +151,7 @@ const calcRoomLimit = function (getters, rooms) {
   if (bigDiff < 0) return false;
 
   totalSmallMax += bigDiff;
-  // console.log('Small People', getters.smallPeople);
+  // //console.log('Small People', getters.smallPeople);
   return smallPeople <= totalSmallMax;
 }
 

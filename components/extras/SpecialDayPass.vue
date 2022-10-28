@@ -97,14 +97,14 @@ export default {
     methods: {
         next() {
             this.$store.commit("extras/SET_SELECTED_DAY_PASS", {
-                dayPassOption: this.selectedDayPass,
+                dayPassOptionsSelected: this.selectedDayPass,
                 date: this.dates[this.dates.length - 1],
             });
             this.$emit("next");
         },
         prev() {
             this.$store.commit("extras/SET_SELECTED_DAY_PASS", {
-                dayPassOption: this.selectedDayPass,
+                dayPassOptionsSelected: this.selectedDayPass,
                 date: this.dates[this.dates.length - 1],
             });
             this.$emit("prev");
@@ -136,7 +136,7 @@ export default {
 
                     this.noDates = noDates;
 
-                    console.log(noDates);
+                    //console.log(noDates);
                 });
         },
     },

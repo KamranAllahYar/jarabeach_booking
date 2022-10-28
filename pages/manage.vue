@@ -201,24 +201,24 @@ export default {
             );
             const totalRooms = this.totalRooms;
 
-            console.log(totalRooms);
-            console.log(hoursDiff);
+            //console.log(totalRooms);
+            //console.log(hoursDiff);
 
             if(this.adminEditMode){
                 return true;
             }
 
             if (totalRooms >= 5 && hoursDiff <= 169) {
-                console.log("5 - 169");
+                //console.log("5 - 169");
                 return false;
             } else if (totalRooms >= 3 && hoursDiff <= 96) {
-                console.log("3 - 96");
+                //console.log("3 - 96");
                 return false;
             } else if (totalRooms >= 2 && hoursDiff <= 72) {
-                console.log("2 - 72");
+                //console.log("2 - 72");
                 return false;
             } else if (totalRooms >= 1 && hoursDiff <= 48) {
-                console.log("1 - 48");
+                //console.log("1 - 48");
                 return false;
             }
 
@@ -249,7 +249,7 @@ export default {
                     } else {
                         this.$toast.error(response.message);
                     }
-                    console.log(res);
+                    //console.log(res);
                 })
                 .finally(() => {
                     this.loading = false;
@@ -294,7 +294,7 @@ export default {
         },
     },
     mounted() {
-        console.log(this.$route.query);
+        //console.log(this.$route.query);
 
         if (
             this.$route.query.ref &&

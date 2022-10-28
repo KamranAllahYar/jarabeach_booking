@@ -21,7 +21,7 @@
             required. A riding waiver / terms of usage must be signed, prior to riding. All damages are chargeable.
           </div>
 				</p>
-				<div class="font-semibold mt-4">Horse Riding</div>
+				<div class="mt-4 font-semibold">Horse Riding</div>
 				<p class="mt-2 font-light leading-relaxed text-gray-600">
 					Horse riding is available through local horse owners, along the beachfront. A riding waiver / terms of usage must be signed, prior to riding. PLEASE BE AWARE riders do so at their
 					own risk. Suitable for Adult riders [only] and passengers (under 18yrs with signed guardian).
@@ -175,7 +175,6 @@ export default {
 				var container = this.$el.querySelector('#con_scroll');
 				container.scrollTop = container.scrollHeight;
 			});
-			console.log(this.dates[0]);
 		},
 		removeMassage(ix) {
 			this.selectedBikes.splice(ix, 1);
@@ -189,7 +188,6 @@ export default {
 
 				this.noDates = noDates;
 
-				console.log(noDates);
 			});
 		},
 	},

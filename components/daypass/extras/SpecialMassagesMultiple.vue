@@ -179,7 +179,7 @@ export default {
 				var container = this.$el.querySelector('#con_scroll');
 				container.scrollTop = container.scrollHeight;
 			});
-			// console.log(this.dates[0]);
+			// //console.log(this.dates[0]);
 		},
 		removeMassage(ix) {
 			this.selectedMassages.splice(ix, 1);
@@ -193,7 +193,6 @@ export default {
 
 				this.noDates = noDates;
 
-				console.log(noDates);
 			});
 		},
 	},

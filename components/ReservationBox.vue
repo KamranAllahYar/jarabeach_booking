@@ -61,6 +61,7 @@
           </div>-->
 				</div>
 			</div>
+			<div>{{specialPrices}}</div>
 			<pre></pre>
 			<template v-for="extra in specialPrices">
 				<div class="flex items-center justify-between px-3 my-3" :key="extra.id">
@@ -190,6 +191,9 @@ export default {
 							break;
 						case 'drinks':
 							price = this.$store.getters['extras/drinksPrice'];
+							break;
+						case 'dayPass':
+							price = this.$store.getters['extras/dayPassPrices'];
 							break;
 						case 'massages':
 							price = this.$store.getters['extras/massagesPrice'];

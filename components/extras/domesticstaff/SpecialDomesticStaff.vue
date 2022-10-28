@@ -139,14 +139,14 @@ export default {
 
         this.selectedDates.forEach((date) => {
           const availData = this.availableStaffs[date];
-          console.log(date);
-          console.log(this.availableStaffs[date]);
+          //console.log(date);
+          //console.log(this.availableStaffs[date]);
           if (availData) {
             if (availData.nanny == false) nannyBool = false;
             if (availData.driver == false) driverBool = false;
           }
 
-          console.log(`nanny - ${nannyBool}, driver - ${driverBool}`);
+          //console.log(`nanny - ${nannyBool}, driver - ${driverBool}`);
         });
 
         return {
@@ -160,8 +160,8 @@ export default {
   },
   methods: {
     checkAvailableDate(date, staffTypes) {
-      console.log("recalculate");
-      console.log(staffTypes);
+      //console.log("recalculate");
+      //console.log(staffTypes);
       const availData = this.availableStaffs[date];
 
       if (availData) {
@@ -177,7 +177,7 @@ export default {
           staffTypes.includes("nanny") &&
           !staffTypes.includes("driver")
         ) {
-          console.log(date + "---nanny");
+          //console.log(date + "---nanny");
           if (availData.nanny >= 2) {
             this.selectedDates = removeItemOnce(
               this.selectedDates,
@@ -190,7 +190,7 @@ export default {
           staffTypes.includes("driver") &&
           !staffTypes.includes("nanny")
         ) {
-          console.log(date + "---driver");
+          //console.log(date + "---driver");
           if (availData.driver >= 2) {
             this.selectedDates = removeItemOnce(
               this.selectedDates,
@@ -256,7 +256,7 @@ export default {
     checkOptions() {
       let oldBookingId = null;
       if (this.$store.state.editMode) {
-        console.log("in edit mode");
+        //console.log("in edit mode");
         if (this.$store.state.editBooking) {
           oldBookingId = this.$store.state.editBooking.id;
         }
@@ -267,8 +267,8 @@ export default {
           oldBookingId: oldBookingId,
         })
         .then((res) => {
-          console.log("Staff data");
-          console.log(res.data.data);
+          //console.log("Staff data");
+          //console.log(res.data.data);
           this.availableStaffs = res.data.data;
         })
         .finally(() => {
@@ -287,7 +287,7 @@ export default {
 
         this.noDates = noDates;
 
-        console.log(noDates);
+        //console.log(noDates);
       });
     },
   },
@@ -296,10 +296,10 @@ export default {
     this.checkOptions();
   },
   updated() {
-    console.log("updated");
+    //console.log("updated");
     const dates = this.$store.getters.bookedRooms.map((r) => r.date);
     const ds = [...new Set(dates)];
-    console.log(ds);
+    //console.log(ds);
   },
   mounted() {
     if (this.$store.state.extras.selectedStaff.type.length > 0) {

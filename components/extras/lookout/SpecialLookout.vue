@@ -122,7 +122,7 @@ export default {
     checkOptions() {
       let oldBookingId = null;
       if (this.$store.state.editMode) {
-        console.log("in edit mode");
+        //console.log("in edit mode");
         if (this.$store.state.editBooking) {
           oldBookingId = this.$store.state.editBooking.id;
         }
@@ -134,7 +134,7 @@ export default {
           oldBookingId: oldBookingId,
         })
         .then((res) => {
-          console.log(res.data.data);
+          //console.log(res.data.data);
           this.availablePackages = res.data.data;
         });
     },
@@ -144,7 +144,7 @@ export default {
 
         this.noDates = noDates;
 
-        console.log(noDates);
+        //console.log(noDates);
       });
     },
   },

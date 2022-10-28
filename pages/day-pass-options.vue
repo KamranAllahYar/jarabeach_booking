@@ -96,7 +96,7 @@ export default {
 			this.$router.push({ path: '/day-pass-extras' });
 		},
 		currency(num) {
-			console.log(num);
+			//console.log(num);
 			return '₦' + num?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 		},
 		increaseQuantity(option) {
@@ -119,11 +119,11 @@ export default {
 			return;
 		}
 		const newDayPassOptions = this.dayPassOptions.map(option => {
-			console.log(option);
+			//console.log(option);
 			return { ...option, seasonal_price: option.seasonal_price, quantity: 0 };
 		});
 
-		// console.log(this.dayPassOptions);
+		// //console.log(this.dayPassOptions);
 		this.selectedOptionType = this.$store.state.day_pass.option_type;
 		this.selectedDayPassOptions = newDayPassOptions;
 	},

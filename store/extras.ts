@@ -138,6 +138,22 @@ export const getters: GetterTree<ExtraState, RootState> = {
 
     return price;
   },
+  dayPassPrices: (state: ExtraState) => {
+    if (state.selectedDayPassOptions.length <= 0) return 0;
+    let price = 0;
+
+    for (let i = 0; i < state.selectedDayPassOptions.length; i++) {
+      const sDayPass = state.selectedDayPassOptions[i];
+
+      const dayPass = state.dayPassOptions.find(dko => dko.id == sDayPass.id);
+
+      if (dayPass) {
+        price += (+dayPass.weekend_price * +sDayPass.qty);
+      }
+    }
+
+    return price;
+  },
   massagesPrice: (state: ExtraState) => {
     if (state.selectedMassages.length <= 0) return 0;
     let price = 0;
@@ -498,7 +514,7 @@ export const mutations: MutationTree<ExtraState> = {
   },
 
   SET_SELECTED_DAY_PASS: (state, payload) => {
-    state.selectedDayPassOptions = payload.daypass
+    state.selectedDayPassOptions = payload.dayPassOptionsSelected
     state.dayPassDate = payload.date
   },
 

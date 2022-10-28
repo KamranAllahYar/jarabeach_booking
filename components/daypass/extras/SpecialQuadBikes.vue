@@ -167,7 +167,6 @@ export default {
                 this.$toast.info("Please select a time slot to proceed");
                 return;
             }
-            console.log("NEXT");
             this.$store.commit("extras/SET_SELECTED_QUADBIKE", {
                 quadbike: this.selectedQuadbike,
                 quantity: this.selectedQuantity,
@@ -192,7 +191,6 @@ export default {
         checkOptions() {
             let oldBookingId = null;
             if (this.$store.state.editMode) {
-                console.log("in edit mode");
                 if (this.$store.state.editBooking) {
                     oldBookingId = this.$store.state.editBooking.id;
                 }
@@ -205,7 +203,6 @@ export default {
                     oldBookingId: oldBookingId,
                 })
                 .then((res) => {
-                    console.log(res.data.data);
                     this.availableQuadbikes = res.data.data;
                 });
         },

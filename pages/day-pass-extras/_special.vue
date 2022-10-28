@@ -37,7 +37,7 @@ export default {
 	},
 	methods: {
 		removeExtra() {
-			console.log(this.special);
+			//console.log(this.special);
 			this.$store.commit('extras/REMOVE_EXTRA', this.special);
 		},
 		checkAndRemove() {
@@ -48,7 +48,7 @@ export default {
 				}
 			});
 
-			console.log('Been Removed - ' + beenRemoved);
+			//console.log('Been Removed - ' + beenRemoved);
 
 			if (beenRemoved) {
 				this.$router.push({ path: '/extras' });
@@ -65,7 +65,7 @@ export default {
 		this.checkAndRemove();
 	},
 	updated() {
-		console.log('updated');
+		//console.log('updated');
 	},
 	// middleware({ store, redirect, $toast }) {
 	// 	if (!store.state.availability_done) {

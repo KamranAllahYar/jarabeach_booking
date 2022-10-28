@@ -174,7 +174,6 @@ export default {
 				var container = this.$el.querySelector('#con_scroll');
 				container.scrollTop = container.scrollHeight;
 			});
-			console.log(this.bookingDate);
 		},
 		removeMassage(ix) {
 			this.selectedBikes.splice(ix, 1);
@@ -188,7 +187,6 @@ export default {
 
 				this.noDates = noDates;
 
-				console.log(noDates);
 			});
 		},
 	},

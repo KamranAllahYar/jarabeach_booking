@@ -213,7 +213,7 @@ export default {
                 }
             }
 
-            console.log(extras);
+            //console.log(extras);
             this.$store.commit("UPDATE_VILLA_EXTRAS", extras);
 
             this.selectedExtra = true;
@@ -224,7 +224,7 @@ export default {
             }
         },
         addToExtraRooms(roomType, extraType, index) {
-            console.log(roomType, extraType, index);
+            //console.log(roomType, extraType, index);
 
             if (roomType == "") {
                 delete this.extraRoomTypes[extraType + index];
@@ -240,7 +240,7 @@ export default {
 
             this.$nextTick(() => {
                 this.extraRoomTypes = Object.assign({}, temp);
-                console.log(this.extraRoomTypes);
+                //console.log(this.extraRoomTypes);
             });
         },
         isSameRoomsAcrossDates() {
@@ -263,7 +263,7 @@ export default {
 
                 maxRoom = totalRoomsForDate;
 
-                console.log("total room for date: " + totalRoomsForDate);
+                //console.log("total room for date: " + totalRoomsForDate);
             }
 
             return true;
@@ -328,10 +328,10 @@ export default {
             this.$router.push({ path: "/guests" });
         },
         selectRooms(rooms) {
-            console.log("Availability page");
-            console.log(rooms);
+            //console.log("Availability page");
+            //console.log(rooms);
             this.rooms = rooms.slice(0);
-            console.log(this.rooms);
+            //console.log(this.rooms);
             this.$store.commit("UPDATE_ROOMS", rooms);
         },
         closeTour() {
@@ -344,7 +344,7 @@ export default {
             return null;
         },
         transformExtras() {
-            console.log("TRANSFORMING_-------");
+            //console.log("TRANSFORMING_-------");
             const extras = this.$store.getters.customVillaExtras;
             for (let i = 0; i < extras.length; i++) {
                 const extra = extras[i];
