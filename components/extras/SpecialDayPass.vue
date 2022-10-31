@@ -21,7 +21,6 @@
                     <div>Departure Time:</div>
                     <div class="font-semibold">5:30 PM</div>
                 </div>
-                <div>{{isWeekend}}</div>
                 <div>
                     <div class="mt-6 font-semibold">Select Wine or Champagne or Spirit</div>
 
@@ -102,6 +101,10 @@ export default {
     },
     methods: {
         next() {
+            if(!this.selectedDayPass.length){
+                this.$toast.error('Please select a day pass option.');
+                return;
+            }
             this.$store.commit("extras/SET_SELECTED_DAY_PASS", {
                 dayPassOptionsSelected: this.selectedDayPass,
                 date: this.dates[this.dates.length - 1],
