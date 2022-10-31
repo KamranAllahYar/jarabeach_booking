@@ -21,6 +21,7 @@
                     <div>Departure Time:</div>
                     <div class="font-semibold">5:30 PM</div>
                 </div>
+                <div>{{isWeekend}}</div>
                 <div>
                     <div class="mt-6 font-semibold">Select Wine or Champagne or Spirit</div>
 
@@ -41,7 +42,7 @@
                                         stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <select v-model="sDrink.id" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
-                                    <option v-for="dayPass in dayPassOptions" :value="dayPass.id" :key="dayPass.id">{{dayPass.name}} - {{currency(dayPass.weekend_price)}}</option>
+                                    <option v-for="dayPass in dayPassOptions" :value="dayPass.id" :key="dayPass.id">{{dayPass.name}} - {{currency(isWeekend ? dayPass.weekend_price: dayPass.weekday_price)}}</option>
                                 </select>
                             </div>
                             <div class="flex items-center flex-1 pl-2 border rounded-md focus-within:ring">
@@ -84,6 +85,11 @@ export default {
     computed: {
         bookingDates() {
             return this.$store.getters.bookingDates;
+        },
+        isWeekend() {
+            var dayOfWeek = new Date(this.dates[this.dates.length - 1]).getDay();
+            var isWeekend = (dayOfWeek === 6) || (dayOfWeek  === 0);
+            return isWeekend;
         },
         dates() {
             return this.bookingDates.filter((date) => {
@@ -145,9 +151,8 @@ export default {
     },
     mounted() {
         this.$store.dispatch("extras/getDayPassOptions");
-
-        if (this.$store.state.extras.selectedDayPass) {
-            this.selectedDayPass = this.$store.state.extras.selectedDayPass.map(
+        if (this.$store.state.extras.selectedDayPassOptions) {
+            this.selectedDayPass = this.$store.state.extras.selectedDayPassOptions.map(
                 (x) => x
             );
         }

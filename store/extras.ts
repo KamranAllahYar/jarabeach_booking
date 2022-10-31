@@ -141,14 +141,16 @@ export const getters: GetterTree<ExtraState, RootState> = {
   dayPassPrices: (state: ExtraState) => {
     if (state.selectedDayPassOptions.length <= 0) return 0;
     let price = 0;
-
+    var dayOfWeek = new Date(state.dayPassDate as string).getDay();
+    var isWeekend = (dayOfWeek === 6) || (dayOfWeek  === 0);
     for (let i = 0; i < state.selectedDayPassOptions.length; i++) {
       const sDayPass = state.selectedDayPassOptions[i];
 
       const dayPass = state.dayPassOptions.find(dko => dko.id == sDayPass.id);
 
       if (dayPass) {
-        price += (+dayPass.weekend_price * +sDayPass.qty);
+        let gottenPrice = isWeekend ? (+dayPass.weekend_price * +sDayPass.qty) : (+dayPass.weekday_price * +sDayPass.qty)
+        price += gottenPrice;
       }
     }
 
@@ -558,6 +560,8 @@ export const mutations: MutationTree<ExtraState> = {
   RESET_STORE: (state) => {
     state.selected = [] as { name: string, type: string, range: string, available: boolean }[];
     state.selectedIndex = 0 as number;
+    state.dayPassDate = null;
+    state.selectedDayPassOptions = [] as any[];
 
     state.lookoutOptions = [] as any[];
     state.selectedLookouts = [] as any[];

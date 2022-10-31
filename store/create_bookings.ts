@@ -61,6 +61,14 @@ const getDataToSend = ({ state, getters, rootState, rootGetters }: any, transDat
 		};
 		prices['drinks'] = rootGetters['extras/drinksPrice'];
 	}
+	console.log(allExtras)
+	if (allExtras.includes('dayPass')) {
+		specialsToSend['dayPass'] = {
+			date: extraState.dayPassDate,
+			options: extraState.selectedDayPassOptions,
+		};
+		prices['dayPass'] = rootGetters['extras/dayPassPrices'];
+	}
 	if (allExtras.includes('massages')) {
 		specialsToSend['massages'] = {
 			date: extraState.dateMassages,

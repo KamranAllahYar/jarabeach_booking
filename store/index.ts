@@ -899,6 +899,13 @@ export const actions: ActionTree<RootState, RootState> = {
 			};
 			prices['drinks'] = rootGetters['extras/drinksPrice'];
 		}
+		if (allExtras.includes('dayPass')) {
+			specialsToSend['dayPass'] = {
+				date: extraState.dayPassDate,
+				options: extraState.selectedDayPassOptions,
+			};
+			prices['dayPass'] = rootGetters['extras/dayPassPrices'];
+		}
 		if (allExtras.includes('massages')) {
 			specialsToSend['massages'] = {
 				date: extraState.dateMassages,
