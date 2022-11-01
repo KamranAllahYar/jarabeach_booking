@@ -1,5 +1,7 @@
 import { RootState } from './index';
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
+import moment from 'moment';
+
 
 export const state = () => ({
   extras_booking: 'guests',
@@ -57,6 +59,7 @@ export const state = () => ({
   decorationPaintingQty: 1 as any,
   decorationBreakfastDate: null as any,
   decorationBreakfastTime: null as any,
+  holidayDates: [] as string[],
 
   staffPrices: [] as any[],
   selectedStaff: {
@@ -139,22 +142,29 @@ export const getters: GetterTree<ExtraState, RootState> = {
     return price;
   },
   dayPassPrices: (state: ExtraState) => {
-    if (state.selectedDayPassOptions.length <= 0) return 0;
-    let price = 0;
-    var dayOfWeek = new Date(state.dayPassDate as string).getDay();
-    var isWeekend = (dayOfWeek === 6) || (dayOfWeek  === 0);
-    for (let i = 0; i < state.selectedDayPassOptions.length; i++) {
-      const sDayPass = state.selectedDayPassOptions[i];
+    const isDateAvailable = state.holidayDates.filter(d => {
+      return moment(state.dayPassDate as string).format('DD/MM/YYYY') === moment(d).format('DD/MM/YYYY');
+    });
+  if (state.selectedDayPassOptions.length <= 0) return 0;
+  let price = 0;
+  var dayOfWeek = new Date(state.dayPassDate as string).getDay();
+  var isWeekend = (dayOfWeek === 6) || (dayOfWeek  === 0);
+  for (let i = 0; i < state.selectedDayPassOptions.length; i++) {
+    const sDayPass = state.selectedDayPassOptions[i];
 
-      const dayPass = state.dayPassOptions.find(dko => dko.id == sDayPass.id);
+    const dayPass = state.dayPassOptions.find(dko => dko.id == sDayPass.id);
 
-      if (dayPass) {
-        let gottenPrice = isWeekend ? (+dayPass.weekend_price * +sDayPass.qty) : (+dayPass.weekday_price * +sDayPass.qty)
-        price += gottenPrice;
-      }
+    if (dayPass) {
+      let gottenPrice = 0;
+      if(isDateAvailable.length) gottenPrice = (+dayPass.seasonal_price * +sDayPass.qty);
+      if(isWeekend) gottenPrice = (+dayPass.weekend_price * +sDayPass.qty);
+      if(!isWeekend && !isDateAvailable.length) gottenPrice = (+dayPass.weekday_price * +sDayPass.qty);
+      // let gottenPrice = isWeekend ? (+dayPass.weekend_price * +sDayPass.qty) : (+dayPass.weekday_price * +sDayPass.qty)
+      price += gottenPrice;
     }
+  }
 
-    return price;
+  return price;
   },
   massagesPrice: (state: ExtraState) => {
     if (state.selectedMassages.length <= 0) return 0;
@@ -363,6 +373,9 @@ export const mutations: MutationTree<ExtraState> = {
   LOAD_SELECTED: (state, payload) => {
     state.selected = payload
   },
+  UPDATE_NO_DISCOUNT_DATES: (state, dates: string[]) => {
+		state.holidayDates = dates;
+	},
   REMOVE_EXTRA: (state, extra) => {
     if (state.clashes[extra]) {
       delete state.clashes[extra];
@@ -817,6 +830,13 @@ export const actions: ActionTree<ExtraState, RootState> = {
       commit("LOAD_EXTRAS", res.data);
     });
   },
+
+  loadNoDiscountDates({ commit }) {
+		this.$axios.get('/no-discount-dates').then(res => {
+			// //console.log(res.data.data);
+			commit('UPDATE_NO_DISCOUNT_DATES', res.data.data);
+		});
+	},
 
   getSpecialDrinks({ commit }) {
     this.$axios.get("/drink-options").then((res) => {

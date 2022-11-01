@@ -41,7 +41,7 @@
                                         stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <select v-model="sDrink.id" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
-                                    <option v-for="dayPass in dayPassOptions" :value="dayPass.id" :key="dayPass.id">{{dayPass.name}} - {{currency(isWeekend ? dayPass.weekend_price: dayPass.weekday_price)}}</option>
+                                    <option v-for="dayPass in dayPassOptions" :value="dayPass.id" :key="dayPass.id">{{dayPass.name}} - {{currency(priceToShow(dayPass))}}</option>
                                 </select>
                             </div>
                             <div class="flex items-center flex-1 pl-2 border rounded-md focus-within:ring">
@@ -72,6 +72,9 @@
 <script>
 import parseISO from "date-fns/parseISO";
 import format from "date-fns/format";
+import { mapGetters } from 'vuex';
+import moment from 'moment';
+
 
 export default {
     data() {
@@ -90,6 +93,15 @@ export default {
             var isWeekend = (dayOfWeek === 6) || (dayOfWeek  === 0);
             return isWeekend;
         },
+        ...mapGetters({
+			noDiscountDates: 'noDiscountDates',
+		}),
+		isDateSeasonalDate() {
+			const isDateAvailable = this.noDiscountDates.filter(d => {
+				return moment(this.dates[this.dates.length - 1]).format('DD/MM/YYYY') === moment(d).format('DD/MM/YYYY');
+			});
+			return isDateAvailable.length;
+		},
         dates() {
             return this.bookingDates.filter((date) => {
                 return !this.noDates.includes(date);
@@ -100,6 +112,11 @@ export default {
         },
     },
     methods: {
+        priceToShow(option) {
+            if(this.isDateSeasonalDate) return option.seasonal_price;
+            if(this.isWeekend) return option.weekend_price;
+            return option.weekday_price;
+        },
         next() {
             if(!this.selectedDayPass.length){
                 this.$toast.error('Please select a day pass option.');

@@ -43,6 +43,7 @@ export default {
         this.$store.dispatch("loadRooms");
         this.$store.dispatch("loadPolicies");
         this.$store.dispatch("loadNoDiscountDates");
+        this.$store.dispatch("extras/loadNoDiscountDates");
 
         this.$store.dispatch("extras/getSpecialDrinks");
         this.$store.dispatch("extras/getSpecialCakes");
