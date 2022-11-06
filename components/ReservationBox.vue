@@ -191,6 +191,9 @@ export default {
 						case 'drinks':
 							price = this.$store.getters['extras/drinksPrice'];
 							break;
+						case 'dayPass':
+							price = this.$store.getters['extras/dayPassPrices'];
+							break;
 						case 'massages':
 							price = this.$store.getters['extras/massagesPrice'];
 							break;

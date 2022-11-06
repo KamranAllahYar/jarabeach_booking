@@ -90,7 +90,7 @@ export default {
 				return;
 			}
 			const dayOfTheWeek = new Date(day.id).getDay();
-			console.log(dayOfTheWeek);
+			//console.log(dayOfTheWeek);
 			if (this.option_type === 'weekday' && (dayOfTheWeek > 4 || dayOfTheWeek === 0)) {
 				this.$toast.info('Please select a weekday from monday - thursday', { duration: 5000 });
 				return;
@@ -99,7 +99,7 @@ export default {
 				this.$toast.info('Please select a weekend from friday - sunday', { duration: 5000 });
 				return;
 			}
-			console.log(moment(this.noDiscountDates[19]).format('DD/MM/YYYY'), moment(day.id).format('DD/MM/YYYY'))
+			//console.log(moment(this.noDiscountDates[19]).format('DD/MM/YYYY'), moment(day.id).format('DD/MM/YYYY'))
 			let isSeasonalDate = false;
 			this.noDiscountDates.forEach(d => {
 				if(moment(d).format('DD/MM/YYYY') === moment(day.id).format('DD/MM/YYYY')){

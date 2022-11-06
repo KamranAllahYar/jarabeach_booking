@@ -204,7 +204,7 @@ export const mutations: MutationTree<RootState> = {
 	TRANSFORM_EDIT_TO_REAL: (state: RootState, booking) => {
 		const oldBooking = booking;
 
-		console.log(booking);
+		//console.log(booking);
 
 		// Guest info transformation
 		state.guests_no = oldBooking.guests_no;
@@ -269,7 +269,7 @@ export const mutations: MutationTree<RootState> = {
 	},
 	UPDATE_NO_DAY_PASS_BOOKING_DATES: (state, dates: string[]) => {
 		state.noDayPassBookingDates = dates;
-		console.log(state.noDayPassBookingDates)
+		//console.log(state.noDayPassBookingDates)
 	},
 
 	RESET_STORE: state => {
@@ -301,14 +301,14 @@ export const mutations: MutationTree<RootState> = {
 export const actions: ActionTree<RootState, RootState> = {
 	loadNoDiscountDates({ commit }) {
 		this.$axios.get('/no-discount-dates').then(res => {
-			// console.log(res.data.data);
+			// //console.log(res.data.data);
 			commit('UPDATE_NO_DISCOUNT_DATES', res.data.data);
 		});
 	},
 	loadNoDayPassBookingDates({ commit }) {
 		this.$axios.get('/no-day-pass-booking-dates').then(res => {
 			commit('UPDATE_NO_DAY_PASS_BOOKING_DATES', res.data.data);
-			// console.log(res.data.data);
+			// //console.log(res.data.data);
 		});
 	},
 	getDayPassOptions({ commit }) {
@@ -319,13 +319,13 @@ export const actions: ActionTree<RootState, RootState> = {
 
 	// async confirmGuest({}, email: string) {
 	// 	return await this.$axios.post('confirm/guest', { email }).then(res => {
-	// 		console.log(res);
+	// 		//console.log(res);
 	// 		return res.data;
 	// 	});
 	// },
 
 	async createTransaction({ state, getters, rootState, rootGetters }) {
-		console.log(getters);
+		//console.log(getters);
 		let dataToPost = {} as any;
 		dataToPost = {
 			method: 'Paystack',
@@ -344,7 +344,7 @@ export const actions: ActionTree<RootState, RootState> = {
 		// 	}
 		// }
 
-		console.log('Create transaction Data to Post:');
+		//console.log('Create transaction Data to Post:');
 
 		const { dataToPost: bookingDataToPost, specialsToSend } = getDataToSend({ state, getters, rootState, rootGetters });
 		dataToPost['booking_data'] = {
@@ -362,15 +362,15 @@ export const actions: ActionTree<RootState, RootState> = {
 		dataToPost['specials_data'] = specialsToSend;
 		const bookingFrom = localStorage.getItem('bookingFrom');
 		if (bookingFrom) {
-			console.log('I got a booking from', bookingFrom);
+			//console.log('I got a booking from', bookingFrom);
 			dataToPost['booking_from'] = bookingFrom;
 		}
 
-		console.log(dataToPost);
+		//console.log(dataToPost);
 
 		try {
 			const res = await this.$axios.post('transactions', dataToPost);
-			console.log(res.data);
+			//console.log(res.data);
 
 			if (res.data.success) {
 				return res.data.reference;
@@ -385,7 +385,7 @@ export const actions: ActionTree<RootState, RootState> = {
 	async createBooking({ state, getters, rootState, rootGetters }, { trans_ref, method_ref, method, booking_from }) {
 		//@ts-ignore
 		const extraState = rootState.extras;
-		// console.log(extraState, rootGetters);
+		// //console.log(extraState, rootGetters);
 
 		const allExtras = (rootGetters['extras/allSelected'] as any[]).map(s => s.type);
 		let specialsToSend = {
@@ -487,7 +487,7 @@ export const actions: ActionTree<RootState, RootState> = {
 		// 	prices['Balance Paid'] = diff;
 		// }
 
-		// console.log(specialsToSend);
+		// //console.log(specialsToSend);
 
 		let dataToPost: any = {
 			booking: {
@@ -518,17 +518,17 @@ export const actions: ActionTree<RootState, RootState> = {
 		// 	dataToPost.oldBookingId = state.editBooking.id;
 		// }
 
-		console.log(dataToPost);
+		//console.log(dataToPost);
 
-		console.log(prices);
+		//console.log(prices);
 
 		try {
 			const res = await this.$axios.post('day-pass-booking', dataToPost);
-			console.log(res.data);
+			//console.log(res.data);
 
 			if (res.data.success) {
 				const newBooking = res.data.data.booking;
-				console.log(newBooking);
+				//console.log(newBooking);
 				const sRes = await this.$axios.post(`/day-pass-book-specials/${newBooking.id}`, specialsToSend);
 				this.app.$toast.success(res.data.message);
 				state.done_data.booking = newBooking;

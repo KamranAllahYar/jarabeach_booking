@@ -376,7 +376,7 @@ export default {
       return deco.name.toLowerCase() == 'flower petals' && this.isPetalsSelected;
     },
     next() {
-      console.log('NEXT');
+      //console.log('NEXT');
       this.$store.commit('extras/SET_SELECTED_DECORATION', {
         note: this.welcomeNote,
         decorations: this.selectedDecorations,
@@ -414,7 +414,7 @@ export default {
       this.picnicLoading = true;
       let oldBookingId = null;
       if (this.$store.state.editMode) {
-        console.log('in edit mode');
+        //console.log('in edit mode');
         if (this.$store.state.editBooking) {
           oldBookingId = this.$store.state.editBooking.id;
         }
@@ -426,7 +426,7 @@ export default {
           oldBookingId: oldBookingId,
         })
         .then(res => {
-          console.log(res.data.data);
+          //console.log(res.data.data);
           this.picnicDates = res.data.data;
         })
         .finally(() => {
@@ -437,7 +437,7 @@ export default {
       this.breakfastLoading = true;
       let oldBookingId = null;
       if (this.$store.state.editMode) {
-        console.log('in edit mode');
+        //console.log('in edit mode');
         if (this.$store.state.editBooking) {
           oldBookingId = this.$store.state.editBooking.id;
         }
@@ -449,8 +449,8 @@ export default {
           oldBookingId: oldBookingId,
         })
         .then(res => {
-          console.log('Breakfast options');
-          console.log(res.data.data);
+          //console.log('Breakfast options');
+          //console.log(res.data.data);
           this.breakfastDateTimes = res.data.data;
         })
         .finally(() => {
@@ -464,7 +464,7 @@ export default {
 
         this.noDates = noDates;
 
-        console.log(noDates);
+        //console.log(noDates);
       });
     },
   },

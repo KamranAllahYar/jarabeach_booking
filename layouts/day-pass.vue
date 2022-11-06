@@ -37,7 +37,7 @@ export default {
 		DayPassTopProgressBar,
 	},
 	created() {
-		console.log('Initial loadings');
+		//console.log('Initial loadings');
 		// this.$store.dispatch("loadRooms");
 		// this.$store.dispatch("loadPolicies");
 		this.$store.dispatch('loadNoDiscountDates');

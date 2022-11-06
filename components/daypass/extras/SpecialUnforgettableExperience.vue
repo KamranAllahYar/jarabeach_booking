@@ -372,7 +372,6 @@ export default {
       );
     },
     next() {
-      console.log("NEXT");
       this.$store.commit("extras/SET_SELECTED_EXPERIENCE", {
         experiences: this.selectedExperiences,
         // note: this.welcomeNote,
@@ -414,7 +413,6 @@ export default {
       this.picnicLoading = true;
       let oldBookingId = null;
       if (this.$store.state.editMode) {
-        console.log("in edit mode");
         if (this.$store.state.editBooking) {
           oldBookingId = this.$store.state.editBooking.id;
         }
@@ -426,7 +424,6 @@ export default {
           oldBookingId: oldBookingId,
         })
         .then((res) => {
-          console.log(res.data.data);
           this.picnicDates = res.data.data;
         })
         .finally(() => {
@@ -437,7 +434,6 @@ export default {
       this.paintingLoading = true;
       let oldBookingId = null;
       if (this.$store.state.editMode) {
-        console.log("in edit mode");
         if (this.$store.state.editBooking) {
           oldBookingId = this.$store.state.editBooking.id;
         }
@@ -449,7 +445,6 @@ export default {
           oldBookingId: oldBookingId,
         })
         .then((res) => {
-          console.log(res.data.data);
           this.paintingDates = res.data.data;
         })
         .finally(() => {
@@ -460,7 +455,6 @@ export default {
       this.breakfastLoading = true;
       let oldBookingId = null;
       if (this.$store.state.editMode) {
-        console.log("in edit mode");
         if (this.$store.state.editBooking) {
           oldBookingId = this.$store.state.editBooking.id;
         }
@@ -472,8 +466,6 @@ export default {
           oldBookingId: oldBookingId,
         })
         .then((res) => {
-          console.log("Breakfast options");
-          console.log(res.data.data);
           this.breakfastDateTimes = res.data.data;
         })
         .finally(() => {
@@ -488,7 +480,6 @@ export default {
 
           this.noDates = noDates;
 
-          console.log(noDates);
         });
     },
   },

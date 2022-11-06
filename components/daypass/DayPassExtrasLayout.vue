@@ -70,12 +70,10 @@ export default {
 
             if (confirmRemove) {
                 this.gotoNext();
-                console.log(this.currentSpecial);
                 this.$store.commit("extras/REMOVE_EXTRA", this.currentSpecial);
             }
         },
         gotoNext() {
-            console.log(this.index);
             if (this.index == this.selected.length - 1) {
                 this.$store.commit("day_pass/COMPLETE_EXTRAS");
                 this.$router.push({ path: "/day-pass-payment" });

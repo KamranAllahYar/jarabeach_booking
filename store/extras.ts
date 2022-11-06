@@ -1,5 +1,7 @@
 import { RootState } from './index';
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
+import moment from 'moment';
+
 
 export const state = () => ({
   extras_booking: 'guests',
@@ -14,7 +16,8 @@ export const state = () => ({
     { type: 'photoshoot', name: 'Photoshoot (third-party photographer access)', available: true, range: '100,000' },
     // { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
     { type: 'bikes', name: 'Go-Kart and Horse Riding', available: true, range: '15,000' },
-    { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' }
+    // { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' },
+    { type: 'dayPass', name: 'Day Pass', available: true, range: '30,000' }
     // { type: 'massage', name: 'Massage', available: false, range: '30,000' },
   ] as { name: string, type: string, range: string, available: boolean }[],
   selected: [] as { name: string, type: string, range: string, available: boolean }[],
@@ -56,6 +59,7 @@ export const state = () => ({
   decorationPaintingQty: 1 as any,
   decorationBreakfastDate: null as any,
   decorationBreakfastTime: null as any,
+  holidayDates: [] as string[],
 
   staffPrices: [] as any[],
   selectedStaff: {
@@ -65,8 +69,11 @@ export const state = () => ({
   dateStaff: [] as String[] | null,
 
   drinkOptions: [] as any[],
+  dayPassOptions: [] as any[],
   selectedDrinks: [] as any[],
+  selectedDayPassOptions: [] as any[],
   dateDrink: null as String | null,
+  dayPassDate: null as String | null,
 
   newmassageOptions: [] as any[],
   selectedMassages: [] as any[],
@@ -92,6 +99,7 @@ export const getters: GetterTree<ExtraState, RootState> = {
   allSpecials: (state: ExtraState) => state.specials,
   allSelected: (state: ExtraState) => state.selected,
   allDrinks: (state: ExtraState) => state.drinkOptions,
+  allDayPass: (state: ExtraState) => state.dayPassOptions,
   allCakes: (state: ExtraState) => state.cakeOptions,
   allDecorations: (state: ExtraState) => state.decorationOptions,
   allLookouts: (state: ExtraState) => state.lookoutOptions,
@@ -132,6 +140,31 @@ export const getters: GetterTree<ExtraState, RootState> = {
     }
 
     return price;
+  },
+  dayPassPrices: (state: ExtraState) => {
+    const isDateAvailable = state.holidayDates.filter(d => {
+      return moment(state.dayPassDate as string).format('DD/MM/YYYY') === moment(d).format('DD/MM/YYYY');
+    });
+  if (state.selectedDayPassOptions.length <= 0) return 0;
+  let price = 0;
+  var dayOfWeek = new Date(state.dayPassDate as string).getDay();
+  var isWeekend = (dayOfWeek === 6) || (dayOfWeek  === 0);
+  for (let i = 0; i < state.selectedDayPassOptions.length; i++) {
+    const sDayPass = state.selectedDayPassOptions[i];
+
+    const dayPass = state.dayPassOptions.find(dko => dko.id == sDayPass.id);
+
+    if (dayPass) {
+      let gottenPrice = 0;
+      if(isDateAvailable.length) gottenPrice = (+dayPass.seasonal_price * +sDayPass.qty);
+      if(isWeekend) gottenPrice = (+dayPass.weekend_price * +sDayPass.qty);
+      if(!isWeekend && !isDateAvailable.length) gottenPrice = (+dayPass.weekday_price * +sDayPass.qty);
+      // let gottenPrice = isWeekend ? (+dayPass.weekend_price * +sDayPass.qty) : (+dayPass.weekday_price * +sDayPass.qty)
+      price += gottenPrice;
+    }
+  }
+
+  return price;
   },
   massagesPrice: (state: ExtraState) => {
     if (state.selectedMassages.length <= 0) return 0;
@@ -340,6 +373,9 @@ export const mutations: MutationTree<ExtraState> = {
   LOAD_SELECTED: (state, payload) => {
     state.selected = payload
   },
+  UPDATE_NO_DISCOUNT_DATES: (state, dates: string[]) => {
+		state.holidayDates = dates;
+	},
   REMOVE_EXTRA: (state, extra) => {
     if (state.clashes[extra]) {
       delete state.clashes[extra];
@@ -492,6 +528,11 @@ export const mutations: MutationTree<ExtraState> = {
     state.dateDrink = payload.date
   },
 
+  SET_SELECTED_DAY_PASS: (state, payload) => {
+    state.selectedDayPassOptions = payload.dayPassOptionsSelected
+    state.dayPassDate = payload.date
+  },
+
   LOAD_NEWMASSAGE_OPTIONS: (state, newmassages) => {
     state.newmassageOptions = newmassages
   },
@@ -532,6 +573,8 @@ export const mutations: MutationTree<ExtraState> = {
   RESET_STORE: (state) => {
     state.selected = [] as { name: string, type: string, range: string, available: boolean }[];
     state.selectedIndex = 0 as number;
+    state.dayPassDate = null;
+    state.selectedDayPassOptions = [] as any[];
 
     state.lookoutOptions = [] as any[];
     state.selectedLookouts = [] as any[];
@@ -576,6 +619,7 @@ export const mutations: MutationTree<ExtraState> = {
     state.dateStaff = [];
 
     state.drinkOptions = [] as any[];
+    state.dayPassOptions = [] as any[];
     state.selectedDrinks = [] as any[];
     state.dateDrink = null;
 
@@ -753,6 +797,9 @@ export const mutations: MutationTree<ExtraState> = {
       state.selectedNewmassage = oldNewmassage.option_id;
     }
   },
+  LOAD_DAY_PASS_OPTIONS: (state, options) => {
+		state.dayPassOptions = options;
+	},
   TRANSFORM_LOOKOUTS: (state, payload) => {
     const oldDates = payload.dates;
     const oldLookout = payload.lookouts;
@@ -784,11 +831,24 @@ export const actions: ActionTree<ExtraState, RootState> = {
     });
   },
 
+  loadNoDiscountDates({ commit }) {
+		this.$axios.get('/no-discount-dates').then(res => {
+			// //console.log(res.data.data);
+			commit('UPDATE_NO_DISCOUNT_DATES', res.data.data);
+		});
+	},
+
   getSpecialDrinks({ commit }) {
     this.$axios.get("/drink-options").then((res) => {
       commit("LOAD_DRINK_OPTIONS", res.data.data);
     });
   },
+
+  getDayPassOptions({ commit }) {
+		this.$axios.get('/day-pass-options').then(res => {
+			commit('LOAD_DAY_PASS_OPTIONS', res.data.data);
+		});
+	},
 
   getSpecialCakes({ commit }) {
     this.$axios.get("/cake-options").then((res) => {

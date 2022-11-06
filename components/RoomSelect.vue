@@ -172,7 +172,6 @@ export default {
                     booking_id: bookingId,
                 })
                 .then((res) => {
-                    console.log(res.data.data);
                     const aRooms = res.data.data;
 
                     this.allRooms = aRooms;
@@ -201,7 +200,6 @@ export default {
                 //         r.date !== format(date, "yyyy-MM-dd")
                 // );
 
-                console.log("Already selected");
             } else {
                 this.selectedRooms.push({
                     room_id: room.id,
@@ -233,7 +231,6 @@ export default {
         },
     },
     created() {
-        console.log("Room Select Created ----");
         this.setupInitialRooms();
 
         const startDate = parseISO(this.startDate);

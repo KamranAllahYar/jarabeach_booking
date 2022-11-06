@@ -1,37 +1,37 @@
 <template>
     <div class="flex flex-col w-full md:flex-row md:h-640">
         <div class="relative w-full md:h-auto md:w-6/12 h-60">
-            <img src="@/assets/images/specials/drinks.png" alt="" class="object-cover object-center w-full h-full">
+            <img src="@/assets/images/specials/dayPass.jpeg" alt="" class="object-cover object-center w-full h-full">
         </div>
         <div class="flex flex-col w-full h-full py-6 md:w-7/12">
             <div class="flex-1 px-6 pb-4 md:overflow-y-auto" id="con_scroll">
-                <div class="font-semibold">Premium Drink Collection</div>
+                <div class="font-semibold">Day Pass</div>
                 <p class="mt-3 font-light leading-relaxed text-gray-600">
-                    Our Premium Collection is available to any guest wishing to make their stay
-                    extra-special. We have curated a small, but memorable range of champagne, wines and
-                    spirits - available to be purchased during your stay via POS or bank transfer (JARA is a
-                    completely cashless resort) or pre-bought on this page. Please select which date you
-                    would like your bottle (if your first day is selected, your order will be available in your
-                    room on arrival in your room, as default).
+                    Want the Jara experience, but just for the day? No problem, we've got you covered! We are delighted to offer our DAY PASS - both alcohol and non-alcohol passes available. Come and spend the day, enjoy the facilities and indulge!
                 </p>
-                <div class="mt-6 font-semibold">What date would you like to have this?</div>
-                <div class="grid items-center mt-3 font-light md:grid-cols-2 gap-y-2">
-                    <label class="flex items-center">
-                        <input type="radio" :value="bookingDate" v-model="selectedDate" class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
-                        <div>{{ showDate(bookingDate) }}</div>
-                    </label>
+                <label class="flex items-center mt-6">
+                    <input type="radio" checked class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
+                    <div>{{ showDate(dates[dates.length - 1]) }}</div>
+                </label>
+                   <div class="flex items-center mt-2 space-x-3">
+                    <div>Arrival Time:</div>
+                    <div class="font-semibold">11:30 AM</div>
+                </div>
+                <div class="flex items-center mt-2 space-x-3">
+                    <div>Departure Time:</div>
+                    <div class="font-semibold">5:30 PM</div>
                 </div>
                 <div>
                     <div class="mt-6 font-semibold">Select Wine or Champagne or Spirit</div>
 
-                    <div @click="addDrinks" class="flex items-center flex-shrink-0 w-20 h-10 mb-3 text-xs cursor-pointer text-brand-blue hover:text-brand-blue-300">
+                    <div @click="addDayPass" class="flex items-center flex-shrink-0 w-20 h-10 mb-3 text-xs cursor-pointer text-brand-blue hover:text-brand-blue-300">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                         </svg>
                         <div>Add</div>
                     </div>
                     <div class="flex flex-wrap items-center mt-3 space-y-4 justify-betweenl md:space-y-3">
-                        <div class="flex flex-col items-center w-full space-x-0 space-y-2 font-light md:space-y-0 md:space-x-3 md:items-end md:flex-row" v-for="(sDrink, ix) in selectedDrinks" :key="ix">
+                        <div class="flex flex-col items-center w-full space-x-0 space-y-2 font-light md:space-y-0 md:space-x-3 md:items-end md:flex-row" v-for="(sDrink, ix) in selectedDayPass" :key="ix">
                             <div class="flex items-center flex-1 pl-2 border rounded-md focus-within:ring">
                                 <svg
                                     class="w-5 h-5" fill="none" viewBox="0 0 15 15"
@@ -41,7 +41,7 @@
                                         stroke="#225A89" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <select v-model="sDrink.id" class="text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
-                                    <option v-for="drink in drinks" :value="drink.id" :key="drink.id">{{drink.name}} - {{currency(drink.price)}}</option>
+                                    <option v-for="dayPass in dayPassOptions" :value="dayPass.id" :key="dayPass.id">{{dayPass.name}} - {{currency(priceToShow(dayPass))}}</option>
                                 </select>
                             </div>
                             <div class="flex items-center flex-1 pl-2 border rounded-md focus-within:ring">
@@ -53,7 +53,7 @@
                                 </select>
                             </div>
                             <div class="flex-1 hidden md:block"></div>
-                            <div @click="removeDrink(ix)" v-if="selectedDrinks.length > 1" class="flex items-center flex-1 flex-shrink-0 h-10 mb-3 text-xs cursor-pointer text-brand-red hover:text-red-300">
+                            <div @click="removeDayPass(ix)" v-if="selectedDayPass.length > 1" class="flex items-center flex-1 flex-shrink-0 h-10 mb-3 text-xs cursor-pointer text-brand-red hover:text-red-300">
                                 <div>Remove</div>
                             </div>
                         </div>
@@ -72,46 +72,72 @@
 <script>
 import parseISO from "date-fns/parseISO";
 import format from "date-fns/format";
+import { mapGetters } from 'vuex';
+import moment from 'moment';
+
 
 export default {
     data() {
         return {
             selectedDate: null,
-            selectedDrinks: [],
+            selectedDayPass: [],
             noDates: [],
         };
     },
     computed: {
-        bookingDate() {
-			return this.$store.getters['day_pass/bookingDate'];
+        bookingDates() {
+            return this.$store.getters.bookingDates;
+        },
+        isWeekend() {
+            var dayOfWeek = new Date(this.dates[this.dates.length - 1]).getDay();
+            var isWeekend = (dayOfWeek === 6) || (dayOfWeek  === 0);
+            return isWeekend;
+        },
+        ...mapGetters({
+			noDiscountDates: 'noDiscountDates',
+		}),
+		isDateSeasonalDate() {
+			const isDateAvailable = this.noDiscountDates.filter(d => {
+				return moment(this.dates[this.dates.length - 1]).format('DD/MM/YYYY') === moment(d).format('DD/MM/YYYY');
+			});
+			return isDateAvailable.length;
 		},
-        // dates() {
-        //     return this.bookingDates.filter((date) => {
-        //         return !this.noDates.includes(date);
-        //     });
-        // },
-        drinks() {
-            return this.$store.getters["extras/allDrinks"];
+        dates() {
+            return this.bookingDates.filter((date) => {
+                return !this.noDates.includes(date);
+            });
+        },
+        dayPassOptions() {
+            return this.$store.getters["extras/allDayPass"];
         },
     },
     methods: {
+        priceToShow(option) {
+            if(this.isDateSeasonalDate) return option.seasonal_price;
+            if(this.isWeekend) return option.weekend_price;
+            return option.weekday_price;
+        },
         next() {
-            this.$store.commit("extras/SET_SELECTED_DRINKS", {
-                drinks: this.selectedDrinks,
-                date: this.selectedDate,
+            if(!this.selectedDayPass.length){
+                this.$toast.error('Please select a day pass option.');
+                return;
+            }
+            this.$store.commit("extras/SET_SELECTED_DAY_PASS", {
+                dayPassOptionsSelected: this.selectedDayPass,
+                date: this.dates[this.dates.length - 1],
             });
             this.$emit("next");
         },
         prev() {
-            this.$store.commit("extras/SET_SELECTED_DRINKS", {
-                drinks: this.selectedDrinks,
-                date: this.selectedDate,
+            this.$store.commit("extras/SET_SELECTED_DAY_PASS", {
+                dayPassOptionsSelected: this.selectedDayPass,
+                date: this.dates[this.dates.length - 1],
             });
             this.$emit("prev");
         },
-        addDrinks() {
-            this.selectedDrinks.unshift({
-                id: this.drinks[0].id,
+        addDayPass() {
+            this.selectedDayPass.unshift({
+                id: this.dayPassOptions[0].id,
                 qty: 1,
             });
             this.$nextTick(() => {
@@ -119,8 +145,8 @@ export default {
                 container.scrollTop = container.scrollHeight;
             });
         },
-        removeDrink(ix) {
-            this.selectedDrinks.splice(ix, 1);
+        removeDayPass(ix) {
+            this.selectedDayPass.splice(ix, 1);
         },
         showDate(date) {
             return format(parseISO(date), "iii, MMM. do yyyy");
@@ -136,6 +162,7 @@ export default {
 
                     this.noDates = noDates;
 
+                    //console.log(noDates);
                 });
         },
     },
@@ -143,25 +170,18 @@ export default {
         await this.getNoDrinksDates();
     },
     mounted() {
-        this.$store.dispatch("extras/getSpecialDrinks");
-
-        if (this.$store.state.extras.selectedDrinks) {
-            this.selectedDrinks = this.$store.state.extras.selectedDrinks.map(
+        this.$store.dispatch("extras/getDayPassOptions");
+        if (this.$store.state.extras.selectedDayPassOptions) {
+            this.selectedDayPass = this.$store.state.extras.selectedDayPassOptions.map(
                 (x) => x
             );
         }
 
-        if (this.drinks.length > 0 && this.selectedDrinks.length <= 0) {
-            this.selectedDrinks.push({
-                id: this.drinks[0].id,
+        if (this.dayPassOptions.length > 0 && this.selectedDayPass.length <= 0) {
+            this.selectedDayPass.push({
+                id: this.dayPassOptions[0].id,
                 qty: 1,
             });
-        }
-
-        this.selectedDate = this.bookingDate;
-
-        if (this.$store.state.extras.dateDrink) {
-            this.selectedDate = this.$store.state.extras.dateDrink;
         }
     },
 };

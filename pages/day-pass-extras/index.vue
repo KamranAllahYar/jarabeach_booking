@@ -72,7 +72,7 @@ export default {
 			let filteredSpecials = specials.filter(
 				special => includedSpecials.includes(special.name)
 			);
-			// console.log(filteredSpecials);
+			// //console.log(filteredSpecials);
 			return filteredSpecials;
 		},
 		selected() {
@@ -84,7 +84,7 @@ export default {
 	},
 	methods: {
 		fileExtension(type) {
-			console.log(this.specials);
+			//console.log(this.specials);
 			if (type !== 'unforgettableExperience' && type !== 'massages') return 'png';
 			return 'jpeg';
 		},
@@ -106,7 +106,7 @@ export default {
 			return this.selected.some(s => s.type == sp.type);
 		},
 		selectSpecial(sp) {
-			console.log(sp);
+			//console.log(sp);
 			if (!sp.available) {
 				this.$toast.info(sp.name + ' is not available for the dates you selected');
 				return;

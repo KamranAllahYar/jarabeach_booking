@@ -229,7 +229,7 @@ export default {
 			}
 
 			if (this.noOfChildren > 0) {
-				console.log(this.childrenAges);
+				//console.log(this.childrenAges);
 				for (let ix = 0; ix < this.childrenAges.length; ix++) {
 					if (this.childrenAges[ix].age == '') {
 						this.$toast.info('Please let us know the age of each child', { duration: 5000 });
@@ -259,7 +259,7 @@ export default {
 		},
 	},
 	mounted() {
-		console.log('Mounting guest');
+		//console.log('Mounting guest');
 		this.updateFromStore();
 	},
 };

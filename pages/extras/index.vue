@@ -15,7 +15,6 @@
                     Here you can book in any extra special experiences. <br />
                     Please select the ones you wish to add to your booking.
                 </h1>
-
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
                     <div v-for="(extra, i) in specials" :key="i"
                         class="w-full overflow-hidden transition-all transform bg-white border rounded-lg"
@@ -74,8 +73,8 @@ export default {
     },
     methods: {
         fileExtension(type){
-            console.log(this.specials);
-            if(type !== 'unforgettableExperience' && type !== 'massages') return 'png'
+            //console.log(this.specials);
+            if(type !== 'unforgettableExperience' && type !== 'massages' && type !== 'dayPass') return 'png'
             return 'jpeg'
         },
         gotoBack() {
@@ -95,13 +94,13 @@ export default {
             return this.selected.some((s) => s.type == sp.type);
         },
         selectSpecial(sp) {
-            console.log(sp);
             if (!sp.available) {
                 this.$toast.info(
                     sp.name + " is not available for the dates you selected"
                 );
                 return;
             }
+
 
             if (this.isSelectedSpecial(sp)) {
                 this.$store.commit("extras/REMOVE_SELECTED", sp);
