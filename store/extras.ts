@@ -17,7 +17,7 @@ export const state = () => ({
     // { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
     { type: 'bikes', name: 'Go-Kart and Horse Riding', available: true, range: '15,000' },
     // { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' },
-    { type: 'dayPass', name: 'Day Pass', available: true, range: '30,000' }
+    { type: 'dayPass', name: 'Day Pass Extension - On Last Day', available: true, range: '30,000' }
     // { type: 'massage', name: 'Massage', available: false, range: '30,000' },
   ] as { name: string, type: string, range: string, available: boolean }[],
   selected: [] as { name: string, type: string, range: string, available: boolean }[],

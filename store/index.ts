@@ -446,6 +446,9 @@ export const getters: GetterTree<RootState, RootState> = {
 			if (extra.type == 'drinks') {
 				extraPrices += getters['extras/drinksPrice'];
 			}
+			if (extra.type == 'dayPass') {
+				extraPrices += getters['extras/dayPassPrices'];
+			}
 			if (extra.type == 'massages') {
 				extraPrices += getters['extras/massagesPrice'];
 			}
