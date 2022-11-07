@@ -1,6 +1,9 @@
 import { RootState } from './index';
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
-import moment from 'moment';
+import parseISO from 'date-fns/parseISO';
+
+import format from 'date-fns/format';
+
 
 
 export const state = () => ({
@@ -143,7 +146,9 @@ export const getters: GetterTree<ExtraState, RootState> = {
   },
   dayPassPrices: (state: ExtraState) => {
     const isDateAvailable = state.holidayDates.filter(d => {
-      return moment(state.dayPassDate as string).format('DD/MM/YYYY') === moment(d).format('DD/MM/YYYY');
+      const daypassBookingDate = parseISO(state.dayPassDate as string);
+      const dDate = parseISO(d);
+      return format(daypassBookingDate, 'yyyy-MM-dd') === format(dDate,'yyyy-MM-dd');
     });
   if (state.selectedDayPassOptions.length <= 0) return 0;
   let price = 0;

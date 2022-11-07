@@ -69,7 +69,6 @@
 import parseISO from "date-fns/parseISO";
 import format from "date-fns/format";
 import { mapGetters } from 'vuex';
-import moment from 'moment';
 
 
 export default {
@@ -94,7 +93,9 @@ export default {
 		}),
 		isDateSeasonalDate() {
 			const isDateAvailable = this.noDiscountDates.filter(d => {
-				return moment(this.dates[this.dates.length - 1]).format('DD/MM/YYYY') === moment(d).format('DD/MM/YYYY');
+                const bookingDateParsed = parseISO(this.dates[this.dates.length - 1]);
+                const dDate = parseISO(d);
+				return format(bookingDateParsed, 'yyyy-MM-dd') === format(dDate, 'yyyy-MM-dd');
 			});
 			return isDateAvailable.length;
 		},

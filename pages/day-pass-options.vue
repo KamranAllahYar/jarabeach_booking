@@ -34,7 +34,10 @@
 <script>
 import ReservationBox from '@/components/daypass/DayPassReservationBox.vue';
 import { mapGetters } from 'vuex';
-import moment from 'moment';
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
+
+
 
 export default {
 	layout: 'day-pass',
@@ -51,7 +54,9 @@ export default {
 		}),
 		isDateSeasonalDate() {
 			const isDateAvailable = this.noDiscountDates.filter(d => {
-				return moment(this.bookingDate).format('DD/MM/YYYY') === moment(d).format('DD/MM/YYYY');
+				const bookingDateParsed = parseISO(this.bookingDate);
+                const dDate = parseISO(d);
+				return format(bookingDateParsed, 'yyyy-MM-dd') === format(dDate, 'yyyy-MM-dd');
 			});
 
 			return isDateAvailable.length;

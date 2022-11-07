@@ -44,7 +44,10 @@
 <script>
 import isBefore from 'date-fns/isBefore';
 import { mapGetters } from 'vuex';
-import moment from 'moment';
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
+
+
 export default {
 	layout: 'day-pass',
 	data() {
@@ -66,7 +69,8 @@ export default {
 	},
 	methods: {
 		dropdownDate(date){
-			return moment(date).format('MMMM Do YYYY')
+			const dropdownDate = parseISO(date);
+			return format(dropdownDate, 'MMMM Do YYYY');
 		},
 		onDayClick(day) {
 			let daySelected = new Date(day.id).toISOString();
@@ -81,7 +85,9 @@ export default {
 			}
 			let isBookingDateBlocked = false;
 			this.noDayPassBookingDates.forEach(d => {
-				if(moment(d).format('DD/MM/YYYY') === moment(day.id).format('DD/MM/YYYY')){
+				const dayDate = parseISO(day.id);
+                const dDate = parseISO(d);
+				if(format(dDate,'yyyy-MM-dd') === format(dayDate,'yyyy-MM-dd')){
 					isBookingDateBlocked = true;
 				}
 			})
@@ -99,10 +105,12 @@ export default {
 				this.$toast.info('Please select a weekend from friday - sunday', { duration: 5000 });
 				return;
 			}
-			//console.log(moment(this.noDiscountDates[19]).format('DD/MM/YYYY'), moment(day.id).format('DD/MM/YYYY'))
+			//console.log(moment(this.noDiscountDates[19]).format('yyyy-MM-dd'), moment(day.id).format('yyyy-MM-dd'))
 			let isSeasonalDate = false;
 			this.noDiscountDates.forEach(d => {
-				if(moment(d).format('DD/MM/YYYY') === moment(day.id).format('DD/MM/YYYY')){
+				const dayDate = parseISO(day.id);
+                const dDate = parseISO(d);
+				if(format(dDate,'yyyy-MM-dd') === format(dayDate,'yyyy-MM-dd')){
 					isSeasonalDate = true;
 				}
 			})
@@ -153,7 +161,9 @@ export default {
 		},
 		isDateSeasonalDate() {
 			const isDateAvailable = this.noDiscountDates.filter(d => {
-				return moment(this.bookingDate).format('DD/MM/YYYY') === moment(d).format('DD/MM/YYYY');
+				const bookingDateParsed = parseISO(this.bookingDate);
+                const dDate = parseISO(d);
+				return format(bookingDateParsed,'yyyy-MM-dd') === format(dDate,'yyyy-MM-dd');
 			});
 
 			return isDateAvailable.length;

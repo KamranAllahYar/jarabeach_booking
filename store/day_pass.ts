@@ -1,12 +1,6 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
-import differenceInDays from 'date-fns/differenceInDays';
-import parseISO from 'date-fns/parseISO';
 import format from 'date-fns/format';
-import isSameDay from 'date-fns/isSameDay';
-import isSameMonth from 'date-fns/isSameMonth';
-import isSameYear from 'date-fns/isSameYear';
-import Bugsnag from '@bugsnag/js';
-import moment from 'moment';
+import parseISO from 'date-fns/parseISO';
 
 
 import getDataToSend from './create_bookings';
@@ -86,7 +80,9 @@ export const getters: GetterTree<RootState, RootState> = {
 		let price = 0;
 		let optionsWithQuantity = state.selected_options.filter((option: any) => option.quantity > 0);
 		const isDateAvailable = rootGetters.noDiscountDates.filter((d: any) => {
-			return moment(getters.bookingDate).format('DD/MM/YYYY') === moment(d).format('DD/MM/YYYY');
+			const bookingDateParsed = parseISO(getters.bookingDate);
+            const dDate = parseISO(d);
+			return format(bookingDateParsed,'yyyy-MM-dd') === format(dDate,'yyyy-MM-dd');
 		});
 		
 		optionsWithQuantity.forEach((option: any) => {
