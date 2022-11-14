@@ -537,6 +537,9 @@ export const mutations: MutationTree<ExtraState> = {
     state.selectedDayPassOptions = payload.dayPassOptionsSelected
     state.dayPassDate = payload.date
   },
+  SET_DAY_PASS_DATE: (state, payload) => {
+    state.dayPassDate = payload
+  },
 
   LOAD_NEWMASSAGE_OPTIONS: (state, newmassages) => {
     state.newmassageOptions = newmassages

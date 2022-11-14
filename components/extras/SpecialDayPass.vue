@@ -167,6 +167,12 @@ export default {
         await this.getNoDrinksDates();
     },
     mounted() {
+        if(!this.dates.length){
+            this.$toast.error('No Day Pass Booking for this date');
+            this.$router.back();
+            return;
+        }
+        this.$store.commit('extras/SET_DAY_PASS_DATE', this.dates[0])
         this.$store.dispatch("extras/getDayPassOptions");
         if (this.$store.state.extras.selectedDayPassOptions) {
             this.selectedDayPass = this.$store.state.extras.selectedDayPassOptions.map(
