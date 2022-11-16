@@ -622,7 +622,7 @@ export default {
             if (isToday(parseISO(dateStr))) {
                 const today = new Date();
                 const todayHrs = today.getHours();
-                if (todayHrs >= 11) return 0;
+                if (todayHrs >= 22) return 0;
             } else if (isBefore(parseISO(dateStr), new Date())) {
                 return 0;
             }
