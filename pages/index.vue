@@ -20,11 +20,11 @@ export default class Index extends Vue {
     }
 
     mounted() {
-        if(this.$route.query.type === 'day_pass'){
-            this.$router.push("/day-pass");
-            return;
-        }
-        this.$router.push("/guests");
+        // if(this.$route.query.type === 'day_pass'){
+        //     this.$router.push("/day-pass");
+        //     return;
+        // }
+        // this.$router.push("/guests");
     }
 
     // middleware({ redirect }: any) {
