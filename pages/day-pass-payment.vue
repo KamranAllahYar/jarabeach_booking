@@ -22,8 +22,8 @@
 							</div>
 						</div>
 					</div>
-					<!-- <div v-if="!$store.state.editMode || $store.state.adminEditMode" class="mt-6 mb-12 border border-gray-100 rounded-md bg-gray-50 ring-gray-200 focus-within:ring ring-offset-2">
-						<form @submit.prevent="checkDiscount()" class="flex justify-between p-2">
+					<div class="mt-6 mb-12 border border-gray-100 rounded-md bg-gray-50 ring-gray-200 focus-within:ring ring-offset-2">
+						<form @submit.prevent="checkDiscount" class="flex justify-between p-2">
 							<input class="w-full ml-2 bg-transparent outline-none" v-model="code" placeholder="Enter Discount code" />
 							<div class="w-40 ml-3">
 								<button
@@ -35,7 +35,7 @@
 								</button>
 							</div>
 						</form>
-					</div> -->
+					</div>
 					<div class="flex-shrink-0 w-full md:hidden md:px-0 md:w-3/12">
 						<DayPassReservationBox showDiscount />
 					</div>
@@ -225,13 +225,12 @@ export default {
 			this.$store.commit('REMOVE_ROOM', room);
 		},
 		async checkDiscount() {
-			this.$store.commit('UPDATE_DISCOUNT', null);
+			this.$store.commit('UPDATE_DISCOUNT', null); 
 			if (this.code.length <= 2) {
 				this.$toast.info('Please input a proper code');
 				return;
 			}
 			this.loadingCode = true;
-			//console.log('Check for - ' + this.code);
 
 			this.$axios
 				.post(`/check-discount`, {
@@ -240,13 +239,13 @@ export default {
 					// date: this.rooms[0].date,
 				})
 				.then(({ data }) => {
-					//console.log(data);
+					console.log(data);
 					if (data.success) {
 						this.$toasted.success(data.message);
 
 						const discount = Object.assign({}, data.data);
-						//console.log(discount);
-						this.$store.commit('UPDATE_DISCOUNT', discount);
+						console.log(discount);
+						this.$store.commit('day_pass/UPDATE_DISCOUNT', discount);
 						// this.createTransaction();
 					} else {
 						this.$toasted.error(data.message);

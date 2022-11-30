@@ -71,7 +71,7 @@ export const getters: GetterTree<RootState, RootState> = {
 			return discount.amount;
 		} else if (discount.type == 'discount') {
 			const percent = discount.amount / 100;
-			return percent * getters.roomPrice;
+			return percent * getters.optionPrices;
 		}
 
 		return 0;
