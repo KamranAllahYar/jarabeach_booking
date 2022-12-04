@@ -41,7 +41,7 @@
 					</div>
 					<div class="flex flex-col items-center w-full my-6 space-y-2 md:space-y-0 md:flex-row md:space-x-2">
 						<MainButton class="md:w-3/12" outline @click="gotoBack()">Back</MainButton>
-						<template v-if="totalPrice > 0">
+						<template v-if="(totalPrice > 0)">
 							<div class="flex-shrink-0 w-full md:w-5/12">
 								<Paystack
 									v-if="trans_ref != null"
@@ -174,11 +174,6 @@ export default {
 			return this.$store.getters['day_pass/subTotal'];
 		},
 	},
-	watch: {
-		trans_ref(newValue) {
-			//console.log(newValue);
-		},
-	},
 	methods: {
 		removeExtra(extra) {
 			//console.log(extra);
@@ -196,7 +191,6 @@ export default {
 		},
 		async completeBooking(paystack_res) {
 			//console.log(paystack_res);
-
 			if (paystack_res.status == 'success') {
 				const bookingFrom = localStorage.getItem('bookingFrom');
 				const res = await this.$store.dispatch('day_pass/createBooking', {
@@ -245,7 +239,6 @@ export default {
 					console.log(data);
 					if (data.success) {
 						this.$toasted.success(data.message);
-
 						const discount = Object.assign({}, data.data);
 						console.log(discount);
 						this.$store.commit('day_pass/UPDATE_DISCOUNT', discount);
@@ -271,10 +264,9 @@ export default {
 	},
 	middleware({ store, redirect, $toast }) {
 		if (!store.state.day_pass.options_done) {
-			// $toast.info("Please accept all policies first");
 			redirect('/day-pass-options');
 		}
-		// store.commit('UPDATE_DISCOUNT', null);
+		store.commit('UPDATE_DISCOUNT', null);
 	},
 };
 </script>
