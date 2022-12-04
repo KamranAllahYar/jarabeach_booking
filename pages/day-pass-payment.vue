@@ -158,6 +158,9 @@ export default {
 		specials() {
 			return this.$store.getters['extras/allSelected'];
 		},
+		bookingDate() {
+			return this.$store.getters['day_pass/bookingDate']
+		},
 		totalPrice() {
 			return this.$store.getters['day_pass/totalPrice'] * 100;
 		},
@@ -236,7 +239,7 @@ export default {
 				.post(`/check-discount`, {
 					code: this.code,
 					total: this.subTotal,
-					// date: this.rooms[0].date,
+					date: this.bookingDate,
 				})
 				.then(({ data }) => {
 					console.log(data);
@@ -246,7 +249,7 @@ export default {
 						const discount = Object.assign({}, data.data);
 						console.log(discount);
 						this.$store.commit('day_pass/UPDATE_DISCOUNT', discount);
-						// this.createTransaction();
+						this.createTransaction();
 					} else {
 						this.$toasted.error(data.message);
 					}
