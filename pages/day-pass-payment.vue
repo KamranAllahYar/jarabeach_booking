@@ -22,8 +22,8 @@
 							</div>
 						</div>
 					</div>
-					<!-- <div v-if="!$store.state.editMode || $store.state.adminEditMode" class="mt-6 mb-12 border border-gray-100 rounded-md bg-gray-50 ring-gray-200 focus-within:ring ring-offset-2">
-						<form @submit.prevent="checkDiscount()" class="flex justify-between p-2">
+					<div class="mt-6 mb-12 border border-gray-100 rounded-md bg-gray-50 ring-gray-200 focus-within:ring ring-offset-2">
+						<form @submit.prevent="checkDiscount" class="flex justify-between p-2">
 							<input class="w-full ml-2 bg-transparent outline-none" v-model="code" placeholder="Enter Discount code" />
 							<div class="w-40 ml-3">
 								<button
@@ -35,13 +35,13 @@
 								</button>
 							</div>
 						</form>
-					</div> -->
+					</div>
 					<div class="flex-shrink-0 w-full md:hidden md:px-0 md:w-3/12">
 						<DayPassReservationBox showDiscount />
 					</div>
 					<div class="flex flex-col items-center w-full my-6 space-y-2 md:space-y-0 md:flex-row md:space-x-2">
 						<MainButton class="md:w-3/12" outline @click="gotoBack()">Back</MainButton>
-						<template v-if="totalPrice > 0">
+						<template v-if="(totalPrice > 0)">
 							<div class="flex-shrink-0 w-full md:w-5/12">
 								<Paystack
 									v-if="trans_ref != null"
@@ -158,6 +158,9 @@ export default {
 		specials() {
 			return this.$store.getters['extras/allSelected'];
 		},
+		bookingDate() {
+			return this.$store.getters['day_pass/bookingDate']
+		},
 		totalPrice() {
 			return this.$store.getters['day_pass/totalPrice'] * 100;
 		},
@@ -169,11 +172,6 @@ export default {
 		},
 		subTotal() {
 			return this.$store.getters['day_pass/subTotal'];
-		},
-	},
-	watch: {
-		trans_ref(newValue) {
-			//console.log(newValue);
 		},
 	},
 	methods: {
@@ -193,7 +191,6 @@ export default {
 		},
 		async completeBooking(paystack_res) {
 			//console.log(paystack_res);
-
 			if (paystack_res.status == 'success') {
 				const bookingFrom = localStorage.getItem('bookingFrom');
 				const res = await this.$store.dispatch('day_pass/createBooking', {
@@ -225,29 +222,27 @@ export default {
 			this.$store.commit('REMOVE_ROOM', room);
 		},
 		async checkDiscount() {
-			this.$store.commit('UPDATE_DISCOUNT', null);
+			this.$store.commit('UPDATE_DISCOUNT', null); 
 			if (this.code.length <= 2) {
 				this.$toast.info('Please input a proper code');
 				return;
 			}
 			this.loadingCode = true;
-			//console.log('Check for - ' + this.code);
 
 			this.$axios
 				.post(`/check-discount`, {
 					code: this.code,
 					total: this.subTotal,
-					// date: this.rooms[0].date,
+					date: this.bookingDate,
 				})
 				.then(({ data }) => {
-					//console.log(data);
+					console.log(data);
 					if (data.success) {
 						this.$toasted.success(data.message);
-
 						const discount = Object.assign({}, data.data);
-						//console.log(discount);
-						this.$store.commit('UPDATE_DISCOUNT', discount);
-						// this.createTransaction();
+						console.log(discount);
+						this.$store.commit('day_pass/UPDATE_DISCOUNT', discount);
+						this.createTransaction();
 					} else {
 						this.$toasted.error(data.message);
 					}
@@ -269,10 +264,9 @@ export default {
 	},
 	middleware({ store, redirect, $toast }) {
 		if (!store.state.day_pass.options_done) {
-			// $toast.info("Please accept all policies first");
 			redirect('/day-pass-options');
 		}
-		// store.commit('UPDATE_DISCOUNT', null);
+		store.commit('UPDATE_DISCOUNT', null);
 	},
 };
 </script>

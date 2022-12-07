@@ -21,26 +21,6 @@
 						<span>{{ currency(extra.price) }}</span>
 					</div>
 				</div>
-				<!-- <div class="flex items-center justify-between px-3 my-3" :key="extra.id">
-          <div>{{ extra.name }}</div>
-          <div>
-            <span v-if="extra.type == 'cakes'">
-              {{ currency($store.getters['extras/cakesPrice']) }}
-            </span>
-            <span v-else-if="extra.type == 'drinks'">{{ currency($store.getters['extras/drinksPrice']) }}</span>
-            <span v-else-if="extra.type == 'massages'">{{ currency($store.getters['extras/massagesPrice']) }}</span>
-            <span v-else-if="extra.type == 'bikes'">{{ currency($store.getters['extras/bikesPrice']) }}</span>
-            <span v-else-if="extra.type == 'photoshoot'">{{ currency($store.getters['extras/photoshootPrice']) }}</span>
-            <span v-else-if="extra.type == 'roomDecoration'">{{ currency($store.getters['extras/decorationPrice']) }}</span>
-            <span v-else-if="extra.type == 'unforgettableExperience'">{{ currency($store.getters['extras/experiencePrice']) }}</span>
-            <span v-else-if="extra.type == 'domesticStaff'">{{ currency($store.getters['extras/staffPrice']) }}</span>
-            <span v-else-if="extra.type == 'massage'">{{ currency($store.getters['extras/massagePrice']) }}</span>
-            <span v-else-if="extra.type == 'newmassage'">{{ currency($store.getters['extras/newmassagePrice']) }}</span>
-            <span v-else-if="extra.type == 'lookout'">{{ currency($store.getters['extras/quadbikePrice']) }}</span>
-            <span v-else-if="extra.type == 'lookout'">{{ currency($store.getters['extras/lookoutPrice']) }}</span>
-            <span v-else>{{ currency(0) }} - {{ extra.type }}</span>
-          </div>
-        </div>-->
 			</template>
 		</div>
 
@@ -49,10 +29,10 @@
 				<div>Sub-total</div>
 				<div class="font-bold">{{ currency(subTotal) }}</div>
 			</div>
-			<div class="flex justify-between px-3 my-3" v-if="memberDiscount > 0">
+			<!-- <div class="flex justify-between px-3 my-3" v-if="memberDiscount > 0">
 				<div>100Club Discount</div>
 				<div class="font-bold">- {{ currency(memberDiscount) }}</div>
-			</div>
+			</div> -->
 			<div class="flex justify-between px-3 my-3" v-if="discount > 0">
 				<div>Discount</div>
 				<div class="font-bold">- {{ currency(discount) }}</div>
@@ -186,7 +166,7 @@ export default {
 		specials() {
 			return this.$store.getters['extras/allSelected'];
 		},
-		memberDiscount() {
+		memberDiscount() { 
 			return this.$store.getters['day_pass/memberDiscount'];
 		},
 		taxTotal() {

@@ -71,7 +71,7 @@ export const getters: GetterTree<RootState, RootState> = {
 			return discount.amount;
 		} else if (discount.type == 'discount') {
 			const percent = discount.amount / 100;
-			return percent * getters.roomPrice;
+			return percent * getters.optionPrices;
 		}
 
 		return 0;
@@ -330,15 +330,15 @@ export const actions: ActionTree<RootState, RootState> = {
 			total: getters.totalPrice,
 		};
 
-		// const discount = state.discount;
-		// if (discount) {
-		// 	if (discount.type == 'discount') {
-		// 		dataToPost['discount'] = discount.amount;
-		// 		dataToPost['discount_amount'] = getters.discount;
-		// 	} else if (discount.type == 'voucher') {
-		// 		dataToPost['voucher'] = discount.amount;
-		// 	}
-		// }
+		const discount = state.discount;
+		if (discount) {
+			if (discount.type == 'discount') {
+				dataToPost['discount'] = discount.amount;
+				dataToPost['discount_amount'] = getters.discount;
+			} else if (discount.type == 'voucher') {
+				dataToPost['voucher'] = discount.amount;
+			}
+		}
 
 		//console.log('Create transaction Data to Post:');
 
