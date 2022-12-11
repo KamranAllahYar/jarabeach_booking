@@ -230,7 +230,7 @@ export default {
 			this.loadingCode = true;
 
 			this.$axios
-				.post(`/check-discount`, {
+				.post(`/check-daypass-discount`, {
 					code: this.code,
 					total: this.subTotal,
 					date: this.bookingDate,
