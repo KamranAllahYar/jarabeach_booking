@@ -37,7 +37,7 @@
 
 					<div v-if="!$store.state.editMode || $store.state.adminEditMode" class="mt-6 mb-12 border border-gray-100 rounded-md bg-gray-50 ring-gray-200 focus-within:ring ring-offset-2">
 						<form @submit.prevent="checkDiscount()" class="flex justify-between p-2">
-							<input class="w-full ml-2 bg-transparent outline-none" v-model="code" placeholder="Enter Discount code" />
+							<input class="w-full ml-2 bg-transparent outline-none" v-model="code" placeholder="Enter Voucher/Discount code" />
 							<div class="w-40 ml-3">
 								<button
 									:loading="loadingCode"
