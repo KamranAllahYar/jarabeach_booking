@@ -4,7 +4,7 @@
 			and toddlers included)</div>
 		<div class="mt-3 mb-4 text-center">By proceeding you understand your payment is transferable but
 			non-refundable in line with <a class="text-brand-blue"
-				href="www.jarabeachresort.com/terms">www.jarabeachresort.com/terms</a> </div>
+				href="https://www.jarabeachresort.com/terms">www.jarabeachresort.com/terms</a> </div>
 		<select name="guest" id="guest" v-model="noOfGuests" class="border rounded-md outline-none focus:outline-none"
 			style="box-shadow: none">
 			<option value="0">Guests</option>
