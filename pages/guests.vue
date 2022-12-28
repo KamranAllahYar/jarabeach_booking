@@ -11,6 +11,7 @@
 				Step 2 (next page): Choose the nights you'll be sleeping and your preferred room(s)
 			</div>
 		</div>
+		<div class="mt-3 text-center">By proceeding you understand your payment is transferable but non-refundable in line with <a class="text-brand-blue" href="www.jarabeachresort.com/terms">www.jarabeachresort.com/terms</a> </div>
 
 		<div class="max-w-lg px-6 py-6 mx-auto mt-10 bg-white border rounded-lg shadow-lg">
 			<div class="border rounded-lg">

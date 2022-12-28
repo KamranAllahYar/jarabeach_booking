@@ -1,7 +1,12 @@
 <template>
 	<div class="px-4 mx-auto md:w-1/2 lg:w-1/3 md:px-0">
-		<div class="mb-4 text-lg font-bold text-center">Please select the number of guests you want to book for (infants and toddlers included)</div>
-		<select name="guest" id="guest" v-model="noOfGuests" class="border rounded-md outline-none focus:outline-none" style="box-shadow: none">
+		<div class="text-lg font-bold text-center">Please select the number of guests you want to book for (infants
+			and toddlers included)</div>
+		<div class="mt-3 mb-4 text-center">By proceeding you understand your payment is transferable but
+			non-refundable in line with <a class="text-brand-blue"
+				href="www.jarabeachresort.com/terms">www.jarabeachresort.com/terms</a> </div>
+		<select name="guest" id="guest" v-model="noOfGuests" class="border rounded-md outline-none focus:outline-none"
+			style="box-shadow: none">
 			<option value="0">Guests</option>
 			<option v-for="num in 50" :value="num" :key="num">
 				{{ num }}
@@ -12,20 +17,20 @@
 			<div class="space-y-6 md:items-center md:space-x-4 md:justify-between md:flex md:space-y-0">
 				<div>
 					<label for="firstName" class="mb-1 font-semibold">First Name</label>
-					<input type="text" id="firstName" class="block w-full rounded" v-model="firstName"/>
+					<input type="text" id="firstName" class="block w-full rounded" v-model="firstName" />
 				</div>
 				<div>
 					<label for="lastName" class="mb-1 font-semibold">Last Name</label>
-					<input type="text" id="lastName" class="block w-full rounded" v-model="lastName"/>
+					<input type="text" id="lastName" class="block w-full rounded" v-model="lastName" />
 				</div>
 			</div>
 			<div>
 				<label for="email" class="mb-1 font-semibold">Email Address</label>
-				<input type="email" id="email" class="block w-full rounded" v-model="email"/>
+				<input type="email" id="email" class="block w-full rounded" v-model="email" />
 			</div>
 			<div>
 				<label for="phone" class="mb-1 font-semibold">Phone Number</label>
-				<input type="text" max-length="11" id="phone" class="block w-full rounded" v-model="phone"/>
+				<input type="text" max-length="11" id="phone" class="block w-full rounded" v-model="phone" />
 			</div>
 		</div>
 		<div class="flex justify-end w-32 mt-6 space-x-3 md:justify-start" v-if="canGoToNext">
@@ -51,7 +56,7 @@ export default {
 	},
 	computed: {
 		canGoToNext() {
-			return this.noOfGuests > 0 && this.firstName.length > 0 && this.lastName.length > 0 && this.email.length > 0 && this.phone.length > 0 && this.isEmailValid && typeof(this.phone) !== 'number';
+			return this.noOfGuests > 0 && this.firstName.length > 0 && this.lastName.length > 0 && this.email.length > 0 && this.phone.length > 0 && this.isEmailValid && typeof (this.phone) !== 'number';
 		},
 		isEmailValid() {
 			return String(this.email)
@@ -112,9 +117,9 @@ export default {
 			this.phone = this.$store.state.day_pass.guest_phone;
 		},
 	},
-	mounted(){
+	mounted() {
 		this.updateFromStore();
-		if(this.$store.state.extras.extras_booking !== 'day-pass'){
+		if (this.$store.state.extras.extras_booking !== 'day-pass') {
 			this.$store.commit("extras/RESET_STORE");
 			this.$store.commit('extras/UPDATE_EXTRAS_BOOKING_TYPE', 'day-pass')
 		}
