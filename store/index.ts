@@ -46,7 +46,7 @@ export const state = () => ({
 
 	extra: '' as string,
 	showExtra: false as boolean,
-	specials: ['lookout', 'massage', 'newmassage', 'quadbike', 'photoshoot', 'drinks', 'cakes', 'roomDecoration', 'unforgettableExperience', 'domesticStaff'] as any[],
+	specials: ['lookout', 'massage', 'newmassage', 'quadbike', 'photoshoot', 'drinks', 'dayPass', 'cakes', 'roomDecoration', 'unforgettableExperience', 'domesticStaff'] as any[],
 
 	booking: null as any,
 	discount: null as any,
@@ -74,6 +74,8 @@ export const getters: GetterTree<RootState, RootState> = {
 	noChildren: (state: RootState) => state.child_no,
 	noDiscountDates: (state: RootState) => state.noDiscountDates,
 	noTeens: (state: RootState) => state.other_guests.filter(child => child.type == 'teen').length,
+	noChild: (state: RootState) => state.other_guests.filter(child => child.type == 'child').length,
+	noSmallPeopleWithoutChild: (state: RootState, getters) => getters.noChildren - (getters.noTeens + getters.noChild),
 	bigPeople: (state: RootState, getters) => getters.noAdults + getters.noTeens,
 	smallPeople: (state: RootState, getters) => getters.noChildren - getters.noTeens,
 	roomsData: (state: RootState) => state.roomsData,
@@ -411,7 +413,7 @@ export const getters: GetterTree<RootState, RootState> = {
 			if (shouldCount) tNights++;
 		});
 
-		console.log('Total nights: ' + tNights);
+		//console.log('Total nights: ' + tNights);
 
 		// const totalNights = getters.totalNights;
 		const totalNights = tNights;
@@ -443,6 +445,9 @@ export const getters: GetterTree<RootState, RootState> = {
 			}
 			if (extra.type == 'drinks') {
 				extraPrices += getters['extras/drinksPrice'];
+			}
+			if (extra.type == 'dayPass') {
+				extraPrices += getters['extras/dayPassPrices'];
 			}
 			if (extra.type == 'massages') {
 				extraPrices += getters['extras/massagesPrice'];
@@ -555,7 +560,7 @@ export const mutations: MutationTree<RootState> = {
 	TRANSFORM_EDIT_TO_REAL: (state: RootState, booking) => {
 		const oldBooking = booking;
 
-		console.log(booking);
+		//console.log(booking);
 
 		// Guest info transformation
 		state.adult_no = oldBooking.adult_no;
@@ -704,28 +709,27 @@ export const mutations: MutationTree<RootState> = {
 export const actions: ActionTree<RootState, RootState> = {
 	loadRooms({ commit }) {
 		return this.$axios.get('/rooms').then(res => {
-			console.log(res.data.data);
+			//console.log(res.data.data);
 			commit('UPDATE_ROOMS_DATA', res.data.data);
 		});
 	},
 
 	loadPolicies({ commit }) {
 		this.$axios.get('/policies').then(res => {
-			console.log(res.data.data);
+			//console.log(res.data.data);
 			commit('UPDATE_POLICIES', res.data.data);
 		});
 	},
 
 	loadNoDiscountDates({ commit }) {
 		this.$axios.get('/no-discount-dates').then(res => {
-			// console.log(res.data.data);
+			// //console.log(res.data.data);
 			commit('UPDATE_NO_DISCOUNT_DATES', res.data.data);
 		});
 	},
-
 	async confirmGuest({}, email: string) {
 		return await this.$axios.post('confirm/guest', { email }).then(res => {
-			console.log(res);
+			//console.log(res);
 			return res.data;
 		});
 	},
@@ -736,7 +740,7 @@ export const actions: ActionTree<RootState, RootState> = {
 				headers: { 'Content-Type': 'multipart/form-data' },
 			})
 			.then(res => {
-				console.log(res);
+				//console.log(res);
 				// return res.data
 
 				if (!res.data.success) {
@@ -746,7 +750,7 @@ export const actions: ActionTree<RootState, RootState> = {
 					if (dataError) {
 						for (let key in dataError) {
 							if (dataError.hasOwnProperty(key)) {
-								console.log(key + ' -> ' + dataError[key]);
+								//console.log(key + ' -> ' + dataError[key]);
 
 								dataError[key].forEach((m: any) => {
 									msg += '<br /><br />' + m;
@@ -771,7 +775,7 @@ export const actions: ActionTree<RootState, RootState> = {
 	},
 
 	async createTransaction({ state, getters, rootState, rootGetters }) {
-		console.log(getters);
+		//console.log(getters);
 		let dataToPost = {} as any;
 		if (!state.editMode) {
 			dataToPost = {
@@ -781,7 +785,7 @@ export const actions: ActionTree<RootState, RootState> = {
 				total: getters.totalPrice,
 			};
 		} else {
-			console.log(state.editBooking.previous_change);
+			//console.log(state.editBooking.previous_change);
 			let diff = getters.differenceToPay;
 
 			dataToPost = {
@@ -803,18 +807,23 @@ export const actions: ActionTree<RootState, RootState> = {
 			}
 		}
 
-		console.log('Create transaction Data to Post:');
+		//console.log('Create transaction Data to Post:');
 
 		const { dataToPost: bookingDataToPost, specialsToSend } = getDataToSend({ state, getters, rootState, rootGetters });
 
 		dataToPost['booking_data'] = bookingDataToPost;
 		dataToPost['specials_data'] = specialsToSend;
+		const bookingFrom = localStorage.getItem('bookingFrom');
+		if(bookingFrom){
+			//console.log('I got a booking from', bookingFrom);
+			dataToPost['booking_from'] = bookingFrom;
+		}
 
-		console.log(dataToPost);
+		//console.log(dataToPost);
 
 		try {
 			const res = await this.$axios.post('transactions', dataToPost);
-			console.log(res.data);
+			//console.log(res.data);
 
 			if (res.data.success) {
 				return res.data.reference;
@@ -826,10 +835,10 @@ export const actions: ActionTree<RootState, RootState> = {
 		}
 	},
 
-	async createBooking({ state, getters, rootState, rootGetters }, { trans_ref, method_ref, method }) {
+	async createBooking({ state, getters, rootState, rootGetters }, { trans_ref, method_ref, method, booking_from }) {
 		//@ts-ignore
 		const extraState = rootState.extras;
-		console.log(extraState, rootGetters);
+		//console.log(extraState, rootGetters);
 
 		const allExtras = (rootGetters['extras/allSelected'] as any[]).map(s => s.type);
 		let specialsToSend = {
@@ -842,6 +851,7 @@ export const actions: ActionTree<RootState, RootState> = {
 			'100Club Member Discount': '-' + rootGetters.memberDiscount,
 			'Extra People Cost': '+' + rootGetters.extraPeoplePrice,
       taxTotal: rootGetters.taxTotal,
+      tax: rootGetters.taxTotal,
 		} as any;
 
 		if (allExtras.includes('cakes')) {
@@ -849,6 +859,7 @@ export const actions: ActionTree<RootState, RootState> = {
 				date: extraState.dateCake,
 				options: extraState.selectedCakes,
 				message: extraState.cakeMessage,
+				gender: extraState.cakeGender,
 			};
 			prices['cakes'] = rootGetters['extras/cakesPrice'];
 		}
@@ -890,6 +901,13 @@ export const actions: ActionTree<RootState, RootState> = {
 				options: extraState.selectedDrinks,
 			};
 			prices['drinks'] = rootGetters['extras/drinksPrice'];
+		}
+		if (allExtras.includes('dayPass')) {
+			specialsToSend['dayPass'] = {
+				date: extraState.dayPassDate,
+				options: extraState.selectedDayPassOptions,
+			};
+			prices['dayPass'] = rootGetters['extras/dayPassPrices'];
 		}
 		if (allExtras.includes('massages')) {
 			specialsToSend['massages'] = {
@@ -953,7 +971,7 @@ export const actions: ActionTree<RootState, RootState> = {
 			prices['Balance Paid'] = diff;
 		}
 
-		console.log(specialsToSend);
+		//console.log(specialsToSend);
 
 		let dataToPost: any = {
 			booking: {
@@ -965,13 +983,14 @@ export const actions: ActionTree<RootState, RootState> = {
 				method_ref: method_ref,
 				method: method,
 			},
+			booking_from,
 			booked_rooms: state.rooms,
 			prices: prices,
 			admin_edit_mode: state.adminEditMode,
 			multi_room: state.multiRoom,
 		};
 
-		if (state.guest.id) {
+		if (state.guest?.id) {
 			dataToPost.guest_id = state.guest.id;
 		}
 
@@ -989,19 +1008,19 @@ export const actions: ActionTree<RootState, RootState> = {
 			dataToPost.oldBookingId = state.editBooking.id;
 		}
 
-		console.log(dataToPost);
+		//console.log(dataToPost);
 
-		console.log(prices);
+		//console.log(prices);
 
 		try {
 			const res = await this.$axios.post('bookings', dataToPost);
-			console.log(res.data);
+			//console.log(res.data);
 
 			if (res.data.success) {
 				const newBooking = res.data.data.booking;
-				console.log(newBooking);
+				//console.log(newBooking);
 				const sRes = await this.$axios.post(`/book-specials/${newBooking.id}`, specialsToSend);
-				console.log(sRes.data);
+				//console.log(sRes.data);
 
 				this.app.$toast.success(res.data.message);
 				state.done_data.booking = newBooking;

@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col w-full md:flex-row">
         <div class="relative w-full md:w-6/12 h-60 md:h-auto">
-            <img src="@/assets/images/specials/massage.png" alt="" class="object-cover object-center w-full h-full">
+            <img src="@/assets/images/specials/massages.jpeg" alt="" class="object-cover object-center w-full h-full">
         </div>
         <div class="w-full p-6 md:w-7/12">
             <div class="font-semibold">Massage</div>
@@ -121,14 +121,14 @@ export default {
             }
 
             if (this.currentAvailableMassages) {
-                // console.log(this.currentAvailableMassages);
+                // //console.log(this.currentAvailableMassages);
                 return this.currentAvailableMassages.includes(slot_id);
             }
 
             return false;
         },
         next() {
-            console.log("NEXT");
+            //console.log("NEXT");
             this.$store.commit("extras/SET_SELECTED_MASSAGE", {
                 massage: this.selectedMassage,
                 date: this.selectedDate,
@@ -148,7 +148,7 @@ export default {
         checkOptions() {
             let oldBookingId = null;
             if (this.$store.state.editMode) {
-                console.log("in edit mode");
+                //console.log("in edit mode");
                 if (this.$store.state.editBooking) {
                     oldBookingId = this.$store.state.editBooking.id;
                 }
@@ -160,7 +160,7 @@ export default {
                     oldBookingId: oldBookingId,
                 })
                 .then((res) => {
-                    console.log(res.data.data);
+                    //console.log(res.data.data);
                     this.availableMassages = res.data.data;
                 });
         },

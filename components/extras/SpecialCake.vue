@@ -194,7 +194,7 @@ export default {
 	},
 	// watch: {
 	//     "cake.type"(newVal, oldVal) {
-	//         console.log("new: " + newVal + " - old: " + oldVal);
+	//         //console.log("new: " + newVal + " - old: " + oldVal);
 	//         if (newVal == "cupcakes" && oldVal != "cupcakes") {
 	//             this.cake.quantity = 0;
 	//             return;
@@ -289,7 +289,7 @@ export default {
 
 				this.noDates = noDates;
 
-				console.log(noDates);
+				//console.log(noDates);
 			});
 		},
 	},

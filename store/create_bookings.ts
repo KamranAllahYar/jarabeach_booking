@@ -61,6 +61,14 @@ const getDataToSend = ({ state, getters, rootState, rootGetters }: any, transDat
 		};
 		prices['drinks'] = rootGetters['extras/drinksPrice'];
 	}
+	console.log(allExtras)
+	if (allExtras.includes('dayPass')) {
+		specialsToSend['dayPass'] = {
+			date: extraState.dayPassDate,
+			options: extraState.selectedDayPassOptions,
+		};
+		prices['dayPass'] = rootGetters['extras/dayPassPrices'];
+	}
 	if (allExtras.includes('massages')) {
 		specialsToSend['massages'] = {
 			date: extraState.dateMassages,
@@ -143,7 +151,7 @@ const getDataToSend = ({ state, getters, rootState, rootGetters }: any, transDat
 		multi_room: state.multiRoom,
 	};
 
-	if (state.guest.id) {
+	if (state.guest?.id) {
 		dataToPost.guest_id = state.guest.id;
 	}
 
@@ -165,13 +173,13 @@ const getDataToSend = ({ state, getters, rootState, rootGetters }: any, transDat
 
 	// try {
 	//   const res = await $axios.post("bookings", dataToPost);
-	//   console.log(res.data);
+	//   //console.log(res.data);
 
 	//   if (res.data.success) {
 	//     const newBooking = res.data.data.booking;
-	//     console.log(newBooking);
+	//     //console.log(newBooking);
 	//     const sRes = await $axios.post(`/book-specials/${newBooking.id}`, specialsToSend);
-	//     console.log(sRes.data);
+	//     //console.log(sRes.data);
 
 	//     $app.$toast.success(res.data.message);
 	//     state.done_data.booking = newBooking;

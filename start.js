@@ -3,7 +3,7 @@
 
 const exec = require("child_process").exec; // Or es6 modules, you know, I'm not your supervisor.
 
-console.log(
+//console.log(
   `Starting app for production` // you may have different envs...
 );
 
@@ -13,12 +13,12 @@ console.log(
 
 const build = exec("npm run start", { stdio: "inherit", windowsHide: true });
 
-build.stdout && build.stdout.on("data", console.log);
-build.stderr && build.stderr.on("data", console.log);
+build.stdout && build.stdout.on("data", //console.log);
+build.stderr && build.stderr.on("data", //console.log);
 
 build.on("close", code => {
   if (code !== 0) {
-    console.log(`Build process exited with code ${code}`);
+    //console.log(`Build process exited with code ${code}`);
   }
 
   if (build.stdin) {

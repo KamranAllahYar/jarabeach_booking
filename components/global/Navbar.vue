@@ -22,12 +22,12 @@
               </a>
             -->
             <div class="flex items-center justify-between space-x-4">
-                <a href="https://www.jarabeachresort.com/day-pass" class="px-4 py-2 transition-colors duration-500 border border-white cursor-pointer hover:text-black hover:bg-white">
+                <a href="https://www.jarabeachresort.com/day-pass" class="px-4 py-2 transition-colors duration-500 border border-white cursor-pointer hover:text-black hover:bg-white" v-if="$route.name !== 'day-pass'">
                     DAYPASS BOOKING
                 </a>
-                <!-- <a href="https://www.jarabeachresort.com/book" class="px-4 py-2 transition-colors duration-700 border border-white cursor-pointer hover:text-black hover:bg-white">
+                <a href="https://www.jarabeachresort.com/book" class="px-4 py-2 transition-colors duration-700 border border-white cursor-pointer hover:text-black hover:bg-white" v-else>
                     OVERNIGHT BOOKING
-                </a> -->
+                </a>
             </div>
             <div class="flex-1 hidden md:block"></div>
             <div class="hidden md:block">

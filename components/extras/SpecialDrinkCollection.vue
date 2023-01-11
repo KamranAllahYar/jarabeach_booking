@@ -136,7 +136,7 @@ export default {
 
                     this.noDates = noDates;
 
-                    console.log(noDates);
+                    //console.log(noDates);
                 });
         },
     },

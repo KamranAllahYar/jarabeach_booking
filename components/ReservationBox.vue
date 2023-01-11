@@ -1,7 +1,9 @@
 <template>
 	<div class="flex flex-col space-y-6">
 		<div class="w-full text-gray-800 border rounded-md border-brand-blue-300 bg-brand-blue-100" v-if="showGuests">
-			<div class="px-3 py-3 text-xl font-bold border-b border-brand-blue-300">Your Reservation</div>
+			<div class="px-3 py-3 text-xl font-bold border-b border-brand-blue-300">
+				Your Reservation
+			</div>
 
 			<div class="flex justify-between px-3 my-3">
 				<div>Guests</div>
@@ -102,7 +104,7 @@
 			<div class="flex justify-between px-3 my-3" v-if="roomDiscountPercent > 0 && roomDiscount > 0">
 				<div>
 					{{ roomDiscountPercent }}% Room Discount
-					<small class="text-xs text-gray-700" v-if="roomVillaPrices > 0 &&roomLoftPrices > 0 "> <br />(exludes Villas and The Loft) </small>
+					<small class="text-xs text-gray-700" v-if="roomVillaPrices > 0 && roomLoftPrices > 0"> <br />(exludes Villas and The Loft) </small>
 					<small class="text-xs text-gray-700" v-else-if="roomVillaPrices > 0"> <br />(exludes Villas) </small>
 					<small class="text-xs text-gray-700" v-else-if="roomLoftPrices > 0"> <br />(exludes The Loft) </small>
 				</div>
@@ -136,7 +138,9 @@
 
 		<div v-if="$store.state.editMode" class="w-full px-3 py-3 border rounded-md border-brand-blue-300 bg-brand-blue-100">
 			<div v-if="$store.state.editBooking.previous_change" class="flex justify-between">
-				<div class="text-xs">Booking Transfer Charge (12.5% VAT and Consumption tax included)</div>
+				<div class="text-xs">
+					Booking Transfer Charge (12.5% VAT and Consumption tax included)
+				</div>
 				<div class="text-xs font-bold">{{ currency(28125) }}</div>
 			</div>
 			<div class="flex justify-between">
@@ -186,6 +190,9 @@ export default {
 							break;
 						case 'drinks':
 							price = this.$store.getters['extras/drinksPrice'];
+							break;
+						case 'dayPass':
+							price = this.$store.getters['extras/dayPassPrices'];
 							break;
 						case 'massages':
 							price = this.$store.getters['extras/massagesPrice'];
@@ -338,15 +345,11 @@ export default {
 		},
 		formatAndStringCabin(arrs) {
 			const arr = [...new Set(arrs)];
-			console.log('array -----');
-			console.log(arr);
+
 			const index = arr.indexOf(6);
 			if (index > -1) {
 				arr.splice(index, 1);
-				console.log('splicing--');
 			}
-			console.log(index);
-			console.log(arr);
 
 			if (arr.length == 0) return false;
 			if (arr.length == 1) return arr[0];

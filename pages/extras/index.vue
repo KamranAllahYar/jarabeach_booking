@@ -15,7 +15,6 @@
                     Here you can book in any extra special experiences. <br />
                     Please select the ones you wish to add to your booking.
                 </h1>
-
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
                     <div v-for="(extra, i) in specials" :key="i"
                         class="w-full overflow-hidden transition-all transform bg-white border rounded-lg"
@@ -32,7 +31,7 @@
                             </div>
                         </div>
                         <div class="relative w-full h-48 overflow-hidden">
-                            <img :src="require(`@/assets/images/thumbnails/${extra.type}.png`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
+                            <img :src="require(`@/assets/images/thumbnails/${extra.type}.${fileExtension(extra.type)}`)" class="absolute object-cover object-center w-full h-full bg-cover" alt="">
                             <div class="absolute bottom-0 z-20 px-5 pb-3 font-semibold text-white">From N{{ extra.range }}</div>
                             <div class="relative z-10 h-full bg-black bg-opacity-25"></div>
                         </div>
@@ -70,8 +69,14 @@ export default {
         dates() {
             return this.$store.getters.bookedRooms.map((room) => room.date);
         },
+        
     },
     methods: {
+        fileExtension(type){
+            //console.log(this.specials);
+            if(type !== 'unforgettableExperience' && type !== 'massages' && type !== 'dayPass') return 'png'
+            return 'jpeg'
+        },
         gotoBack() {
             this.$store.commit("extras/RESET_INDEX");
             this.$router.push({ path: "/availability" });
@@ -89,13 +94,18 @@ export default {
             return this.selected.some((s) => s.type == sp.type);
         },
         selectSpecial(sp) {
-            console.log(sp);
+            if(sp.name === 'Go-Kart and Horse Riding'){
+                this.$toast.error('Sorry, this is no longer available');
+                return;
+            }
+            
             if (!sp.available) {
                 this.$toast.info(
                     sp.name + " is not available for the dates you selected"
                 );
                 return;
             }
+
 
             if (this.isSelectedSpecial(sp)) {
                 this.$store.commit("extras/REMOVE_SELECTED", sp);
@@ -115,6 +125,11 @@ export default {
         this.$store.dispatch("extras/getSpecialNewmassages");
         this.$store.dispatch("extras/getQuadbikeOptions");
         this.$store.dispatch("extras/getMostPrices");
+        if(this.$store.state.extras.extras_booking !== 'guests'){
+			this.$store.commit("extras/RESET_STORE");
+			this.$store.commit('extras/UPDATE_EXTRAS_BOOKING_TYPE', 'guests')
+
+		}
     },
     middleware({ store, redirect, $toast }) {
         if (!store.state.availability_done) {

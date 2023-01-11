@@ -24,6 +24,8 @@
 
         <SpecialDomesticStaff v-else-if="currentSpecial == 'domesticStaff'" @next="gotoNext()" @prev="gotoPrev()" />
 
+        <SpecialDayPass v-else-if="currentSpecial == 'dayPass'" @next="gotoNext()" @prev="gotoPrev()" />
+
         <button @click="removeExtra()" class="absolute px-2 py-1 text-sm text-red-500 capitalize transition-colors rounded-sm top-2 right-2 hover:bg-red-500 hover:text-white">remove extra</button>
     </div>
 </template>
@@ -52,12 +54,12 @@ export default {
 
             if (confirmRemove) {
                 this.gotoNext();
-                console.log(this.currentSpecial);
+                //console.log(this.currentSpecial);
                 this.$store.commit("extras/REMOVE_EXTRA", this.currentSpecial);
             }
         },
         gotoNext() {
-            console.log(this.index);
+            //console.log(this.index);
             if (this.index == this.selected.length - 1) {
                 this.$router.push({ path: "/profile" });
                 return;

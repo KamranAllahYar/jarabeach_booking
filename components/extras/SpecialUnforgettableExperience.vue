@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full md:flex-row">
     <div class="relative w-full md:w-6/12 h-60 md:h-auto">
-      <img src="@/assets/images/specials/unforgettableExperience.png" alt class="object-cover object-center w-full h-full" />
+      <img src="@/assets/images/specials/unforgettableExperience.jpeg" alt class="object-cover object-center w-full h-full" />
     </div>
 
     <div class="w-full p-6 md:w-7/12">
@@ -372,7 +372,7 @@ export default {
       );
     },
     next() {
-      console.log("NEXT");
+      //console.log("NEXT");
       this.$store.commit("extras/SET_SELECTED_EXPERIENCE", {
         experiences: this.selectedExperiences,
         // note: this.welcomeNote,
@@ -414,7 +414,7 @@ export default {
       this.picnicLoading = true;
       let oldBookingId = null;
       if (this.$store.state.editMode) {
-        console.log("in edit mode");
+        //console.log("in edit mode");
         if (this.$store.state.editBooking) {
           oldBookingId = this.$store.state.editBooking.id;
         }
@@ -426,7 +426,7 @@ export default {
           oldBookingId: oldBookingId,
         })
         .then((res) => {
-          console.log(res.data.data);
+          //console.log(res.data.data);
           this.picnicDates = res.data.data;
         })
         .finally(() => {
@@ -437,7 +437,7 @@ export default {
       this.paintingLoading = true;
       let oldBookingId = null;
       if (this.$store.state.editMode) {
-        console.log("in edit mode");
+        //console.log("in edit mode");
         if (this.$store.state.editBooking) {
           oldBookingId = this.$store.state.editBooking.id;
         }
@@ -449,7 +449,7 @@ export default {
           oldBookingId: oldBookingId,
         })
         .then((res) => {
-          console.log(res.data.data);
+          //console.log(res.data.data);
           this.paintingDates = res.data.data;
         })
         .finally(() => {
@@ -460,7 +460,7 @@ export default {
       this.breakfastLoading = true;
       let oldBookingId = null;
       if (this.$store.state.editMode) {
-        console.log("in edit mode");
+        //console.log("in edit mode");
         if (this.$store.state.editBooking) {
           oldBookingId = this.$store.state.editBooking.id;
         }
@@ -472,8 +472,8 @@ export default {
           oldBookingId: oldBookingId,
         })
         .then((res) => {
-          console.log("Breakfast options");
-          console.log(res.data.data);
+          //console.log("Breakfast options");
+          //console.log(res.data.data);
           this.breakfastDateTimes = res.data.data;
         })
         .finally(() => {
@@ -488,7 +488,7 @@ export default {
 
           this.noDates = noDates;
 
-          console.log(noDates);
+          //console.log(noDates);
         });
     },
   },

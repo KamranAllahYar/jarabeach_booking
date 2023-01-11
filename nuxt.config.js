@@ -26,6 +26,7 @@ export default {
   plugins: [
     "@/plugins/popover.js",
     "@/plugins/vue-tour.js",
+    "@/plugins/v-calendar.js",
     { src: '@/plugins/vuex-persist', ssr: false },
     { src: '@/plugins/bugsnag', ssr: false }
   ],
@@ -50,7 +51,7 @@ export default {
     '@nuxtjs/toast',
   ],
   axios: {
-    baseURL: process.env.API_URL || "https://jarabeach-admin.reftek.app/api"
+    baseURL: process.env.API_URL || "http://localhost:8000/api/",
   },
   build: {},
   toast: {

@@ -202,7 +202,7 @@ export default {
             const today = new Date();
             const currentYear = today.getFullYear();
 
-            console.log(currentYear - 18);
+            //console.log(currentYear - 18);
 
             return currentYear - 18;
         },
@@ -249,13 +249,13 @@ export default {
             return false;
         },
         async gotoNext() {
-            console.log("go to next");
+            //console.log("go to next");
             if (this.initialLoad && !this.wantsToUpdate) {
-                console.log("sd");
+                //console.log("sd");
                 this.confirmGuest();
                 return;
             }
-            console.log("sss");
+            //console.log("sss");
 
             let guestFormData = new FormData();
             if (this.hasFileUpload) {
@@ -289,7 +289,7 @@ export default {
             );
 
             // for (var pair of guestFormData.entries()) {
-            //     console.log(pair[0] + ", " + pair[1]);
+            //     //console.log(pair[0] + ", " + pair[1]);
             // }
 
             this.$store.commit("UPDATE_GUEST", {
@@ -298,12 +298,12 @@ export default {
             });
 
             if (this.showFullForm) {
-                console.log("go and save");
+                //console.log("go and save");
                 try {
                     await this.saveGuest(guestFormData);
                 } catch (e) {
-                    console.log("Catch me here");
-                    console.log(e);
+                    //console.log("Catch me here");
+                    //console.log(e);
                     this.loading = false;
                     this.$toast.error(e.message ?? e);
                     return;
@@ -320,7 +320,8 @@ export default {
         },
 
         gotoBack() {
-            this.$router.go(-1);
+            // this.$router.go(-1);
+            this.$router.push({ path: "/extras" });
         },
 
         submitFile() {
@@ -329,12 +330,12 @@ export default {
         },
         handleFileUpload() {
             this.file = this.$refs.file.files[0];
-            console.log(">>>> 1st element in files array >>>> ", this.file);
+            //console.log(">>>> 1st element in files array >>>> ", this.file);
             const kbSize = parseFloat(this.file.size / 1024).toFixed(2);
-            console.log(kbSize);
+            //console.log(kbSize);
 
             if (kbSize > 990) {
-                console.log("Too big");
+                //console.log("Too big");
                 this.$toast.error("You cannot upload files larger than 1 MB");
                 this.file = null;
                 this.$refs.file.value = "";
@@ -354,7 +355,7 @@ export default {
                 return;
             }
 
-            console.log("confirming guest");
+            //console.log("confirming guest");
 
             this.loading = true;
             const res = await this.$store.dispatch(
@@ -380,7 +381,7 @@ export default {
                 });
             }
 
-            // console.log(res);
+            // //console.log(res);
             this.loading = false;
             this.initialLoad = false;
         },
@@ -404,7 +405,7 @@ export default {
                 this.loading = false;
                 return res;
             } catch (e) {
-              console.log(e);
+              //console.log(e);
                 this.loading = false;
                 // this.$toast.error("Something went wrong, please try again");
                 // this.$toast.error(e);
@@ -421,7 +422,7 @@ export default {
         },
     },
     created() {
-        console.log("CREATED PROFILE");
+        //console.log("CREATED PROFILE");
         if (this.$store.state.guest) {
             this.guest = Object.assign({}, this.$store.state.guest);
 

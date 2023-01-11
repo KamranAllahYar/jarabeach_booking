@@ -21,7 +21,7 @@
             required. A riding waiver / terms of usage must be signed, prior to riding. All damages are chargeable.
           </div>
 				</p>
-				<div class="font-semibold mt-4">Horse Riding</div>
+				<div class="mt-4 font-semibold">Horse Riding</div>
 				<p class="mt-2 font-light leading-relaxed text-gray-600">
 					Horse riding is available through local horse owners, along the beachfront. A riding waiver / terms of usage must be signed, prior to riding. PLEASE BE AWARE riders do so at their
 					own risk. Suitable for Adult riders [only] and passengers (under 18yrs with signed guardian).
@@ -65,11 +65,11 @@
 						</div>
 					</div>
 
-					<div @click="addNewMassage" v-if="showAddButton" class="flex items-center flex-shrink-0 h-10 mt-0 text-xs cursor-pointer w-44 text-brand-blue hover:text-brand-blue-300">
+					<div @click="addNewMassage" v-if="showAddButton" class="flex items-center flex-shrink-0 h-10 mt-0 text-xs cursor-pointer text-brand-blue hover:text-brand-blue-300">
 						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
 						</svg>
-						<div>Add</div>
+						<div>Click here to add section above to your booking</div>
 					</div>
 
 					<div class="flex flex-wrap items-center justify-between mt-4 space-y-4 md:space-y-3">
@@ -175,7 +175,6 @@ export default {
 				var container = this.$el.querySelector('#con_scroll');
 				container.scrollTop = container.scrollHeight;
 			});
-			console.log(this.dates[0]);
 		},
 		removeMassage(ix) {
 			this.selectedBikes.splice(ix, 1);
@@ -189,7 +188,6 @@ export default {
 
 				this.noDates = noDates;
 
-				console.log(noDates);
 			});
 		},
 	},

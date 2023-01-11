@@ -100,6 +100,7 @@ const calcExtraPeoplePrice = function (getters, rooms) {
 }
 
 const calcRoomLimit = function (getters, rooms) {
+  //console.log('ROoms', rooms)
   const roomTypes = rooms.map(r => {
     return r.type;
   });
@@ -113,7 +114,7 @@ const calcRoomLimit = function (getters, rooms) {
   const villaBigMax = 4;
   const loftBigMax = 5;
 
-  const standardSmallMax = 2;
+  const standardSmallMax = 1;
   const familySmallMax = 2;
   const villaSmallMax = 2;
   const loftSmallMax = 2;
@@ -121,8 +122,13 @@ const calcRoomLimit = function (getters, rooms) {
   let totalBigMax = 0;
   let totalSmallMax = 0;
 
+  let smallPeople = getters.smallPeople;
+  let isStandardAndChildIsAvailable = false;
   roomTypes.forEach((type) => {
     if (type == 'standard') {
+      if(getters.bigPeople === 2 && getters.noChild > 0 && rooms.length === 1) {
+        isStandardAndChildIsAvailable = true;
+      }
       totalBigMax += standardBigMax;
       totalSmallMax += standardSmallMax;
     } else if (type == 'family') {
@@ -137,12 +143,16 @@ const calcRoomLimit = function (getters, rooms) {
     }
   });
 
+  if(isStandardAndChildIsAvailable){
+    return false;
+  }
+
   const bigDiff = totalBigMax - getters.bigPeople;
   if (bigDiff < 0) return false;
 
   totalSmallMax += bigDiff;
-
-  return getters.smallPeople <= totalSmallMax;
+  // //console.log('Small People', getters.smallPeople);
+  return smallPeople <= totalSmallMax;
 }
 
 const calcRoomPrice = function (getters, rooms) {

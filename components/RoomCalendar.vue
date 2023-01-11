@@ -285,7 +285,6 @@ export default {
         },
         fullDays() {
             let num = this.daysInMonth;
-            console.log(this.daysInMonth);
 
             const nums = [];
             for (let n = 1; n <= num; n++) {
@@ -295,7 +294,6 @@ export default {
         },
         firstHalfDays() {
             let num = Math.ceil(this.daysInMonth / 2);
-            console.log(this.daysInMonth);
 
             const nums = [];
             for (let n = 1; n <= num; n++) {
@@ -305,8 +303,6 @@ export default {
         },
         secondHalfDays() {
             const num = this.daysInMonth - this.firstHalfDays.length + 1;
-
-            console.log(num + 1);
 
             const nums = [];
             for (let n = num + 1; n <= this.daysInMonth; n++) {
@@ -426,8 +422,6 @@ export default {
                 isAfter(parseISO(this.getDateStr(date)), parseISO(startStr)) &&
                 isBefore(parseISO(this.getDateStr(date)), parseISO(endStr))
             );
-
-            console.log(startStr, endStr);
         },
         selectRoom(roomType, date) {
             if (this.roomsAvailable(roomType, date) <= 0) return;
@@ -576,7 +570,6 @@ export default {
                     booking_id: bookingId,
                 })
                 .then((res) => {
-                    console.log(res.data.data);
                     const aRooms = res.data.data;
 
                     this.hoveredRooms = [];
@@ -600,8 +593,6 @@ export default {
                 new Date(this.endDate)
             ).map((v) => v.toISOString().slice(0, 10));
 
-            console.log(dateList);
-
             return dateList;
         },
         onResize() {
@@ -612,14 +603,9 @@ export default {
         this.getRooms();
         this.getRoomsForMonth();
 
-        console.log("ROOM CALENDAR MOUNTED");
-        console.log(this.initialRooms);
 
         if (this.initialRooms) {
             this.bookedRooms = this.initialRooms;
-            console.log("-----------ALL INITIAL ROOMS");
-            console.log(this.initialRooms);
-            console.log(this.roomIds);
 
             const firstRoom = this.initialRooms[0];
 
@@ -637,14 +623,11 @@ export default {
 
                 this.startDate = allDates[0];
                 this.endDate = allDates[allDates.length - 1];
-                console.log("This is start date: " + this.startDate);
-                console.log("This is end date: " + this.endDate);
                 this.getRoomsAvailableForPeriod().then(() => {
                     this.roomIds = this.initialRooms.map((v) => v.room_id);
                     this.roomIds = [...new Set(this.roomIds)];
                 });
 
-                console.log(allDates);
             }
         }
 
