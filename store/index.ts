@@ -199,7 +199,7 @@ export const getters: GetterTree<RootState, RootState> = {
 		let onlyVilla = true;
 		getters.uniqueRooms.map((roomid: any) => {
 			const r = state.roomsData.find(r => r.id == roomid);
-			if (r.type == 'standard' ) {
+			if (r.type == 'standard') {
 				onlyVilla = false;
 			} else if (r.type == 'family') {
 				onlyVilla = false;
@@ -497,7 +497,7 @@ export const getters: GetterTree<RootState, RootState> = {
 		return 0;
 	},
 	preTotal: (state: RootState, getters) => {
-		const preTotal = +getters.subTotal - +getters.discount - +getters.roomDiscount - +getters.memberDiscount ;
+		const preTotal = +getters.subTotal - +getters.discount - +getters.roomDiscount - +getters.memberDiscount;
 		if (preTotal < 0) return 0;
 
 		return preTotal;
@@ -774,12 +774,13 @@ export const actions: ActionTree<RootState, RootState> = {
 			});
 	},
 
-	async createTransaction({ state, getters, rootState, rootGetters }) {
+	async createTransaction({ state, getters, rootState, rootGetters }, { trans_ref }) {
 		//console.log(getters);
 		let dataToPost = {} as any;
 		if (!state.editMode) {
 			dataToPost = {
 				method: 'Paystack',
+				trans_ref: trans_ref,
 				subtotal: getters.subTotal,
 				taxTotal: getters.taxTotal,
 				total: getters.totalPrice,
@@ -790,6 +791,7 @@ export const actions: ActionTree<RootState, RootState> = {
 
 			dataToPost = {
 				method: 'Paystack',
+				trans_ref: trans_ref,
 				subtotal: getters.subTotal,
 				total: getters.totalPrice,
 				previousTotal: state.editBooking.payment.total,
@@ -814,7 +816,7 @@ export const actions: ActionTree<RootState, RootState> = {
 		dataToPost['booking_data'] = bookingDataToPost;
 		dataToPost['specials_data'] = specialsToSend;
 		const bookingFrom = localStorage.getItem('bookingFrom');
-		if(bookingFrom){
+		if (bookingFrom) {
 			//console.log('I got a booking from', bookingFrom);
 			dataToPost['booking_from'] = bookingFrom;
 		}
@@ -850,8 +852,8 @@ export const actions: ActionTree<RootState, RootState> = {
 			'Room Discount': '-' + rootGetters.roomDiscount,
 			'100Club Member Discount': '-' + rootGetters.memberDiscount,
 			'Extra People Cost': '+' + rootGetters.extraPeoplePrice,
-      taxTotal: rootGetters.taxTotal,
-      tax: rootGetters.taxTotal,
+			taxTotal: rootGetters.taxTotal,
+			tax: rootGetters.taxTotal,
 		} as any;
 
 		if (allExtras.includes('cakes')) {
