@@ -70,7 +70,7 @@ export default {
 	methods: {
 		dropdownDate(date){
 			const dropdownDate = parseISO(date);
-			return format(dropdownDate, 'MMMM Do YYYY');
+			return format(dropdownDate, 'MMMM Do yyyy');
 		},
 		onDayClick(day) {
 			let daySelected = new Date(day.id).toISOString();

@@ -84,7 +84,7 @@ export const getters: GetterTree<RootState, RootState> = {
             const dDate = parseISO(d);
 			return format(bookingDateParsed,'yyyy-MM-dd') === format(dDate,'yyyy-MM-dd');
 		});
-		
+
 		optionsWithQuantity.forEach((option: any) => {
 			if(isDateAvailable.length){
 				price += +option.seasonal_price * option.quantity;
@@ -320,11 +320,12 @@ export const actions: ActionTree<RootState, RootState> = {
 	// 	});
 	// },
 
-	async createTransaction({ state, getters, rootState, rootGetters }) {
+	async createTransaction({ state, getters, rootState, rootGetters }, { trans_ref }) {
 		//console.log(getters);
 		let dataToPost = {} as any;
 		dataToPost = {
 			method: 'Paystack',
+			trans_ref: trans_ref,
 			subtotal: getters.subTotal,
 			taxTotal: getters.taxTotal,
 			total: getters.totalPrice,
@@ -362,7 +363,8 @@ export const actions: ActionTree<RootState, RootState> = {
 			dataToPost['booking_from'] = bookingFrom;
 		}
 
-		//console.log(dataToPost);
+		console.log('Transaction data', dataToPost);
+		// return false;
 
 		try {
 			const res = await this.$axios.post('transactions', dataToPost);
@@ -514,7 +516,8 @@ export const actions: ActionTree<RootState, RootState> = {
 		// 	dataToPost.oldBookingId = state.editBooking.id;
 		// }
 
-		//console.log(dataToPost);
+		// console.log('Booking data', dataToPost);
+		// return false;
 
 		//console.log(prices);
 

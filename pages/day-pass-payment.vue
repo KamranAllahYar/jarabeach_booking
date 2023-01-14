@@ -43,6 +43,18 @@
 						<MainButton class="md:w-3/12" outline @click="gotoBack()">Back</MainButton>
 						<template v-if="(totalPrice > 0)">
 							<div class="flex-shrink-0 w-full md:w-5/12">
+								<!-- <MainButton class="md:px-2" :loading="loading" @click="completeBooking({status: 'success', transaction: 'dummy_012012'})">
+									<div class="flex justify-center">
+										<svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+											<path
+												fill-rule="evenodd"
+												d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
+												clip-rule="evenodd"
+											/>
+										</svg>
+										Book | Pay With Paystack
+									</div>
+								</MainButton> -->
 								<Paystack
 									v-if="trans_ref != null"
 									:amount="totalPrice"
@@ -183,13 +195,23 @@ export default {
 		},
 		async createTransaction() {
 			this.loading = true;
-			const trans_ref = await this.$store.dispatch('day_pass/createTransaction');
+			const trans_ref = await this.$store.dispatch('day_pass/createTransaction', {
+				trans_ref: this.trans_ref
+			});
 			//console.log(trans_ref);
 
 			this.trans_ref = trans_ref;
 			this.loading = false;
 		},
 		async completeBooking(paystack_res) {
+
+			try {
+				await this.createTransaction();
+			} catch(err) {
+				this.$toasted.error('Something went wrong, Please try again.');
+				return false;
+			}
+
 			//console.log(paystack_res);
 			if (paystack_res.status == 'success') {
 				const bookingFrom = localStorage.getItem('bookingFrom');
@@ -222,12 +244,14 @@ export default {
 			this.$store.commit('REMOVE_ROOM', room);
 		},
 		async checkDiscount() {
-			this.$store.commit('UPDATE_DISCOUNT', null); 
+			this.$store.commit('UPDATE_DISCOUNT', null);
 			if (this.code.length <= 2) {
 				this.$toast.info('Please input a proper code');
 				return;
 			}
 			this.loadingCode = true;
+
+			console.log('this.bookingDate', this.bookingDate);
 
 			this.$axios
 				.post(`/check-daypass-discount`, {
@@ -235,14 +259,14 @@ export default {
 					total: this.subTotal,
 					date: this.bookingDate,
 				})
-				.then(({ data }) => {
+				.then(async ({ data }) => {
 					console.log(data);
 					if (data.success) {
 						this.$toasted.success(data.message);
 						const discount = Object.assign({}, data.data);
-						console.log(discount);
+						// console.log(discount);
 						this.$store.commit('day_pass/UPDATE_DISCOUNT', discount);
-						this.createTransaction();
+						await this.createTransaction().catch((err) => console.log(err));
 					} else {
 						this.$toasted.error(data.message);
 					}
@@ -260,7 +284,7 @@ export default {
 		},
 	},
 	mounted() {
-		this.createTransaction();
+		this.createTransaction().catch((err) => console.log(err));
 	},
 	middleware({ store, redirect, $toast }) {
 		if (!store.state.day_pass.options_done) {

@@ -105,10 +105,10 @@ export default {
 			return this.selected.some(s => s.type == sp.type);
 		},
 		selectSpecial(sp) {
-			if (sp.name === 'Go-Kart and Horse Riding') {
+			/* if (sp.name === 'Go-Kart and Horse Riding') {
 				this.$toast.error('Sorry, this is no longer available');
 				return;
-			}
+			} */
 			//console.log(sp);
 			if (!sp.available) {
 				this.$toast.info(sp.name + ' is not available for the dates you selected');

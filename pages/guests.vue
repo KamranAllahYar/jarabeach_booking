@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="px-6 text-xl font-bold text-center md:px-0 md:text-2xl">
+		<div class="px-6 text-lg font-semibold text-center md:px-0">
 			<div>
 				Step 1 (below): Tell us about your group visiting overnight /
 				<a class="underline hover:text-brand-blue" href="https://www.jarabeachresort.com/room-detail" target="_blank">

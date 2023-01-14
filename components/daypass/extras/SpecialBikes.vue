@@ -15,7 +15,7 @@
             Equipped with a powerful four-stroke engine and a heavy-duty frame with durable all-terrain tyres. This rugged 196cc go-kart has a top speed of 23mph. Strap yourself and a friend
             in (max load capacity of 125kg) with the safety harnesses and head out for an exciting ride through Jara’s sandy neighbourhood terrain.
           </div>
-					
+
           <div class="mt-2 text-gray-600">
             Suitable for Adult drivers [only] and passengers (under 18yrs with signed guardian). Limited to the back road, sand driving only (not the beach). No reverse so big turning circle
             required. A riding waiver / terms of usage must be signed, prior to riding. All damages are chargeable.
@@ -35,7 +35,7 @@
 									<div class="pb-1 text-sm font-bold">Please select a package</div>
 									<div class="flex items-center flex-1 w-full border rounded-md focus-within:ring">
 										<select v-model="newBike.id" class="w-full text-sm border-0 rounded-md outline-none focus:outline-none" style="box-shadow: none">
-											<option v-for="massage in bikes" :value="massage.id" :key="massage.id">{{ massage.name }} ({{ massage.duration }})</option>
+											<option v-for="bike in bikes" :value="bike.id" :key="bike.id">{{ bike.name }} ({{ bike.duration }})</option>
 										</select>
 									</div>
 								</div>
@@ -65,7 +65,7 @@
 						</div>
 					</div>
 
-					<div @click="addNewMassage" v-if="showAddButton" class="flex items-center flex-shrink-0 h-10 mt-0 text-xs cursor-pointer w-44 text-brand-blue hover:text-brand-blue-300">
+					<div @click="addNewBike" v-if="showAddButton" class="flex items-center flex-shrink-0 h-10 mt-0 text-xs cursor-pointer w-44 text-brand-blue hover:text-brand-blue-300">
 						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
 						</svg>
@@ -73,13 +73,13 @@
 					</div>
 
 					<div class="flex flex-wrap items-center justify-between mt-4 space-y-4 md:space-y-3">
-						<div class="flex flex-col w-full px-3 py-2 bg-gray-100 rounded md:flex-row md:items-center" v-for="(sMassage, ix) in selectedBikes" :key="ix">
+						<div class="flex flex-col w-full px-3 py-2 bg-gray-100 rounded md:flex-row md:items-center" v-for="(sBike, ix) in selectedBikes" :key="ix">
 							<div class="w-full">
-								<div class="mb-1 font-bold truncate">{{ massageName(sMassage.id) }}</div>
-								<div>{{ showDate(sMassage.date) }}</div>
+								<div class="mb-1 font-bold truncate">{{ bikeName(sBike.id) }}</div>
+								<div>{{ showDate(sBike.date) }}</div>
 							</div>
 
-							<button @click="removeMassage(ix)" class="flex items-center flex-1 flex-shrink-0 h-10 mt-3 text-xs cursor-pointer md:ml-5 md:mt-0 text-brand-red hover:text-red-300">
+							<button @click="removeBike(ix)" class="flex items-center flex-1 flex-shrink-0 h-10 mt-3 text-xs cursor-pointer md:ml-5 md:mt-0 text-brand-red hover:text-red-300">
 								<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 									<path
 										stroke-linecap="round"
@@ -119,7 +119,7 @@ export default {
 		bookingDate() {
 			return this.$store.getters['day_pass/bookingDate'];
 		},
-		
+
 		bikes() {
 			return this.$store.getters['extras/allBikes'];
 		},
@@ -131,10 +131,10 @@ export default {
 		}
 	},
 	methods: {
-		massageName(massageId) {
-			const massage = this.bikes.find(m => m.id == massageId);
+		bikeName(bikeId) {
+			const bike = this.bikes.find(m => m.id == bikeId);
 
-			return `${massage.name} (${massage.duration})`;
+			return `${bike.name} (${bike.duration})`;
 		},
 		// getTimeOptions(date) {
 		//     if (date == this.dates[0]) {
@@ -156,16 +156,16 @@ export default {
 			});
 			this.$emit('prev');
 		},
-		addNewMassage() {
-			const massage = Object.assign({}, this.newBike);
-			this.selectedBikes.unshift(massage);
+		addNewBike() {
+			const bike = Object.assign({}, this.newBike);
+			this.selectedBikes.unshift(bike);
 
 			this.$nextTick(() => {
 				var container = this.$el.querySelector('#con_scroll');
 				container.scrollTop = container.scrollHeight;
 			});
 		},
-		addMassage() {
+		addBike() {
 			this.selectedBikes.unshift({
 				id: this.bikes[0].id,
 				date: this.bookingDate,
@@ -175,7 +175,7 @@ export default {
 				container.scrollTop = container.scrollHeight;
 			});
 		},
-		removeMassage(ix) {
+		removeBike(ix) {
 			this.selectedBikes.splice(ix, 1);
 		},
 		showDate(date) {
@@ -198,7 +198,7 @@ export default {
 		};
 	},
 	mounted() {
-		this.$store.dispatch('extras/getSpecialDrinks');
+		// this.$store.dispatch('extras/getSpecialBikes');
 
 		if (this.$store.state.extras.selectedBikes) {
 			this.selectedBikes = this.$store.state.extras.selectedBikes.map(x => x);
