@@ -36,6 +36,7 @@ import ReservationBox from '@/components/daypass/DayPassReservationBox.vue';
 import { mapGetters } from 'vuex';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
+import moment from 'moment';
 
 
 
@@ -80,9 +81,27 @@ export default {
 	},
 	methods: {
 		optionPrice(option) {
-			if(this.isDateSeasonalDate) return option.seasonal_price;
+
+			let type = this.isDateSeasonalDate ? 'seasonal' : (this.selectedOptionType === 'weekend' ? 'weekend' : 'weekday');
+
+			let price = option[type+'_price'] || 0;
+
+			let booking_date = moment(this.$store.state.day_pass.booking_date).utcOffset(0, false).add(11.5, 'hours');
+			let current_date = moment().utcOffset(0, true);
+
+			let diff = current_date.diff(booking_date, 'seconds');
+
+			// console.log('booking_date, current_date, diff', booking_date.format('YYYY-MM-DD HH:mm:ss'), current_date.format('YYYY-MM-DD HH:mm:ss'), diff)
+
+			if(diff >= 0) {
+				price = option.urgent_charges > 0 ? price + (price * option.urgent_charges / 100) : price;
+			}
+
+			return price;
+
+			/* if(this.isDateSeasonalDate) return option.seasonal_price;
 			if (this.selectedOptionType === 'weekend') return option.weekend_price;
-			return option.weekday_price;
+			return option.weekday_price; */
 		},
 		goToNext() {
 			// if (!this.canGoToNext) return;
