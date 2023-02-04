@@ -3,7 +3,7 @@
 		<div class="max-w-6xl px-4 mx-auto space-y-4 text-center md:space-y-0 md:flex md:px-0 md:space-x-6">
 			<!-- <div>{{isDateSeasonalDate}}</div> -->
 			<div class="flex-1 border divide-y">
-				<div v-for="option in selectedDayPassOptions" :key="option.id" class="mx-auto">
+				<div v-for="[index, option] of selectedDayPassOptions.entries()" :key="option.id" class="mx-auto">
 					<div class="flex items-center justify-between px-6 py-4 space-x-8">
 						<div class="flex flex-col items-start">
 							<div>{{ option.name }}</div>
@@ -125,16 +125,21 @@ export default {
 		},
 		increaseQuantity(option) {
 			option.quantity++;
+			this.updateStores();
+			this.updateFromStore();
 		},
 		decreaseQuantity(option) {
-			if (option.quantity === 0) return;
-			option.quantity--;
+			if(option.quantity !== 0) {
+				option.quantity--;
+			}
+			this.updateStores();
+			this.updateFromStore();
 		},
 		updateStores() {
 			this.$store.commit('day_pass/UPDATE_SELECTED_OPTIONS', this.selectedDayPassOptions);
 		},
 		updateFromStore() {
-			this.selectedDayPassOptions = this.$store.state.day_pass.selected_options;
+			this.selectedDayPassOptions = structuredClone(this.$store.state.day_pass.selected_options);
 		},
 	},
 	mounted() {
