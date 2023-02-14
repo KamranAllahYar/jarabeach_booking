@@ -11,24 +11,24 @@
 				<option value="weekday">Weekday</option>
 				<option value="seasonal">Seasonal</option>
 			</select>
-			<div class="items-center hidden md:flex md:space-x-4" v-if="option_type === 'seasonal'">
+			<!-- <div class="items-center hidden md:flex md:space-x-4" v-if="option_type === 'seasonal'">
 				<div class="font-semibold">Check Seasonal Dates here</div>
 				<select name="option_type" id="option_type" class="block border rounded-md outline-none focus:outline-none" style="box-shadow: none" @change="selectedDate = 'see your date'" v-model="selectedDate">
 					<option value="see your date" selected>See Seasonal Date</option>
 					<option class="pointer-events-none" v-for="(date, index) in sortedNoDiscountDays" :key="index">{{dropdownDate(date)}}</option>
 				</select>
-			</div>
+			</div> -->
 		</div>
-		<div class="mt-4 md:hidden" v-if="option_type === 'seasonal'">
+		<!-- <div class="mt-4 md:hidden" v-if="option_type === 'seasonal'">
 			<div class="font-semibold">Check Seasonal Dates here</div>
 			<select name="option_type" id="option_type" class="block mt-2 border rounded-md outline-none focus:outline-none" style="box-shadow: none" @change="selectedDate = 'see your date'" v-model="selectedDate">
 				<option value="see your date" selected>See Seasonal Date</option>
 				<option class="pointer-events-none" v-for="(date, index) in sortedNoDiscountDays" :key="index">{{dropdownDate(date)}}</option>
 			</select>
-		</div>
+		</div> -->
 		<div class="mt-4 text-sm md:hidden">More about seasonal <a href="https://www.jarabeachresort.com/day-pass" class="font-bold" target="_blank">here</a></div>
 		<div class="mt-6">
-			<vc-calendar :min-date="new Date().toISOString().split('T')[0]" @dayclick="onDayClick" :attributes="attributes" v-if="option_type === 'seasonal'"/>
+			<vc-calendar @dayclick="onDayClick" :attributes="attributes" v-if="option_type === 'seasonal'" :available-dates="availableDates"/>
 			<vc-calendar :min-date="new Date().toISOString().split('T')[0]" @dayclick="onDayClick" :attributes="attributes" :disabled-dates="disabledDates" v-else/>
 		</div>
 
@@ -54,7 +54,7 @@ export default {
 		return {
 			option_type: 'weekend',
 			date: null,
-			selectedDate: 'see your date'
+			selectedDate: 'see your date',
 		};
 	},
 	mounted() {
@@ -115,7 +115,7 @@ export default {
 				}
 			})
 			if(this.option_type === 'seasonal' && !isSeasonalDate){
-				this.$toast.error('That is not a seasonal date, please see seasonal dates in the dropdown!', { duration: 5000 });
+				this.$toast.error('This is not a seasonal date, Please try to select an enabled date from calender.', { duration: 5000 });
 				return;
 			}
 			this.date = new Date(day.id).toISOString();
@@ -156,9 +156,9 @@ export default {
 			noDiscountDates: 'noDiscountDates',
 			noDayPassBookingDates: 'day_pass/getNoDayPassBookingDates',
 		}),
-		sortedNoDiscountDays(){
+		/* sortedNoDiscountDays(){
 			return this.noDiscountDates.sort((a, b) => a - b)
-		},
+		}, */
 		isDateSeasonalDate() {
 			const isDateAvailable = this.noDiscountDates.filter(d => {
 				const bookingDateParsed = parseISO(this.bookingDate);
@@ -171,6 +171,16 @@ export default {
 		disabledDates() {
 			if (this.option_type === 'weekday') return { weekdays: [1, 6, 7] };
 			return { weekdays: [2, 3, 4, 5] };
+		},
+		availableDates() {
+			let dates = [];
+			this.noDiscountDates.forEach(element => {
+				if(!isBefore(new Date(element), new Date())) {
+					let availableDate = {start: new Date(element), end: new Date(element)};
+					dates.push(availableDate);
+				}
+			});
+			return dates;
 		},
 		canGoToNext() {
 			return (this.option_type === 'weekday' || this.option_type === 'weekend' || this.option_type === 'seasonal') && this.date !== null;

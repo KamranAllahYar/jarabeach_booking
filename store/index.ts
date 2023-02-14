@@ -990,6 +990,7 @@ export const actions: ActionTree<RootState, RootState> = {
 			prices: prices,
 			admin_edit_mode: state.adminEditMode,
 			multi_room: state.multiRoom,
+			specials: specialsToSend,
 		};
 
 		if (state.guest?.id) {
@@ -1010,18 +1011,18 @@ export const actions: ActionTree<RootState, RootState> = {
 			dataToPost.oldBookingId = state.editBooking.id;
 		}
 
-		//console.log(dataToPost);
+		// console.log(dataToPost);
+		// return;
 
 		//console.log(prices);
 
 		try {
 			const res = await this.$axios.post('bookings', dataToPost);
-			//console.log(res.data);
 
 			if (res.data.success) {
 				const newBooking = res.data.data.booking;
 				//console.log(newBooking);
-				const sRes = await this.$axios.post(`/book-specials/${newBooking.id}`, specialsToSend);
+				// const sRes = await this.$axios.post(`/book-specials/${newBooking.id}`, specialsToSend);
 				//console.log(sRes.data);
 
 				this.app.$toast.success(res.data.message);
