@@ -175,11 +175,12 @@ export default {
 		availableDates() {
 			let dates = [];
 			this.noDiscountDates.forEach(element => {
-				if(!isBefore(new Date(element), new Date())) {
-					let availableDate = {start: new Date(element), end: new Date(element)};
-					dates.push(availableDate);
-				}
+				/* if(!isBefore(new Date(element), new Date())) {
+				} */
+				let availableDate = {start: new Date(element), end: new Date(element)};
+				dates.push(availableDate);
 			});
+			console.log('dates', dates)
 			return dates;
 		},
 		canGoToNext() {
