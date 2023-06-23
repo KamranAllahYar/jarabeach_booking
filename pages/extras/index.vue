@@ -69,12 +69,12 @@ export default {
         dates() {
             return this.$store.getters.bookedRooms.map((room) => room.date);
         },
-        
+
     },
     methods: {
         fileExtension(type){
             //console.log(this.specials);
-            if(type !== 'unforgettableExperience' && type !== 'massages' && type !== 'dayPass') return 'png'
+            if(type !== 'unforgettableExperience' && type !== 'massages' && type !== 'dayPass' && type !== 'lookout') return 'png'
             return 'jpeg'
         },
         gotoBack() {
@@ -98,7 +98,7 @@ export default {
                 this.$toast.error('Sorry, this is no longer available');
                 return;
             }
-            
+
             if (!sp.available) {
                 this.$toast.info(
                     sp.name + " is not available for the dates you selected"
