@@ -17,7 +17,8 @@ export default {
       { hid: 'og:image', name: 'og:image', content: '/logo.webp' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { href: "https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap", rel: "stylesheet" }
     ]
   },
   css: [
