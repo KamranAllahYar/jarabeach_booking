@@ -4,8 +4,6 @@ import parseISO from 'date-fns/parseISO';
 
 import format from 'date-fns/format';
 
-
-
 export const state = () => ({
   extras_booking: 'guests',
   specials: [
@@ -76,7 +74,7 @@ export const state = () => ({
   selectedDrinks: [] as any[],
   selectedDayPassOptions: [] as any[],
   dateDrink: null as String | null,
-  dayPassDate: null as String | null,
+  dayPassDate: null as any | String,
 
   newmassageOptions: [] as any[],
   selectedMassages: [] as any[],
@@ -145,8 +143,9 @@ export const getters: GetterTree<ExtraState, RootState> = {
     return price;
   },
   dayPassPrices: (state: ExtraState) => {
+    console.log('state.holidayDates', state.holidayDates);
     const isDateAvailable = state.holidayDates.filter(d => {
-      const daypassBookingDate = parseISO(state.dayPassDate as string);
+      const daypassBookingDate = parseISO((state.dayPassDate || new Date().toISOString()) as string);
       const dDate = parseISO(d);
       return format(daypassBookingDate, 'yyyy-MM-dd') === format(dDate,'yyyy-MM-dd');
     });

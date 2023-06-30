@@ -11,7 +11,7 @@
                 </p>
                 <label class="flex items-center mt-6">
                     <input type="radio" checked class="mr-3 rounded-full focus-within:ring-0 text-brand-blue-400">
-                    <div>{{ showDate(dates[dates.length - 1]) }}</div>
+                    <div>{{ showDate(dayPassDate) }}</div>
                 </label>
                    <div class="flex items-center mt-2 space-x-3">
                     <div>Arrival Time:</div>
@@ -74,6 +74,7 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
+            dayPassDate: null,
             selectedDate: null,
             selectedDayPass: [],
             noDates: [],
@@ -84,7 +85,7 @@ export default {
             return this.$store.getters.bookingDates;
         },
         isWeekend() {
-            var dayOfWeek = new Date(this.dates[this.dates.length - 1]).getDay();
+            var dayOfWeek = new Date(this.dayPassDate).getDay();
             var isWeekend = (dayOfWeek === 6) || (dayOfWeek  === 0);
             return isWeekend;
         },
@@ -93,7 +94,7 @@ export default {
 		}),
 		isDateSeasonalDate() {
 			const isDateAvailable = this.noDiscountDates.filter(d => {
-                const bookingDateParsed = parseISO(this.dates[this.dates.length - 1]);
+                const bookingDateParsed = parseISO(this.dayPassDate);
                 const dDate = parseISO(d);
 				return format(bookingDateParsed, 'yyyy-MM-dd') === format(dDate, 'yyyy-MM-dd');
 			});
@@ -121,14 +122,14 @@ export default {
             }
             this.$store.commit("extras/SET_SELECTED_DAY_PASS", {
                 dayPassOptionsSelected: this.selectedDayPass,
-                date: this.dates[this.dates.length - 1],
+                date: this.dayPassDate,
             });
             this.$emit("next");
         },
         prev() {
             this.$store.commit("extras/SET_SELECTED_DAY_PASS", {
                 dayPassOptionsSelected: this.selectedDayPass,
-                date: this.dates[this.dates.length - 1],
+                date: this.dayPassDate,
             });
             this.$emit("prev");
         },
@@ -146,6 +147,7 @@ export default {
             this.selectedDayPass.splice(ix, 1);
         },
         showDate(date) {
+            if(!date) return '';
             return format(parseISO(date), "iii, MMM. do yyyy");
         },
         currency(num) {
@@ -172,7 +174,13 @@ export default {
             this.$router.back();
             return;
         }
-        this.$store.commit('extras/SET_DAY_PASS_DATE', this.dates[0])
+        let dayPassDate = new Date(this.dates[this.dates.length-1]);
+        dayPassDate.setDate(dayPassDate.getDate() + 1);
+        dayPassDate = dayPassDate.toISOString();
+        dayPassDate = format(parseISO(dayPassDate), 'yyyy-MM-dd');
+        this.dayPassDate = dayPassDate;
+
+        this.$store.commit('extras/SET_DAY_PASS_DATE', dayPassDate)
         this.$store.dispatch("extras/getDayPassOptions");
         if (this.$store.state.extras.selectedDayPassOptions) {
             this.selectedDayPass = this.$store.state.extras.selectedDayPassOptions.map(
