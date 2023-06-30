@@ -1,0 +1,48 @@
+{
+  "request": {
+    "booking": {
+      "full_names": [
+        {
+          "first_name": "gyy",
+          "last_name": "uh",
+          "type": "adult",
+          "num": 1,
+          "age": null
+        }
+      ],
+      "adult_no": 1,
+      "child_no": 0,
+      "extra_info": "ex",
+      "trans_ref": "JBTR_YOQ18HTZWP",
+      "method_ref": "1395289849",
+      "method": "Paystack"
+    },
+    "booked_rooms": [
+      {
+        "room_id": 6,
+        "date": "2021-10-26",
+        "isWeekend": false
+      },
+      {
+        "room_id": 6,
+        "date": "2021-10-27",
+        "isWeekend": false
+      }
+    ],
+    "prices": {
+      "Rooms": 370000,
+      "Room Discount": "-18500",
+      "100Club Member Discount": "-0",
+      "Extra People Cost": "+0",
+      "newmassage": 10000,
+      "Sub Total": 380000
+    },
+    "admin_edit_mode": false,
+    "guest_id": 19,
+    "discount": {
+      "type": "discount",
+      "amount": 10,
+      "id": 9
+    }
+  }
+}
