@@ -12,7 +12,7 @@ export const state = () => ({
 	guest_email: '' as string,
 	guest_phone: '' as string,
 	booking_date: null,
-	option_type: null,
+	option_type: '' as string,
 	day_pass_options: [] as any,
 	selected_options: [] as any,
 
@@ -276,13 +276,13 @@ export const mutations: MutationTree<RootState> = {
 		state.extras_done = false;
 		state.guests_no = 0;
 		state.booking_date = null;
-		state.option_type = null;
+		state.option_type = '' as string;
 		state.guest_first_name = '' as string;
 		state.guest_last_name = '' as string;
 		state.guest_email = '' as string;
 		state.guest_phone = '' as string;
 		state.booking_date = null;
-		state.option_type = null;
+		state.option_type = '' as string;
 		state.selected_options = [] as any;
 		state.guests_done = false as boolean;
 		state.availability_done = false as boolean;
@@ -320,12 +320,11 @@ export const actions: ActionTree<RootState, RootState> = {
 	// 	});
 	// },
 
-	async createTransaction({ state, getters, rootState, rootGetters }, { trans_ref }) {
+	async createTransaction({ state, getters, rootState, rootGetters }) {
 		//console.log(getters);
 		let dataToPost = {} as any;
 		dataToPost = {
 			method: 'Paystack',
-			trans_ref: trans_ref,
 			subtotal: getters.subTotal,
 			taxTotal: getters.taxTotal,
 			total: getters.totalPrice,
@@ -363,8 +362,7 @@ export const actions: ActionTree<RootState, RootState> = {
 			dataToPost['booking_from'] = bookingFrom;
 		}
 
-		console.log('Transaction data', dataToPost);
-		// return false;
+		//console.log(dataToPost);
 
 		try {
 			const res = await this.$axios.post('transactions', dataToPost);
@@ -516,8 +514,7 @@ export const actions: ActionTree<RootState, RootState> = {
 		// 	dataToPost.oldBookingId = state.editBooking.id;
 		// }
 
-		// console.log('Booking data', dataToPost);
-		// return false;
+		//console.log(dataToPost);
 
 		//console.log(prices);
 

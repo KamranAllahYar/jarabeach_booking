@@ -120,8 +120,32 @@ export const getters: GetterTree<RootState, RootState> = {
 		}
 		return newRooms;
 	},
+	dayFromTo: (state: RootState, getters) => {
+		const dates = getters.bookedRooms.map((room: any) => room.date);
+
+		let orderedDates = dates.sort(function(a: string, b: string) {
+			return Date.parse(a) > Date.parse(b);
+		});
+
+		if (orderedDates.length == 0) return;
+
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+		if (orderedDates.length == 1) {
+			const startDate = parseISO(orderedDates[0]);
+			const dayNo = startDate.getDay();
+			return dayNames[dayNo];
+		} else {
+			const beginDate = parseISO(orderedDates[0]);
+			const endDate = parseISO(orderedDates[orderedDates.length - 1]);
+			const dayStart = beginDate.getDay();
+			const dayEnd = endDate.getDay();
+			return dayNames[dayStart] + ' - ' + dayNames[dayEnd];
+		}
+	},
 	dateFromTo: (state: RootState, getters) => {
 		const dates = getters.bookedRooms.map((room: any) => room.date);
+
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 		let orderedDates = dates.sort(function(a: string, b: string) {
 			return Date.parse(a) > Date.parse(b);
@@ -131,11 +155,15 @@ export const getters: GetterTree<RootState, RootState> = {
 
 		if (orderedDates.length == 1) {
 			const startDate = parseISO(orderedDates[0]);
-			return format(startDate, 'do MMM yyyy');
+			const dayNo = startDate.getDay();
+
+			return `${dayNames[dayNo]}, ${format(startDate, 'do MMM yyyy')}`;
 		} else {
 			const beginDate = parseISO(orderedDates[0]);
 			const endDate = parseISO(orderedDates[orderedDates.length - 1]);
-			return format(beginDate, 'do MMM yyyy') + ' - ' + format(endDate, 'do MMM yyyy');
+      const dayStart = beginDate.getDay();
+			const dayEnd = endDate.getDay();
+			return `${dayNames[dayStart]}, ${format(beginDate, 'do MMM yyyy')}  -  ${dayNames[dayEnd]}, ${format(endDate, 'do MMM yyyy')}`;
 		}
 	},
 	roomsDetailsStandard: (state: RootState, getters) => {
@@ -333,6 +361,10 @@ export const getters: GetterTree<RootState, RootState> = {
 	},
 	confirmEnoughRooms: (state: RootState, getters) => {
 		const nights = getters.individualDates;
+		if (Object.keys(nights).length <= 0) {
+			console.log(nights);
+			return false;
+		}
 		for (const date in nights) {
 			if (Object.prototype.hasOwnProperty.call(nights, date)) {
 				const rooms = nights[date];
@@ -774,13 +806,12 @@ export const actions: ActionTree<RootState, RootState> = {
 			});
 	},
 
-	async createTransaction({ state, getters, rootState, rootGetters }, { trans_ref }) {
+	async createTransaction({ state, getters, rootState, rootGetters }) {
 		//console.log(getters);
 		let dataToPost = {} as any;
 		if (!state.editMode) {
 			dataToPost = {
 				method: 'Paystack',
-				trans_ref: trans_ref,
 				subtotal: getters.subTotal,
 				taxTotal: getters.taxTotal,
 				total: getters.totalPrice,
@@ -791,7 +822,6 @@ export const actions: ActionTree<RootState, RootState> = {
 
 			dataToPost = {
 				method: 'Paystack',
-				trans_ref: trans_ref,
 				subtotal: getters.subTotal,
 				total: getters.totalPrice,
 				previousTotal: state.editBooking.payment.total,
@@ -990,7 +1020,6 @@ export const actions: ActionTree<RootState, RootState> = {
 			prices: prices,
 			admin_edit_mode: state.adminEditMode,
 			multi_room: state.multiRoom,
-			specials: specialsToSend,
 		};
 
 		if (state.guest?.id) {
@@ -1011,18 +1040,18 @@ export const actions: ActionTree<RootState, RootState> = {
 			dataToPost.oldBookingId = state.editBooking.id;
 		}
 
-		// console.log(dataToPost);
-		// return;
+		//console.log(dataToPost);
 
 		//console.log(prices);
 
 		try {
 			const res = await this.$axios.post('bookings', dataToPost);
+			//console.log(res.data);
 
 			if (res.data.success) {
 				const newBooking = res.data.data.booking;
 				//console.log(newBooking);
-				// const sRes = await this.$axios.post(`/book-specials/${newBooking.id}`, specialsToSend);
+				const sRes = await this.$axios.post(`/book-specials/${newBooking.id}`, specialsToSend);
 				//console.log(sRes.data);
 
 				this.app.$toast.success(res.data.message);

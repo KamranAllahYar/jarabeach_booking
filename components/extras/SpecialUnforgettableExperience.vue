@@ -1,13 +1,19 @@
 <template>
   <div class="flex flex-col w-full md:flex-row">
     <div class="relative w-full md:w-6/12 h-60 md:h-auto">
-      <img src="@/assets/images/specials/unforgettableExperience.jpeg" alt class="object-cover object-center w-full h-full" />
+      <img
+        src="@/assets/images/specials/unforgettableExperience.jpeg"
+        alt
+        class="object-cover object-center w-full h-full"
+      />
     </div>
 
     <div class="w-full p-6 md:w-7/12">
       <div class="font-semibold">Unforgettable Experiences</div>
       <p class="mt-3 font-light leading-relaxed text-gray-600">
-        Do you wish to make your stay at Jara even more special? Well you’re on the right page. Here you can pre book your floating breakfast, sunset picnic or DIY painting experience.
+        Do you wish to make your stay at Jara even more special? Well you’re on the right
+        page. Here you can pre book your floating breakfast, sunset picnic or DIY painting
+        experience.
         <!-- There are a number of expected extras we offer for free, including romantic room decoration, or happy birthday messages, simple decorations, floating breakfast, sunset picnic etc.
         <br />
         <br />Helium Balloons or bespoke Special Decoration on request-->
@@ -15,33 +21,56 @@
 
       <div class="p-4 mt-6 bg-gray-100 rounded-lg">
         <label class="font-semibold cursor-pointer" v-if="breakfastSelection">
-          <input type="checkbox" :value="breakfastSelection" v-model="selectedExperiences" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400" />
+          <input
+            type="checkbox"
+            :value="breakfastSelection"
+            v-model="selectedExperiences"
+            class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400"
+          />
           {{ realDecoName(breakfastSelection.name) }} -
-          <span class="font-bold uppercase" v-if="breakfastSelection.price > 0">{{ currency(breakfastSelection.price) }}</span>
+          <span class="font-bold uppercase" v-if="breakfastSelection.price > 0">{{
+            currency(breakfastSelection.price)
+          }}</span>
           <span class="font-bold uppercase" v-else>FREE</span>
         </label>
         <div v-if="showBreakfastOptions(breakfastSelection)">
-          <div class="flex flex-col items-center mt-4 space-y-2 font-normal md:space-y-0 md:space-x-6 md:flex-row">
+          <div
+            class="flex flex-col items-center mt-4 space-y-2 font-normal md:space-y-0 md:space-x-6 md:flex-row"
+          >
             <div class="w-full md:w-48">
               What
               <b>date</b> would you like to have this?
             </div>
 
-            <select v-model="myBreakfastDate" class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+            <select
+              v-model="myBreakfastDate"
+              class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4"
+            >
               <option value>Select Date</option>
-              <option :value="date" v-for="date in breakfastDates" :key="date">{{ showDate(date) }}</option>
+              <option :value="date" v-for="date in breakfastDates" :key="date">
+                {{ showDate(date) }}
+              </option>
             </select>
           </div>
-          <div class="flex flex-col items-center mt-6 space-y-2 font-normal md:mt-4 md:space-y-0 md:space-x-6 md:flex-row">
+          <div
+            class="flex flex-col items-center mt-6 space-y-2 font-normal md:mt-4 md:space-y-0 md:space-x-6 md:flex-row"
+          >
             <div class="w-full md:w-48">
               What
               <b>time</b> would you like this for?
             </div>
 
-            <template v-if="breakfastAvailableTimes && breakfastAvailableTimes.length > 0">
-              <select v-model="myBreakfastTime" class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+            <template
+              v-if="breakfastAvailableTimes && breakfastAvailableTimes.length > 0"
+            >
+              <select
+                v-model="myBreakfastTime"
+                class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4"
+              >
                 <option :value="null">Select Time</option>
-                <option :value="time" v-for="time in breakfastAvailableTimes" :key="time">{{ time }}</option>
+                <option :value="time" v-for="time in breakfastAvailableTimes" :key="time">
+                  {{ time }}
+                </option>
               </select>
             </template>
             <div class="font-light" v-else>
@@ -54,21 +83,36 @@
 
       <div class="p-4 mt-6 bg-gray-100 rounded-lg">
         <label class="font-semibold cursor-pointer">
-          <input type="checkbox" :value="picnicSelection" v-model="selectedExperiences" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400" />
+          <input
+            type="checkbox"
+            :value="picnicSelection"
+            v-model="selectedExperiences"
+            class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400"
+          />
           {{ realDecoName(picnicSelection.name) }} -
-          <span class="font-bold uppercase" v-if="picnicSelection.price > 0">{{ currency(picnicSelection.price) }}</span>
+          <span class="font-bold uppercase" v-if="picnicSelection.price > 0">{{
+            currency(picnicSelection.price)
+          }}</span>
           <span class="font-bold uppercase" v-else>FREE</span>
         </label>
-        <div class="flex flex-col items-center mt-4 space-y-2 font-normal md:space-y-0 md:space-x-6 md:flex-row" v-if="showPicnicOptions(picnicSelection)">
+        <div
+          class="flex flex-col items-center mt-4 space-y-2 font-normal md:space-y-0 md:space-x-6 md:flex-row"
+          v-if="showPicnicOptions(picnicSelection)"
+        >
           <div class="w-full md:w-48">
             What
             <b>date</b> would you like to have this?
           </div>
 
           <template v-if="picnicDates.length > 0">
-            <select v-model="myPicnicDate" class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+            <select
+              v-model="myPicnicDate"
+              class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4"
+            >
               <option value>Select Date</option>
-              <option :value="date" v-for="date in picnicDates" :key="date">{{ showDate(date) }}</option>
+              <option :value="date" v-for="date in picnicDates" :key="date">
+                {{ showDate(date) }}
+              </option>
             </select>
           </template>
           <div class="font-light" v-else>
@@ -80,21 +124,36 @@
 
       <div class="p-4 mt-6 bg-gray-100 rounded-lg">
         <label class="font-semibold cursor-pointer">
-          <input type="checkbox" :value="paintingSelection" v-model="selectedExperiences" class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400" />
+          <input
+            type="checkbox"
+            :value="paintingSelection"
+            v-model="selectedExperiences"
+            class="w-5 h-5 mr-3 rounded focus:ring-0 text-brand-blue-400"
+          />
           {{ realDecoName(paintingSelection.name) }} -
-          <span class="font-bold uppercase" v-if="paintingSelection.price > 0">{{ currency(paintingSelection.price) }}</span>
+          <span class="font-bold uppercase" v-if="paintingSelection.price > 0">{{
+            currency(paintingSelection.price)
+          }}</span>
           <span class="font-bold uppercase" v-else>FREE</span>
         </label>
-        <div class="flex flex-col items-center mt-4 space-y-2 font-normal md:space-y-0 md:space-x-6 md:flex-row" v-if="showPaintingOptions(paintingSelection)">
+        <div
+          class="flex flex-col items-center mt-4 space-y-2 font-normal md:space-y-0 md:space-x-6 md:flex-row"
+          v-if="showPaintingOptions(paintingSelection)"
+        >
           <div class="w-full md:w-48">
             What
             <b>date</b> would you like to have this?
           </div>
 
           <template v-if="paintingDates.length > 0">
-            <select v-model="myPaintingDate" class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+            <select
+              v-model="myPaintingDate"
+              class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4"
+            >
               <option value>Select Date</option>
-              <option :value="date" v-for="date in paintingDates" :key="date">{{ showDate(date) }}</option>
+              <option :value="date" v-for="date in paintingDates" :key="date">
+                {{ showDate(date) }}
+              </option>
             </select>
           </template>
           <div class="font-light" v-else>
@@ -102,13 +161,21 @@
             <template v-else>Not available during your visit</template>
           </div>
         </div>
-        <div class="flex flex-col items-center mt-4 space-y-2 font-normal md:space-y-0 md:space-x-6 md:flex-row" v-if="showPaintingOptions(paintingSelection)">
+        <div
+          class="flex flex-col items-center mt-4 space-y-2 font-normal md:space-y-0 md:space-x-6 md:flex-row"
+          v-if="showPaintingOptions(paintingSelection)"
+        >
           <div class="w-full md:w-48">How many people are you expecting?</div>
 
           <template v-if="paintingDates.length > 0">
-            <select v-model="myPaintingQty" class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4">
+            <select
+              v-model="myPaintingQty"
+              class="flex-1 w-full py-2 rounded-lg focus:outline-none focus:ring focus:ring-brand-blue-300 ring-offset-4"
+            >
               <option value>Select</option>
-              <option :value="num" v-for="num in totalGuests" :key="num">{{ num }}</option>
+              <option :value="num" v-for="num in totalGuests" :key="num">
+                {{ num }}
+              </option>
             </select>
           </template>
           <div class="font-light" v-else>
@@ -159,9 +226,7 @@ export default {
   watch: {
     myBreakfastDate() {
       if (this.breakfastAvailableTimes) {
-        if (
-          !this.breakfastAvailableTimes.includes(this.myBreakfastTime)
-        ) {
+        if (!this.breakfastAvailableTimes.includes(this.myBreakfastTime)) {
           this.myBreakfastTime = null;
         }
       }
@@ -185,9 +250,7 @@ export default {
       let uniqueRooms = [];
 
       rooms.forEach((r) => {
-        const itsThere = uniqueRooms.some(
-          (i) => i.room_id == r.room_id
-        );
+        const itsThere = uniqueRooms.some((i) => i.room_id == r.room_id);
 
         if (!itsThere) {
           uniqueRooms.push(r);
@@ -335,41 +398,27 @@ export default {
     realDecoName(deconame) {
       if (deconame.toLowerCase() == "painting") return "DIY Painting";
       if (deconame.toLowerCase() == "picnic") return "Sunset Picnic";
-      if (deconame.toLowerCase() == "breakfast")
-        return "Floating Breakfast (Pool)";
+      if (deconame.toLowerCase() == "breakfast") return "Floating Breakfast (Pool)";
 
       return deconame;
     },
     showNote(deco) {
-      return (
-        deco.name.toLowerCase() == "welcome note" &&
-        this.isWelcomeNoteSelected
-      );
+      return deco.name.toLowerCase() == "welcome note" && this.isWelcomeNoteSelected;
     },
     showBreakfastOptions(deco) {
-      return (
-        deco.name.toLowerCase() == "breakfast" &&
-        this.isBreakfastSelected
-      );
+      return deco.name.toLowerCase() == "breakfast" && this.isBreakfastSelected;
     },
     showPicnicOptions(deco) {
       return deco.name.toLowerCase() == "picnic" && this.isPicnicSelected;
     },
     showPaintingOptions(deco) {
-      return (
-        deco.name.toLowerCase() == "painting" && this.isPaintingSelected
-      );
+      return deco.name.toLowerCase() == "painting" && this.isPaintingSelected;
     },
     showColorOptions(deco) {
-      return (
-        deco.name.toLowerCase() == "balloons" && this.isBalloonSelected
-      );
+      return deco.name.toLowerCase() == "balloons" && this.isBalloonSelected;
     },
     showPetalsNote(deco) {
-      return (
-        deco.name.toLowerCase() == "flower petals" &&
-        this.isPetalsSelected
-      );
+      return deco.name.toLowerCase() == "flower petals" && this.isPetalsSelected;
     },
     next() {
       //console.log("NEXT");
@@ -481,15 +530,13 @@ export default {
         });
     },
     async getNoExperienceDates() {
-      await this.$axios
-        .get("/extra-no-dates?extra=experience")
-        .then((res) => {
-          const noDates = res.data.data;
+      await this.$axios.get("/extra-no-dates?extra=experience").then((res) => {
+        const noDates = res.data.data;
 
-          this.noDates = noDates;
+        this.noDates = noDates;
 
-          //console.log(noDates);
-        });
+        //console.log(noDates);
+      });
     },
   },
   async created() {
@@ -498,8 +545,7 @@ export default {
     if (this.dates.length > 0) {
       this.breakfastDates = [...new Set(this.dates)];
 
-      const lastDate =
-        this.breakfastDates[this.breakfastDates.length - 1];
+      const lastDate = this.breakfastDates[this.breakfastDates.length - 1];
       this.breakfastDates.push(
         format(add(parseISO(lastDate), { days: 1 }), "yyyy-MM-dd")
       );
@@ -529,11 +575,12 @@ export default {
       this.myPaintingDate = this.paintingDates[0];
     }
 
-    this.selectedRoom = this.rooms[0].name;
+    // this.selectedRoom = this.rooms[0].name;
 
     if (this.$store.state.extras.selectedExperiences) {
-      this.selectedExperiences =
-        this.$store.state.extras.selectedExperiences.map((x) => x);
+      this.selectedExperiences = this.$store.state.extras.selectedExperiences.map(
+        (x) => x
+      );
     }
     // if (this.$store.state.extras.decorationRoom) {
     //     this.selectedRoom = this.$store.state.extras.decorationRoom;
@@ -552,23 +599,19 @@ export default {
     //         this.$store.state.extras.decorationBalloonsColor;
     // }
     if (this.$store.state.extras.decorationBreakfastDate) {
-      this.myBreakfastDate =
-        this.$store.state.extras.decorationBreakfastDate;
+      this.myBreakfastDate = this.$store.state.extras.decorationBreakfastDate;
     }
     if (this.$store.state.extras.decorationBreakfastTime) {
-      this.myBreakfastTime =
-        this.$store.state.extras.decorationBreakfastTime;
+      this.myBreakfastTime = this.$store.state.extras.decorationBreakfastTime;
     }
     if (this.$store.state.extras.decorationPicnicDate) {
       this.myPicnicDate = this.$store.state.extras.decorationPicnicDate;
     }
     if (this.$store.state.extras.decorationPaintingDate) {
-      this.myPaintingDate =
-        this.$store.state.extras.decorationPaintingDate;
+      this.myPaintingDate = this.$store.state.extras.decorationPaintingDate;
     }
     if (this.$store.state.extras.decorationPaintingQty) {
-      this.myPaintingQty =
-        this.$store.state.extras.decorationPaintingQty;
+      this.myPaintingQty = this.$store.state.extras.decorationPaintingQty;
     }
   },
 };

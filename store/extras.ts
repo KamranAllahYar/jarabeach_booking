@@ -1,11 +1,15 @@
+// import { ExtraState } from './extras';
 import { RootState } from './index';
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import parseISO from 'date-fns/parseISO';
 
 import format from 'date-fns/format';
 
+
+
 export const state = () => ({
   extras_booking: 'guests',
+  extras_booking_selected :"" as String,
   specials: [
     { type: 'unforgettableExperience', name: 'Unforgettable Experiences', available: true, range: '10,000' },
     { type: 'roomDecoration', name: 'Room Decoration', available: true, range: '0' },
@@ -16,7 +20,7 @@ export const state = () => ({
     { type: 'cakes', name: 'Cake', available: true, range: '15,000' },
     { type: 'photoshoot', name: 'Photoshoot (third-party photographer access)', available: true, range: '100,000' },
     // { type: 'quadbike', name: 'Quad Bikes', available: true, range: '25,000' },
-    { type: 'bikes', name: 'Go-Kart and Horse Riding', available: true, range: '15,000' },
+    { type: 'bikes', name: 'Horse Riding', available: true, range: '15,000' },
     // { type: 'domesticStaff', name: 'Domestic Staff', available: true, range: '30,000' },
     { type: 'dayPass', name: 'Day Pass Extension - On Last Day', available: true, range: '30,000' }
     // { type: 'massage', name: 'Massage', available: false, range: '30,000' },
@@ -74,7 +78,7 @@ export const state = () => ({
   selectedDrinks: [] as any[],
   selectedDayPassOptions: [] as any[],
   dateDrink: null as String | null,
-  dayPassDate: null as any | String,
+  dayPassDate: null as String | null,
 
   newmassageOptions: [] as any[],
   selectedMassages: [] as any[],
@@ -97,6 +101,7 @@ export const state = () => ({
 export type ExtraState = ReturnType<typeof state>
 
 export const getters: GetterTree<ExtraState, RootState> = {
+  extrasBookingSelected: (state: ExtraState) => state.extras_booking_selected,
   allSpecials: (state: ExtraState) => state.specials,
   allSelected: (state: ExtraState) => state.selected,
   allDrinks: (state: ExtraState) => state.drinkOptions,
@@ -143,32 +148,36 @@ export const getters: GetterTree<ExtraState, RootState> = {
     return price;
   },
   dayPassPrices: (state: ExtraState) => {
-    console.log('state.holidayDates', state.holidayDates);
     const isDateAvailable = state.holidayDates.filter(d => {
-      const daypassBookingDate = parseISO((state.dayPassDate || new Date().toISOString()) as string);
+      // const daypassBookingDate = parseISO(state.dayPassDate as string);
+      // console.log(state.dayPassDate)
       const dDate = parseISO(d);
-      return format(daypassBookingDate, 'yyyy-MM-dd') === format(dDate,'yyyy-MM-dd');
+
+      // return format(daypassBookingDate, 'yyyy-MM-dd') === format(dDate, 'yyyy-MM-dd');
+      return  format(dDate, 'yyyy-MM-dd');
     });
-  if (state.selectedDayPassOptions.length <= 0) return 0;
-  let price = 0;
-  var dayOfWeek = new Date(state.dayPassDate as string).getDay();
-  var isWeekend = (dayOfWeek === 6) || (dayOfWeek  === 0);
-  for (let i = 0; i < state.selectedDayPassOptions.length; i++) {
-    const sDayPass = state.selectedDayPassOptions[i];
+    // console.log(isDateAvailable)
+    if (state.selectedDayPassOptions.length <= 0) return 0;
+    let price = 0;
+    var dayOfWeek = new Date(state.dayPassDate as string).getDay();
+    var isWeekend = (dayOfWeek === 6) || (dayOfWeek === 0);
+    for (let i = 0; i < state.selectedDayPassOptions.length; i++) {
+      const sDayPass = state.selectedDayPassOptions[i];
 
-    const dayPass = state.dayPassOptions.find(dko => dko.id == sDayPass.id);
+      const dayPass = state.dayPassOptions.find(dko => dko.id == sDayPass.id);
 
-    if (dayPass) {
-      let gottenPrice = 0;
-      if(isDateAvailable.length) gottenPrice = (+dayPass.seasonal_price * +sDayPass.qty);
-      if(isWeekend) gottenPrice = (+dayPass.weekend_price * +sDayPass.qty);
-      if(!isWeekend && !isDateAvailable.length) gottenPrice = (+dayPass.weekday_price * +sDayPass.qty);
-      // let gottenPrice = isWeekend ? (+dayPass.weekend_price * +sDayPass.qty) : (+dayPass.weekday_price * +sDayPass.qty)
-      price += gottenPrice;
+      if (dayPass) {
+        let gottenPrice = 0;
+        if (isDateAvailable.length) gottenPrice = (+dayPass.seasonal_price * +sDayPass.qty);
+        if (isWeekend) gottenPrice = (+dayPass.weekend_price * +sDayPass.qty);
+        if (!isWeekend && !isDateAvailable.length) gottenPrice = (+dayPass.weekday_price * +sDayPass.qty);
+        //  gottenPrice = isWeekend ? (+dayPass.weekend_price * +sDayPass.qty) : (+dayPass.weekday_price * +sDayPass.qty)
+        // console.log(price, gottenPrice, 'price',)
+        price += gottenPrice;
+      }
     }
-  }
 
-  return price;
+    return price;
   },
   massagesPrice: (state: ExtraState) => {
     if (state.selectedMassages.length <= 0) return 0;
@@ -244,9 +253,9 @@ export const getters: GetterTree<ExtraState, RootState> = {
       const deco = state.selectedExperiences[i];
 
       if (deco) {
-        if(deco.name.toLowerCase() == "painting"){
+        if (deco.name.toLowerCase() == "painting") {
           price += +deco.price * +state.decorationPaintingQty;
-        }else{
+        } else {
           price += +deco.price;
         }
       }
@@ -368,6 +377,9 @@ function getSpecialObjFromStr(specials: any[], specialStr: String): any {
 }
 
 export const mutations: MutationTree<ExtraState> = {
+  SET_EXTRAS_BOOKING_SELECTED : (state, sp: string) => {
+    state.extras_booking_selected = sp;
+  },
   LOAD_EXTRAS: (state, payload) => {
     state.specials = payload
   },
@@ -378,8 +390,8 @@ export const mutations: MutationTree<ExtraState> = {
     state.selected = payload
   },
   UPDATE_NO_DISCOUNT_DATES: (state, dates: string[]) => {
-		state.holidayDates = dates;
-	},
+    state.holidayDates = dates;
+  },
   REMOVE_EXTRA: (state, extra) => {
     if (state.clashes[extra]) {
       delete state.clashes[extra];
@@ -631,10 +643,10 @@ export const mutations: MutationTree<ExtraState> = {
     state.dateDrink = null;
 
     state.newmassageOptions = [] as any[],
-    state.selectedMassages = [] as any[],
-    state.dateMassages = null as String | null,
+      state.selectedMassages = [] as any[],
+      state.dateMassages = null as String | null,
 
-    state.cakeOptions = [] as any[];
+      state.cakeOptions = [] as any[];
     state.cakeMessage = "" as any;
     state.cakeGender = "" as any;
     state.selectedCakes = [] as any[];
@@ -805,8 +817,8 @@ export const mutations: MutationTree<ExtraState> = {
     }
   },
   LOAD_DAY_PASS_OPTIONS: (state, options) => {
-		state.dayPassOptions = options;
-	},
+    state.dayPassOptions = options;
+  },
   TRANSFORM_LOOKOUTS: (state, payload) => {
     const oldDates = payload.dates;
     const oldLookout = payload.lookouts;
@@ -824,6 +836,9 @@ export const mutations: MutationTree<ExtraState> = {
 }
 
 export const actions: ActionTree<ExtraState, RootState> = {
+  updateExtrasSelected({commit} , data: string){
+    commit('SET_EXTRAS_BOOKING_SELECTED', data);
+  },
 
   updateSpecials({ commit, rootState }, dates: string[]) {
     let oldBookingId = null;
@@ -839,11 +854,11 @@ export const actions: ActionTree<ExtraState, RootState> = {
   },
 
   loadNoDiscountDates({ commit }) {
-		this.$axios.get('/no-discount-dates').then(res => {
-			// //console.log(res.data.data);
-			commit('UPDATE_NO_DISCOUNT_DATES', res.data.data);
-		});
-	},
+    this.$axios.get('/no-discount-dates').then(res => {
+      // //console.log(res.data.data);
+      commit('UPDATE_NO_DISCOUNT_DATES', res.data.data);
+    });
+  },
 
   getSpecialDrinks({ commit }) {
     this.$axios.get("/drink-options").then((res) => {
@@ -852,10 +867,10 @@ export const actions: ActionTree<ExtraState, RootState> = {
   },
 
   getDayPassOptions({ commit }) {
-		this.$axios.get('/day-pass-options').then(res => {
-			commit('LOAD_DAY_PASS_OPTIONS', res.data.data);
-		});
-	},
+    this.$axios.get('/day-pass-options').then(res => {
+      commit('LOAD_DAY_PASS_OPTIONS', res.data.data);
+    });
+  },
 
   getSpecialCakes({ commit }) {
     this.$axios.get("/cake-options").then((res) => {
