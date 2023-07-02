@@ -123,6 +123,13 @@
             </div> -->
     </div>
 
+    <div class="py-3 ml-32 md:ml-36 md:py-3">
+      How long are you staying?
+      <div class="px-4 py-2 bg-cal-non-avail rounded-md w-max mb-2">
+            {{ endDate ? getDatesInbetween().length : 0  }} Nights
+      </div>
+    </div>
+
     <div class="flex w-full" v-for="(datesHalf, k) in calType30Days" :key="k">
       <div class="flex-shrink-0 w-32 md:w-36">
         <div

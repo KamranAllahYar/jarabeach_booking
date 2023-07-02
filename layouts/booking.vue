@@ -11,13 +11,15 @@
         <!-- <Navbar /> -->
 
         <div class="py-4 bg-white text-center">
-          <img src="~/assets/logo_big.jpg" class="w-32 mx-auto md:w-40" />
+          <a href="https://www.jarabeachresort.com/">
+            <img src="~/assets/logo_big.jpg" class="w-32 mx-auto md:w-40" />
+          </a>
         </div>
 
         <!-- <TopProgressBar /> -->
         <div
           v-if="!routeCheck"
-          class="h-96 banner_image w-full bg-black flex justify-center gap-4 flex-col items-center"
+          class="h-44 md:h-60 banner_image w-full bg-black flex justify-center gap-4 flex-col items-center"
         >
           <h1 class="md:text-6xl text-4xl text-white font-rubik text-center font-bold">
             Overnight Booking
@@ -30,7 +32,7 @@
           </p>
         </div>
 
-        <div class="relative z-20 pt-10 pb-6 mx-auto max-w-7xl">
+        <div class="relative z-20 pt-0 md:pt-10 pb-6 mx-auto max-w-7xl">
           <Nuxt keep-alive />
         </div>
 
