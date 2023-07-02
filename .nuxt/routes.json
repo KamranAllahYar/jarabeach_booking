@@ -1,0 +1,114 @@
+[
+  {
+    "name": "availability",
+    "path": "/availability",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/availability.vue",
+    "chunkName": "pages/availability",
+    "_name": "_165ae3cb"
+  },
+  {
+    "name": "day-pass",
+    "path": "/day-pass",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/day-pass.vue",
+    "chunkName": "pages/day-pass",
+    "_name": "_7fbda292"
+  },
+  {
+    "name": "day-pass-options",
+    "path": "/day-pass-options",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/day-pass-options.vue",
+    "chunkName": "pages/day-pass-options",
+    "_name": "_6df321e3"
+  },
+  {
+    "name": "day-pass-payment",
+    "path": "/day-pass-payment",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/day-pass-payment.vue",
+    "chunkName": "pages/day-pass-payment",
+    "_name": "_2674d94b"
+  },
+  {
+    "name": "done",
+    "path": "/done",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/done.vue",
+    "chunkName": "pages/done",
+    "_name": "_1fe9431c"
+  },
+  {
+    "name": "done_hold",
+    "path": "/done_hold",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/done_hold.vue",
+    "chunkName": "pages/done_hold",
+    "_name": "_0fd50d9c"
+  },
+  {
+    "name": "guests",
+    "path": "/guests",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/guests.vue",
+    "chunkName": "pages/guests",
+    "_name": "_25fa1e0b"
+  },
+  {
+    "name": "manage",
+    "path": "/manage",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/manage.vue",
+    "chunkName": "pages/manage",
+    "_name": "_222038d5"
+  },
+  {
+    "name": "policies",
+    "path": "/policies",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/policies.vue",
+    "chunkName": "pages/policies",
+    "_name": "_bc7dad80"
+  },
+  {
+    "name": "profile",
+    "path": "/profile",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/profile/index.vue",
+    "chunkName": "pages/profile/index",
+    "_name": "_0b83c9a8"
+  },
+  {
+    "name": "summary",
+    "path": "/summary",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/summary.vue",
+    "chunkName": "pages/summary",
+    "_name": "_47d94234"
+  },
+  {
+    "name": "welcome",
+    "path": "/welcome",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/welcome.vue",
+    "chunkName": "pages/welcome",
+    "_name": "_22f414a2"
+  },
+  {
+    "name": "profile-more",
+    "path": "/profile/more",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/profile/more.vue",
+    "chunkName": "pages/profile/more",
+    "_name": "_ac23bb2a"
+  },
+  {
+    "name": "day-pass-extras-special",
+    "path": "/day-pass-extras/:special?",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/day-pass-extras/_special.vue",
+    "chunkName": "pages/day-pass-extras/_special",
+    "_name": "_7916982a"
+  },
+  {
+    "name": "extras-special",
+    "path": "/extras/:special?",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/extras/_special.vue",
+    "chunkName": "pages/extras/_special",
+    "_name": "_edb32e34"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/macbook/Documents/upwork/jarabeach_booking/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_fc6d97dc"
+  }
+]
