@@ -126,10 +126,7 @@
     <div class="py-3 ml-32 md:ml-36 md:py-3">
       How long are you staying?
       <div class="px-4 py-2 bg-cal-non-avail rounded-md w-max mb-2">
-          <!-- <span class=" text-xs font-semibold md:text-lg text-black"> -->
-            {{ endDate ? getDatesInbetween().length : 0  }}
-          <!-- </span>  -->
-           Nights
+            {{ endDate ? getDatesInbetween().length : 0  }} Nights
       </div>
     </div>
 
