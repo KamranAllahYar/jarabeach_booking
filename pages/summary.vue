@@ -143,8 +143,6 @@
                     <b>30 mins</b>. You must send a proof of payment to
                     <b>bookings@jarabeachresort.com</b> within that time or the hold on
                     the booking will be cancelled.
-                    <br />
-                    <i class="text-red-800">Option not available between 6pm-9am WAT</i>
                   </div>
                 </div>
                 <div class="flex-shrink-0 w-full md:w-5/12">
@@ -290,12 +288,6 @@ export default {
     },
     shouldShowBookOnHold() {
       if (this.$store.state.editMode) return false;
-
-      const today = new Date();
-      const todayHrs = today.getHours();
-
-      //console.log(todayHrs);
-      if (todayHrs >= 20 || todayHrs < 8) return false;
 
       return true;
     },
