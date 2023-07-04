@@ -1020,6 +1020,7 @@ export const actions: ActionTree<RootState, RootState> = {
 			prices: prices,
 			admin_edit_mode: state.adminEditMode,
 			multi_room: state.multiRoom,
+      specials: specialsToSend,
 		};
 
 		if (state.guest?.id) {
