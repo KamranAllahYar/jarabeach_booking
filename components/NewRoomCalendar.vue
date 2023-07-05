@@ -153,7 +153,7 @@
           <div
             v-for="(compDate, ix) in datesHalf"
             :key="ix + 'sss'"
-            class="flex flex-col items-center justify-center flex-shrink-0 text-sm text-center text-black w-14 md:w-auto h-14"
+            class="flex flex-col items-center justify-center flex-shrink-0 text-sm text-center text-black w-12 md:w-auto h-12"
           >
             <div class="text-xs md:text-xs">{{ weekDays[compDate.weekday] }}.</div>
             <div class="text-xs font-light md:text-sm">{{ compDate.day }}</div>
