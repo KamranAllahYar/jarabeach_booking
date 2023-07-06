@@ -32,7 +32,7 @@
           </p>
         </div>
 
-        <div class="relative z-20 pt-0 md:pt-10 pb-6 mx-auto max-w-7xl">
+        <div class="relative z-20 pt-6 md:pt-10 pb-6 mx-auto max-w-7xl">
           <Nuxt keep-alive />
         </div>
 

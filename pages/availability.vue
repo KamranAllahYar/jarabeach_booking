@@ -1,9 +1,9 @@
 <template>
   <div class="pb-20">
-    <h1 class="px-6 mb-6 text-xl font-bold text-center md:px-0 md:text-2xl">
+    <h1 class="mb-2 md:mb-6 text-lg font-bold text-center md:px-0 md:text-2xl">
       Select the dates you would like to stay
     </h1>
-    <h2 class="px-6 mb-6 text-xl font-bold text-center md:px-0 md:text-2xl">
+    <h2 class="px-6 mb-6 text-base font-rubik text-gray-500 md:text-black md:font-bold md:text-center md:px-0 md:text-2xl">
       Choose the nights you'll be sleeping and your preferred room(s)
     </h2>
 
