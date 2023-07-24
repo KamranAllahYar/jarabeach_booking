@@ -54,12 +54,15 @@
       </div>
     </div>
     <div class="flex gap-5 px-3">
-      <button
+     <!--  <button
         @click="clearBooking()"
         class="w-64 bg-gray-button rounded-lg py-4 font-rubik text-sm font-medium"
       >
         Restart Booking
-      </button>
+      </button> -->
+      <MainButton @click="$router.push({ path: '/manage' })" outline class=""
+        >Manage Booking</MainButton
+      >
       <button
         @click="gotoNext()"
         class="w-64 bg-black text-white rounded-lg py-4 font-rubik text-sm font-medium"
