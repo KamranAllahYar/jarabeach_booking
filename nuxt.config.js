@@ -2,7 +2,7 @@ export default {
   ssr: false,
   target: 'static',
   publicRuntimeConfig: {
-    PAYMENT_PUBLIC_KEY: process.env.PAYSTACK_LIVE_MODE == "true" ? process.env.PAYSTACK_LIVE_PK : process.env.PAYSTACK_TEST_PK,
+    PAYMENT_PUBLIC_KEY: 'pk_test_cca22ec587ad1eb2b95281b6b65db79470fdea2a',
     BUGSNAG_KEY: process.env.BUGSNAG_KEY,
   },
   head: {

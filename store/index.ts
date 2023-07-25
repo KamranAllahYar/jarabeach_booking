@@ -395,8 +395,22 @@ export const getters: GetterTree<RootState, RootState> = {
 	roomPrice: (state: RootState, getters) => {
 		let price = 0;
 
+    const nightsDiscount = [0, 10, 15, 20];
+    let index = 0;
+
 		const nights = getters.individualDates;
-		for (const date in nights) {
+
+		// for ( const date in nights) {
+		// 	if (Object.prototype.hasOwnProperty.call(nights, date)) {
+		// 		const rooms = nights[date];
+
+		// 		const roomPrice = calcRoomPrice(getters, rooms);
+		// 		price += (roomPrice - roomPrice * nightsDiscount[index] / 100);
+    //     index = (index < 4) ? index++ : 3;
+		// 	}
+		// }
+
+    for ( const date in nights) {
 			if (Object.prototype.hasOwnProperty.call(nights, date)) {
 				const rooms = nights[date];
 
@@ -514,6 +528,7 @@ export const getters: GetterTree<RootState, RootState> = {
 		});
 
 		return extraPrices + roomPrices + +getters.extraPeoplePrice;
+    // return extraPrices + roomPrices;
 	},
 	discount: (state: RootState, getters) => {
 		const discount = state.discount;

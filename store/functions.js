@@ -155,7 +155,7 @@ const calcRoomLimit = function (getters, rooms) {
   return smallPeople <= totalSmallMax;
 }
 
-const calcRoomPrice = function (getters, rooms) {
+const calcRoomPrice2 = function (getters, rooms) {
   let totalPeople = getters.totalPeople;
   let nowSingles = false;
 
@@ -183,6 +183,86 @@ const calcRoomPrice = function (getters, rooms) {
     if (nowRoom.type == 'villa') totalPeople -= 3;
     if (nowRoom.type == 'family') totalPeople -= 3;
     if (nowRoom.type == 'standard') totalPeople -= 2;
+    roomsLeft.splice(i, 1);
+  }
+
+  return roomPrices;
+}
+
+const calcRoomPrice = function (getters, rooms) {
+  let totalPeople = getters.totalPeople;
+  let nowSingles = false;
+
+  let roomsLeft = rooms.map((room_id) => {
+    return rooms.find((room) => room.room_id == room_id);
+  });
+
+  let roomPrices = 0;
+  let totalAdults = getters.noAdults;
+  let totalTeens = getters.noTeens;
+  let totalSmall = getters.smallPeople - 1;
+  let roomBig = 0;
+  let roomSmall = 0;
+
+  for (let i = 0; i < rooms.length; i++) {
+    const nowRoom = rooms[i];
+
+    if (roomsLeft.length >= totalPeople) {
+      nowSingles = true;
+    } else {
+      nowSingles = false;
+    }
+
+
+    if (nowRoom.type == 'loft') {
+      roomBig = 3;
+      roomSmall = 2;
+    }
+    if (nowRoom.type == 'villa') {
+      roomBig = 2;
+      roomSmall = 2;
+    }
+    if (nowRoom.type == 'family') {
+      roomBig = 3;
+      roomSmall = 2;
+    }
+    if (nowRoom.type == 'standard') {
+      roomBig = 2;
+      roomSmall = 1;
+    }
+
+    if (nowSingles) {
+      if (totalAdults > 0) {
+        roomPrices += nowRoom.single_price;
+        totalAdults -= 1;
+        totalPeople -= 1;
+      } else if (totalTeens > 0) {
+        roomPrices += (nowRoom.single_price) * 0.75;
+        totalTeens -= 1;
+        totalPeople -= 1;
+      } else if (totalSmall > 0) {
+        roomPrices += nowRoom.single_price * 0.25;
+        totalSmall -= 1;
+        totalSmall -= 1;
+      }
+    } else {
+      if (totalAdults > 0) {
+        roomPrices += nowRoom.price * Math.min(roomBig, totalAdults);
+        totalAdults -= roomBig;
+        totalPeople -= roomBig;
+      }
+      if (totalTeens > 0) {
+        roomPrices += nowRoom.price * Math.min(roomBig, totalTeens) * 0.75;
+        totalTeens -= roomBig;
+        totalPeople -= roomBig;
+      }
+      if (totalSmall > 0) {
+        roomPrices += nowRoom.price * Math.min(roomBig, totalSmall)  * 0.25;
+        totalSmall -= roomSmall;
+        totalSmall -= roomSmall;
+      }
+    }
+
     roomsLeft.splice(i, 1);
   }
 
