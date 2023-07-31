@@ -464,9 +464,9 @@ export const getters: GetterTree<RootState, RootState> = {
 		// const totalNights = getters.totalNights;
 		const totalNights = tNights;
 		let percent = 0;
-		if (totalNights == 2) percent = 5;
-		else if (totalNights == 3) percent = 10;
-		else if (totalNights >= 4) percent = 15;
+		if (totalNights == 2) percent = 10;
+		else if (totalNights == 3) percent = 15;
+		else if (totalNights >= 4) percent = 20;
 
 		return percent;
 	},
@@ -527,8 +527,8 @@ export const getters: GetterTree<RootState, RootState> = {
 			}
 		});
 
-		return extraPrices + roomPrices + +getters.extraPeoplePrice;
-    // return extraPrices + roomPrices;
+		// return extraPrices + roomPrices + +getters.extraPeoplePrice;
+    return extraPrices + roomPrices;
 	},
 	discount: (state: RootState, getters) => {
 		const discount = state.discount;
@@ -896,7 +896,7 @@ export const actions: ActionTree<RootState, RootState> = {
 			Rooms: rootGetters.roomPrice,
 			'Room Discount': '-' + rootGetters.roomDiscount,
 			'100Club Member Discount': '-' + rootGetters.memberDiscount,
-			'Extra People Cost': '+' + rootGetters.extraPeoplePrice,
+			// 'Extra People Cost': '+' + rootGetters.extraPeoplePrice,
 			taxTotal: rootGetters.taxTotal,
 			tax: rootGetters.taxTotal,
 		} as any;

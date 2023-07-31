@@ -112,13 +112,13 @@
       class="w-full text-gray-800 border-t border-borderColor-light bg-gray-button"
       v-if="showDiscount"
     >
-      <div
+      <!-- <div
         class="flex justify-between px-5 my-3"
         v-if="!hideExtraGuests && extraPeoplePrice > 0"
       >
         <div>Extra Guest(s)</div>
         <div class="font-bold">+ {{ currency(extraPeoplePrice) }}</div>
-      </div>
+      </div> -->
       <div class="flex justify-between px-5 my-6">
         <div>Sub-total</div>
         <div class="font-bold">{{ currency(subTotal) }}</div>
