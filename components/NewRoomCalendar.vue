@@ -131,7 +131,7 @@
     </div>
 
     <div class="flex w-full" v-for="(datesHalf, k) in calType30Days" :key="k">
-      <div class="flex-shrink-0 w-32 md:w-36">
+      <div class="flex-shrink-0 w-32 md:w-36 mb-4">
         <div
           class="flex items-center px-4 text-base font-bold md:px-6 md:text-xl h-14 mb-4"
         >
@@ -143,7 +143,7 @@
         <div
           v-for="roomType in roomTypes"
           :key="roomType"
-          class="flex items-center w-full px-4 text-sm capitalize md:px-6 md:text-base h-14"
+          class="flex items-center w-full px-4 text-sm capitalize md:px-6 md:text-base h-12"
         >
           {{ roomType }}
         </div>
