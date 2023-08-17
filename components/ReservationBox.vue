@@ -164,6 +164,13 @@
         <div class="text-sm">Consumption Tax and VAT (12.5%)</div>
         <div class="text-sm font-bold">{{ currency(taxTotal) }}</div>
       </div>
+      <div
+        class="flex justify-between w-full my-3 mb-4"
+        v-if="guestsDiscountPercent > 0 && guestsDiscount > 0"
+      >
+        <div>{{ guestsDiscountPercent }}% Guests Discount</div>
+        <div class="font-bold">- {{ currency(guestsDiscount) }}</div>
+      </div>
       <div class="flex justify-between w-full my-3">
         <div class="text-xl">Total</div>
         <div class="text-xl font-bold">{{ currency(totalPrice) }}</div>
@@ -342,6 +349,12 @@ export default {
     },
     roomDiscount() {
       return this.$store.getters.roomDiscount;
+    },
+    guestsDiscountPercent() {
+      return this.$store.getters.guestsDiscountPercent
+    },
+    guestsDiscount() {
+      return this.$store.getters.guestsDiscount
     },
     memberDiscount() {
       return this.$store.getters.memberDiscount;

@@ -197,7 +197,10 @@ const calcRoomPrice = function (getters, rooms) {
   });
 
   let roomPrices = 0;
+  let firstAdultPrice = 0;
   let ExtraAdultPrice = 0;
+  let teenPrice = 0;
+  let smallPrice = 0;
   let totalAdults = getters.noAdults;
   let totalTeens = getters.noTeens;
   let totalSmall = getters.noChild - 1;
@@ -217,58 +220,110 @@ const calcRoomPrice = function (getters, rooms) {
     if (nowRoom.type == 'loft') {
       roomAdults = 5;
       roomSmall = 1;
+      firstAdultPrice = 185000;
       ExtraAdultPrice = 100000;
+      teenPrice = 65000;
+      smallPrice = 32500;
     }
     if (nowRoom.type == 'villa') {
       roomAdults = 5;
       roomSmall = 1;
+      firstAdultPrice = 250000;
       ExtraAdultPrice = 125000;
+      teenPrice = 85000;
+      smallPrice = 42500;
     }
     if (nowRoom.type == 'family') {
       roomAdults = 5;
       roomSmall = 1;
       ExtraAdultPrice = 75000;
+      firstAdultPrice = 175000;
+      teenPrice = 60000;
+      smallPrice = 30000;
     }
     if (nowRoom.type == 'standard') {
       roomAdults = 2;
       roomSmall = 1;
       ExtraAdultPrice = 75000;
+      firstAdultPrice = 150000;
+      teenPrice = 50000;
+      smallPrice = 25000;
     }
+
+    // if (nowSingles) {
+    //   if (totalAdults > 0) {
+    //     roomPrices += nowRoom.price;
+    //     totalAdults -= 1;
+    //     totalPeople -= 1;
+    //   } else if (totalTeens > 0) {
+    //     roomPrices += (nowRoom.price) * 0.5;
+    //     totalTeens -= 1;
+    //     totalPeople -= 1;
+    //   } else if (totalSmall > 0) {
+    //     roomPrices += nowRoom.price * 0.25;
+    //     totalSmall -= 1;
+    //     totalSmall -= 1;
+    //   }
+    // } else {
+    //   if (totalAdults > 0) {
+    //     roomPrices += nowRoom.price + ExtraAdultPrice * Math.min(roomAdults - 1, totalAdults - 1);
+    //     totalAdults -= Math.min(roomAdults, totalAdults);
+    //     totalPeople -= Math.min(roomAdults, totalAdults);
+    //   }
+    //   if (totalTeens > 0) {
+    //     roomPrices += nowRoom.price * Math.min(roomAdults, totalTeens) * 0.5;
+    //     totalTeens -= Math.min(roomAdults, totalTeens);
+    //     totalPeople -= roomAdults;
+    //   }
+    //   if (totalSmall > 0) {
+    //     if (totalAdults > 0)  roomPrices += nowRoom.price * Math.min(roomsmall, totalSmall)  * 0.25;
+    //     else roomPrices += nowRoom.price * Math.min(roomAdults, totalSmall)  * 0.25;
+    //     totalSmall -= roomSmall;
+    //     totalSmall -= roomSmall;
+    //   }
+    // }
 
     if (nowSingles) {
       if (totalAdults > 0) {
-      console.log(nowRoom.price);
-        roomPrices += nowRoom.price;
+        roomPrices += firstAdultPrice;
         totalAdults -= 1;
         totalPeople -= 1;
       } else if (totalTeens > 0) {
-        roomPrices += (nowRoom.price) * 0.5;
+        roomPrices += teenPrice;
         totalTeens -= 1;
         totalPeople -= 1;
       } else if (totalSmall > 0) {
-        roomPrices += nowRoom.price * 0.25;
+        roomPrices += smallPrice;
         totalSmall -= 1;
         totalSmall -= 1;
       }
     } else {
       if (totalAdults > 0) {
-        roomPrices += nowRoom.price + ExtraAdultPrice * Math.min(roomAdults - 1, totalAdults - 1);
-        totalAdults -= Math.min(roomAdults, totalAdults);
-        totalPeople -= Math.min(roomAdults, totalAdults);
+        if (i != (rooms.length - 1)) {
+          const adultsForTheOfRestRooms = (rooms.length - 1 - i);
+          roomPrices += firstAdultPrice + ExtraAdultPrice * Math.min(roomAdults - adultsForTheOfRestRooms - 1, totalAdults - adultsForTheOfRestRooms - 1);
+          // (rooms.length - 1 - i)
+          totalAdults -= Math.min(roomAdults - adultsForTheOfRestRooms, totalAdults - adultsForTheOfRestRooms);
+          totalPeople -= Math.min(roomAdults - adultsForTheOfRestRooms, totalAdults - adultsForTheOfRestRooms);
+        }
+        else {
+          roomPrices += firstAdultPrice + ExtraAdultPrice * Math.min(roomAdults - 1, totalAdults - 1);
+          totalAdults -= Math.min(roomAdults, totalAdults);
+          totalPeople -= Math.min(roomAdults, totalAdults);
+        }
       }
       if (totalTeens > 0) {
-        roomPrices += nowRoom.price * Math.min(roomAdults, totalTeens) * 0.5;
+        roomPrices += teenPrice * Math.min(roomAdults, totalTeens);
         totalTeens -= Math.min(roomAdults, totalTeens);
-        totalPeople -= roomAdults;
+        totalPeople -= Math.min(roomAdults, totalTeens);
       }
       if (totalSmall > 0) {
-        if (totalAdults > 0)  roomPrices += nowRoom.price * Math.min(roomsmall, totalSmall)  * 0.25;
-        else roomPrices += nowRoom.price * Math.min(roomAdults, totalSmall)  * 0.25;
-        totalSmall -= roomSmall;
-        totalSmall -= roomSmall;
+        if (totalAdults > 0) roomPrices +=smallPrice * Math.min(roomSmall, totalSmall);
+        else roomPrices += smallPrice * Math.min(roomAdults, totalSmall);
+        totalSmall -= Math.min(roomSmall, totalSmall);
+        totalSmall -= Math.min(roomSmall, totalSmall);
       }
     }
-
     roomsLeft.splice(i, 1);
   }
 
