@@ -481,6 +481,16 @@ export const getters: GetterTree<RootState, RootState> = {
 
 		return 0;
 	},
+  guestsDiscountPercent: (state: RootState, getters) => {
+    const guests = getters.totalPeople;
+    if (guests >= 30 && guests < 40) return 15;
+    else if (guests >= 40) return 20;
+    else return 0;
+	},
+  guestsDiscount: (state: RootState, getters) => {
+    const guestsDiscount = (+getters.preTotal + +getters.taxTotal) * (getters.guestsDiscountPercent / 100);
+		return guestsDiscount.toFixed(2);
+	},
 	subTotal: (state: RootState, getters) => {
 		const roomPrices = getters.roomPrice;
 
@@ -553,7 +563,11 @@ export const getters: GetterTree<RootState, RootState> = {
 		return (+getters.preTotal * 0.125).toFixed(2);
 	},
 	totalPrice: (state: RootState, getters) => {
-		return (+getters.preTotal + +getters.taxTotal).toFixed(2);
+    const total = (+getters.preTotal + +getters.taxTotal) - +getters.guestsDiscount;
+    // if (getters.totalPeople >= 30 && getters.totalPeople < 40) return total - +total * 0.15;
+    // else if (getters.totalPeople >= 40) return total - +total * 0.2;
+    // else return total;
+		return total.toFixed(2);
 	},
 	previousTotalPaid: (state: RootState, getters) => {
 		// return state.editBooking.payment.subtotal;
