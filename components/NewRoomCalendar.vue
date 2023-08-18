@@ -266,6 +266,7 @@
             <div
               v-if="isEnd(roomType, compDate.dateStr) && !smallScreen"
               @click.stop=""
+              v-click-outside="toggleMobileSelectSheet"
               class="absolute bottom-0 right-0 z-50 text-sm transform translate-x-full translate-y-full bg-white border rounded-lg cursor-auto"
               style="--tw-translate-x: 0%; --tw-translate-y: -55px"
             >
@@ -400,7 +401,7 @@
                   v-if="showRoomSelect && canSwap"
                 >
                   <div class="flex justify-end px-4 pb-3">
-                    <button class="text-black" @click="mobileSelectSheet = false">
+                    <button class="font-thin cursor-pointer md:text-base text-white bg-atlantic-blue rounded px-2 py-1" @click="mobileSelectSheet = false">
                       Done
                     </button>
                   </div>
@@ -416,7 +417,7 @@
                 </div>
                 <div class="w-full px-4 pt-6 pb-12 bg-white" @click.stop v-else>
                   <div class="flex justify-end">
-                    <button class="text-black" @click="mobileSelectSheet = false">
+                    <button class="font-thin cursor-pointer md:text-base text-white bg-atlantic-blue rounded px-2 py-1" @click="mobileSelectSheet = false">
                       Done
                     </button>
                   </div>
@@ -1064,6 +1065,12 @@ export default {
     onResize() {
       this.windowWidth = window.innerWidth;
     },
+    toggleMobileSelectSheet() {
+      if (this.mobileSelectSheet == true) {
+        this.startDate = null;
+        this.endDate = null;
+      }
+    }
   },
   mounted() {
     this.getRooms();

@@ -2,7 +2,7 @@ export default {
   ssr: false,
   target: 'static',
   publicRuntimeConfig: {
-    PAYMENT_PUBLIC_KEY: 'pk_test_cca22ec587ad1eb2b95281b6b65db79470fdea2a',
+    PAYMENT_PUBLIC_KEY: process.env.PAYSTACK_LIVE_MODE == "true" ? process.env.PAYSTACK_LIVE_PK : process.env.PAYSTACK_TEST_PK,
     BUGSNAG_KEY: process.env.BUGSNAG_KEY,
   },
   head: {
@@ -29,7 +29,8 @@ export default {
     "@/plugins/vue-tour.js",
     "@/plugins/v-calendar.js",
     { src: '@/plugins/vuex-persist', ssr: false },
-    { src: '@/plugins/bugsnag', ssr: false }
+    { src: '@/plugins/bugsnag', ssr: false },
+    '~/plugins/directives.js'
   ],
   router: {
     middleware: 'clear'
@@ -52,7 +53,7 @@ export default {
     '@nuxtjs/toast',
   ],
   axios: {
-    baseURL: process.env.API_URL || "http://localhost:8000/api/",
+    baseURL: process.env.API_URL || "https://admin.jarabeachresort.com/api/",
   },
   build: {},
   toast: {

@@ -422,15 +422,15 @@ export default {
     },
     ageToString(age, qty) {
       const translate = {
-        "0 - 2": "Infant (0 - 2) yrs",
-        "3 - 5": "Child (3 - 5) yrs",
-        "6 - 17": "Teen (6 - 17) yrs",
+        "0 - 12": "Infant (0 - 12) months",
+        "1 - 3": "Toddler (1 - 3) yrs",
+        "4 - 17": "Child (4 - 17) yrs",
       };
 
       const translatePlural = {
-        "0 - 2": "Infants (0 - 2) yrs",
-        "3 - 5": "Children (3 - 5) yrs",
-        "6 - 17": "Teens (6 - 17) yrs",
+        "0 - 12": "Infants (0 - 12) months",
+        "1 - 3": "Toddlers (1 - 3) yrs",
+        "4 - 17": "Children (4 - 17) yrs",
       };
 
       if (qty > 1) {

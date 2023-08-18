@@ -22,6 +22,7 @@ module.exports = {
       },
       colors: {
         'blury-blue': 'rgb(59 130 246 / 75%)',
+        'atlantic-blue': 'rgb(1 91 141 / 100%)',
 
         borderColor :{
           light: '#909090',

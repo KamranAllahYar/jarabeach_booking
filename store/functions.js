@@ -301,10 +301,10 @@ const calcRoomPrice = function (getters, rooms) {
       if (totalAdults > 0) {
         if (i != (rooms.length - 1)) {
           const adultsForTheOfRestRooms = (rooms.length - 1 - i);
-          roomPrices += firstAdultPrice + ExtraAdultPrice * Math.min(roomAdults - adultsForTheOfRestRooms - 1, totalAdults - adultsForTheOfRestRooms - 1);
+          roomPrices += firstAdultPrice + ExtraAdultPrice * Math.min(roomAdults - 1, totalAdults - adultsForTheOfRestRooms - 1);
           // (rooms.length - 1 - i)
-          totalAdults -= Math.min(roomAdults - adultsForTheOfRestRooms, totalAdults - adultsForTheOfRestRooms);
-          totalPeople -= Math.min(roomAdults - adultsForTheOfRestRooms, totalAdults - adultsForTheOfRestRooms);
+          totalAdults -= Math.min(roomAdults, totalAdults - adultsForTheOfRestRooms);
+          totalPeople -= Math.min(roomAdults, totalAdults - adultsForTheOfRestRooms);
         }
         else {
           roomPrices += firstAdultPrice + ExtraAdultPrice * Math.min(roomAdults - 1, totalAdults - 1);

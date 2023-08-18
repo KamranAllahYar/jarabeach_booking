@@ -671,8 +671,8 @@ export const mutations: MutationTree<RootState> = {
 		}
 		for (let i = 0; i < payload.child_no; i++) {
 			let childType = 'teen';
-			if (state.children_ages[i] == '0 - 2') childType = 'infant';
-			if (state.children_ages[i] == '3 - 5') childType = 'child';
+			if (state.children_ages[i] == '0 - 12') childType = 'infant';
+			if (state.children_ages[i] == '1 - 3') childType = 'child';
 
 			otherguests.push({
 				first_name: '',

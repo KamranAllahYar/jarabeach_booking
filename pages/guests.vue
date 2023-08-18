@@ -46,9 +46,9 @@
             style="box-shadow: none"
           >
             <option value="">Age</option>
-            <option value="0 - 2">0 - 12 months</option>
-            <option value="3 - 5">1 - 3</option>
-            <option value="6 - 17">4 - 17</option>
+            <option value="0 - 12">0 - 12 months - Infant</option>
+            <option value="1 - 3">1 - 3 years - Toddler</option>
+            <option value="4 - 17">4 - 17 years - Child</option>
           </select>
         </div>
       </div>
