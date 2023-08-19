@@ -264,9 +264,9 @@
 
             <!-- POPOVER -->
             <div
-              v-if="isEnd(roomType, compDate.dateStr) && !smallScreen"
+              v-if="isEnd(roomType, compDate.dateStr) && !smallScreen && desktopSelectSheet"
               @click.stop=""
-              v-click-outside="toggleMobileSelectSheet"
+              v-click-outside="toggleDesktopSelectSheet"
               class="absolute bottom-0 right-0 z-50 text-sm transform translate-x-full translate-y-full bg-white border rounded-lg cursor-auto"
               style="--tw-translate-x: 0%; --tw-translate-y: -55px"
             >
@@ -382,6 +382,11 @@
                         clip-rule="evenodd"
                       ></path>
                     </svg>
+                  </button>
+                </div>
+                <div class="flex justify-center">
+                  <button class="font-thin cursor-pointer md:text-base text-white bg-atlantic-blue rounded px-4 py-0" @click="toggleDesktopSelectSheet">
+                    Done
                   </button>
                 </div>
               </div>
@@ -579,6 +584,7 @@ export default {
   },
   data() {
     return {
+      desktopSelectSheet: false,
       mobileSelectSheet: false,
       smallScreen: false,
       windowWidth: window.innerWidth,
@@ -997,6 +1003,7 @@ export default {
       this.canSwap = false;
       this.loadingRoomOptions = true;
       this.mobileSelectSheet = true;
+      this.desktopSelectSheet = true;
       const date = this.startDate;
       this.roomIds = [];
 
@@ -1065,10 +1072,13 @@ export default {
     onResize() {
       this.windowWidth = window.innerWidth;
     },
-    toggleMobileSelectSheet() {
-      if (this.mobileSelectSheet == true) {
-        this.startDate = null;
-        this.endDate = null;
+    toggleDesktopSelectSheet() {
+      if (this.desktopSelectSheet == true) {
+        if(this.roomIds.length >= 0){
+          this.startDate = null;
+          this.endDate = null;
+        }
+        this.desktopSelectSheet = false;
       }
     }
   },
