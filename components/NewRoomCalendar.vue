@@ -1074,7 +1074,7 @@ export default {
     },
     toggleDesktopSelectSheet() {
       if (this.desktopSelectSheet == true) {
-        if(this.roomIds.length >= 0){
+        if(this.roomIds.length <= 0){
           this.startDate = null;
           this.endDate = null;
         }
