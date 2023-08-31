@@ -112,13 +112,13 @@
       class="w-full text-gray-800 border-t border-borderColor-light bg-gray-button"
       v-if="showDiscount"
     >
-      <div
+      <!-- <div
         class="flex justify-between px-5 my-3"
         v-if="!hideExtraGuests && extraPeoplePrice > 0"
       >
         <div>Extra Guest(s)</div>
         <div class="font-bold">+ {{ currency(extraPeoplePrice) }}</div>
-      </div>
+      </div> -->
       <div class="flex justify-between px-5 my-6">
         <div>Sub-total</div>
         <div class="font-bold">{{ currency(subTotal) }}</div>
@@ -163,6 +163,13 @@
       <div class="flex justify-between w-full my-3">
         <div class="text-sm">Consumption Tax and VAT (12.5%)</div>
         <div class="text-sm font-bold">{{ currency(taxTotal) }}</div>
+      </div>
+      <div
+        class="flex justify-between w-full my-3 mb-4"
+        v-if="guestsDiscountPercent > 0 && guestsDiscount > 0"
+      >
+        <div>{{ guestsDiscountPercent }}% Guests Discount</div>
+        <div class="font-bold">- {{ currency(guestsDiscount) }}</div>
       </div>
       <div class="flex justify-between w-full my-3">
         <div class="text-xl">Total</div>
@@ -343,6 +350,12 @@ export default {
     roomDiscount() {
       return this.$store.getters.roomDiscount;
     },
+    guestsDiscountPercent() {
+      return this.$store.getters.guestsDiscountPercent
+    },
+    guestsDiscount() {
+      return this.$store.getters.guestsDiscount
+    },
     memberDiscount() {
       return this.$store.getters.memberDiscount;
     },
@@ -409,15 +422,15 @@ export default {
     },
     ageToString(age, qty) {
       const translate = {
-        "0 - 2": "Infant (0 - 2) yrs",
-        "3 - 5": "Child (3 - 5) yrs",
-        "6 - 17": "Teen (6 - 17) yrs",
+        "0 - 12": "Infant (0 - 12) months",
+        "1 - 3": "Toddler (1 - 3) yrs",
+        "4 - 17": "Child (4 - 17) yrs",
       };
 
       const translatePlural = {
-        "0 - 2": "Infants (0 - 2) yrs",
-        "3 - 5": "Children (3 - 5) yrs",
-        "6 - 17": "Teens (6 - 17) yrs",
+        "0 - 12": "Infants (0 - 12) months",
+        "1 - 3": "Toddlers (1 - 3) yrs",
+        "4 - 17": "Children (4 - 17) yrs",
       };
 
       if (qty > 1) {

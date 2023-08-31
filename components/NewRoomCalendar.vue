@@ -264,8 +264,9 @@
 
             <!-- POPOVER -->
             <div
-              v-if="isEnd(roomType, compDate.dateStr) && !smallScreen"
+              v-if="isEnd(roomType, compDate.dateStr) && !smallScreen && desktopSelectSheet"
               @click.stop=""
+              v-click-outside="toggleDesktopSelectSheet"
               class="absolute bottom-0 right-0 z-50 text-sm transform translate-x-full translate-y-full bg-white border rounded-lg cursor-auto"
               style="--tw-translate-x: 0%; --tw-translate-y: -55px"
             >
@@ -383,6 +384,11 @@
                     </svg>
                   </button>
                 </div>
+                <div class="flex justify-center">
+                  <button class="font-thin cursor-pointer md:text-base text-white bg-atlantic-blue rounded px-4 py-0" @click="toggleDesktopSelectSheet">
+                    Done
+                  </button>
+                </div>
               </div>
             </div>
             <!-- POPOVER END -->
@@ -400,7 +406,7 @@
                   v-if="showRoomSelect && canSwap"
                 >
                   <div class="flex justify-end px-4 pb-3">
-                    <button class="text-black" @click="mobileSelectSheet = false">
+                    <button class="font-thin cursor-pointer md:text-base text-white bg-atlantic-blue rounded px-2 py-1" @click="mobileSelectSheet = false">
                       Done
                     </button>
                   </div>
@@ -416,7 +422,7 @@
                 </div>
                 <div class="w-full px-4 pt-6 pb-12 bg-white" @click.stop v-else>
                   <div class="flex justify-end">
-                    <button class="text-black" @click="mobileSelectSheet = false">
+                    <button class="font-thin cursor-pointer md:text-base text-white bg-atlantic-blue rounded px-2 py-1" @click="mobileSelectSheet = false">
                       Done
                     </button>
                   </div>
@@ -578,6 +584,7 @@ export default {
   },
   data() {
     return {
+      desktopSelectSheet: false,
       mobileSelectSheet: false,
       smallScreen: false,
       windowWidth: window.innerWidth,
@@ -996,6 +1003,7 @@ export default {
       this.canSwap = false;
       this.loadingRoomOptions = true;
       this.mobileSelectSheet = true;
+      this.desktopSelectSheet = true;
       const date = this.startDate;
       this.roomIds = [];
 
@@ -1064,6 +1072,15 @@ export default {
     onResize() {
       this.windowWidth = window.innerWidth;
     },
+    toggleDesktopSelectSheet() {
+      if (this.desktopSelectSheet == true) {
+        if(this.roomIds.length <= 0){
+          this.startDate = null;
+          this.endDate = null;
+        }
+        this.desktopSelectSheet = false;
+      }
+    }
   },
   mounted() {
     this.getRooms();

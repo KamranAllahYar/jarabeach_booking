@@ -29,7 +29,8 @@ export default {
     "@/plugins/vue-tour.js",
     "@/plugins/v-calendar.js",
     { src: '@/plugins/vuex-persist', ssr: false },
-    { src: '@/plugins/bugsnag', ssr: false }
+    { src: '@/plugins/bugsnag', ssr: false },
+    '~/plugins/directives.js'
   ],
   router: {
     middleware: 'clear'

@@ -395,8 +395,22 @@ export const getters: GetterTree<RootState, RootState> = {
 	roomPrice: (state: RootState, getters) => {
 		let price = 0;
 
+    const nightsDiscount = [0, 10, 15, 20];
+    let index = 0;
+
 		const nights = getters.individualDates;
-		for (const date in nights) {
+
+		// for ( const date in nights) {
+		// 	if (Object.prototype.hasOwnProperty.call(nights, date)) {
+		// 		const rooms = nights[date];
+
+		// 		const roomPrice = calcRoomPrice(getters, rooms);
+		// 		price += (roomPrice - roomPrice * nightsDiscount[index] / 100);
+    //     index = (index < 4) ? index++ : 3;
+		// 	}
+		// }
+
+    for ( const date in nights) {
 			if (Object.prototype.hasOwnProperty.call(nights, date)) {
 				const rooms = nights[date];
 
@@ -450,9 +464,9 @@ export const getters: GetterTree<RootState, RootState> = {
 		// const totalNights = getters.totalNights;
 		const totalNights = tNights;
 		let percent = 0;
-		if (totalNights == 2) percent = 5;
-		else if (totalNights == 3) percent = 10;
-		else if (totalNights >= 4) percent = 15;
+		if (totalNights == 2) percent = 10;
+		else if (totalNights == 3) percent = 15;
+		else if (totalNights >= 4) percent = 20;
 
 		return percent;
 	},
@@ -466,6 +480,16 @@ export const getters: GetterTree<RootState, RootState> = {
 		}
 
 		return 0;
+	},
+  guestsDiscountPercent: (state: RootState, getters) => {
+    const guests = getters.totalPeople;
+    if (guests >= 30 && guests < 40) return 15;
+    else if (guests >= 40) return 20;
+    else return 0;
+	},
+  guestsDiscount: (state: RootState, getters) => {
+    const guestsDiscount = (+getters.preTotal + +getters.taxTotal) * (getters.guestsDiscountPercent / 100);
+		return guestsDiscount.toFixed(2);
 	},
 	subTotal: (state: RootState, getters) => {
 		const roomPrices = getters.roomPrice;
@@ -513,7 +537,8 @@ export const getters: GetterTree<RootState, RootState> = {
 			}
 		});
 
-		return extraPrices + roomPrices + +getters.extraPeoplePrice;
+		// return extraPrices + roomPrices + +getters.extraPeoplePrice;
+    return extraPrices + roomPrices;
 	},
 	discount: (state: RootState, getters) => {
 		const discount = state.discount;
@@ -538,7 +563,11 @@ export const getters: GetterTree<RootState, RootState> = {
 		return (+getters.preTotal * 0.125).toFixed(2);
 	},
 	totalPrice: (state: RootState, getters) => {
-		return (+getters.preTotal + +getters.taxTotal).toFixed(2);
+    const total = (+getters.preTotal + +getters.taxTotal) - +getters.guestsDiscount;
+    // if (getters.totalPeople >= 30 && getters.totalPeople < 40) return total - +total * 0.15;
+    // else if (getters.totalPeople >= 40) return total - +total * 0.2;
+    // else return total;
+		return total.toFixed(2);
 	},
 	previousTotalPaid: (state: RootState, getters) => {
 		// return state.editBooking.payment.subtotal;
@@ -642,8 +671,8 @@ export const mutations: MutationTree<RootState> = {
 		}
 		for (let i = 0; i < payload.child_no; i++) {
 			let childType = 'teen';
-			if (state.children_ages[i] == '0 - 2') childType = 'infant';
-			if (state.children_ages[i] == '3 - 5') childType = 'child';
+			if (state.children_ages[i] == '0 - 12') childType = 'infant';
+			if (state.children_ages[i] == '1 - 3') childType = 'child';
 
 			otherguests.push({
 				first_name: '',
@@ -881,7 +910,7 @@ export const actions: ActionTree<RootState, RootState> = {
 			Rooms: rootGetters.roomPrice,
 			'Room Discount': '-' + rootGetters.roomDiscount,
 			'100Club Member Discount': '-' + rootGetters.memberDiscount,
-			'Extra People Cost': '+' + rootGetters.extraPeoplePrice,
+			// 'Extra People Cost': '+' + rootGetters.extraPeoplePrice,
 			taxTotal: rootGetters.taxTotal,
 			tax: rootGetters.taxTotal,
 		} as any;
