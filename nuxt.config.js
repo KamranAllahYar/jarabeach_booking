@@ -53,7 +53,7 @@ export default {
     '@nuxtjs/toast',
   ],
   axios: {
-    baseURL: process.env.API_URL || "https://admin.jarabeachresort.com/api/",
+    baseURL: process.env.API_URL || "http://localhost:8000/api/",
   },
   build: {},
   toast: {
