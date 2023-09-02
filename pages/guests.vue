@@ -5,7 +5,7 @@
       <div class="mt-3 mb-8 text-rubik text-gray-text">
         Please select the number of guests you want to book for (infants and toddlers
         included). By proceeding you understand your payment is transferable but
-        non-refundable in line with <nuxt-link to="www.jarabeachresort.com/terms" />
+        non-refundable in line with <a href="https://www.jarabeachresort.com/terms" class="text-blue-500 underline" >Our terms and conditions.</a>
       </div>
       <div class="flex gap-5 md:flex-row flex-col">
         <select
