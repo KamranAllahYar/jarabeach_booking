@@ -21,8 +21,8 @@
           <div
             v-for="(extra, i) in specials"
             :key="i"
-            class="h-500 overflow-hidden bg-white border for_hover rounded-2xl	relative"
-            :class="!extra.available ? 'opacity-25' : 'cursor-pointer shadow-md '"
+            class="h-500 overflow-hidden bg-white border for_hover rounded-2xl	relative cursor-pointer shadow-md"
+
             @click="selectSpecial(extra)"
           >
             <div class="relative w-full h-full overflow-hidden">
@@ -148,7 +148,7 @@ export default {
         return;
       }
 
-      if (!sp.available) {
+      if (!sp.available && sp.name != "Dining Experiences") {
         this.$toast.info(sp.name + " is not available for the dates you selected");
         return;
       }

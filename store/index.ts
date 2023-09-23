@@ -17,9 +17,12 @@ var groupBy = function(xs: any, key: any) {
 	}, {});
 };
 
+
 var onlyUnique = function(value: any, index: any, self: string | any[]) {
 	return self.indexOf(value) === index;
 };
+
+let totalVillasPrice = 0 as number;
 
 export const state = () => ({
 	groupType: 'individual' as string,
@@ -64,6 +67,7 @@ export const state = () => ({
 	customVillaExtras: [] as any[],
 
 	multiRoom: false as boolean,
+
 });
 
 export type RootState = ReturnType<typeof state>;
@@ -362,7 +366,6 @@ export const getters: GetterTree<RootState, RootState> = {
 	confirmEnoughRooms: (state: RootState, getters) => {
 		const nights = getters.individualDates;
 		if (Object.keys(nights).length <= 0) {
-			console.log(nights);
 			return false;
 		}
 		for (const date in nights) {
@@ -410,11 +413,14 @@ export const getters: GetterTree<RootState, RootState> = {
 		// 	}
 		// }
 
+    totalVillasPrice = 0;
+    let roomsPrices: any;
     for ( const date in nights) {
 			if (Object.prototype.hasOwnProperty.call(nights, date)) {
 				const rooms = nights[date];
-
-				price += calcRoomPrice(getters, rooms);
+        roomsPrices = calcRoomPrice(getters, rooms);
+        totalVillasPrice += roomsPrices.villa;
+				price += roomsPrices.total;
 			}
 		}
 
@@ -471,7 +477,8 @@ export const getters: GetterTree<RootState, RootState> = {
 		return percent;
 	},
 	roomDiscount: (state: RootState, getters) => {
-		const roomPriceForDiscount = getters.roomPrice - getters.roomVillaPrices - getters.roomLoftPrices;
+		// const roomPriceForDiscount = getters.roomPrice - getters.roomVillaPrices - getters.roomLoftPrices;
+    const roomPriceForDiscount = getters.roomPrice - totalVillasPrice - getters.roomLoftPrices;
 		return roomPriceForDiscount * (getters.roomDiscountPercent / 100);
 	},
 	memberDiscount: (state: RootState, getters) => {
@@ -483,6 +490,7 @@ export const getters: GetterTree<RootState, RootState> = {
 	},
   guestsDiscountPercent: (state: RootState, getters) => {
     const guests = getters.totalPeople;
+
     if (guests >= 30 && guests < 40) return 15;
     else if (guests >= 40) return 20;
     else return 0;
@@ -765,6 +773,7 @@ export const mutations: MutationTree<RootState> = {
 
 		state.multiRoom = false as boolean;
 	},
+
 };
 
 export const actions: ActionTree<RootState, RootState> = {

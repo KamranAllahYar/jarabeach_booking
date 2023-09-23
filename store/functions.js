@@ -207,6 +207,9 @@ const calcRoomPrice = function (getters, rooms) {
   let roomAdults = 0;
   let roomSmall = 0;
 
+  let pervPrice = 0;
+  let villasPrice = 0;
+
   for (let i = 0; i < rooms.length; i++) {
     const nowRoom = rooms[i];
 
@@ -250,39 +253,6 @@ const calcRoomPrice = function (getters, rooms) {
       smallPrice = 25000;
     }
 
-    // if (nowSingles) {
-    //   if (totalAdults > 0) {
-    //     roomPrices += nowRoom.price;
-    //     totalAdults -= 1;
-    //     totalPeople -= 1;
-    //   } else if (totalTeens > 0) {
-    //     roomPrices += (nowRoom.price) * 0.5;
-    //     totalTeens -= 1;
-    //     totalPeople -= 1;
-    //   } else if (totalSmall > 0) {
-    //     roomPrices += nowRoom.price * 0.25;
-    //     totalSmall -= 1;
-    //     totalSmall -= 1;
-    //   }
-    // } else {
-    //   if (totalAdults > 0) {
-    //     roomPrices += nowRoom.price + ExtraAdultPrice * Math.min(roomAdults - 1, totalAdults - 1);
-    //     totalAdults -= Math.min(roomAdults, totalAdults);
-    //     totalPeople -= Math.min(roomAdults, totalAdults);
-    //   }
-    //   if (totalTeens > 0) {
-    //     roomPrices += nowRoom.price * Math.min(roomAdults, totalTeens) * 0.5;
-    //     totalTeens -= Math.min(roomAdults, totalTeens);
-    //     totalPeople -= roomAdults;
-    //   }
-    //   if (totalSmall > 0) {
-    //     if (totalAdults > 0)  roomPrices += nowRoom.price * Math.min(roomsmall, totalSmall)  * 0.25;
-    //     else roomPrices += nowRoom.price * Math.min(roomAdults, totalSmall)  * 0.25;
-    //     totalSmall -= roomSmall;
-    //     totalSmall -= roomSmall;
-    //   }
-    // }
-
     if (nowSingles) {
       if (totalAdults > 0) {
         roomPrices += firstAdultPrice;
@@ -302,7 +272,6 @@ const calcRoomPrice = function (getters, rooms) {
         if (i != (rooms.length - 1)) {
           const adultsForTheOfRestRooms = (rooms.length - 1 - i);
           roomPrices += firstAdultPrice + ExtraAdultPrice * Math.min(roomAdults - 1, totalAdults - adultsForTheOfRestRooms - 1);
-          // (rooms.length - 1 - i)
           totalAdults -= Math.min(roomAdults, totalAdults - adultsForTheOfRestRooms);
           totalPeople -= Math.min(roomAdults, totalAdults - adultsForTheOfRestRooms);
         }
@@ -324,10 +293,14 @@ const calcRoomPrice = function (getters, rooms) {
         totalSmall -= Math.min(roomSmall, totalSmall);
       }
     }
+    if (nowRoom.type == 'villa') {
+      villasPrice = villasPrice + (roomPrices - pervPrice);
+    }
+    pervPrice = roomPrices;
     roomsLeft.splice(i, 1);
   }
 
-  return roomPrices;
+  return {villa: villasPrice, total: roomPrices};
 }
 
 export {
