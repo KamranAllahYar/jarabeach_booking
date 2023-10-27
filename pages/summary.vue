@@ -108,44 +108,40 @@
           <div
             class="flex flex-col items-center w-full my-6 space-y-2 md:space-y-0 md:flex-row md:space-x-2"
           >
-            <MainButton class="md:w-3/12" outline @click="gotoBack()">Back</MainButton>
+            <MainButton class="md:w-1/4" summary @click="gotoBack()">Back</MainButton>
             <template v-if="shouldShowPaymentButton">
               <template v-if="totalPrice > 0">
-                <div
-                  class="relative flex-shrink-0 w-full md:w-5/12"
-                  v-if="shouldShowBookOnHold"
-                  @mouseenter="holdDisclaimerToggle(true)"
-                  @mouseleave="holdDisclaimerToggle(false)"
-                >
-                  <MainButton :loading="loading" @click.native="bookOnHoldBooking()">
+                <div class="relative flex-shrink-0 w-40 md:w-1/4" v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimerToggle(true)" @mouseleave="holdDisclaimerToggle(false)" >
+                  <MainButton summarybbg :loading="loading" @click.native="bookOnHoldBooking('Hold Bank Transfer')">
                     <div class="flex justify-center">
-                      <svg
-                        class="w-6 h-6 mr-2"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
-                          clip-rule="evenodd"
-                        />
+                      <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                       </svg>
                       Hold | Bank Transfer
                     </div>
                   </MainButton>
-                  <div
-                    v-if="holdDisclaimer"
-                    class="absolute p-2 mx-auto text-xs bg-white border-2 rounded border-brand-blue-300"
-                    style="top: -120px"
-                  >
+                  <div v-if="holdDisclaimer" class="absolute p-2 mx-auto text-xs bg-white border-2 rounded border-brand-blue-300" style="top: -120px">
                     Booking will only be held for
                     <b>30 mins</b>. You must send a proof of payment to
                     <b>bookings@jarabeachresort.com</b> within that time or the hold on
                     the booking will be cancelled.
                   </div>
                 </div>
-                <div class="flex-shrink-0 w-full md:w-5/12">
+                <div class="relative flex-shrink-0 w-40 md:w-1/4" v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimer30Toggle(true)" @mouseleave="holdDisclaimer30Toggle(false)" >
+                  <!-- <MainButton summarybbg :loading="loading" @click.native="bookPartPaymentBooking('Part Payment')"> -->
+                  <MainButton summarybbg :loading="loading" @click.native="bookOnHoldBooking('Book Part Payment')">
+                    <div class="flex justify-center">
+                      <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                      </svg>
+                      Book | Part Payment
+                    </div>
+                  </MainButton>
+                  <div v-if="holdDisclaimer30" class="absolute p-2 mx-auto text-xs bg-white border-2 rounded border-brand-blue-300" style="top: -120px">
+                    By proceeding, you understand that Jara Beach Resort will hold your reservation on receipt of your <b>non-refundable 70%</b> payment.
+                  </div>
+                </div>
+                <div class="flex-shrink-0 w-48 md:w-1/3">
                   <Paystack
                     v-if="trans_ref != null && agreed"
                     :amount="totalPrice"
@@ -156,7 +152,7 @@
                     :close="closePayment"
                     :embed="false"
                   >
-                    <MainButton class="md:px-2" :loading="loading" :disabled="agreed">
+                    <MainButton summarybbg class="md:px-2" :loading="loading" :disabled="agreed">
                       <div class="flex justify-center">
                         <svg
                           class="w-6 h-6 mr-2"
@@ -223,6 +219,7 @@ export default {
       loading: false,
       trans_ref: null,
       holdDisclaimer: false,
+      holdDisclaimer30: false,
     };
   },
   computed: {
@@ -288,7 +285,6 @@ export default {
     },
     shouldShowBookOnHold() {
       if (this.$store.state.editMode) return false;
-
       return true;
     },
     shouldShowPaymentButton() {
@@ -333,6 +329,9 @@ export default {
   methods: {
     holdDisclaimerToggle(v) {
       this.holdDisclaimer = v;
+    },
+    holdDisclaimer30Toggle(v) {
+      this.holdDisclaimer30 = v;
     },
     removeExtra(extra) {
       //console.log(extra);
@@ -405,7 +404,7 @@ export default {
       }
       this.loading = false;
     },
-    async bookOnHoldBooking() {
+    async bookOnHoldBooking(paymentMethod) {
       //console.log('Clickling book on hold');
       if (!this.agreed) {
         this.$toasted.error("Please accept the policy first", {
@@ -423,6 +422,7 @@ export default {
         trans_ref: this.trans_ref,
         method_ref: "offline booking",
         method: "Offline",
+        payment_method: paymentMethod
       });
       //console.log(res);
       if (res) {
@@ -457,6 +457,7 @@ export default {
           code: this.code,
           total: this.subTotal,
           date: this.rooms[0].date,
+          rooms: this.rooms
         })
         .then(({ data }) => {
           //console.log(data);
@@ -497,22 +498,22 @@ export default {
 </script>
 
 <style>
-.payButton {
-  flex: 1;
-  width: 100%;
-}
-.no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-pre {
-  font-family: "Maison Neue", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  .payButton {
+    flex: 1;
+    width: 100%;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  pre {
+    font-family: "Maison Neue", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  white-space: pre-wrap; /* Since CSS 2.1 */
-  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-  white-space: -pre-wrap; /* Opera 4-6 */
-  white-space: -o-pre-wrap; /* Opera 7 */
-  word-wrap: break-word; /* Internet Explorer 5.5+ */
-}
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+  }
 </style>

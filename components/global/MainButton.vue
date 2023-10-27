@@ -19,6 +19,28 @@
     <slot v-else></slot>
   </button>
   <button
+    v-else-if="summary"
+    v-on="$listeners"
+    :disabled="disabled"
+    class="w-full bg-gray-button rounded-lg py-4 font-rubik text-sm font-medium"
+  >
+    <div v-if="loading" class="py-1 text-center">
+      <Loading class="mx-auto" :color="!summary ? 'text-white' : ''" />
+    </div>
+    <slot v-else></slot>
+  </button>
+  <button
+    v-else-if="summarybbg"
+    v-on="$listeners"
+    :disabled="disabled"
+    class="w-full bg-black text-white rounded-lg py-4 font-rubik text-sm font-medium"
+  >
+    <div v-if="loading" class="py-1 text-center">
+      <Loading class="mx-auto" :color="!summarybbg ? 'text-white' : ''" />
+    </div>
+    <slot v-else></slot>
+  </button>
+  <button
     v-else
     v-on="$listeners"
     :disabled="disabled"
@@ -40,6 +62,14 @@ export default {
       default: false,
     },
     outline: {
+      type: Boolean,
+      default: false,
+    },
+    summary: {
+      type: Boolean,
+      default: false,
+    },
+    summarybbg: {
       type: Boolean,
       default: false,
     },
