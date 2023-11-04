@@ -10,7 +10,7 @@
       <div class="flex items-center justify-end space-x-2">
         <div
           @click="prevMonth()"
-          class="flex items-center justify-center w-8 h-8 bg-black rounded-full cursor-pointer text-white"
+          class="flex items-center justify-center w-20 gap-1 h-8 bg-black rounded-full cursor-pointer text-white"
         >
           <svg
             class="w-4 h-4"
@@ -26,11 +26,13 @@
               d="M15 19l-7-7 7-7"
             ></path>
           </svg>
+          Prev
         </div>
         <div
           @click="nextMonth()"
-          class="flex items-center justify-center w-8 h-8 bg-black rounded-full cursor-pointer text-white"
+          class="flex items-center justify-center w-20 gap-1 h-8 bg-black rounded-full cursor-pointer text-white"
         >
+          Next
           <svg
             class="w-4 h-4"
             fill="none"

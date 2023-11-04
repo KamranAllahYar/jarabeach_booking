@@ -67,7 +67,7 @@
             <div v-else-if="roomsDetailsVilla.includes(11)">Sunset 11</div>
           </div>
           <div class="text-sm text-right" v-if="roomsDetailsLoft.length > 0">
-            <div v-if="roomsDetailsLoft.includes(12)">The Loft</div>
+            <div>{{ formatAndStringLoft() }}</div>
           </div>
           <!-- <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
                         <div>{{ formatDate(room.date) }}</div>
@@ -383,6 +383,9 @@ export default {
     previousTotalPaid() {
       return this.$store.getters.previousTotalPaid;
     },
+    roomsData() {
+      return this.$store.getters.roomsData;
+    },
   },
   methods: {
     formatAndString(arrs) {
@@ -413,6 +416,21 @@ export default {
       arr.pop();
 
       return arr.join(", ") + " & " + last;
+    },
+    formatAndStringLoft() {
+      const arr = this.roomsDetailsLoft;
+      let str = ''
+
+      for (let index = 0 ; index < arr.length  ; index ++) {
+        const roomIndex = this.roomsData.findIndex((room) => room.id == arr[index]);
+        str += this.roomsData[roomIndex].name?.replace('Loft - ','The Loft ')
+
+        if(index != arr.length -1){
+          str += ', '
+        }
+      }
+      
+      return str;
     },
     formatDate(date) {
       return format(parseISO(date), "do MMM yyyy");

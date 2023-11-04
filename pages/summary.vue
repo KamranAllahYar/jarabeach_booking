@@ -106,13 +106,13 @@
           </label>
 
           <div
-            class="flex flex-col items-center w-full my-6 space-y-2 md:space-y-0 md:flex-row md:space-x-2"
+            class="flex flex-wrap gap-y-2 items-center w-full my-6 space-y-2 md:space-y-0  md:space-x-2"
           >
-            <MainButton class="md:w-1/4" summary @click="gotoBack()">Back</MainButton>
+            <MainButton class="md:w-16" summary @click="gotoBack()">Back</MainButton>
             <template v-if="shouldShowPaymentButton">
               <template v-if="totalPrice > 0">
-                <div class="relative flex-shrink-0 w-40 md:w-1/4" v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimerToggle(true)" @mouseleave="holdDisclaimerToggle(false)" >
-                  <MainButton summarybbg :loading="loading" @click.native="bookOnHoldBooking('Hold Bank Transfer')">
+                <div class="relative flex-shrink-0 w-full md:w-48 " v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimerToggle(true)" @mouseleave="holdDisclaimerToggle(false)" >
+                  <MainButton summarybbg class="px-2" :loading="loading" @click.native="bookOnHoldBooking('Hold Bank Transfer')">
                     <div class="flex justify-center">
                       <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
@@ -127,9 +127,9 @@
                     the booking will be cancelled.
                   </div>
                 </div>
-                <div class="relative flex-shrink-0 w-40 md:w-1/4" v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimer30Toggle(true)" @mouseleave="holdDisclaimer30Toggle(false)" >
+                <div class="relative flex-shrink-0 w-full md:w-48 " v-if="shouldShowBookOnHold" @mouseenter="holdDisclaimer30Toggle(true)" @mouseleave="holdDisclaimer30Toggle(false)" >
                   <!-- <MainButton summarybbg :loading="loading" @click.native="bookPartPaymentBooking('Part Payment')"> -->
-                  <MainButton summarybbg :loading="loading" @click.native="bookOnHoldBooking('Book Part Payment')">
+                  <MainButton summarybbg class="px-2" :loading="loading" @click.native="bookOnHoldBooking('Book Part Payment')">
                     <div class="flex justify-center">
                       <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
@@ -141,7 +141,7 @@
                     By proceeding, you understand that Jara Beach Resort will hold your reservation on receipt of your <b>non-refundable 70%</b> payment.
                   </div>
                 </div>
-                <div class="flex-shrink-0 w-48 md:w-1/3">
+                <div class="flex-shrink-0 w-full md:w-56">
                   <Paystack
                     v-if="trans_ref != null && agreed"
                     :amount="totalPrice"
@@ -152,7 +152,7 @@
                     :close="closePayment"
                     :embed="false"
                   >
-                    <MainButton summarybbg class="md:px-2" :loading="loading" :disabled="agreed">
+                    <MainButton summarybbg class="md:px-2" :loading="loading" :disabled="!agreed">
                       <div class="flex justify-center">
                         <svg
                           class="w-6 h-6 mr-2"
