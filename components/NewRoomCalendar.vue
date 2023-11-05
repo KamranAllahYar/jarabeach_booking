@@ -286,7 +286,7 @@
               <div
                 v-else
                 class="py-2 pl-3 pr-4"
-                :style="hoveredRooms.length > 5 ? 'width: 350px' : 'width: 185px'"
+                :style="'width: ' + Math.ceil(hoveredRooms.length / 5) * 175  + 'px'"
               >
                 <div v-if="loadingRoomOptions">
                   <svg

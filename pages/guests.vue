@@ -16,7 +16,7 @@
           style="box-shadow: none"
         >
           <option value="0" selected>Adults</option>
-          <option v-for="num in 42" :value="num" :key="num">
+          <option v-for="num in 51" :value="num" :key="num">
             {{ num }}
           </option>
         </select>
