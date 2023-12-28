@@ -151,6 +151,7 @@
                     :callback="completeBooking"
                     :close="closePayment"
                     :embed="false"
+                    :channels="paystackChannels"
                   >
                     <MainButton summarybbg class="md:px-2" :loading="loading" :disabled="!agreed">
                       <div class="flex justify-center">
@@ -220,6 +221,7 @@ export default {
       trans_ref: null,
       holdDisclaimer: false,
       holdDisclaimer30: false,
+      paystackChannels: ["card", "bank", "ussd", "qr", "mobile_money", "bank_transfer"],
     };
   },
   computed: {
@@ -305,7 +307,8 @@ export default {
       return this.$store.getters.bookedRooms;
     },
     roomsPrice() {
-      return this.rooms.reduce((price, room) => price + room.price, 0);
+      // return this.rooms.reduce((price, room) => price + room.price, 0);
+      return this.$store.getters.roomPrice;
     },
     specials() {
       return this.$store.getters["extras/allSelected"];
