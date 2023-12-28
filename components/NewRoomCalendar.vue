@@ -1031,6 +1031,10 @@ export default {
         if (this.bigPeople <= 3) {
           this.notAllRooms = true;
         }
+      } else if (this.seRoom == "studio") {
+        if (this.bigPeople <= 4) {
+          this.notAllRooms = true;
+        }
       }
 
       return await this.$axios
@@ -1099,8 +1103,10 @@ export default {
           this.seRoom = "family";
         } else if (firstRoom.room_id >= 10 && firstRoom.room_id <= 11) {
           this.seRoom = "villa";
-        } else {
+        } else if(firstRoom.room_id >= 12 && firstRoom.room_id <= 13){
           this.seRoom = "loft";
+        } else {
+          this.seRoom = "studio";
         }
 
         const allDates = this.initialRooms.map((r) => r.date);

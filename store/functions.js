@@ -16,7 +16,11 @@ const calcExtraPeople = function (rooms, getters) {
     }else if (r.type == 'loft') {
       bigMax += 3;
       smallMax += 2;
+    }else if (r.type == 'studio') {
+      bigMax += 4;
+      smallMax += 3;
     }
+
   });
 
   const noTeens = getters.noTeens;
@@ -113,11 +117,13 @@ const calcRoomLimit = function (getters, rooms) {
   const familyBigMax = 5;
   const villaBigMax = 5;
   const loftBigMax = 5;
+  const studioBigMax = 5;
 
   const standardSmallMax = 1;
   const familySmallMax = 1;
   const villaSmallMax = 1;
   const loftSmallMax = 1;
+  const studioSmallMax = 1;
 
   let totalBigMax = 0;
   let totalSmallMax = 0;
@@ -140,6 +146,9 @@ const calcRoomLimit = function (getters, rooms) {
     } else if (type == 'loft') {
       totalBigMax += loftBigMax;
       totalSmallMax += loftSmallMax;
+    } else if (type == 'studio') {
+      totalBigMax += studioBigMax;
+      totalSmallMax += studioSmallMax;
     }
   });
 
@@ -178,6 +187,7 @@ const calcRoomPrice2 = function (getters, rooms) {
       roomPrices += nowRoom.price;
     }
 
+    if (nowRoom.type == 'studio') totalPeople -= 4;
     if (nowRoom.type == 'loft') totalPeople -= 3;
     if (nowRoom.type == 'villa') totalPeople -= 3;
     if (nowRoom.type == 'family') totalPeople -= 3;
@@ -219,7 +229,14 @@ const calcRoomPrice = function (getters, rooms) {
       nowSingles = false;
     }
 
-
+    if (nowRoom.type == 'studio') {
+      roomAdults = 5;
+      roomSmall = 1;
+      ExtraAdultPrice = 75000;
+      firstAdultPrice = 175000;
+      teenPrice = 60000;
+      smallPrice = 30000;
+    }
     if (nowRoom.type == 'loft') {
       roomAdults = 5;
       roomSmall = 1;

@@ -69,6 +69,9 @@
           <div class="text-sm text-right" v-if="roomsDetailsLoft.length > 0">
             <div>{{ formatAndStringLoft() }}</div>
           </div>
+          <div class="text-sm text-right" v-if="roomsDetailsStudio.length > 0">
+              Studio {{ formatAndStringCabin(roomsDetailsStudio) }}
+          </div>
           <!-- <div class="mb-1 text-right" v-for="(room, ix) in rooms" :key="ix">
                         <div>{{ formatDate(room.date) }}</div>
                         <div class="text-xs text-gray-600">{{ room.name }}</div>
@@ -305,6 +308,9 @@ export default {
     },
     roomsDetailsLoft() {
       return this.$store.getters.roomsDetailsLoft;
+    },
+    roomsDetailsStudio() {
+      return this.$store.getters.roomsDetailsStudio;
     },
     editBooking() {
       return this.$store.state.editBooking;

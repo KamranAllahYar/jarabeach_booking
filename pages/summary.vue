@@ -427,7 +427,11 @@ export default {
       //console.log(res);
       if (res) {
         //console.log(res);
-        this.$router.push("/done_hold");
+        if(paymentMethod == "Book Part Payment"){
+          this.$router.push("/done_hold_part_payment");
+        }else{
+          this.$router.push("/done_hold");
+        }
         this.$store.commit("RESET_STORE");
         this.$store.commit("extras/RESET_STORE");
       }

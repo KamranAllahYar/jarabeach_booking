@@ -186,6 +186,10 @@ export const getters: GetterTree<RootState, RootState> = {
 		const rooms = getters.bookedRooms.filter((room: any) => room.type == 'loft').map((room: any) => room.room_id);
 		return rooms.filter(onlyUnique);
 	},
+	roomsDetailsStudio: (state: RootState, getters) => {
+		const rooms = getters.bookedRooms.filter((room: any) => room.type == 'studio').map((room: any) => room.room_id);
+		return rooms.filter(onlyUnique);
+	},
 	uniqueRooms: (state: RootState, getters) => {
 		const roomGroup = groupBy(getters.bookedRooms, 'room_id');
 		return Object.keys(roomGroup);
@@ -213,7 +217,7 @@ export const getters: GetterTree<RootState, RootState> = {
 			const roomid = getters.uniqueRooms[i];
 			const r = state.roomsData.find(r => r.id == roomid);
 
-			if (r.type == 'standard' || r.type == 'family') {
+			if (r.type == 'standard' || r.type == 'family' || r.type == 'studio') {
 				notVilla++;
 			} else if (r.type == 'villa') {
 				villa++;
@@ -231,11 +235,7 @@ export const getters: GetterTree<RootState, RootState> = {
 		let onlyVilla = true;
 		getters.uniqueRooms.map((roomid: any) => {
 			const r = state.roomsData.find(r => r.id == roomid);
-			if (r.type == 'standard') {
-				onlyVilla = false;
-			} else if (r.type == 'family') {
-				onlyVilla = false;
-			} else if (r.type == 'loft') {
+			if (r.type == 'standard' || r.type == 'family' || r.type == 'loft' || r.type == 'studio') {
 				onlyVilla = false;
 			}
 		});
@@ -270,6 +270,9 @@ export const getters: GetterTree<RootState, RootState> = {
 			} else if (r.type == 'loft') {
 				bigMax += 3;
 				smallMax += 2;
+			} else if (r.type == 'studio') {
+				bigMax += 4;
+				smallMax += 3;
 			}
 		});
 
@@ -328,6 +331,8 @@ export const getters: GetterTree<RootState, RootState> = {
 				bigMax += 3;
 			} else if (r.type == 'villa') {
 				bigMax += 3;
+			} else if (r.type == 'studio') {
+				bigMax += 4;
 			}
 		});
 
@@ -382,7 +387,7 @@ export const getters: GetterTree<RootState, RootState> = {
 	},
 	oldRoomPrice: (state: RootState, getters) => {
 		const roomPrices = getters.bookedRooms.reduce((price: number, room: any) => {
-			if (room.type == 'family') {
+			if (room.type == 'family' || room.type == 'studio') {
 				return price + room.price;
 			} else if (room.type == 'standard') {
 				if (getters.totalPeople == 1) {
