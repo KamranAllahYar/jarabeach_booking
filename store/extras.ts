@@ -96,6 +96,9 @@ export const state = () => ({
   datePhotoshoot: null as String | null,
 
   clashes: {} as any,
+
+  selectedConferenceDates: [],
+  selectedTeamsDates: []
 })
 
 export type ExtraState = ReturnType<typeof state>
@@ -114,6 +117,8 @@ export const getters: GetterTree<ExtraState, RootState> = {
   allBikes: (state: ExtraState) => state.bikeOptions,
   allQuadbikes: (state: ExtraState) => state.quadbikeOptions,
   allClashes: (state: ExtraState) => state.clashes,
+  allSelectedConferenceDates: (state: ExtraState) => state.selectedConferenceDates,
+  allselectedTeamsDates: (state: ExtraState) => state.selectedTeamsDates,
 
   cakesPrice: (state: ExtraState) => {
     if (state.selectedCakes.length <= 0) return 0;
@@ -367,6 +372,28 @@ export const getters: GetterTree<ExtraState, RootState> = {
 
     return price;
   },
+  conferencePrice: (state: ExtraState) => {
+
+    if (state.selectedConferenceDates.length <= 0) return 0;
+    let price = 0;
+
+    for (let i = 0; i < state.selectedConferenceDates.length; i++) {
+        price += 250000;
+    }
+
+
+    return price;
+  },
+  teamsPrice: (state: ExtraState) => {
+    if (state.selectedTeamsDates.length <= 0) return 0;
+    let price = 0;
+
+    for (let i = 0; i < state.selectedTeamsDates.length; i++) {
+        price += 150000;
+    }
+
+    return price;
+  }
 }
 
 function getSpecialObjFromStr(specials: any[], specialStr: String): any {
@@ -833,6 +860,14 @@ export const mutations: MutationTree<ExtraState> = {
     });
     state.selectedLookouts = packages;
   },
+
+  SET_SELECTED_CONFERENCES: (state, payload) => {
+    state.selectedConferenceDates = payload;
+  },
+
+  SET_SELECTED_TEAMS: (state, payload) => {
+    state.selectedTeamsDates = payload;
+  }
 }
 
 export const actions: ActionTree<ExtraState, RootState> = {
