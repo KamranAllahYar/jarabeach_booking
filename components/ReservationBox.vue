@@ -268,6 +268,12 @@ export default {
             case "lookout":
               price = this.$store.getters["extras/lookoutPrice"];
               break;
+            case "conferences":
+              price = this.$store.getters["extras/conferencePrice"];
+              break;
+            case "teams":
+              price = this.$store.getters["extras/teamsPrice"];
+              break;
             default:
               price = 0;
               break;
@@ -429,7 +435,7 @@ export default {
           str += ', '
         }
       }
-      
+
       return str;
     },
     formatDate(date) {

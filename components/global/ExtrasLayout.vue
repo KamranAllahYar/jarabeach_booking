@@ -78,6 +78,18 @@
       @prev="gotoPrev()"
     />
 
+    <SpecialConference
+      v-else-if="currentSpecial == 'conferences'"
+      @next="gotoNext()"
+      @prev="gotoPrev()"
+    />
+
+    <SpecialTeam
+      v-else-if="currentSpecial == 'teams'"
+      @next="gotoNext()"
+      @prev="gotoPrev()"
+    />
+
     <button
       @click="removeExtra()"
       class="absolute px-2 py-1 text-sm text-red-500 capitalize transition-colors rounded-sm top-2 right-2 hover:bg-red-500 hover:text-white"
@@ -125,7 +137,6 @@ export default {
 
       this.$store.commit("extras/INC_INDEX");
       const special = this.selected[this.index];
-      console.log(special);
       this.$store.dispatch("extras/updateExtrasSelected", special.type);
       // this.$router.push({ path: "/extras/" + special.type });
     },

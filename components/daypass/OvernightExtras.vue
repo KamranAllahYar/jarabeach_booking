@@ -117,7 +117,7 @@ export default {
   methods: {
     fileExtension(type) {
       //console.log(this.specials);
-      if (type !== "unforgettableExperience" && type !== "massages" && type !== "dayPass" && type !== "lookout")
+      if (type !== "unforgettableExperience" && type !== "massages" && type !== "dayPass" && type !== "lookout" && type !== "conferences" && type !== "teams")
         return "png";
       return "jpeg";
     },

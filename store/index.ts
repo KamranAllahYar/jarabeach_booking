@@ -543,6 +543,12 @@ export const getters: GetterTree<RootState, RootState> = {
 			if (extra.type == 'lookout') {
 				extraPrices += getters['extras/lookoutPrice'];
 			}
+      if (extra.type == 'conferences') {
+				extraPrices += getters['extras/conferencePrice'];
+			}
+      if (extra.type == 'teams') {
+				extraPrices += getters['extras/teamsPrice'];
+			}
 		});
 
 		// return extraPrices + roomPrices + +getters.extraPeoplePrice;
@@ -1029,6 +1035,18 @@ export const actions: ActionTree<RootState, RootState> = {
 				packages: extraState.selectedLookouts,
 			};
 			prices['lookout'] = rootGetters['extras/lookoutPrice'];
+		}
+    if (allExtras.includes('conferences')) {
+			specialsToSend['conferences'] = {
+				dates: extraState.selectedConferenceDates,
+			};
+			prices['conference'] = rootGetters['extras/conferencePrice'];
+		}
+    if (allExtras.includes('teams')) {
+			specialsToSend['teams'] = {
+				dates: extraState.selectedTeamsDates,
+			};
+			prices['team'] = rootGetters['extras/teamsPrice'];
 		}
 
 		prices['Sub Total'] = rootGetters.subTotal;
