@@ -1114,7 +1114,7 @@ export const actions: ActionTree<RootState, RootState> = {
 			if (res.data.success) {
 				const newBooking = res.data.data.booking;
 				//console.log(newBooking);
-				const sRes = await this.$axios.post(`/book-specials/${newBooking.id}`, specialsToSend);
+				// const sRes = await this.$axios.post(`/book-specials/${newBooking.id}`, specialsToSend);
 				//console.log(sRes.data);
 
 				this.app.$toast.success(res.data.message);
