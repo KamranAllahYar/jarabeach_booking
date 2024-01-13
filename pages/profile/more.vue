@@ -152,6 +152,18 @@
                     style="box-shadow: none"
                   />
                 </div>
+                <div class="flex-1">
+                  <select
+                    v-model="guest.room"
+                    name="room"
+                    placeholder="Room"
+                    class="w-full px-0 border-0"
+                    style="box-shadow: none"
+                  >
+                    <option :value="undefined" disabled selected>-- Room --</option>
+                    <option v-for="room in rooms" :value="room.room_id"> {{ room.name }}</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -177,25 +189,162 @@
 <script>
 export default {
   layout: "booking",
+  data() {
+    return {
+      rooms: [],
+    }
+  },
   computed: {
     others() {
       return this.$store.state.other_guests;
     },
+    uniqueRooms() {
+      return this.$store.getters.uniqueRooms;
+    },
+    roomsData() {
+      return this.$store.state.roomsData;
+    }
+  },
+  mounted() {
+    this.uniqueRooms.forEach(room => {
+			let rData = this.roomsData.find(r => r.id === parseInt(room));
+
+
+			if (rData) {
+				this.rooms.push({
+					room_id: parseInt(room),
+					name: rData.name,
+					type: rData.type,
+				});
+			}
+    });
   },
   methods: {
+    checkRoomsCapacity() {
+      // check if each room has at least one adult
+      for (const room of this.rooms) {
+        if (!this.others.filter(g => g.room == room.room_id && g.type === 'adult').length) {
+          return false;
+        }
+
+        let bigMembers = this.others.filter(guest =>
+            guest.room == room.room_id
+            && (guest.type == "adult" || guest.type == "teen")
+          ).length;
+
+        let smallMembers = this.others.filter(guest =>
+            guest.room == room.room_id
+            && (guest.type == "child" || guest.type == "infant")
+          ).length;
+
+
+        if (room.type == "standard") {
+
+          let maxSmall = 1;
+          let maxBig = 2;
+
+          let diffrence = maxBig - bigMembers;
+          if (diffrence < 0) {
+            return false;
+          }
+          maxSmall += diffrence;
+
+          if (smallMembers > maxSmall) {
+            return false;
+          }
+        }
+        else {
+          let maxSmall = 1;
+          let maxBig = 5;
+
+          let diffrence = maxBig - bigMembers;
+          if (diffrence < 0) {
+            return false;
+          }
+          maxSmall += diffrence;
+
+          if (smallMembers > maxSmall) {
+            return false;
+          }
+        }
+
+      }
+      // check for rooms' capacites
+      // const standardRoomsNbr = this.uniqueRooms.filter(r => r <= 6).length
+      // const bigRoomsNbr = this.uniqueRooms.filter(r => r > 6).length
+
+      // if (bigRoomsNbr) {
+      //   let maxSmall = 1 * bigRoomsNbr;
+      //   let maxBig = 5 * bigRoomsNbr;
+      //   // filter guests depends on age and room types
+      //   let bigMembers = this.others.filter(guest =>
+      //       guest.room > 4
+      //       && (guest.type == "adult" || guest.type == "teen")
+      //     ).length;
+      //   let smallMembers = this.others.filter(guest =>
+      //       guest.room > 4
+      //       && (guest.type == "infant" || guest.type == "child")
+      //     ).length;
+
+      //   let diffrence = maxBig - bigMembers;
+      //   if (diffrence < 0) {
+      //     return false;
+      //   }
+      //   maxSmall += diffrence;
+
+      //   if (smallMembers > maxSmall) {
+      //     return false;
+      //   }
+
+      // }
+
+      // if (standardRoomsNbr) {
+      //   let maxSmall = 1 * standardRoomsNbr;
+      //   let maxBig = 2 * standardRoomsNbr;
+
+      //   let bigMembers = this.others.filter(guest =>
+      //       guest.room <= 4
+      //       && (guest.type == "adult" || guest.type == "teen")
+      //     ).length;
+      //   let smallMembers = this.others.filter(guest =>
+      //       guest.room <= 4
+      //       && (guest.type == "infant" || guest.type == "child")
+      //     ).length;
+
+      //   let diffrence = maxBig - bigMembers;;
+      //   if (diffrence < 0) {
+      //     return false;
+      //   }
+      //   maxSmall += diffrence;
+
+      //   if (smallMembers > maxSmall) {
+      //     return false;
+      //   }
+      // }
+
+
+      return true;
+    },
+
     gotoBack() {
       this.$router.push({ path: "/profile" });
     },
     gotoNext() {
       for (let i = 0; i < this.others.length; i++) {
         const guest = this.others[i];
-        if (guest.firs_name == "" || guest.last_name == "") {
+        if (guest.firs_name == "" || guest.last_name == "" || !guest.room) {
           this.$toast.info(
-            "Please provide the full names of all the guests before you can move forward"
+            "Please provide the full names and rooms of all the guests before you can move forward"
           );
           return;
         }
       }
+
+      if (!this.checkRoomsCapacity()) {
+        this.$toast.info("eroeeerrrrrrr");
+        return;
+      }
+
       this.$router.push({ path: "/summary" });
     },
   },
